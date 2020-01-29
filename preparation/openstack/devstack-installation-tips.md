@@ -1,8 +1,9 @@
 # 安装`devstack`的注意事项
 
-自己是安装在一个Ubuntu 18.04虚拟机里的，安装过程大致在按照官方教程https://docs.openstack.org/devstack/latest/就可以了，但是我自己安装的时候遇到很多坑并用了一天仍未成功，这里记一下，以下错误按时间顺序。可以通过重新运行脚本自行解决的错误、网络错误等就不在这里记录了。
+安装过程大致在按照官方教程https://docs.openstack.org/devstack/latest/就可以了，但是我自己安装的时候遇到很多坑并用了一天仍未成功，这里记一下，以下错误按时间顺序。可以通过重新运行脚本自行解决的错误、网络错误等就不在这里记录了。
 
-# Ubuntu 18.04
+# Ubuntu 18.04 Hyper-V VM
+
 
 ## `./stack.sh`时`Permission denied: '/opt/stack/.cache...'`
 
@@ -37,29 +38,21 @@ python3.6 -> python3
 
 https://bugs.launchpad.net/devstack/+bug/1671409
 
-## 在解决上述问题之后，Cannot uninstall ‘httplib2’
+## 在解决上述问题之后，Cannot uninstall ‘{httplib2,simplejson}’
 
 解决掉上述问题之后，`./stack.sh`报错：
 
 > Cannot uninstall ‘httplib2’. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall.
 
+`simplejson`包也有这个问题
+
 ### 解决方法
 
-手动强制更新`httplib2`：`sudo pip install --ignore-installed httplib2`后重新运行`stack.sh`
+手动强制更新：`sudo pip install --ignore-installed httplib2 simplejson`后重新运行`stack.sh`
 
 ### 参考
 
 https://blog.csdn.net/kudou1994/article/details/82383588
-
-## 在解决上述问题之后，Cannot uninstall ‘simplejson’
-
-解决掉上述问题之后，`./stack.sh`报错：
-
-> Cannot uninstall ‘httplib2’. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall.
-
-### 解决方法
-
-照上个问题依葫芦画瓢，`sudo pip install --ignore-installed simplejson`后重新运行`stack.sh`
 
 ## /opt/stack/devstack/lib/glance:333 g-api did not start
 
@@ -105,3 +98,21 @@ open("./python_plugin.so"): No such file or directory [core/utils.c line 3724]
 https://ask.openstack.org/en/question/112030/glance354-g-api-did-not-start-during-devstack-installation/
 
 https://stackoverflow.com/questions/15936413/pip-installed-uwsgi-python-plugin-so-error
+
+# CentOS 7
+
+## /opt/stack/devstack/functions:583 Invalid path permissions
+
+前面提示`/opt/stack appears to have 0700 permissions. This is very likely to cause fatal issues for DevStack daemons.`
+
+## 解决方法
+
+修改权限为`755`：`chmod 755 /opt/stack`
+
+## 参考
+
+https://www.cnblogs.com/rhjeans/p/11328346.html
+
+## Ubuntu Server 18.04 VM on Microsoft Azure
+
+遇到了本机Hyper-V VM的前三个问题，解决后直接安装成功。
