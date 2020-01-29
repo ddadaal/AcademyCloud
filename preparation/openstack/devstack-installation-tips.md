@@ -97,6 +97,7 @@ open("./python_plugin.so"): No such file or directory [core/utils.c line 3724]
 - 再次查看日志发现没有这一行错误
 - 再次运行`stack.sh`同样的错误
 - 再次查看被修改的ini文件，发现文件被改回来了
+- 找不到其他有意义的解决方案，放弃
 
 
 ### 参考
