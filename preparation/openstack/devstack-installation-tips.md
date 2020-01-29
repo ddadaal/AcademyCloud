@@ -115,4 +115,6 @@ https://www.cnblogs.com/rhjeans/p/11328346.html
 
 ## Ubuntu Server 18.04 VM on Microsoft Azure
 
-遇到了本机Hyper-V VM的前三个问题，解决后直接安装成功。
+遇到了本机Hyper-V VM的前两个问题，解决后直接安装成功。
+
+注意，需要手动更新的，除了`httplib2`和`simplejson`，还有`pyasn1-modules`.
