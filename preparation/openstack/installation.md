@@ -10,16 +10,17 @@
 
 ## Controller Node
 
-包需要安装和配置：
+需要安装的包：
 - 基础包
-- 数据库（https://docs.openstack.org/install-guide/environment-sql-database.html）
-- 消息队列（https://docs.openstack.org/install-guide/environment-messaging-ubuntu.html）
-- memcached（https://docs.openstack.org/install-guide/environment-memcached-ubuntu.html）
-- etcd（https://docs.openstack.org/install-guide/environment-etcd-ubuntu.html）
+- [数据库](#database)
+- [消息队列](#rabbitmq)
+- [memcached](#memcached)
+- [etcd](#etcd)
+- [配置网络](#network-of-controller)
 
 需要安装以下服务：
-- Identity (keystone)
-- Image (glance)
+- Identity ([keystone](#keystone))
+- Image ([glance](#glance))
 - Placement (placement)
 - Compute
 - Networking
@@ -33,3 +34,65 @@
 需要安装服务：
 - Compute (hypervisor portion)
 - Network service agent
+
+# 安装脚本
+
+## database
+
+https://docs.openstack.org/install-guide/environment-sql-database.html
+
+```bash
+/vagrant/scripts/packages/database/init.sh
+```
+
+## rabbitmq
+
+https://docs.openstack.org/install-guide/environment-sql-database.html
+
+```bash
+/vagrant/scripts/packages/rabbitmq/init.sh
+```
+
+## memcached
+
+https://docs.openstack.org/install-guide/environment-sql-database.html
+
+```bash
+/vagrant/scripts/packages/memcached/init.sh
+```
+
+## etcd
+
+https://docs.openstack.org/install-guide/environment-sql-database.html
+
+
+```bash
+/vagrant/scripts/packages/etcd/init.sh
+```
+
+## network of controller
+
+https://docs.openstack.org/install-guide/environment-networking-controller.html
+
+```bash
+/vagrant/scripts/packages/network/controller.sh
+```
+
+## network of compute
+
+## keystone
+
+```bash
+# Install
+# https://docs.openstack.org/keystone/train/install/keystone-install-ubuntu.html
+/vagrant/scripts/controller/keystone/init.sh
+
+# Configure
+# https://docs.openstack.org/keystone/train/install/keystone-users-ubuntu.html
+/vagrant/scripts/controller/keystone/configure.sh
+
+# Verify
+# https://docs.openstack.org/keystone/train/install/keystone-verify-ubuntu.html
+/vagrant/scripts/controller/keystone/verify.sh
+
+```
