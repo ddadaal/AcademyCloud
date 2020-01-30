@@ -60,12 +60,11 @@ Vagrant.configure("2") do |config|
     vb.memory = "4096"
     vb.linked_clone = true
   end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
-  # documentation for more information about their specific syntax and use.
+  # Provisions
+  # Set apt mirror to TUNA
+  config.vm.provision "file", source: "scripts/sources.list", destination: "/tmp/"
+
+  # Run prerequisites shell
   config.vm.provision "shell", path: "scripts/prerequisites.sh"
 end
