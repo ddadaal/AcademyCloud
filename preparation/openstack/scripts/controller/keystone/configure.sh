@@ -1,3 +1,5 @@
+. /root/admin-openrc
+
 openstack domain create --description "An Example Domain" example
 
 openstack project create --domain default --description "Service Project" service

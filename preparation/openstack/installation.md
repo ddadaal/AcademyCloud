@@ -87,6 +87,15 @@ https://docs.openstack.org/install-guide/environment-networking-controller.html
 # https://docs.openstack.org/keystone/train/install/keystone-install-ubuntu.html
 /vagrant/scripts/controller/keystone/init.sh
 
+# Create auth scripts
+# https://docs.openstack.org/keystone/train/install/keystone-openrc-ubuntu.html
+/vagrant/scripts/controller/keystone/create-auth-scripts.sh
+
+# Use auth
+. /root/admin-openrc
+. /root/demo-openrc
+openstack token issue
+
 # Configure
 # https://docs.openstack.org/keystone/train/install/keystone-users-ubuntu.html
 /vagrant/scripts/controller/keystone/configure.sh
