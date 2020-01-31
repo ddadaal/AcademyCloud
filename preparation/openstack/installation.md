@@ -13,7 +13,7 @@
 
 需要安装两个插件
 ```
-vagrant plugin install vagrant-reload
+vagrant plugin install vagrant-hostmanager
 vagrant plugin install vagrant-vbguest
 ```
 
