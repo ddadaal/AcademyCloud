@@ -5,7 +5,7 @@ mysql -uroot -e "CREATE DATABASE keystone;"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'KEYSTONE_DBPASS';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'KEYSTONE_DBPASS';"
 
-apt install -y keystone
+yum install -y openstack-keystone httpd mod_wsgi
 cat "$SH_DIR/keystone.conf" > /etc/keystone/keystone.conf
 su -s /bin/sh -c "keystone-manage db_sync" keystone
 keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
@@ -16,5 +16,7 @@ keystone-manage bootstrap --bootstrap-password ADMIN_PASS \
   --bootstrap-public-url http://controller:5000/v3/ \
   --bootstrap-region-id RegionOne
 
-cat "$SH_DIR/apache2.conf" > /etc/apache2/apache2.conf
-service apache2 restart
+cp "$SH_DIR/httpd.conf" /etc/httpd/conf/
+ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/
+systemctl enable httpd.service
+systemctl start httpd.service

@@ -12,7 +12,7 @@ openstack endpoint create --region RegionOne image public http://controller:9292
 openstack endpoint create --region RegionOne image internal http://controller:9292
 openstack endpoint create --region RegionOne image admin http://controller:9292
 
-apt install -y glance
+yum install -y glance
 
 cp "$SH_DIR/glance-api.conf" /etc/glance/glance-api.conf
 

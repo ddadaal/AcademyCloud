@@ -6,12 +6,21 @@
   - Controller Node: 10.0.2.3
   - Compute Node: 10.0.2.4
   - 使用`vagrant-proxyconf`为各个虚拟机设置代理到主机的SS服务器`http://10.0.2.2:1080`
-- `CentOS 7 2001`镜像，https://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7.box
+- `generic/centos7`镜像
+    - `ubuntu 18.04`的仓库中不存在`placement-api`，自己使用pypi安装+apache2部署，会在访问终结点的时候出现403错误，无法解决
 
-## Controller Node
+# Vagrant的配置
+
+需要安装两个插件
+```
+vagrant plugin install vagrant-reload
+vagrant plugin install vagrant-vbguest
+```
+
+# Controller Node
 
 需要安装的包：
-- 基础包
+- [基础包](#openstack)
 - [数据库](#database)
 - [消息队列](#rabbitmq)
 - [memcached](#memcached)
@@ -26,50 +35,16 @@
 - Networking
 - Dashboard (horizon)
 
-## Compute Node
+# Compute Node
 
 包需要安装和配置：
-- 基础包
+- [基础包](#openstack)
 
 需要安装服务：
 - Compute (hypervisor portion)
 - Network service agent
 
 # 安装脚本
-
-## database
-
-https://docs.openstack.org/install-guide/environment-sql-database.html
-
-```bash
-/vagrant/scripts/packages/database/init.sh
-```
-
-## rabbitmq
-
-https://docs.openstack.org/install-guide/environment-sql-database.html
-
-```bash
-/vagrant/scripts/packages/rabbitmq/init.sh
-```
-
-## memcached
-
-https://docs.openstack.org/install-guide/environment-sql-database.html
-
-```bash
-/vagrant/scripts/packages/memcached/init.sh
-```
-
-## etcd
-
-https://docs.openstack.org/install-guide/environment-sql-database.html
-
-
-```bash
-/vagrant/scripts/packages/etcd/init.sh
-```
-
 ## network of controller
 
 https://docs.openstack.org/install-guide/environment-networking-controller.html
@@ -78,47 +53,93 @@ https://docs.openstack.org/install-guide/environment-networking-controller.html
 /vagrant/scripts/packages/network/controller.sh
 ```
 
-## network of compute
+## openstack
+
+https://docs.openstack.org/install-guide/environment-packages-rdo.html
+
+```bash
+/vagrant/scripts/packages/openstack/install.sh
+```
+
+## database
+
+https://docs.openstack.org/install-guide/environment-sql-database-rdo.html
+
+```bash
+/vagrant/scripts/packages/database/install.sh
+```
+
+## rabbitmq
+
+| 信息         | 值                     | 要修改的地方 |
+| ------------ | ---------------------- | ------------ |
+| 用户名和密码 | openstack, RABIIT_PASS | install.sh   |
+
+https://docs.openstack.org/install-guide/environment-messaging-rdo.html
+
+```bash
+/vagrant/scripts/packages/rabbitmq/install.sh
+```
+
+## memcached
+
+https://docs.openstack.org/install-guide/environment-memcached-rdo.html
+
+```bash
+/vagrant/scripts/packages/memcached/install.sh
+```
+
+## etcd
+
+https://docs.openstack.org/install-guide/environment-etcd-rdo.html
+
+```bash
+/vagrant/scripts/packages/etcd/install.sh
+```
 
 ## keystone
 
+| 信息         | 值                     | 要修改的地方 |
+| ------------ | ---------------------- | ------------ |
+| 数据库用户名和密码 | `keystone`, `KEYSTONE_DBPASS` | keystone.conf的connection =，install.sh   |
+
 ```bash
 # Install
-# https://docs.openstack.org/keystone/train/install/keystone-install-ubuntu.html
-/vagrant/scripts/services/keystone/init.sh
+# https://docs.openstack.org/keystone/train/install/keystone-install-rdo.html
+/vagrant/scripts/services/keystone/install.sh
+
+
+# Configure
+# https://docs.openstack.org/keystone/train/install/keystone-users-rdo.html
+/vagrant/scripts/services/keystone/configure.sh
+
+# Verify
+# https://docs.openstack.org/keystone/train/install/keystone-verify-rdo.html
+/vagrant/scripts/services/keystone/verify.sh
 
 # Create auth scripts
-# https://docs.openstack.org/keystone/train/install/keystone-openrc-ubuntu.html
+# https://docs.openstack.org/keystone/train/install/keystone-openrc-rdo.html
 /vagrant/scripts/services/keystone/create-auth-scripts.sh
 
 # Use auth
 . /root/admin-openrc
 . /root/demo-openrc
 openstack token issue
-
-# Configure
-# https://docs.openstack.org/keystone/train/install/keystone-users-ubuntu.html
-/vagrant/scripts/services/keystone/configure.sh
-
-# Verify
-# https://docs.openstack.org/keystone/train/install/keystone-verify-ubuntu.html
-/vagrant/scripts/services/keystone/verify.sh
-
 ```
 
 ## glance
 
 
-| 信息               | 值                 | 需要修改的地方                                                                               |
-| ------------------ | ------------------ | -------------------------------------------------------------------------------------------- |
-| 数据库密码         | `GLANCE_DBPASS`    | `/etc/glance/glance-api.conf`, 数据库GRANT指令, `glance-api.conf`                            |
+| 信息         | 值                 | 需要修改的地方                                                                               |
+| ------------ | ------------------ | -------------------------------------------------------------------------------------------- |
+| 数据库密码   | `GLANCE_DBPASS`    | `/etc/glance/glance-api.conf`, 数据库GRANT指令, `glance-api.conf`                            |
 | 用户名和密码 | `glance`和`glance` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
 
 ```bash
 
 # Install
-# https://docs.openstack.org/glance/train/install/install-ubuntu.html
-/vagrant/scripts/services/glance/init.sh
+# https://docs.openstack.org/glance/train/install/install-rdo.html
+/vagrant/scripts/services/glance/install.sh
 
 # Verify
 # https://docs.openstack.org/glance/train/install/verify.html
@@ -128,15 +149,15 @@ openstack token issue
 
 ## placement
 
-| 信息               | 值                 | 需要修改的地方                                                                               |
-| ------------------ | ------------------ | -------------------------------------------------------------------------------------------- |
-| 数据库密码         | `PLACEMENT_DBPASS`    | `/etc/placement/placement-api.conf`, 数据库GRANT指令, `placement-api.conf`                            |
+| 信息         | 值                       | 需要修改的地方                                                                               |
+| ------------ | ------------------------ | -------------------------------------------------------------------------------------------- |
+| 数据库密码   | `PLACEMENT_DBPASS`       | `/etc/placement/placement-api.conf`, 数据库GRANT指令, `placement-api.conf`                   |
 | 用户名和密码 | `placement`和`placement` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
 
 ```bash
 
 # Install
-# https://docs.openstack.org/placement/train/install/install-ubuntu.html
-/vagrant/scripts/services/placement/init.sh
+# https://docs.openstack.org/placement/train/install/install-rdo.html
+/vagrant/scripts/services/placement/install.sh
 
 ```
