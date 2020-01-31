@@ -85,11 +85,11 @@ https://docs.openstack.org/install-guide/environment-networking-controller.html
 ```bash
 # Install
 # https://docs.openstack.org/keystone/train/install/keystone-install-ubuntu.html
-/vagrant/scripts/controller/keystone/init.sh
+/vagrant/scripts/services/keystone/init.sh
 
 # Create auth scripts
 # https://docs.openstack.org/keystone/train/install/keystone-openrc-ubuntu.html
-/vagrant/scripts/controller/keystone/create-auth-scripts.sh
+/vagrant/scripts/services/keystone/create-auth-scripts.sh
 
 # Use auth
 . /root/admin-openrc
@@ -98,10 +98,30 @@ openstack token issue
 
 # Configure
 # https://docs.openstack.org/keystone/train/install/keystone-users-ubuntu.html
-/vagrant/scripts/controller/keystone/configure.sh
+/vagrant/scripts/services/keystone/configure.sh
 
 # Verify
 # https://docs.openstack.org/keystone/train/install/keystone-verify-ubuntu.html
-/vagrant/scripts/controller/keystone/verify.sh
+/vagrant/scripts/services/keystone/verify.sh
+
+```
+
+## glance
+
+
+| 信息 | 值 | 需要修改的地方 |
+| -- | -- | -- |
+| 数据库密码 | `GLANCE_DBPASS` | `/etc/glance/glance-api.conf`, 数据库GRANT指令, `glance-api.conf` |
+| 数据库用户名和密码 | `glance`和`glance` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
+
+```bash
+
+# Install
+# https://docs.openstack.org/glance/train/install/install-ubuntu.html
+/vagrant/scripts/services/glance/init.sh
+
+# Verify
+# https://docs.openstack.org/glance/train/install/verify.html
+/vagrant/scripts/services/glance/verify.sh
 
 ```
