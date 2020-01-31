@@ -13,12 +13,15 @@ openstack endpoint create --region RegionOne placement public http://controller:
 openstack endpoint create --region RegionOne placement internal http://controller:8778
 openstack endpoint create --region RegionOne placement admin http://controller:8778
 
-# apt install -y placement-api
+# Install placement through pip
 
-apt install -y gcc
 pip3 install openstack-placement pymysql
 mkdir /etc/placement
 cp "$SH_DIR/placement.conf" /etc/placement/
 placement-manage db sync
 
-pip install uwsgi
+# Configure Apache2
+
+cp "$SH_DIR/apache-placement.conf" /etc/apache2/sites-available/placement.conf
+ln -s /etc/apache2/sites-available/placement.conf /etc/apache2/sites-enabled/placement.conf
+service apache2 restart

@@ -6,7 +6,7 @@
   - Controller Node: 10.0.2.3
   - Compute Node: 10.0.2.4
   - 使用`vagrant-proxyconf`为各个虚拟机设置代理到主机的SS服务器`http://10.0.2.2:1080`
-- `ubuntu server 18.04`镜像，[TUNA镜像](https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/bionic/)
+- `CentOS 7 2001`镜像，https://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7.box
 
 ## Controller Node
 
