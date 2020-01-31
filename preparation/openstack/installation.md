@@ -31,8 +31,8 @@ vagrant plugin install vagrant-vbguest
 - Identity ([keystone](#keystone))
 - Image ([glance](#glance))
 - Placement ([placement](#placement))
-- Compute
-- Networking
+- Compute (management portion)
+- Networking (management portion, various network agents)
 - Dashboard (horizon)
 
 # Compute Node
@@ -42,7 +42,7 @@ vagrant plugin install vagrant-vbguest
 
 需要安装服务：
 - Compute (hypervisor portion)
-- Network service agent
+- a Network service agent
 
 # 安装脚本
 ## network of controller
@@ -117,7 +117,7 @@ https://docs.openstack.org/install-guide/environment-etcd-rdo.html
 # https://docs.openstack.org/keystone/train/install/keystone-verify-rdo.html
 /vagrant/scripts/services/keystone/verify.sh
 
-# Create auth scripts
+# Create auth scripts under /root/
 # https://docs.openstack.org/keystone/train/install/keystone-openrc-rdo.html
 /vagrant/scripts/services/keystone/create-auth-scripts.sh
 
@@ -159,5 +159,28 @@ openstack token issue
 # Install
 # https://docs.openstack.org/placement/train/install/install-rdo.html
 /vagrant/scripts/services/placement/install.sh
+
+# Verify
+# https://docs.openstack.org/placement/train/install/verify.html
+/vagrant/scripts/services/placement/verify.sh
+
+```
+
+## nova
+
+Controller
+
+| 信息         | 值                       | 需要修改的地方                                                                               |
+| ------------ | ------------------------ | -------------------------------------------------------------------------------------------- |
+| 数据库密码   | `NOVA_DBPASS`       | `/etc//placement-api.conf`, 数据库GRANT指令, `placement-api.conf`                   |
+| 用户名和密码 | `nova`和`nova` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
+| RABBIT密码 | `RABBIT_PASS` | `placement-api.conf`的`[DEFAULT]`下的`[transport_url]` |
+
+
+```bash
+# Install 
+# https://docs.openstack.org/nova/train/install/controller-install-obs.html
+/vagrant/scripts/services/nova/install-controller.sh
+
 
 ```
