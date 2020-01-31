@@ -21,7 +21,7 @@
 需要安装以下服务：
 - Identity ([keystone](#keystone))
 - Image ([glance](#glance))
-- Placement (placement)
+- Placement ([placement](#placement))
 - Compute
 - Networking
 - Dashboard (horizon)
@@ -109,10 +109,10 @@ openstack token issue
 ## glance
 
 
-| 信息 | 值 | 需要修改的地方 |
-| -- | -- | -- |
-| 数据库密码 | `GLANCE_DBPASS` | `/etc/glance/glance-api.conf`, 数据库GRANT指令, `glance-api.conf` |
-| 数据库用户名和密码 | `glance`和`glance` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
+| 信息               | 值                 | 需要修改的地方                                                                               |
+| ------------------ | ------------------ | -------------------------------------------------------------------------------------------- |
+| 数据库密码         | `GLANCE_DBPASS`    | `/etc/glance/glance-api.conf`, 数据库GRANT指令, `glance-api.conf`                            |
+| 用户名和密码 | `glance`和`glance` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
 
 ```bash
 
@@ -123,5 +123,20 @@ openstack token issue
 # Verify
 # https://docs.openstack.org/glance/train/install/verify.html
 /vagrant/scripts/services/glance/verify.sh
+
+```
+
+## placement
+
+| 信息               | 值                 | 需要修改的地方                                                                               |
+| ------------------ | ------------------ | -------------------------------------------------------------------------------------------- |
+| 数据库密码         | `PLACEMENT_DBPASS`    | `/etc/placement/placement-api.conf`, 数据库GRANT指令, `placement-api.conf`                            |
+| 用户名和密码 | `placement`和`placement` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
+
+```bash
+
+# Install
+# https://docs.openstack.org/placement/train/install/install-ubuntu.html
+/vagrant/scripts/services/placement/init.sh
 
 ```
