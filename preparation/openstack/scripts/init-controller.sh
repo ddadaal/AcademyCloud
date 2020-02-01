@@ -31,3 +31,10 @@ if [ "$R" != "n" ] ; then
     "$SH_DIR/services/placement/install.sh"
     "$SH_DIR/services/placement/verify.sh"
 fi
+
+
+read -p "Install nova on controller? (Y/n)" R
+if [ "$R" != "n" ] ; then
+    "$SH_DIR/services/nova/controller/install.sh"
+    "$SH_DIR/services/placement/verify.sh"
+fi

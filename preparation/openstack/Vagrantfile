@@ -6,18 +6,23 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/centos-7"
   config.vm.synced_folder ".", "/vagrant", type: 'virtualbox'
 
+  # Login as root
+  config.ssh.username = 'root'
+  config.ssh.password = 'vagrant'
+  config.ssh.insert_key = 'true'
+
   # Disable VBGuest auto update
   config.vbguest.auto_update = false
 
   # Enable auto host management
-  # config.hostmanager.enabled = true
-  # config.hostmanager.manage_guest = true
-  # config.hostmanager.manage_host = false
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_guest = true
+  config.hostmanager.manage_host = false
 
   # Provisions
   config.vm.provision "shell", path: "scripts/init.sh"
 
-  config.vm.define "controller" do |controller|
+  config.vm.define "controller", primary: true do |controller|
     controller.vm.hostname =  "controller"
     controller.vm.network "private_network", ip: "192.168.56.2",
       virtual__intnet: true
