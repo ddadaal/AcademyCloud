@@ -3,19 +3,21 @@
 - `vagrant`和`virtualbox`来管理和部署虚拟机和网络
 - 使用`virtualbox internal network`实现多机之间的连接
   - 主机：10.0.2.2，需要在网络连接里手动设置
-  - Controller Node: 10.0.2.3
-  - Compute Node: 10.0.2.4
+  - Controller Node: 192.168.56.2
+  - Compute Node: 192.168.56.3
   - 使用`vagrant-proxyconf`为各个虚拟机设置代理到主机的SS服务器`http://10.0.2.2:1080`
 - `generic/centos7`镜像
     - `ubuntu 18.04`的仓库中不存在`placement-api`，自己使用pypi安装+apache2部署，会在访问终结点的时候出现403错误，无法解决
 
 # Vagrant的配置
 
-需要安装两个插件
+vagrant-hostmanager容易卡住，所以手动维护hosts文件
+
+<!-- 需要安装两个插件
 ```
 vagrant plugin install vagrant-hostmanager
 vagrant plugin install vagrant-vbguest
-```
+``` -->
 
 # Controller Node
 

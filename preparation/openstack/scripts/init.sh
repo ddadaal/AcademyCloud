@@ -1,8 +1,11 @@
 
 echo "Set tuna as yum mirror"
-sudo mv /tmp/CentOS-Base.repo /etc/yum.repos.d/
-sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
+sudo cp /vagrant/scripts/CentOS-Base.repo /etc/yum.repos.d/
+sudo sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
 sudo yum makecache
+
+echo "Set hosts"
+sudo cat /vagrant/scripts/hosts >> /etc/hosts
 
 # echo "Install pip3 and set mirror"
 # sudo curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"

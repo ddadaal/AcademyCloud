@@ -17,3 +17,7 @@ SH_DIR=$(dirname "$BASH_SOURCE")
 ```bash
 tail -10 /var/log/keystone/keystone-wsgi-public.log
 ```
+
+Vagrant up时在涉及到网络操作的时候非常慢：
+
+去设备管理器里删除多余的VirtualBox网卡

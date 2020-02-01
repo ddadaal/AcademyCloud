@@ -1,5 +1,5 @@
 [mysqld]
-bind-address = 10.0.2.3
+bind-address = 192.168.56.2
 
 default-storage-engine = innodb
 innodb_file_per_table = on

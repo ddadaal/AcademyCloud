@@ -10,19 +10,17 @@ Vagrant.configure("2") do |config|
   config.vbguest.auto_update = false
 
   # Enable auto host management
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_guest = true
-  config.hostmanager.manage_host = false
-  config.hostmanager.include_offline = true
+  # config.hostmanager.enabled = true
+  # config.hostmanager.manage_guest = true
+  # config.hostmanager.manage_host = false
 
   # Provisions
-  config.vm.provision "file", source: "scripts/CentOS-Base.repo", destination: "/tmp/"
   config.vm.provision "shell", path: "scripts/init.sh"
 
   config.vm.define "controller" do |controller|
     controller.vm.hostname =  "controller"
-    controller.vm.network "private_network", ip: "10.0.2.3",
-      virtualbox__intnet: true
+    controller.vm.network "private_network", ip: "192.168.56.2",
+      virtual__intnet: true
     controller.vm.provider "virtualbox" do |vb|
       vb.cpus = 2
       vb.memory = 4096
@@ -32,8 +30,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "compute1" do |compute1|
     compute1.vm.hostname = "compute1"
-    compute1.vm.network "private_network", ip: "10.0.2.4",
-      virtualbox__intnet: true
+    compute1.vm.network "private_network", ip: "192.168.56.3",
+      virtual__intnet: true
     compute1.vm.provider "virtualbox" do |vb|
       vb.cpus = 2
       vb.memory = 4096
