@@ -2,7 +2,7 @@
 
 - `vagrant`和`virtualbox`来管理和部署虚拟机和网络
 - 使用`virtualbox internal network`实现多机之间的连接
-  - 主机：10.0.2.2，需要在网络连接里手动设置
+  - 主机：192.168.56.1，默认:w
   - Controller Node: 192.168.56.2
   - Compute Node: 192.168.56.3
   - 使用`vagrant-proxyconf`为各个虚拟机设置代理到主机的SS服务器`http://10.0.2.2:1080`
@@ -101,9 +101,9 @@ https://docs.openstack.org/install-guide/environment-etcd-rdo.html
 
 ## keystone
 
-| 信息         | 值                     | 要修改的地方 |
-| ------------ | ---------------------- | ------------ |
-| 数据库用户名和密码 | `keystone`, `KEYSTONE_DBPASS` | keystone.conf的connection =，install.sh   |
+| 信息               | 值                            | 要修改的地方                            |
+| ------------------ | ----------------------------- | --------------------------------------- |
+| 数据库用户名和密码 | `keystone`, `KEYSTONE_DBPASS` | keystone.conf的connection =，install.sh |
 
 ```bash
 # Install
@@ -172,17 +172,37 @@ openstack token issue
 
 Controller
 
-| 信息         | 值                       | 需要修改的地方                                                                               |
-| ------------ | ------------------------ | -------------------------------------------------------------------------------------------- |
-| 数据库密码   | `NOVA_DBPASS`       | `/etc//placement-api.conf`, 数据库GRANT指令, `placement-api.conf`                   |
+| 信息         | 值             | 需要修改的地方                                                                               |
+| ------------ | -------------- | -------------------------------------------------------------------------------------------- |
+| 数据库密码   | `NOVA_DBPASS`  | `/etc//placement-api.conf`, 数据库GRANT指令, `placement-api.conf`                            |
 | 用户名和密码 | `nova`和`nova` | openstack user create时，`/etc/glance/glance-api.conf`里`[keystone_authtoken]`下的`password` |
-| RABBIT密码 | `RABBIT_PASS` | `placement-api.conf`的`[DEFAULT]`下的`[transport_url]` |
+| RABBIT密码   | `RABBIT_PASS`  | `placement-api.conf`的`[DEFAULT]`下的`[transport_url]`                                       |
 
 
 ```bash
 # Install 
 # https://docs.openstack.org/nova/train/install/controller-install-obs.html
+# nova的配置是在https://docs.openstack.org/neutron/train/install/controller-install-rdo.html#neutron-controller-metadata-agent-rdo
 /vagrant/scripts/services/nova/install-controller.sh
+
+
+```
+
+## neutron
+
+Controller
+
+| 信息         | 值                   | 需要修改的地方                                                                               |
+| ------------ | -------------------- | -------------------------------------------------------------------------------------------- |
+| 数据库密码   | `NEUTRON_DBPASS`     | `neutron.conf`下`[database].connection`, 数据库GRANT指令,                                    |
+| 用户名和密码 | `neutron`和`neutron` | openstack user create时，`neutron.conf`里`[keystone_authtoken]`下的`password` |
+| RABBIT密码   | `RABBIT_PASS`        | `neutron.conf`的`[DEFAULT]`下的`[transport_url]`                                             |
+
+
+```bash
+# Install 
+# https://docs.openstack.org/nova/train/install/controller-install-obs.html
+/vagrant/scripts/services/neutron/controller/install.sh
 
 
 ```

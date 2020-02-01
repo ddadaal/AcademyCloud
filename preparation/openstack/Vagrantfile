@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "generic/centos7"
+  config.vm.box = "bento/centos-7"
   config.vm.synced_folder ".", "/vagrant", type: 'virtualbox'
 
   # Disable VBGuest auto update
@@ -25,6 +25,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = 2
       vb.memory = 4096
       vb.linked_clone = true
+      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     end
   end
 
@@ -36,6 +37,7 @@ Vagrant.configure("2") do |config|
       vb.cpus = 2
       vb.memory = 4096
       vb.linked_clone = true
+      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
     end
   end
 

@@ -1,5 +1,8 @@
+SH_DIR=$(dirname "$BASH_SOURCE")
+
 mysql -uroot -e "CREATE DATABASE nova_api;"
 mysql -uroot -e "CREATE DATABASE nova;"
+mysql -uroot -e "CREATE DATABASE nova_cell0;"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
   IDENTIFIED BY 'NOVA_DBPASS';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
@@ -23,3 +26,23 @@ openstack endpoint create --region RegionOne compute internal http://controller:
 openstack endpoint create --region RegionOne compute admin http://controller:8774/v2.1
 
 yum install -y openstack-nova-api openstack-nova-conductor openstack-nova-novncproxy openstack-nova-scheduler
+
+cp "$SH_DIR/nova.conf" /etc/nova/nova.conf
+
+su -s /bin/sh -c "nova-manage api_db sync" nova
+su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
+su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
+su -s /bin/sh -c "nova-manage db sync" nova
+su -s /bin/sh -c "nova-manage cell_v2 list_cells" nova
+
+systemctl enable \
+    openstack-nova-api.service \
+    openstack-nova-scheduler.service \
+    openstack-nova-conductor.service \
+    openstack-nova-novncproxy.service
+
+systemctl start \
+    openstack-nova-api.service \
+    openstack-nova-scheduler.service \
+    openstack-nova-conductor.service \
+    openstack-nova-novncproxy.service
