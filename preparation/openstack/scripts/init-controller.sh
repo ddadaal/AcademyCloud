@@ -42,4 +42,5 @@ if [ "$R" = "n" ]; then
 fi
 "$SH_DIR/services/neutron/controller/verify.sh"
 
-
+# horizon
+"$SH_DIR/services/horizon/install.sh"
