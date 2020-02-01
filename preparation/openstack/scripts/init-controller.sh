@@ -36,5 +36,14 @@ fi
 read -p "Install nova on controller? (Y/n)" R
 if [ "$R" != "n" ] ; then
     "$SH_DIR/services/nova/controller/install.sh"
-    "$SH_DIR/services/placement/verify.sh"
+
+    read -p "Configure nova-compute on a compute node and then press to continue, or n to cancel. (Y/n)" R
+    if [ "$R" != "n" ] ; then
+        . /root/admin-openrc
+        openstack compute service list --service nova-compute
+        su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+    fi
+
+    "$SH_DIR/services/nova/controller/verify.sh"
+
 fi

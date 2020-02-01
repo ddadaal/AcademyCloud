@@ -37,6 +37,10 @@ vagrant plugin install vagrant-vbguest
 - Networking (management portion, various network agents)
 - Dashboard (horizon)
 
+```bash
+/vagrant/scripts/init-controller.sh
+```
+
 # Compute Node
 
 包需要安装和配置：
@@ -185,6 +189,8 @@ Controller
 # nova的配置是在https://docs.openstack.org/neutron/train/install/controller-install-rdo.html#neutron-controller-metadata-agent-rdo
 /vagrant/scripts/services/nova/install-controller.sh
 
+# 每次新增compute节点后，需要在controller上运行
+su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 
 ```
 
