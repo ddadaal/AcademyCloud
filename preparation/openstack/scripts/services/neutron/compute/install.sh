@@ -8,6 +8,7 @@ cp "$SH_DIR/linuxbridge_agent.ini" /etc/neutron/plugins/ml2/linuxbridge_agent.in
 # Enable bridge
 modprobe br_netfilter
 cp "$SH_DIR/sysctl.conf" /etc/sysctl.conf
+echo "br_netfilter" > /etc/modules-load.d/br_netfilter.conf
 sysctl -p
 
 systemctl restart openstack-nova-compute.service

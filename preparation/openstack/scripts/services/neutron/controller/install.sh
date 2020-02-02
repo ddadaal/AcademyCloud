@@ -31,8 +31,8 @@ cp "$SH_DIR/linuxbridge_agent.ini" /etc/neutron/plugins/ml2/linuxbridge_agent.in
 # Enable bridge
 modprobe br_netfilter
 cp "$SH_DIR/sysctl.conf" /etc/sysctl.conf
+echo "br_netfilter" > /etc/modules-load.d/br_netfilter.conf
 sysctl -p
-cp "$SH_DIR/br_netfilter.conf" /etc/modules-load.d/
 
 cp "$SH_DIR/l3_agent.ini" /etc/neutron/l3_agent.ini
 cp "$SH_DIR/dhcp_agent.ini" /etc/neutron/dhcp_agent.ini
@@ -44,6 +44,7 @@ cp "$SH_DIR/metadata_agent.ini" /etc/neutron/metadata_agent.ini
 ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini
 su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
   --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+
 systemctl restart openstack-nova-api.service
 systemctl enable neutron-server.service \
   neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
