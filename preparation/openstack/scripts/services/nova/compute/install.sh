@@ -1,3 +1,4 @@
+SH_DIR=$(dirname "$BASH_SOURCE")
 yum install -y openstack-nova-compute
 
 cp "$SH_DIR/nova.conf" /etc/nova/nova.conf

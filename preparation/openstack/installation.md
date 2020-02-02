@@ -2,22 +2,25 @@
 
 - `vagrant`和`virtualbox`来管理和部署虚拟机和网络
 - 使用`virtualbox internal network`实现多机之间的连接
-  - 主机：192.168.56.1，默认:w
+  - 主机：192.168.56.1，默认
   - Controller Node: 192.168.56.2
   - Compute Node: 192.168.56.3
-  - 使用`vagrant-proxyconf`为各个虚拟机设置代理到主机的SS服务器`http://10.0.2.2:1080`
-- `generic/centos7`镜像
+  - Block storage node: 192.168.56.4
+  - Provider interface: eth1
+    - 修改方法：搜索`provider:eth1`，有两处neutron的要改
+  - Management interface: eth2
+- `bento/centos-7`镜像
     - `ubuntu 18.04`的仓库中不存在`placement-api`，自己使用pypi安装+apache2部署，会在访问终结点的时候出现403错误，无法解决
+    - `generic/centos7`好像不支持root登录，没试过
+    - `bento/centos-7`可以root登录，但是没有vim，可以用vi
 
 # Vagrant的配置
 
-vagrant-hostmanager容易卡住，所以手动维护hosts文件
-
-<!-- 需要安装两个插件
+需要安装两个插件
 ```
 vagrant plugin install vagrant-hostmanager
 vagrant plugin install vagrant-vbguest
-``` -->
+```
 
 # Controller Node
 
@@ -33,11 +36,13 @@ vagrant plugin install vagrant-vbguest
 - Identity ([keystone](#keystone))
 - Image ([glance](#glance))
 - Placement ([placement](#placement))
-- Compute (management portion)
-- Networking (management portion, various network agents)
-- Dashboard (horizon)
+- Compute ([nova](#nova), management portion)
+- Networking ([neutron](#neutron) portion, various network agents)
+- Dashboard ([horizon](#horizon))
 
 ```bash
+# 一键安装
+# 在安装之前，先查看各个机器的IP地址和网卡配置
 /vagrant/scripts/init-controller.sh
 ```
 
@@ -47,19 +52,19 @@ vagrant plugin install vagrant-vbguest
 - [基础包](#openstack)
 
 需要安装服务：
-- Compute (hypervisor portion)
+- Compute ([nova](#nova), hypervisor portion)
 - a Network service agent
 
-# 安装脚本
-## network of controller
-
-https://docs.openstack.org/install-guide/environment-networking-controller.html
-
 ```bash
-/vagrant/scripts/packages/network/controller.sh
+# 一键安装
+# 注意在多台compute上安装时改IP
+# 可以搜索192.168.56.3看看哪些地方用到了compute的IP
+/vagrant/scripts/init-compute.sh
 ```
 
-## openstack
+# 安装脚本
+
+## openstack packages
 
 https://docs.openstack.org/install-guide/environment-packages-rdo.html
 
@@ -79,7 +84,7 @@ https://docs.openstack.org/install-guide/environment-sql-database-rdo.html
 
 | 信息         | 值                     | 要修改的地方 |
 | ------------ | ---------------------- | ------------ |
-| 用户名和密码 | openstack, RABIIT_PASS | install.sh   |
+| 用户名和密码 | openstack, RABBIT_PASS | install.sh   |
 
 https://docs.openstack.org/install-guide/environment-messaging-rdo.html
 
@@ -196,19 +201,51 @@ su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 
 ## neutron
 
-Controller
 
-| 信息         | 值                   | 需要修改的地方                                                                               |
-| ------------ | -------------------- | -------------------------------------------------------------------------------------------- |
-| 数据库密码   | `NEUTRON_DBPASS`     | `neutron.conf`下`[database].connection`, 数据库GRANT指令,                                    |
+| 信息         | 值                   | 需要修改的地方                                                                |
+| ------------ | -------------------- | ----------------------------------------------------------------------------- |
+| 数据库密码   | `NEUTRON_DBPASS`     | `neutron.conf`下`[database].connection`, 数据库GRANT指令,                     |
 | 用户名和密码 | `neutron`和`neutron` | openstack user create时，`neutron.conf`里`[keystone_authtoken]`下的`password` |
-| RABBIT密码   | `RABBIT_PASS`        | `neutron.conf`的`[DEFAULT]`下的`[transport_url]`                                             |
+| RABBIT密码   | `RABBIT_PASS`        | `neutron.conf`的`[DEFAULT]`下的`[transport_url]`                              |
 
 
 ```bash
+# Controller
 # Install 
 # https://docs.openstack.org/nova/train/install/controller-install-obs.html
 /vagrant/scripts/services/neutron/controller/install.sh
 
+# Verify
+/vagrant/scripts/services/neutron/controller/verify.sh
 
+# Compute
+/vagrant/scripts/services/neutron/compute/install.sh
+```
+
+## horizon
+
+```bash
+# Install 
+# https://docs.openstack.org/horizon/train/install/install-rdo.html
+/vagrant/scripts/services/horizon/install.sh
+```
+
+## cinder
+
+```bash
+
+# Controller
+# https://docs.openstack.org/cinder/train/install/cinder-controller-install-rdo.html
+/vagrant/scripts/services/cinder/controller/install.sh
+
+# Block storage node
+# https://docs.openstack.org/cinder/train/install/cinder-storage-install-rdo.html
+/vagrant/scripts/services/cinder/block-storage/install.sh
+
+# Didn't install backup
+# https://docs.openstack.org/cinder/train/install/cinder-backup-install-rdo.html
+
+# Verify on Controller
+# https://docs.openstack.org/cinder/train/install/cinder-verify.html
+/vagrant/scripts/services/cinder/controller/verify.sh
 ```

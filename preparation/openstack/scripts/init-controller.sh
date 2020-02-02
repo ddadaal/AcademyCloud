@@ -25,10 +25,8 @@ SH_DIR=$(dirname "$BASH_SOURCE")
 
 # nova
 "$SH_DIR/services/nova/controller/install.sh"
-read -p "Configure nova on a compute node and then press to continue, or n to cancel. (Y/n)" R
-if [ "$R" = "n" ]; then
-    exit
-fi
+read -p "Configure nova on a compute node and then press to continue." R
+
 . /root/admin-openrc
 openstack compute service list --service nova-compute
 su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
@@ -36,11 +34,13 @@ su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 
 # neutron
 "$SH_DIR/services/neutron/controller/install.sh"
-read -p "Configure neutron on a compute node and then press to continue, or n to cancel. (Y/n)" R
-if [ "$R" = "n" ]; then
-    exit
-fi
+read -p "Configure neutron on a compute node and then press to continue" R
 "$SH_DIR/services/neutron/controller/verify.sh"
 
 # horizon
 "$SH_DIR/services/horizon/install.sh"
+
+# cinder
+"$SH_DIR/services/cinder/controller/install.sh"
+read -p "Configure cinder on block-storage node and then press to continue" R
+"$SH_DIR/services/cinder/controller/verify.sh"

@@ -19,3 +19,7 @@ sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
 
 # echo "Add automatic switch to root"
 # echo "sudo su -" >> .bashrc
+
+# Disable firewalld and NetworkManager for openstack
+systemctl stop NetworkManager firewalld
+systemctl disable NetworkManager firewalld

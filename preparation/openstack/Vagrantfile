@@ -6,6 +6,9 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/centos-7"
   config.vm.synced_folder ".", "/vagrant", type: 'virtualbox'
 
+  # Enable bridged public network as provided network
+  config.vm.network "public_network"
+
   # Login as root
   config.ssh.username = 'root'
   config.ssh.password = 'vagrant'
@@ -19,39 +22,56 @@ Vagrant.configure("2") do |config|
   config.hostmanager.manage_guest = true
   config.hostmanager.manage_host = false
 
+  # Common config for virtualbox
+  def vb_common_config(vb)
+    vb.linked_clone = true
+    vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+  end
+
   # Provisions
   config.vm.provision "shell", path: "scripts/init.sh"
 
   config.vm.define "controller", primary: true do |controller|
     controller.vm.hostname =  "controller"
-    controller.vm.network "private_network", ip: "192.168.56.2",
-      virtual__intnet: true
+    controller.vm.network "private_network", ip: "192.168.56.2"
     controller.vm.provider "virtualbox" do |vb|
+      vb.name = "openstack_controller"
       vb.cpus = 2
       vb.memory = 4096
-      vb.linked_clone = true
-      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+      vb_common_config(vb)
     end
   end
 
   config.vm.define "compute1" do |compute1|
     compute1.vm.hostname = "compute1"
-    compute1.vm.network "private_network", ip: "192.168.56.3",
-      virtual__intnet: true
+    compute1.vm.network "private_network", ip: "192.168.56.3"
     compute1.vm.provider "virtualbox" do |vb|
+      vb.name = "openstack_compute1"
       vb.cpus = 2
       vb.memory = 4096
-      vb.linked_clone = true
-      vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
+      vb_common_config(vb)
     end
   end
 
-  # config.vm.define "blockstorage" do |bs|
-  #   compute1.vm.hostname "blockstorage"
-  #   controller.vm.network "private_network", ip: "10.0.2.5",
-  #     virtualbox__intnet: true
-  #   controller.vm.provider "virtualbox" do |vb|
-  #     vb.cpus = 1
-  #     vb.memory = 2048
-  # end
+  config.vm.define "block-storage" do |bs|
+    bs.vm.hostname = "block-storage"
+    bs.vm.network "private_network", ip: "192.168.56.4"
+    bs.vm.provider "virtualbox" do |vb|
+      vb.name = "openstack_block-storage"
+      vb.cpus = 1
+      vb.memory = 2048
+      vb_common_config(vb)
+
+      # Create and mount storage disk
+      line = `vboxmanage list systemproperties`.split(/\n/).grep(/Default machine folder/).first
+      vb_machine_folder = line.split(':').drop(1).join(':').strip()
+      storage_disk_path = File.join(vb_machine_folder, vb.name, 'disk2.vdi')
+      unless File.exist?(storage_disk_path)
+        vb.customize ['createhd', '--filename', storage_disk_path, '--format', 'VDI', '--size', 60 * 1024]
+      end
+      vb.customize ['storagectl', :id, '--name', 'SATA Controller', '--portcount', '2']
+      vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', storage_disk_path]
+    end
+  end
+  
 end

@@ -32,6 +32,7 @@ cp "$SH_DIR/linuxbridge_agent.ini" /etc/neutron/plugins/ml2/linuxbridge_agent.in
 modprobe br_netfilter
 cp "$SH_DIR/sysctl.conf" /etc/sysctl.conf
 sysctl -p
+cp "$SH_DIR/br_netfilter.conf" /etc/modules-load.d/
 
 cp "$SH_DIR/l3_agent.ini" /etc/neutron/l3_agent.ini
 cp "$SH_DIR/dhcp_agent.ini" /etc/neutron/dhcp_agent.ini

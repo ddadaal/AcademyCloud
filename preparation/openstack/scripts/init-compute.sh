@@ -5,10 +5,7 @@ SH_DIR=$(dirname "$BASH_SOURCE")
 
 # Install nova
 "$SH_DIR/services/nova/compute/install.sh"
-read -p "Verify nova on controller, and press to continue, or n to cancel. (Y/n)" R
-if [ "$R" = "n" ]; then
-    exit 0
-fi
+read -p "Verify nova on controller, and press to continue." R
 
 # Install neutron
 "$SH_DIR/services/neutron/compute/install.sh"
