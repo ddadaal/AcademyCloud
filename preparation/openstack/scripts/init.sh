@@ -23,3 +23,8 @@ sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
 # Disable firewalld and NetworkManager for openstack
 systemctl stop NetworkManager firewalld
 systemctl disable NetworkManager firewalld
+
+# Manually set public_network
+cp /vagrant/scripts/network/ifcfg-eth1 /etc/sysconfig/network-scripts/ 
+systemctl enable network
+systemctl restart network
