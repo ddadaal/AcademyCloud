@@ -10,4 +10,8 @@ read -p "Verify nova on controller, and press to continue to install neutron." R
 
 # Install neutron
 "$SH_DIR/services/neutron/compute/install.sh"
-read -p "Verify neutron on controller, and press to continue to install neutron." R
+read -p "Verify neutron on controller, and press to continue to install ceilometer." R
+
+# Install ceilometer
+"$SH_DIR/services/ceilometer/controller/install.sh"
+read -p "Verify ceilometer on controller, and press to continue" R
