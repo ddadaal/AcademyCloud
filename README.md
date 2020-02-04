@@ -8,6 +8,8 @@ My undergraduate graduation project.
   - daily and periodic reports
 - [preparation](/preparation)
   - preparation works
+- [documents](/docs)
+  - including [**important talks between me and mentor**](docs/important-talks.md)
 
 ## License
 
