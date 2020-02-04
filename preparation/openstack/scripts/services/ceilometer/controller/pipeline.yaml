@@ -8,7 +8,9 @@ sources:
 sinks:
     - name: meter_sink
       publishers:
-          - gnocchi://?filter_project=service&archive_policy=low
+          - gnocchi://
+publishers:
+    - gnocchi://?filter_project=service&archive_policy=low
 
 
 
