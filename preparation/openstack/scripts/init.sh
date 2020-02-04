@@ -3,6 +3,9 @@ echo "Set tuna as yum mirror"
 cp /vagrant/scripts/CentOS-Base.repo /etc/yum.repos.d/
 sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/fastestmirror.conf
 
+
+
+
 # Always fail at yum makecache during provision
 # Just leave caching to the first yum run
 # yum makecache

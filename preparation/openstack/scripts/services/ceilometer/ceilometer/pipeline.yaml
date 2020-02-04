@@ -1,0 +1,14 @@
+---
+sources:
+    - name: meter_source
+      meters:
+          - "*"
+      sinks:
+          - meter_sink
+sinks:
+    - name: meter_sink
+      publishers:
+          - gnocchi://?filter_project=service&archive_policy=low
+
+
+

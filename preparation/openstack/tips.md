@@ -50,3 +50,5 @@ cp /vagrant/scripts/network/ifcfg-eth1 /etc/sysconfig/network-scripts/
 # 如果用vagrant的public_network让它自动配置，那么就得每次手动重启network
 systemctl restart network
 ```
+
+ceilometer依赖的gnocchi依赖uwsgi，得yum手动安装
