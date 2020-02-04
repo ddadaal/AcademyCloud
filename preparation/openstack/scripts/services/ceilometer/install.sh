@@ -52,4 +52,7 @@ systemctl enable openstack-ceilometer-notification.service \
 systemctl start openstack-ceilometer-notification.service \
     openstack-ceilometer-central.service
 
-echo "Ceilometer installed. Configure component with https://docs.openstack.org/ceilometer/latest/install/install-controller.html#ceilometer"
+systemctl restart openstack-glance-api.service openstack-glance-registry.service neutron-server.service
+
+echo "Ceilometer installed. glance and neutron has already been setup." 
+echo "Configure more components with https://docs.openstack.org/ceilometer/latest/install/install-controller.html#ceilometer"

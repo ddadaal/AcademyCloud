@@ -51,4 +51,4 @@ cp /vagrant/scripts/network/ifcfg-eth1 /etc/sysconfig/network-scripts/
 systemctl restart network
 ```
 
-ceilometer依赖的gnocchi依赖uwsgi，得yum手动安装
+ceilometer依赖的gnocchi依赖uwsgi，yum安装的不能用（会造成服务实际没有启动，没有任何log可以看出来），需要从pip安装。需要配置c环境，安装步骤可以查看[environ.sh](scripts/services/ceilometer/environ.sh)。

@@ -15,6 +15,7 @@ openstack endpoint create --region RegionOne image admin http://controller:9292
 yum install -y openstack-glance
 
 cp "$SH_DIR/glance-api.conf" /etc/glance/glance-api.conf
+cp "$SH_DIR/glance-registry.conf" /etc/glance/
 
 su -s /bin/sh -c "glance-manage db_sync" glance
 
