@@ -7,10 +7,9 @@ verify_ssl = true
 autopep8 = "*"
 
 [packages]
+openstacksdk = "*"
 flask-restful = "*"
 flask-sqlalchemy = "*"
-pyjwt = "*"
-openstacksdk = "*"
 
 [requires]
 python_version = "3.8"

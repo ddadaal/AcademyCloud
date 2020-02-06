@@ -11,6 +11,7 @@ Implements 2018 version of VicBlog API. [Swagger Doc](https://vicblogapi.azurewe
 - Best-effort [type hints](https://docs.python.org/3/library/typing.html)
 - [flask](https://flask.palletsprojects.com/en/1.1.x/) and [flask-RESTful](https://flask-restful.readthedocs.io/en/latest/index.html) 
 - [SQLAlchemy](https://www.sqlalchemy.org/) with [flask-sqlalchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/)
+- [SQLAlchemy](https://www.sqlalchemy.org/) 
 - SQLite
 
 ## Progress

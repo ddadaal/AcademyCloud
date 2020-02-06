@@ -42,11 +42,13 @@
 
 登录过程：
 
-1. 登录后，再使用root账号登录一次获得所有role assignment，然后找出当前登录用户的所有属于的projects
-2. 若当前用户是一个domain的admin，则显示domain admin界面，登陆结束。若否：
-3. 找出primary_project或者任意一个project，并以此Project重新登录当前用户
-4. 若没有指定任何project，应该报错，拒绝登录
-5. 用户可以在界面里切换使用的project
+1. 首先以unscoped的模式登录
+2. 然后调用https://docs.openstack.org/api-ref/identity/v3/index.html?expanded=get-available-project-scopes-detail 这个API获得这个用户可以用的project scope
+3. 或者没有project可以用，那么检查
+4. 若当前用户是一个domain的admin，则显示domain admin界面，登陆结束。若否：
+5. 找出primary_project或者任意一个project，并以此Project重新登录当前用户
+6. 若没有指定任何project，应该报错，拒绝登录
+7. 用户可以在界面里切换使用的project
 
 
 
