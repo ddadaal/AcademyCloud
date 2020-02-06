@@ -6,4 +6,4 @@ validation_token_expire_seconds = 15 * 60
 token_header_key = "Authorization"
 
 # openstack config
-openstack_auth_url = "http://controller:5000/v3"
+openstack_auth_url = "http://controller:5000/v3/"
