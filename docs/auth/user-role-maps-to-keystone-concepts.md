@@ -1,18 +1,63 @@
-# Keystone权限
+# 权限问题解决方案
 
-| 业务角色 | Keystone用户 | domain  | project | role   | 权限                                                   |
-| -------- | ------------ | ------- | ------- | ------ | ------------------------------------------------------ |
-| 平台管理 | admin        | Default | default | admin  | 所有权限                                               |
-| 学校管理 | admin        | NJU     |         | admin  | 管理一个domain下的所有project, user等，查看所有domain  |
-| 老师     | 67           | NJU     | 67      | admin  | 管理project下的用户和资源等，查看domain里的所有project |
-| 同学     | cjd          | NJU     | 67      | member | 管理自己名下的资源                                     |
+| 业务角色 | univcloud用户 | univcloud role | Keystone用户 | domain  | project | role                |
+| -------- | ------------- | -------------- | ------------ | ------- | ------- | ------------------- |
+| 平台管理 | admin         | cloud-admin    | admin        | Default | default | admin (system)      |
+| 学校管理 | nju-admin     | school-admin   | admin        | NJU     | default | admin (NJU domain)  |
+| 老师     | 67            | teacher        | 67           | NJU     | 67      | admin (67 project)  |
+| 同学     | cjd           | student        | cjd          | NJU     | 67      | member (67 project) |
 
-## 相关命令
+
+## 3级admin详细解释
+
+1. Train release已经默认使用了default roles
+2. 一个domain下的admin账号
+   1. 只对domain有admin，以domain scope登录（登录时指定domain，不指定project）：
+      1. 可以显示所有的domain（隐藏）
+      2. 只能显示本domain下的project和user（可以接受）
+      3. 能够创建domain（UI隐藏）
+      4. 能够创建project（接受只能在当前domain创建）
+      5. 不能显示instances
+   2. 只某一个project有admin，以project scoped登录（在登录时指定project）：
+      1. 可以显示所有domain（隐藏）
+      2. 能够显示所有domain下的project和user（project过滤只显示当前domain的；user过滤，只显示当前的project的）
+      3. 能够创建domain（UI隐藏）
+      4. 能够创建project（UI隐藏）
+      5. 可以显示当前project下的所有instances（可以接受）
+3. 一个domain下，某个project的member账号
+   1. 不能显示任何project和domain（可以接受）
+   2. 不能显示自己为member的project的user（可以接受）
+   3. 不能创建domain和project（可以接受）
+   4. 可以显示自己的instances (list_servers())（可以接受）
+4. 一个domain下不为任何project的账号：
+   1. 无法进行任何操作，报The service catalog is empty（可以接受，显示让它找domain admin分配project）
+
+## 实现细节
+
+业务假设：
+
+1. domain admin不能是任何一个domain的project的成员
+2. 每个用户必须属于至少一个project，只接受Member和admin用户；admin表示老师，member表示学生
+3. 不适用group功能
+
+登录过程：
+
+1. 登录后，再使用root账号登录一次获得所有role assignment，然后找出当前登录用户的所有属于的projects
+2. 若当前用户是一个domain的admin，则显示domain admin界面，登陆结束。若否：
+3. 找出primary_project或者任意一个project，并以此Project重新登录当前用户
+4. 若没有指定任何project，应该报错，拒绝登录
+5. 用户可以在界面里切换使用的project
+
+
+
+
+## ~~尝试配置三级admin相关命令~~
+
+Deprecated：train release已经使用了三级Admin
 
 ```bash
 # http://www.florentflament.com/blog/setting-keystone-v3-domains.html
 
-# 1. Train release还没有默认使用multi-domain，所以得使用policy.json手动开启multi-domain
 # 使用系统admin
 . /root/admin-openrc
 
