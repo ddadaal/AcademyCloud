@@ -1,7 +1,7 @@
-from typing import Protocol, Optional, List
+from typing import Protocol, Optional, List, Union, Literal
 
 
-class User(Protocol):
+class Entity(Protocol):
     id: str
     name: str
 
@@ -21,18 +21,23 @@ class Domain(Protocol):
     description: str
 
 
-class Role(Protocol):
-    id: str
-    name: str
+RoleName = Union[Literal["admin"], Literal["member"]]
 
 
-class RoleComplete(Role):
+class Role(Entity):
+    name: RoleName
     description: Optional[str]
     domain_id: Optional[str]
 
 
 class Token(Protocol):
     is_domain: bool
-    method: List[str]
-    roles: List[Role]
-    user: User
+
+    # Either
+    domain: Entity
+    # Or
+    project: Entity
+
+    methods: List[str]
+    roles: List[Entity]
+    user: Entity
