@@ -1,3 +1,4 @@
+import functools
 from dataclasses import dataclass
 from urllib.parse import urljoin
 from typing import Optional, List, Union, Tuple, TypedDict, Literal, Protocol, cast
@@ -8,13 +9,8 @@ from connection.extended_apis import ExtendedApis
 from connection.identity import IdentityService
 from connection.models import Project, Domain, Token, RoleName
 from openstack.connection import Connection as OpenStackConnection
-import requests
 import config
-
-
-class NoScopeableDomainOrProjectException(Exception):
-    """This account has no domain or project assigned."""
-    pass
+import cachetools
 
 
 @dataclass
@@ -23,6 +19,13 @@ class Scope:
     id: str
     name: str
     role: RoleName
+
+
+@dataclass
+class ScopeableTarget:
+    type: Union[Literal["project"], Literal["domain"]]
+    id: str
+    name: str
 
 
 class Connection:
@@ -66,33 +69,62 @@ class Connection:
     def current_project_id(self) -> str:
         return self.os_connection.current_project_id
 
-    @staticmethod
-    def connect(username: str, password: str, domain_name: str) -> "Connection":
-        # Try connect with credentials and login as unscoped
-        conn = OpenStackConnection(auth_url=config.openstack_auth_url,
-                                   user_domain_name=domain_name,
-                                   username=username,
-                                   password=password,
-                                   )
 
-        # Get more apis
-        extended_apis = ExtendedApis(conn)
+@dataclass(frozen=True, eq=True)
+class ScopedAuth:
+    username: str
+    password: str
+    domain_name: str
+    project_name: Optional[str]
 
-        # Try scope to projects
-        projects = extended_apis.get_scopeable_projects()
-        if len(projects) == 0:
-            # The account doesn't have a scopeable project
-            # Try domain
-            domains = extended_apis.get_scopeable_domains()
-            if len(domains) == 0:
-                raise NoScopeableDomainOrProjectException()
 
-            # It's a domain. Reconnect as domain scoped
-            domain = domains[0]
-            conn = conn.connect_as(domain_id=domain.id)
-            return Connection(conn, domain.id)
-        else:
-            # Scope to project
-            project = projects[0]
-            conn = conn.connect_as(project_id=project.id)
-            return Connection(conn, project.domain_id)
+@functools.lru_cache(120)
+def scoped_connect(auth: ScopedAuth) -> "Connection":
+    if auth.project_name:
+        # project scoped auth
+        return Connection(OpenStackConnection(
+            auth_url=config.openstack_auth_url,
+            user_domain_name=auth.domain_name,
+            username=auth.username,
+            password=auth.password,
+            project_domain_name=auth.domain_name,
+            project_name=auth.project_name,
+        ), auth.domain_name)
+    else:
+        # domain scoped auth
+        return Connection(OpenStackConnection(
+            auth_url=config.openstack_auth_url,
+            user_domain_name=auth.domain_name,
+            username=auth.username,
+            password=auth.password,
+            domain_name=auth.domain_name,
+        ), auth.domain_name)
+
+
+def get_scopeable_targets(username: str, password: str, domain_name: str) -> List[ScopeableTarget]:
+    # Try connect with credentials and login as unscoped
+    conn = OpenStackConnection(auth_url=config.openstack_auth_url,
+                               user_domain_name=domain_name,
+                               username=username,
+                               password=password,
+                               )
+
+    # Get more apis
+    extended_apis = ExtendedApis(conn)
+
+    # Try scope to projects
+    projects = extended_apis.get_scopeable_projects()
+    if len(projects) == 0:
+        # The account doesn't have a scopeable project
+        # Try domain
+        domains = extended_apis.get_scopeable_domains()
+        if len(domains) == 0:
+            return []
+
+        # A domain is scopeable. Return domain.
+        domain = domains[0]
+        return [ScopeableTarget(type="domain", id=domain.id, name=domain.name)]
+    else:
+        # Return all scopeable project
+        return [ScopeableTarget(type="project", id=project.id, name=project.name)
+                for project in projects]
