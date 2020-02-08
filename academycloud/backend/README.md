@@ -1,6 +1,6 @@
-# UnivCloud API
+# AcademyCloud API
 
-API for UnivCloud project.
+API for AcademyCloud project.
 
 ## Features
 

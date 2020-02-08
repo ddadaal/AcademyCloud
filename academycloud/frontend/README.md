@@ -1,4 +1,4 @@
-# UnivCloud frontend
+# AcademyCloud frontend
 
 
 # Commands

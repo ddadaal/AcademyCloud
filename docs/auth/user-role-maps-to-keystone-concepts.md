@@ -1,11 +1,11 @@
 # 权限问题解决方案
 
-| 业务角色 | univcloud用户 | univcloud role | Keystone用户 | domain  | project | role                |
-| -------- | ------------- | -------------- | ------------ | ------- | ------- | ------------------- |
-| 平台管理 | admin         | cloud-admin    | admin        | Default | default | admin (system)      |
-| 学校管理 | nju-admin     | school-admin   | admin        | NJU     | default | admin (NJU domain)  |
-| 老师     | 67            | teacher        | 67           | NJU     | 67      | admin (67 project)  |
-| 同学     | cjd           | student        | cjd          | NJU     | 67      | member (67 project) |
+| 业务角色 | AcademyCloud用户 | AcademyCloud role | Keystone用户 | domain  | project | role                |
+| -------- | ---------------- | ----------------- | ------------ | ------- | ------- | ------------------- |
+| 平台管理 | admin            | cloud-admin       | admin        | Default | default | admin (system)      |
+| 学校管理 | nju-admin        | school-admin      | admin        | NJU     | default | admin (NJU domain)  |
+| 老师     | 67               | teacher           | 67           | NJU     | 67      | admin (67 project)  |
+| 同学     | cjd              | student           | cjd          | NJU     | 67      | member (67 project) |
 
 
 ## 3级admin详细解释

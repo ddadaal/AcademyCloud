@@ -8,7 +8,7 @@ export default {
   },
   definitions: {
     homepage: {
-      title: "UnivCloud",
+      title: "AcademyCloud",
       description: "为大学设计的云平台",
       loginForm: {
         school: "学校",

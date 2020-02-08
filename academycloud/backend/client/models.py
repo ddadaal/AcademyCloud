@@ -41,3 +41,12 @@ class Token(Protocol):
     methods: List[str]
     roles: List[Entity]
     user: Entity
+
+
+class User(Protocol):
+    domain_id: str
+    enabled: str
+    id: str
+    name: str
+    description: str
+    email: str

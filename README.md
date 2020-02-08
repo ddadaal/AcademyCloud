@@ -1,6 +1,6 @@
-# Graduation Project
+# Graduation Project - AcademyCloud
 
-My undergraduate graduation project.
+My undergraduate graduation project: AcademyCloud.
 
 ## Contents
 
@@ -10,6 +10,8 @@ My undergraduate graduation project.
   - preparation works
 - [documents](/docs)
   - including [**important talks between me and mentor**](docs/important-talks.md)
+- [academycloud](/academycloud)
+  - The source code for the project, including Python backend and React frontend.
 
 ## License
 

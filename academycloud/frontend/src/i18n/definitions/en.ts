@@ -8,8 +8,8 @@ export default {
   },
   definitions: {
     homepage: {
-      title: "UnivCloud",
-      description: "Cloud for Universities",
+      title: "AcademyCloud",
+      description: "Cloud for Academy",
       loginForm: {
         school: "School",
         schoolPrompt: "Please input school.",
