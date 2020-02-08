@@ -6,7 +6,7 @@ from munch import Munch
 
 from openstack.connection import Connection as OpenStackConnection
 
-from connection.models import Project, Domain, Token, Entity
+from client.models import Project, Domain, Token, Entity
 
 
 class ExtendedApis:

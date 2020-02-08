@@ -47,3 +47,49 @@
 >
 > 以下是我目前考虑的架构图：
 > ![](pics/0204-architecture.png)
+
+**2020年02月07日 16:06，我** *需求精化*
+
+发了一下[0207-requirement-list](requirements/0207-requirement-list.md)的内容。
+
+**2020年02月08日 08:19，导师** *需求精化*
+
+1. 项目对用户计费而不收费。
+2. Project可以对User设定quota，User超过quota，需要Project Admin手动解开。
+3. Project Admin 和 Domain Admin都可以指定助理完成管理工作。
+4. 所有用户，包括Projecrt Admin， Domain Admin都要实名。到Domain级别的单位隶属关系要争取。
+5. 所有domain，Project，User都需要收取管理费，Domain的管理费100元/月，Project管理费10元/月，User管理费1元/月。连续18个月不交管理费就清除相应的Domain，Project，User
+
+费用小于一个额度，需要邮件提醒。
+费用为为0锁定（domain，Project）用户使用完 Project 分配的quota也要锁定。（锁定：用户服务不可访问），相应的Admin需要登录系统手动解封，并设置信用额度。信用额度上限由上级管理设定。
+
+另外还需要提供一些查询报表功能
+各级管理员可以查询交费明细，
+可以查询计费明细。
+
+**2020年02年08月 09:37，我** *需求精化*
+
+0. 按目前我的考虑，计费收费的根据是**分配的资源**，而非使用的资源
+   1. 对domain和project来说，即是一旦他们被分配可用资源后，即开始按照已经分配的部分进行收费，而不是看具体使用了多少资源
+      1. 比如云平台给Domain限制了40个CPU 80G内存，那么domain可以给其下的project分配资源，但是给project分配的总量不能超过这么多；不管分配了多少，收费还是按照40CPU 80G内存进行收费。
+   2. 对user同理，project给user限制可以使用资源，那么user在创建资源的时候，如果想创建的资源已经超过了它还可以使用的资源，那么user直接是不能创建资源了
+      1. 比如用户限额是3个CPU 8G内存，用户已经用了2个CPU 4G内存，当用户想要再创建一个2CPU 4G内存的虚拟机时就会创建失败
+   3. 这样实现的话，整个计费收费功能都不用和openstack打交道
+   4. 这就导致了：
+1. 项目对用户计费似乎是没有意义的，因为用户又不交钱，给用户设立计费标准并通过给用户设定的限制计费出来的数据有什么用吗？
+2. 用户永远不会超过quota，因为当他在创建资源的时候一旦超过quota，创建资源就会失败（所以用户这里用的词是资源限制）
+3. system admin，domain admin和project admin都可以指定某个自己domain（系统domain是Default）或者project下的用户为自己的其他domain/project的admin。这里可以改一下限制，即domain admin也可以属于某一个project。我之前考虑的domain admin不能属于project感觉不太必要。但是由系统管理员创建的domain admin用户仍然不能加入其他project。
+4. 实名可以采用由对应admin统一管理的方法，不允许自由注册；什么叫单位隶属关系？
+5. 按以上逻辑，domain和project管理费没有任何问题，如果对user收管理费的话，是不是user唯一需要支付的钱就是1元每月的管理费？（user不支付资源费用，它只是使用由project分配给它的资源）
+
+另外对于交费我想的是一种以充值为中心的交费方法：
+
+1. 即所有用户要使用平台，首先需要往自己的账号里充值
+2. 扣款的时候，按分配的资源每小时扣除账号里的钱
+3. 管理费每月从账号里直接打到系统管理员的账号
+4. 对系统、domain和project，其可以用多个admin，但是收费是从某一个指定的admin的账户里扣费。
+5. project扣费是从负责收费的project admin的账号打到其负责收费的domain admin的账号里；domain扣费是从负责收费的domain admin账号打到负责收费的系统管理员的账号里。扣费用户可以由现在的扣费用户修改为另外一个admin账号
+6. 当需要扣费的账户为0的时候停用对应的domain，project和/或user下的所有资源，并停用除了充值之外的所有功能（信用额度和解锁机制可能有点复杂，如果时间够的尽量吧）
+7. 查询报表我计划提供包括系统到domain，domain到project和project到user资源分配记录（周期内每个时间段分配的资源量），价格计划记录（每个时间段资源所适用的价格表），充值记录，扣费记录
+
+请问这样实现怎么样？

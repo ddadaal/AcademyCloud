@@ -4,5 +4,5 @@ from openstack.identity.identity_service import IdentityService as OSIdentitySer
 class IdentityService:
     os_identity: OSIdentityService
 
-    def __init__(self, os_connection: OSIdentityService):
-        self.os_connection = os_connection
+    def __init__(self, identity: OSIdentityService):
+        self.identity = identity

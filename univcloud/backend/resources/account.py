@@ -2,7 +2,7 @@ from dataclasses import dataclass, asdict
 from flask_restful import reqparse, Resource, fields, marshal_with
 from munch import Munch
 
-from connection.connection import get_scopeable_targets, scoped_connect, ScopedAuth
+from client.client import get_scopeable_targets, scoped_connect, ScopedAuth
 from utils.auth import generate_token, decode_token
 
 scopeable_targets_request_parser = reqparse.RequestParser()

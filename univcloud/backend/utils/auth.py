@@ -1,14 +1,12 @@
-from typing import Optional
+from typing import Optional, List
 
 from cryptography.fernet import Fernet
-from connection.connection import ScopedAuth
+from client.client import ScopedAuth
 from config import token_key
 
 # Put this somewhere safe!
 # str to byte[]
 f = Fernet(token_key.encode())
-
-encoding = "utf-8"
 
 
 def generate_token(auth: ScopedAuth) -> str:
@@ -16,19 +14,19 @@ def generate_token(auth: ScopedAuth) -> str:
                                   auth.password,
                                   auth.domain_name,
                                   auth.project_name if auth.project_name else ""
-                                  ).encode(encoding)
+                                  )
     # byte[] to str
-    return f.encrypt(secret).decode()
+    return f.encrypt(secret.encode()).decode()
 
 
 def decode_token(token: str) -> ScopedAuth:
     # decrypt requires str to bytes[]
     # and bytes[] to str the result
     decrypted: str = f.decrypt(token.encode()).decode()
-    splited = decrypted.split("+")
+    parts: List[str] = decrypted.split("+")
     return ScopedAuth(
-        username=splited[0],
-        password=splited[1],
-        domain_name=splited[2],
-        project_name=splited[3] if splited[3] == "" else None
+        username=parts[0],
+        password=parts[1],
+        domain_name=parts[2],
+        project_name=parts[3] if parts[3] != "" else None
     )
