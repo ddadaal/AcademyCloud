@@ -25,8 +25,29 @@ export default {
         other: "登录失败",
       }
     },
+    resources: {
+      sidebar: {
+        dashboard: "控制台",
+        instance: "实例",
+        network: "网络",
+        volume: "云硬盘",
+      },
+    },
+    nav: {
+      breadcrumbLeader: "位置",
+      navPoints: {
+        homepage: "登录",
+        resources: {
+          root: "资源管理",
+          dashboard: "控制台",
+          instance: "实例",
+          network: "网络",
+          volume: "云硬盘",
+        }
+      }
+    },
     header: {
-      dashboard: "资源管理",
+      resources: "资源管理",
       expenses: "费用管理",
       identity: "用户管理"
     },

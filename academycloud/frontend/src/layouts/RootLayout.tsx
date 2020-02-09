@@ -2,8 +2,9 @@ import React from "react";
 import { Header } from "src/components/Header";
 import styled from "styled-components";
 import { layoutConstants } from "./constants";
+import { Layout } from "antd";
+import { SideNav } from "./nav/SideNav";
 // import { Footer } from "@/components/Footer";
-
 
 const CenterContent = styled.div`
   position: relative;
@@ -15,11 +16,14 @@ const CenterContent = styled.div`
 
 const RootLayout: React.FunctionComponent = (props) => {
   return (
-    <div>
+    <Layout>
       <Header />
-      {props.children}
+      <Layout>
+        <SideNav />
+        {props.children}
+      </Layout>
       {/* <Footer /> */}
-    </div>
+    </Layout>
   )
 };
 

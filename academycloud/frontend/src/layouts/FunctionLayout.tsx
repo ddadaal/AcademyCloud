@@ -2,6 +2,7 @@ import React from "react";
 import { Layout as AntdLayout } from "antd";
 import styled from "styled-components";
 import { layoutConstants } from "./constants";
+import { BreadcrumbNav } from "./nav/BreadcrumbNav";
 
 const { Content } = AntdLayout;
 
@@ -15,20 +16,30 @@ const Layout = styled(AntdLayout)`
   }
 `;
 
-const styleContent = {
-  padding: 24,
-  margin: 8,
-  minHeight: 800,
-  background: "#FFFFFF",
-};
+const StyledContent = styled(Content)`
+  padding: 24px;
+  margin: 8px;
+  min-height: 800px;
+  background-color: #FFFFFF;
+`;
+
+const StyledBreadcrumbNav = styled(BreadcrumbNav)`
+  margin: 4px 4px 4px 4px !important;
+
+   padding-left: 4px;
+  @media (max-width: ${layoutConstants.paddingBreakpoint}px) {
+  }
+
+`;
 
 
 const FunctionLayout: React.FC = (props) => {
   return (
     <Layout>
-      <Content style={styleContent}>
+      <StyledBreadcrumbNav />
+      <StyledContent >
         {props.children}
-      </Content>
+      </StyledContent>
     </Layout>
   );
 

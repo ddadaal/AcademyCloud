@@ -7,6 +7,7 @@ import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { getApiService } from "src/apis";
 import { AccountService } from "src/apis/account/AccountService";
+import { navigate } from "@reach/router";
 
 const root = lang.homepage.loginForm;
 
@@ -35,6 +36,8 @@ export function LoginForm() {
       userStore.login({ username, token: loginResponse.token, scope: loginResponse.scope}, values.remember);
 
       console.log("Login success.");
+
+      navigate("/resources");
     } catch (e) {
       notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.other)});
     }

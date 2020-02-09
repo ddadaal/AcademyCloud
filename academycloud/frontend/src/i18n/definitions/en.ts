@@ -25,8 +25,29 @@ export default {
         other: "Login Failed",
       }
     },
+    resources: {
+      sidebar: {
+        dashboard: "Dashboard",
+        instance: "Instances",
+        network: "Network",
+        volume: "Volumes",
+      },
+    },
+    nav: {
+      breadcrumbLeader: "Location",
+      navPoints: {
+        homepage: "Login",
+        resources: {
+          root: "Resources",
+          dashboard: "Dashboard",
+          instance: "Instances",
+          network: "Network",
+          volume: "Volumes",
+        }
+      }
+    },
     header: {
-      dashboard: "Dashboard",
+      resources: "Resources",
       expenses: "Expenses",
       identity: "Identity"
     },

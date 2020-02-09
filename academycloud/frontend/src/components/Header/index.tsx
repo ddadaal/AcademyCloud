@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Dropdown, Layout, Menu, Popover } from "antd";
 import { BarsOutlined } from "@ant-design/icons";
 import { mainNavs } from "./mainNavs";
 import MediaQuery from "react-responsive";
 import { layoutConstants } from "../../layouts/constants";
 import styled from "styled-components";
-import { Location, navigate } from "@reach/router";
-import logo from "src/assets/logo.png";
+import { Location, navigate, Link } from "@reach/router";
+import {ReactComponent as LogoSvg} from "src/assets/logo-horizontal.svg";
 import { LocalizedString } from "src/i18n";
+import { useStore } from "simstate";
+import { NavStore } from "src/layouts/nav/NavStore";
+import HeaderIcon from "./HeaderIcon";
+import { MenuFoldOutlined, MenuUnfoldOutlined }  from "@ant-design/icons";
 const { Header: AntdHeader } = Layout;
 
 interface Props {
@@ -19,9 +23,9 @@ export const MarginedDiv = styled.div`
   display: flex;
   align-items: center;
   & > * {
-  margin-right: 4px;
-  margin-left: 4px;
-  //display: inline-block;
+    margin-right: 4px;
+    margin-left: 4px;
+    //display: inline-block;
   }
 
   &:first-child {
@@ -67,7 +71,7 @@ export function HeaderNavMenu(props: {
         <Menu.Item
           key={x.path}
           onClick={() => to(x.path)}>
-          {React.createElement(x.icon)}
+          {React.createElement(x.Icon)}
           <LocalizedString id={x.textId} />
         </Menu.Item>,
       )}
@@ -75,15 +79,24 @@ export function HeaderNavMenu(props: {
   );
 }
 
-const Logo = styled.span`
-  color: white;
+const StyledLogo = styled(LogoSvg)`
+
+  height: 40px;
+  width: auto;
 
   &:hover {
     cursor: pointer;
   }
+
 `;
 
 export const Header: React.FunctionComponent = () => {
+  const navStore = useStore(NavStore);
+
+  const collapse = useCallback(() => {
+    navStore.setSidebarCollapsed(!navStore.sidebarCollapsed);
+  }, [navStore]);
+
   return (
     <Location>
       {({ location }) => {
@@ -92,9 +105,14 @@ export const Header: React.FunctionComponent = () => {
         return (
           <Head>
             <MarginedDiv>
-              <Logo onClick={() => navigate("/")}>
-                <img src={logo} />
-              </Logo>
+              {navStore.hasSider
+                ? <a onClick={collapse}>
+                  <HeaderIcon
+                    Icon={navStore.sidebarCollapsed ? MenuFoldOutlined : MenuUnfoldOutlined}
+                  />
+                </a>
+                : null}
+              <StyledLogo onClick={() => navigate("/resources")}/>
             </MarginedDiv>
             <MarginedDiv>
               <MediaQuery minWidth={layoutConstants.menuBreakpoint}>

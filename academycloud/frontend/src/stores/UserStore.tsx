@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { Scope } from "src/models/account";
 
-const STORAGE_KEY = "User"
+const STORAGE_KEY = "User";
 
 interface User {
   username: string;
@@ -19,8 +19,8 @@ export function getUserInfoInStorage(): User | null {
 }
 
 export function UserStore() {
-  const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(getUserInfoInStorage);
+  const [loggedIn, setLoggedIn] = useState(!!user);
 
   const logout = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
