@@ -1,22 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-// import background from "../../assets/background/1.png";
-import { Row, Col, Divider, Button } from "antd";
-import { UserStore } from "../../stores/UserStore";
-import { layoutConstants, antdBreakpoints } from "../../layouts/constants";
-import { useStore } from "simstate";
-import { navigate, RouteComponentProps, Link } from "@reach/router";
-import CenterContainer from "../../layouts/CenterContainer";
-import styles from "./styles.less"
+import { antdBreakpoints } from "../../layouts/constants";
+import { RouteComponentProps, Link } from "@reach/router";
 import { LoginForm } from "./LoginForm";
-import logo from "src/assets/logo.png";
 import banner from "src/assets/banner.png";
-import { lang, LocalizedString } from "src/i18n";
 import { HomepageLanguageSelector } from "./LanguageSelector";
 
-interface Props {
-
-}
 
 const Container = styled.div`
   display: flex;
@@ -66,7 +55,7 @@ export const HomePage: React.FC<RouteComponentProps> = () => {
         <Top>
           <Header>
             <Link to="/">
-              <img alt="logo" className={styles.logo} src={banner} />
+              <img alt="logo" src={banner} />
             </Link>
           </Header>
           <HomepageLanguageSelector />

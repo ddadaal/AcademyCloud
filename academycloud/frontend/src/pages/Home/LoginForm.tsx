@@ -1,21 +1,43 @@
-import { Form, Input, Checkbox, Button } from 'antd';
+import { Form, Input, Checkbox, Button, notification } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import React from "react";
-import { lang, useMultiLocalized, LocalizedString } from "src/i18n";
+import { lang, useMultiLocalized, LocalizedString, I18nStore } from "src/i18n";
 import styled from "styled-components";
-
-interface LoginInfo {
-  domain: string;
-  username: string;
-  password: string;
-}
+import { useStore } from "simstate";
+import { UserStore } from "src/stores/UserStore";
+import { getApiService } from "src/apis";
+import { AccountService } from "src/apis/account/AccountService";
 
 const root = lang.homepage.loginForm;
 
 export function LoginForm() {
 
-  const onFinish = (values: { [key: string]: string }) => {
-    console.log('Received values of form: ', values);
+  const userStore = useStore(UserStore);
+  const i18nStore = useStore(I18nStore);
+
+  // The original signature is any.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onFinish = async (values: { [key: string]: any }) => {
+    const { username, password, domain } = values;
+    try {
+      const accountService = getApiService(AccountService);
+      const targets = await accountService.getScopeableTargets(username, password, domain);
+      if (targets.length === 0) {
+        notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.noScope)});
+        return;
+      }
+
+      console.log("Available scopes", targets);
+
+      // randomly select a target to login for now
+      const target = targets[0];
+      const loginResponse = await accountService.login(username, password, domain, target.type === "project" ? target.name : undefined);
+      userStore.login({ username, token: loginResponse.token, scope: loginResponse.scope}, values.remember);
+
+      console.log("Login success.");
+    } catch (e) {
+      notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.other)});
+    }
   };
 
   const localizedStrings = useMultiLocalized(

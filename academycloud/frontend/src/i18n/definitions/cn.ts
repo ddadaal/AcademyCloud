@@ -18,8 +18,11 @@ export default {
         password: "密码",
         passwordPrompt: "请输入密码",
         login: "登录",
-        remember: "记住",
+        remember: "记住我",
         forget: "忘记密码",
+        loginFailTitle: "登录失败",
+        noScope:  "您未加入任何学校或者项目！请联系管理员。",
+        other: "登录失败",
       }
     },
     header: {

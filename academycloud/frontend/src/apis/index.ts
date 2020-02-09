@@ -3,7 +3,7 @@ import { AccountService } from "./account/AccountService";
 import { AccountServiceMock } from "./account/AccountServiceMock";
 import { InstanceService } from "./instance/InstanceService";
 
-export const USE_MOCK = false;
+export const USE_MOCK = true;
 
 const services = [
   [AccountService, USE_MOCK ? AccountServiceMock : AccountService],

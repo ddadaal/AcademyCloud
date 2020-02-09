@@ -1,10 +1,12 @@
 import { useState, useCallback } from "react";
+import { Scope } from "src/models/account";
 
 const STORAGE_KEY = "User"
 
 interface User {
   username: string;
   token: string;
+  scope: Scope;
 }
 
 export function getUserInfoInStorage(): User | null {
@@ -26,10 +28,12 @@ export function UserStore() {
     setUser(null);
   }, []);
 
-  const login = useCallback((username: string, token: string) => {
-    const user = { username, token };
+  const login = useCallback((user: User, remember: boolean) => {
     setLoggedIn(true);
     setUser(user);
+    if (remember) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    }
   }, []);
 
   return { loggedIn, user, logout, login };

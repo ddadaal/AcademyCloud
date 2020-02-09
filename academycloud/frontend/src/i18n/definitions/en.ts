@@ -20,6 +20,9 @@ export default {
         login: "Login",
         remember: "Remember me",
         forget: "Forget password",
+        loginFailTitle: "Login failed.",
+        noScope:  "You are not part of any schools or projects. Please contact administrator.",
+        other: "Login Failed",
       }
     },
     header: {

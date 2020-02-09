@@ -21,6 +21,10 @@ export interface HttpError {
   data?: unknown;
 }
 
+export function makeHttpError(status: number, data?: unknown): HttpError {
+  return { status, data };
+}
+
 
 const BASE_URL = "http://localhost:5000";
 
