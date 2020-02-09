@@ -1,3 +1,5 @@
+<img src="academycloud/frontend/src/assets/logo-horizontal.svg" width="500px">
+
 # Graduation Project - AcademyCloud
 
 My undergraduate graduation project: AcademyCloud.
