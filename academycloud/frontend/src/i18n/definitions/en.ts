@@ -34,7 +34,10 @@ export default {
       },
     },
     nav: {
-      breadcrumbLeader: "Location",
+      user: {
+        selfCenter: "Self Center",
+        logout: "Logout",
+      },
       navPoints: {
         homepage: "Login",
         resources: {

@@ -66,11 +66,7 @@ export const SideNav: React.FC<Props> = (props) => {
 
     // children selected keys
     const childrenSelected = flatten(rootSelected.map((x) => {
-      if (arrayContainsElement(x.children)) {
-        return (x.children ?? []).filter((child) => child.match(path));
-      } else {
-        return [];
-      }
+      return (x.children ?? []).filter((child) => child.match(path));
     }));
 
     return flatten([rootSelected, childrenSelected]).map((x) => x.path);
@@ -106,9 +102,11 @@ export const SideNav: React.FC<Props> = (props) => {
             .map((x) => {
               const subs = x.children ?? [];
               if (!arrayContainsElement(subs)) {
-                return <Menu.Item key={x.path}>
-                  <Link path={x.path} textId={x.textId} Icon={x.Icon} onClick={onClick}/>
-                </Menu.Item>;
+                return (
+                  <Menu.Item key={x.path}>
+                    <Link path={x.path} textId={x.textId} Icon={x.Icon} onClick={onClick}/>
+                  </Menu.Item>
+                );
               } else {
                 return (
                   <SubMenu key={x.path} title={
@@ -125,7 +123,6 @@ export const SideNav: React.FC<Props> = (props) => {
                   </SubMenu>
                 );
               }
-
             },
             )}
         </Menu>

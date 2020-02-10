@@ -10,7 +10,7 @@ export const antdBreakpoints = {
 export const layoutConstants = {
   paddingBreakpoint: antdBreakpoints.md,
   menuBreakpoint: antdBreakpoints.md,
-  headerHeight: 48,
+  headerHeight: 56,
   sidebarBreakpoint: antdBreakpoints.lg,
   headerIconColor: "#ffffff",
   headerIconBackgroundColor: "#1890FF",

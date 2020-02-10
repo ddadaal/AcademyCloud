@@ -5,7 +5,7 @@ import { useStore } from "simstate";
 
 interface Props {
   id: string;
-  replacements?: React.ReactNode[];
+  replacements?: (string | React.ReactNode)[];
 }
 
 const LocalizedString: React.FC<Props> = ({ id, replacements }) => {

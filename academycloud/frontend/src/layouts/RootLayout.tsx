@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from "src/components/Header";
+import { Header } from "src/layouts/nav/Header";
 import styled from "styled-components";
 import { layoutConstants } from "./constants";
 import { Layout } from "antd";

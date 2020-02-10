@@ -34,7 +34,10 @@ export default {
       },
     },
     nav: {
-      breadcrumbLeader: "位置",
+      user: {
+        selfCenter: "个人中心",
+        logout: "登出",
+      },
       navPoints: {
         homepage: "登录",
         resources: {
