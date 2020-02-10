@@ -10,9 +10,9 @@ My undergraduate graduation project: AcademyCloud.
   - daily and periodic reports
 - [preparation](/preparation)
   - preparation works
-- [documents](/docs)
+- [documentations](/docs)
   - including [**important talks between me and mentor**](docs/important-talks.md)
-- [academycloud](/academycloud)
+- [sources](/sources)
   - The source code for the project, including Python backend and React frontend.
 
 ## License
