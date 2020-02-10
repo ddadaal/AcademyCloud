@@ -1,4 +1,4 @@
-<img src="academycloud/frontend/src/assets/logo-horizontal.svg" width="500px">
+<img src="sources/frontend/src/assets/logo-horizontal.svg" width="500px">
 
 # Graduation Project - AcademyCloud
 
