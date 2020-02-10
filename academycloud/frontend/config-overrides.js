@@ -9,6 +9,7 @@ module.exports = override(
   }),
   addLessLoader({
     javascriptEnabled: true,
+
   }),
   addBabelPlugin(
     "babel-plugin-styled-components"

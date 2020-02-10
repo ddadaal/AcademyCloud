@@ -61,7 +61,7 @@ export const SideNav: React.FC<Props> = (props) => {
 
   const selectedKeys = useMemo(() =>{
     // root selected keys
-    const path = navStore.location.location.pathname;
+    const path = navStore.location.pathname;
     const rootSelected = navStore.sidenavs.filter((x) => x.match(path));
 
     // children selected keys

@@ -17,7 +17,7 @@ export function NavStore() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const currentNavPath = useMemo(() => {
-    const path = location.location.pathname;
+    const path = location.pathname;
     const points = availableNavPoints.map((x) => {
       if (typeof x.path === "string") {
         return path.startsWith(x.path) ? x : null;

@@ -12,6 +12,7 @@ import { useStore } from "simstate";
 import { NavStore } from "src/layouts/nav/NavStore";
 import HeaderIcon from "./HeaderIcon";
 import { MenuFoldOutlined, MenuUnfoldOutlined }  from "@ant-design/icons";
+import { useLocation } from "src/utils/useLocation";
 const { Header: AntdHeader } = Layout;
 
 interface Props {
@@ -54,6 +55,7 @@ export const Head = styled(AntdHeader)`
     justify-content: space-between;
     height: ${layoutConstants.headerHeight}px;
     padding: 4px;
+    /* background-color: white; */
 
   }
 `;
@@ -97,46 +99,42 @@ export const Header: React.FunctionComponent = () => {
     navStore.setSidebarCollapsed(!navStore.sidebarCollapsed);
   }, [navStore]);
 
+  const location = useLocation();
+
+  const selectedKeys = mainNavs.filter((x) => x.match(location.pathname)).map((x) => x.path);
+
   return (
-    <Location>
-      {({ location }) => {
-        const selectedKeys = mainNavs.filter((x) => x.match(location.pathname)).map((x) => x.path);
+    <Head>
+      <MarginedDiv>
+        {navStore.hasSider
+          ? <a onClick={collapse}>
+            <HeaderIcon
+              Icon={navStore.sidebarCollapsed ? MenuFoldOutlined : MenuUnfoldOutlined}
+            />
+          </a>
+          : null}
+        <StyledLogo onClick={() => navigate("/resources")}/>
+      </MarginedDiv>
+      <MarginedDiv>
+        <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
+          {(matches) => matches
+            ? <>
+              <HeaderNavMenu vertical={false} selectedKeys={selectedKeys} to={navigate} />
+            </>
+            : <>
 
-        return (
-          <Head>
-            <MarginedDiv>
-              {navStore.hasSider
-                ? <a onClick={collapse}>
-                  <HeaderIcon
-                    Icon={navStore.sidebarCollapsed ? MenuFoldOutlined : MenuUnfoldOutlined}
-                  />
-                </a>
-                : null}
-              <StyledLogo onClick={() => navigate("/resources")}/>
-            </MarginedDiv>
-            <MarginedDiv>
-              <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
-                {(matches) => matches
-                  ? <>
-                    <HeaderNavMenu vertical={false} selectedKeys={selectedKeys} to={navigate} />
-                  </>
-                  : <>
-
-                    <Dropdown overlay={<HeaderNavMenu
-                      vertical={true}
-                      selectedKeys={selectedKeys}
-                      to={navigate}
-                    />} trigger={["click"]}>
-                      <BarsOutlined />
-                    </Dropdown>
-                  </>
-                }
-              </MediaQuery>
-            </MarginedDiv>
-          </Head>
-        );
-      }}
-    </Location>
+              <Dropdown overlay={<HeaderNavMenu
+                vertical={true}
+                selectedKeys={selectedKeys}
+                to={navigate}
+              />} trigger={["click"]}>
+                <HeaderIcon Icon={BarsOutlined} />
+              </Dropdown>
+            </>
+          }
+        </MediaQuery>
+      </MarginedDiv>
+    </Head>
   );
 }
 
