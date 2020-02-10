@@ -7,6 +7,7 @@ import logo from "src/assets/logo-horizontal.svg";
 import { HomepageLanguageSelector } from "./LanguageSelector";
 import { UserStore } from "src/stores/UserStore";
 import { useStore } from "simstate";
+import { Footer } from "src/components/Footer";
 
 
 const Container = styled.div`
@@ -15,11 +16,9 @@ const Container = styled.div`
   height: 100vh;
   overflow: auto;
 
-  @media (min-width: ${antdBreakpoints.md}px) {
-    background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
-    background-position: center 110px;
-    background-size: 100%;
-  }
+  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  background-position: center 110px;
+  background-size: 100%;
 `;
 
 const Center = styled.div`
@@ -29,6 +28,7 @@ const Center = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
 `;
 
 const Top = styled.div`
@@ -42,9 +42,9 @@ const Header = styled.div`
 `;
 
 const Content = styled.div`
-  max-width: 500px;
+  max-width: 600px;
 
-  transform: translateY(-20%);
+  transform: translateY(-10%);
 `;
 
 const LoginFormSection = styled.div`
@@ -63,24 +63,28 @@ export const HomePage: React.FC<RouteComponentProps> = () => {
   }
 
   return (
-    <Container>
-      <Center>
-        <Content>
-          <Top>
-            <Header>
-              <Link to="/">
-                {/* <StyledLogo /> */}
-                {/* {React.createElement(banner)} */}
-                <img width={"100%"} alt="logo" src={logo} />
-              </Link>
-            </Header>
-            <HomepageLanguageSelector />
-          </Top>
-          <LoginFormSection>
-            <LoginForm />
-          </LoginFormSection>
-        </Content>
-      </Center>
-    </Container >
+    <div>
+
+      <Container>
+        <Center>
+          <Content>
+            <Top>
+              <Header>
+                <Link to="/">
+                  {/* <StyledLogo /> */}
+                  {/* {React.createElement(banner)} */}
+                  <img width={"100%"} alt="logo" src={logo} />
+                </Link>
+              </Header>
+              <HomepageLanguageSelector />
+            </Top>
+            <LoginFormSection>
+              <LoginForm />
+            </LoginFormSection>
+          </Content>
+        </Center>
+      </Container >
+      <Footer />
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 export default {
   metadata: {
     id: "cn",
-    gitalkLangId: "zh-CN",
     langStrings: ["cn", "zh-CN", "zh"],
     detailedId: "zh-CN",
     name: "简体中文",
@@ -53,6 +52,26 @@ export default {
       resources: "资源管理",
       expenses: "费用管理",
       identity: "用户管理"
+    },
+    footer: {
+      description: "为高校设计的云平台",
+      contact: {
+        title: "联系方式",
+        github:"GitHub - ddadaal",
+        website: "个人网站 - ddadaal.me",
+        linkedin: "LinkedIn - Chen Junda",
+      },
+      moreProducts: {
+        title: "更多产品",
+        chainstore: "ChainStore - 基于区块链的分布式存储解决方案",
+        chainpaper: "ChainPaper - 基于区块链的论文社交平台",
+        aplusquant: "A+Quant - 基于机器学习的大类资产管理系统",
+        tagx00: "Tag x00 - 基于机器学习的众包标注平台",
+        lightx00: "Light x00 - 灯具进销存管理系统",
+      },
+      copyright: {
+        madeWithLove: "用 ❤ 制作",
+      }
     },
   }
 };

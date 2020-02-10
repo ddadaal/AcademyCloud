@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { layoutConstants } from "./constants";
 import { Layout } from "antd";
 import { SideNav } from "./nav/SideNav";
-// import { Footer } from "@/components/Footer";
+import { Footer } from "src/components/Footer";
 
 const CenterContent = styled.div`
   position: relative;
@@ -22,7 +22,7 @@ const RootLayout: React.FunctionComponent = (props) => {
         <SideNav />
         {props.children}
       </Layout>
-      {/* <Footer /> */}
+      <Footer />
     </Layout>
   )
 };

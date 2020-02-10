@@ -2,35 +2,48 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "@reach/router";
 import "./footer.less";
-import logo from "@/assets/logo.png";
+import logo from "src/assets/logo-horizontal.svg";
+import { lang, LocalizedString } from "src/i18n";
 
 export interface FooterProps {
   isMobile?: boolean;
   id?: string;
 }
+const root = lang.footer;
 
 const dataSource = [
   {
-    title: "联系我",
+    title: root.contact.title,
     content: [
-      "GitHub"
+      root.contact.github,
+      root.contact.website,
+      root.contact.linkedin,
     ],
     contentLink: [
-      "https://github.com/ddadaal"
-    ]
+      "https://github.com/ddadaal",
+      "https://ddadaal.me",
+      "https://linkedin.com/chenjunda",
+    ],
   },
   {
-    title: "相关产品",
+    title: root.moreProducts.title,
     content: [
-      "ChainStore - 基于区块链的分布式存储解决方案",
-      "FinBrain - 基于机器学习的大类资产管理系统"
+      root.moreProducts.chainstore,
+      root.moreProducts.chainpaper,
+      root.moreProducts.aplusquant,
+      root.moreProducts.tagx00,
+      root.moreProducts.lightx00,
     ],
     contentLink: [
       "https://github.com/NJUChainStore/ChainStore",
-      "https://github.com/FinTechNJU/FinBrain"
+      "https://github.com/ddadaal/ChainPaper-Frontend",
+      "https://github.com/FinTechNJU/FinBrain",
+      "https://github.com/trapx00/Tagx00",
+      "https://github.com/trapx00/Lightx00",
     ],
   },
 ];
+
 
 export class Footer extends React.Component<FooterProps, {}> {
 
@@ -40,27 +53,29 @@ export class Footer extends React.Component<FooterProps, {}> {
     isMobile: false,
   };
 
-  getLiChildren = (data, i) => {
+  getLiChildren = (data: typeof dataSource[0], i: number) => {
     const links = data.contentLink;
     const content = data.content
       .map((item, ii) => {
-        const cItem = item.trim();
-        const isImg = cItem.match(/\.(jpg|png|svg|bmp|jpeg)$/i);
+        const cItem = <LocalizedString id={item} />;
         const link = links[ii];
-        const imgContent = isImg ? <img src={cItem} width="100%" /> : cItem;
-        return (<li className={isImg ? "icon" : ""} key={ii}>
-          {link.startsWith("/")
-            ? <Link to={link}>{imgContent}</Link>
-            : <a href={link} target="_blank" rel="noopener noreferrer">{imgContent}</a>
-          }
-        </li>);
+        return (
+          <li key={ii}>
+            {link.startsWith("/")
+              ? <Link to={link}>{cItem}</Link>
+              : <a href={link} target="_blank" rel="noopener noreferrer">{cItem}</a>
+            }
+          </li>
+        );
       });
-    return (<li className={data.className} key={i} id={`${this.props.id}-block${i}`}>
-      <h2>{data.title}</h2>
-      <ul>
-        {content}
-      </ul>
-    </li>);
+    return (
+      <li key={i} id={`${this.props.id}-block${i}`}>
+        <h2><LocalizedString id={data.title} /></h2>
+        <ul>
+          {content}
+        </ul>
+      </li>
+    );
   }
 
   render() {
@@ -76,27 +91,23 @@ export class Footer extends React.Component<FooterProps, {}> {
             <LogoContainer>
               <img src={logo} />
             </LogoContainer>
-            <p>基于区块链的论文分享平台；论文交流，版权保证</p>
+            <p><LocalizedString id={root.description}/> </p>
           </li>
           {liChildrenToRender}
         </ul>
-        <span className="copyright">
-          2019
-        </span>
+        <p className="copyright">
+          {new Date().getFullYear()} | <LocalizedString id={root.copyright.madeWithLove}/>
+        </p>
       </div>
     );
   }
 }
 
+
 export const LogoContainer = styled.div`
-  span {
-    color: #ffffff;
-    font-weight: bold;
-    font-size: 21px;
-  }
   img {
-    margin-right: 8px;
-    width: 80px;
+    width: auto;
     height: 40px;
+    margin-bottom: 12px;
   }
 `;

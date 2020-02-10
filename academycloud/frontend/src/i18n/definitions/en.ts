@@ -1,7 +1,6 @@
 export default {
   metadata: {
     id: "en",
-    gitalkLangId: "en",
     langStrings: ["en", "en-US"],
     detailedId: "en-US",
     name: "English",
@@ -53,6 +52,26 @@ export default {
       resources: "Resources",
       expenses: "Expenses",
       identity: "Identity"
+    },
+    footer: {
+      description: "Cloud for Academy",
+      contact: {
+        title: "Contact",
+        github:"GitHub - ddadaal",
+        website: "Personal Website - ddadaal.me",
+        linkedin: "LinkedIn - Chen Junda"
+      },
+      moreProducts: {
+        title: "More Products",
+        chainpaper: "ChainPaper - Paper Social Platform powered by Blockchain",
+        chainstore: "ChainStore - Distributed Storage System based on Blockchain",
+        aplusquant: "A+Quant - An Asset Allocation System based on ML",
+        tagx00: "Tag x00 - Online Tagging Platform powered by ML",
+        lightx00: "Light x00 - Light Product Purchasing-Selling-Stocking System",
+      },
+      copyright: {
+        madeWithLove: "Made with ❤",
+      },
     },
   },
 };
