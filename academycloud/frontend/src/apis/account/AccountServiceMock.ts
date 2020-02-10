@@ -1,8 +1,10 @@
 import { AccountService, LoginResponse } from "./AccountService";
 import { ScopeableTarget } from "src/models/account";
+import { delay } from "src/utils/delay";
 
 export class AccountServiceMock extends AccountService {
   async getScopeableTargets(username: string, password: string, domainName: string): Promise<ScopeableTarget[]> {
+    await delay(1000);
     if (username === "noscope") { return []; }
 
     return [
