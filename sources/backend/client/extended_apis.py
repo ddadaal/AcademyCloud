@@ -21,7 +21,8 @@ class ExtendedApis:
         if not extra_headers:
             extra_headers = {}
         return requests.get(urljoin(self.auth_url, url),
-                            headers={"X-Auth-Token": self.auth_token, "Content-Type": "application/json",
+                            headers={"X-Auth-Token": self.auth_token,
+                                     "Content-Type": "application/json",
                                      **extra_headers})
 
     def get_scopeable_projects(self) -> List[Project]:
@@ -34,13 +35,13 @@ class ExtendedApis:
 
     def get_roles_user_has_on_domain(self, user_id: str, domain_id: str) -> List[Entity]:
         resp = self.request_with_auth_token(
-            "domains/{domain_id}/users/{user_id}/roles".format(domain_id=domain_id, user_id=user_id)
+            f"domains/{domain_id}/users/{user_id}/roles"
         ).json()
         return Munch.fromDict(resp["roles"])
 
     def get_roles_user_has_on_project(self, user_id: str, project_id: str) -> List[Entity]:
         resp = self.request_with_auth_token(
-            "projects/{project_id}/users/{user_id}/roles".format(project_id=project_id, user_id=user_id)
+            f"projects/{project_id}/users/{user_id}/roles"
         ).json()
         return Munch.fromDict(resp["roles"])
 

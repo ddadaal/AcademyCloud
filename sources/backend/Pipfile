@@ -8,7 +8,7 @@ autopep8 = "*"
 
 [packages]
 openstacksdk = "*"
-flask-restful = "*"
+flask-restx = "*"
 flask-sqlalchemy = "*"
 cachetools = "*"
 

@@ -1,37 +1,56 @@
-from dataclasses import dataclass, asdict
-from flask_restful import reqparse, Resource, fields, marshal_with
-from munch import Munch
+from flask import request
+from flask_restx import Resource, fields, Namespace
 
-from client.client import get_scopeable_targets, scoped_connect, ScopedAuth
-from utils.auth import generate_token, decode_token
+ns = Namespace("account", description="登录注册")
 
-scopeable_targets_request_parser = reqparse.RequestParser()
-scopeable_targets_request_parser.add_argument('username', type=str, required=True, help='username')
-scopeable_targets_request_parser.add_argument('password', type=str, required=True, help='password')
-scopeable_targets_request_parser.add_argument('domainName', type=str, required=True, help='domain name')
-
-login_parser = reqparse.RequestParser()
-login_parser.add_argument("username", type=str, required=True, help="username")
-login_parser.add_argument("password", type=str, required=True, help="password")
-login_parser.add_argument("domainName", type=str, required=True, help="domain name")
-login_parser.add_argument("projectName", type=str, required=False, help="project name, if scoped to project")
+scope = ns.model("范围", {
+    "domainId": fields.String(help="域ID"),
+    "projectId": fields.String(required=False, help="项目ID，可为None"),
+    "role": fields.String(enum=["Admin", "Member"]),
+})
 
 
-class Account(Resource):
-    PATH = "/account"
+@ns.route("login")
+class AccountLoginResource(Resource):
 
-    # Get scopeable targets
+    @ns.doc("获取用户可以登录的范围")
+    @ns.expect(ns.model("ScopeRequest", {
+        "username": fields.String(required=True, help="用户名"),
+        "password": fields.String(required=True, help="密码")
+    }))
+    @ns.response(200, "用户名和密码有效，返回用户可以登录的范围", ns.model("Scopes Response", {
+        "scopes": fields.List(fields.Nested(ns.inherit("ScopeInfo", scope, {
+            "domainName": fields.String(help="域名字"),
+            "projectName": fields.String(required=False, help="项目名字"),
+        })))
+    }))
+    @ns.response(401, "用户名和密码无效。")
     def get(self):
-        args = Munch(scopeable_targets_request_parser.parse_args())
-        targets = get_scopeable_targets(args.username, args.password, args.domainName)
-        return [asdict(target) for target in targets]
+        args = request.get_json()
+        return
 
-    # Login. Generate token.
+    @ns.doc("使用用户指定的用户名、密码和范围登录")
+    @ns.expect(ns.model("LoginRequest", {
+        "username": fields.String(required=True, help="用户名"),
+        "password": fields.String(required=True, help="密码"),
+        "scope": fields.Nested(scope, required=True, help="以登录的范围"),
+    }))
+    @ns.response(200, "用户名、密码和范围有效，返回token。", {
+        "token": fields.String(help="Token")
+    })
+    @ns.response(401, "用户名、密码或者范围无效。")
     def post(self):
-        args = Munch(login_parser.parse_args())
-        auth = ScopedAuth(args.username, args.password, args.domainName, args.projectName)
-        conn = scoped_connect(auth)
-        return {
-            "token": generate_token(auth),
-            "scope": asdict(conn.current_scope)
-        }
+        args = request.get_json()
+        return
+
+
+@ns.route("register")
+class AccountRegisterResource(Resource):
+    @ns.doc("注册")
+    @ns.expect(ns.model("RegisterRequest", {
+        "username": fields.String(required=True, help="用户名"),
+        "password": fields.String(required=True, help="密码"),
+    }))
+    @ns.response(200, "注册成功")
+    def post(self):
+        pass

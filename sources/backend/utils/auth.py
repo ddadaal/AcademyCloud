@@ -1,32 +1,21 @@
-from typing import Optional, List
-
+from typing import Optional, List, Dict
+import json
 from cryptography.fernet import Fernet
-from client.client import ScopedAuth
 from config import token_key
+import base64
 
-# Put this somewhere safe!
 # str to byte[]
 f = Fernet(token_key.encode())
 
 
-def generate_token(auth: ScopedAuth) -> str:
-    secret = "{}+{}+{}+{}".format(auth.username,
-                                  auth.password,
-                                  auth.domain_name,
-                                  auth.project_name if auth.project_name else ""
-                                  )
+def generate_token(payload: Dict) -> str:
+    secret = json.dumps(payload)
     # byte[] to str
     return f.encrypt(secret.encode()).decode()
 
 
-def decode_token(token: str) -> ScopedAuth:
+def decode_token(token: str) -> Dict:
     # decrypt requires str to bytes[]
     # and bytes[] to str the result
     decrypted: str = f.decrypt(token.encode()).decode()
-    parts: List[str] = decrypted.split("+")
-    return ScopedAuth(
-        username=parts[0],
-        password=parts[1],
-        domain_name=parts[2],
-        project_name=parts[3] if parts[3] != "" else None
-    )
+    return json.loads(decrypted)
