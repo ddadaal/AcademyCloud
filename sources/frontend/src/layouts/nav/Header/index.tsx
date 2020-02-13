@@ -151,14 +151,14 @@ export const Header: React.FC = () => {
       </MarginedDiv>
       <MarginedDiv margin={0}>
         {/* {fixedMenu} */}
-        <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
+        <FixedMenu/>
+        {/* <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
           {(matches) => matches
             ? <>
               <HeaderNavMenu vertical={false} selectedKeys={selectedKeys} to={navigate} />
               <FixedMenu />
             </>
             : <>
-              <FixedMenu/>
               <Dropdown overlay={
                 <HeaderNavMenu
                   vertical={true}
@@ -169,7 +169,7 @@ export const Header: React.FC = () => {
               </Dropdown>
             </>
           }
-        </MediaQuery>
+        </MediaQuery> */}
       </MarginedDiv>
     </Head>
   );

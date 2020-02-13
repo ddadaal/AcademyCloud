@@ -37,6 +37,21 @@ export default {
         selfCenter: "个人中心",
         logout: "登出",
       },
+      sidenav: {
+        resources: {
+          root: "资源管理",
+          instance: "实例",
+          network: "网络",
+          volume: "云硬盘",
+        },
+        expenses: {
+          root: "费用管理",
+        },
+        identity: {
+          root: "用户管理",
+          selfcenter: "个人中心",
+        },
+      },
       navPoints: {
         homepage: "登录",
         resources: {

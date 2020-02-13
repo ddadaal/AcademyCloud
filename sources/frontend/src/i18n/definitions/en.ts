@@ -46,8 +46,24 @@ export default {
           network: "Network",
           volume: "Volumes",
         }
-      }
+      },
+      sidenav: {
+        resources: {
+          root: "Resources",
+          instance: "Instances",
+          network: "Network",
+          volume: "Volume",
+        },
+        expenses: {
+          root: "Expenses",
+        },
+        identity: {
+          root: "Identity",
+          selfcenter: "Self Center",
+        },
+      },
     },
+
     header: {
       resources: "Resources",
       expenses: "Expenses",
