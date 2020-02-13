@@ -1,0 +1,27 @@
+{
+	"Daily Report": {
+		"scope": "markdown",
+		"prefix": "dailyreport",
+		"body": [
+			"# $CURRENT_MONTH月$CURRENT_DATE日",
+			"",
+			"## 完成的工作",
+			"",
+			"- $1",
+			"",
+			"## 计划",
+			"",
+			"- "
+		]
+	},
+	"talk": {
+		"scope": "markdown",
+		"prefix": "talk",
+		"description": "Important talk between me and tutor",
+		"body": [
+			"**$CURRENT_YEAR年$CURRENT_MONTH月$CURRENT_DATE日 $1:$2，$3** *$4*",
+			"",
+			"> $0"
+		]
+	}
+}
