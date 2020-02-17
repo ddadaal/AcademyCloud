@@ -57,12 +57,12 @@ export const HomePageLayout: React.FC = ({ children }) => {
       <Container>
         <Center>
           <Content>
+            <Header>
+              <Link to="/">
+                <img width={"100%"} alt="logo" src={logo} />
+              </Link>
+            </Header>
             <RowCenter>
-              <Header>
-                <Link to="/">
-                  <img width={"100%"} alt="logo" src={logo} />
-                </Link>
-              </Header>
               <PageIndicator />
             </RowCenter>
             <FormSection>

@@ -9,6 +9,10 @@ export default {
     homepage: {
       title: "AcademyCloud",
       description: "Cloud for Academy",
+      pageIndicator: {
+        login: "Login",
+        register: "Register",
+      },
       loginForm: {
         username: "Username",
         usernamePrompt: "Please input username.",

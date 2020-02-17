@@ -9,6 +9,10 @@ export default {
     homepage: {
       title: "AcademyCloud",
       description: "为大学设计的云平台",
+      pageIndicator: {
+        login: "登录",
+        register: "注册",
+      },
       loginForm: {
         username: "用户名",
         usernamePrompt: "请输入用户名",
