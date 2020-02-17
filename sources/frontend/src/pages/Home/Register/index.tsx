@@ -20,6 +20,8 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
   const i18nStore = useStore(I18nStore);
   const [registering, setRegistering] = useState(false);
 
+  // the origin signature is any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = useCallback(async (values: { [key: string]: any }) => {
     const { username, password } = values;
     setRegistering(true);
@@ -33,7 +35,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
         scope: registeringResponse.scope,
         token: registeringResponse.token
       }, true);
-      navigate("/resources");
+      await navigate("/resources");
     } catch (e) {
       const ex = e as HttpError;
       if (ex.status === 403) {

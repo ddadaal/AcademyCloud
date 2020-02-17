@@ -32,7 +32,7 @@ function App() {
   return (
     <StoreProvider stores={[userStore, i18nStore, navStore]}>
       <Suspense fallback={<PageLoading />}>
-        <Router primary={false}>
+        <Router primary={false} >
           <TopLevelRouteSelector path="*" />
         </Router>
       </Suspense>

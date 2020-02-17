@@ -35,7 +35,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       const loginResponse = await accountService.login(username, password, scope);
       userStore.login({ username, token: loginResponse.token, scope }, values.remember);
 
-      navigate("/resources");
+      await navigate("/resources");
     } catch (e) {
       notification.error({
         message: i18nStore.translate(root.loginFailTitle),
@@ -46,7 +46,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
     }
   };
 
-  const localizedStrings = useMultiLocalized(
+  const [username, password] = useMultiLocalized(
     root.username,
     root.password,
   ) as string[];
@@ -63,7 +63,10 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
         name="username"
         rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}
       >
-        <Input disabled={loggingIn} prefix={<UserOutlined className="site-form-item-icon" />} placeholder={localizedStrings[0]} />
+        <Input
+          disabled={loggingIn}
+          prefix={<UserOutlined className="site-form-item-icon" />}
+          placeholder={username} />
       </Form.Item>
       <Form.Item
         name="password"
@@ -73,7 +76,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           disabled={loggingIn}
-          placeholder={localizedStrings[1]}
+          placeholder={password}
         />
       </Form.Item>
       <Form.Item>
