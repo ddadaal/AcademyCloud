@@ -26,37 +26,29 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
     try {
       setLoggingIn(true);
       const accountService = getApiService(AccountService);
-      const targets = await accountService.getScopes(username, password);
-      if (targets.length === 0) {
-        notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.noScope) });
-        return;
-      }
+      const scopes = await accountService.getScopes(username, password);
 
-      console.log("Available scopes", targets);
+      console.log("response", scopes);
 
-      // randomly select a target to login for now
-      const target = targets[0];
-      const loginResponse = await accountService.login(username, password, target);
-      userStore.login({ username, token: loginResponse.token }, values.remember);
-
-      console.log("Login success.");
+      // select default; if not, select lastLogin; if not, the first
+      const scope = scopes.defaultScope ?? scopes.lastLoginScope ?? scopes.scopes[0];
+      const loginResponse = await accountService.login(username, password, scope);
+      userStore.login({ username, token: loginResponse.token, scope }, values.remember);
 
       navigate("/resources");
     } catch (e) {
-      notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.other) });
+      notification.error({
+        message: i18nStore.translate(root.loginFailTitle),
+        description: i18nStore.translate(root.other)
+      });
     } finally {
       setLoggingIn(false);
     }
   };
 
   const localizedStrings = useMultiLocalized(
-    root.school,
     root.username,
     root.password,
-    root.remember,
-    root.forget,
-    root.login,
-    root.register,
   ) as string[];
 
   return (
@@ -71,7 +63,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
         name="username"
         rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}
       >
-        <Input disabled={loggingIn} prefix={<UserOutlined className="site-form-item-icon" />} placeholder={localizedStrings[1]} />
+        <Input disabled={loggingIn} prefix={<UserOutlined className="site-form-item-icon" />} placeholder={localizedStrings[0]} />
       </Form.Item>
       <Form.Item
         name="password"
@@ -81,21 +73,21 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           disabled={loggingIn}
-          placeholder={localizedStrings[2]}
+          placeholder={localizedStrings[1]}
         />
       </Form.Item>
       <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox disabled={loggingIn}>{localizedStrings[3]}</Checkbox>
+          <Checkbox disabled={loggingIn}><LocalizedString id={root.remember} /></Checkbox>
         </Form.Item>
 
         <ForgotLink>
-          {localizedStrings[4]}
+          <LocalizedString id={root.forget} />
         </ForgotLink>
       </Form.Item>
       <Form.Item>
         <FormButton loading={loggingIn} type="primary" htmlType="submit">
-          {localizedStrings[5]}
+          <LocalizedString id={root.login} />
         </FormButton>
       </Form.Item>
     </Form >

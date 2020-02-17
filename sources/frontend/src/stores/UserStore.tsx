@@ -5,6 +5,7 @@ const STORAGE_KEY = "User";
 
 interface User {
   username: string;
+  scope: Scope;
   token: string;
 }
 
@@ -19,21 +20,24 @@ export function getUserInfoInStorage(): User | null {
 
 export function UserStore() {
   const [user, setUser] = useState(getUserInfoInStorage);
-  const [loggedIn, setLoggedIn] = useState(!!user);
+
+  const changeScope = useCallback((scope: Scope) => {
+    setUser((user) => user ? { ...user, scope } : null);
+  }, [setUser]);
+
+  const loggedIn = !!user;
 
   const logout = useCallback(() => {
     localStorage.removeItem(STORAGE_KEY);
-    setLoggedIn(false);
     setUser(null);
   }, []);
 
   const login = useCallback((user: User, remember: boolean) => {
-    setLoggedIn(true);
     setUser(user);
     if (remember) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     }
   }, []);
 
-  return { loggedIn, user, logout, login };
+  return { loggedIn, user, logout, login, changeScope };
 }

@@ -10,8 +10,6 @@ export default {
       title: "AcademyCloud",
       description: "Cloud for Academy",
       loginForm: {
-        school: "School",
-        schoolPrompt: "Please input school.",
         username: "Username",
         usernamePrompt: "Please input username.",
         password: "Password",
@@ -20,10 +18,21 @@ export default {
         remember: "Remember me",
         forget: "Forget password",
         loginFailTitle: "Login failed.",
-        noScope:  "You are not part of any schools or projects. Please contact administrator.",
+        noScope: "You are not part of any schools or projects. Please contact administrator.",
         other: "Login Failed",
+      },
+      registerForm: {
+        username: "Username",
+        usernamePrompt: "Please input username.",
+        password: "Password",
+        passwordPrompt: "Please input password.",
+        email: "Email",
+        emailPrompt: "Please input email.",
         register: "Register",
-      }
+        registerFailed: "Register failed",
+        conflict: "Username has been token.",
+        other: "Register failed. Please retry.",
+      },
     },
     resources: {
       sidebar: {
@@ -74,7 +83,7 @@ export default {
       description: "Cloud for Academy",
       contact: {
         title: "Contact",
-        github:"GitHub - ddadaal",
+        github: "GitHub - ddadaal",
         website: "Personal Website - ddadaal.me",
         linkedin: "LinkedIn - Chen Junda"
       },

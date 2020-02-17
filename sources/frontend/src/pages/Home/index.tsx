@@ -6,7 +6,7 @@ import { HomePageLayout } from "src/pages/Home/HomePageLayout";
 import { LoginForm } from "src/pages/Home/Login";
 import { RegisterForm } from "src/pages/Home/Register";
 
-const HomePage: React.FC<RouteComponentProps> = (props) => {
+const HomePage: React.FC<RouteComponentProps> = () => {
   const userStore = useStore(UserStore);
   if (userStore.loggedIn) {
     return <Redirect noThrow={true} to="/resources" />;

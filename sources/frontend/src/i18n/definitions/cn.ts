@@ -10,8 +10,6 @@ export default {
       title: "AcademyCloud",
       description: "为大学设计的云平台",
       loginForm: {
-        school: "学校",
-        schoolPrompt: "请输入学校",
         username: "用户名",
         usernamePrompt: "请输入用户名",
         password: "密码",
@@ -20,10 +18,21 @@ export default {
         remember: "记住我",
         forget: "忘记密码",
         loginFailTitle: "登录失败",
-        noScope:  "您未加入任何学校或者项目！请联系管理员。",
+        noScope: "您未加入任何学校或者项目！请联系管理员。",
         other: "登录失败",
+      },
+      registerForm: {
+        username: "用户名",
+        usernamePrompt: "请输入用户名",
+        password: "密码",
+        passwordPrompt: "请输入密码",
+        email: "电子邮箱",
+        emailPrompt: "请输入电子邮箱",
         register: "注册",
-      }
+        registerFailed: "注册失败",
+        conflict: "用户名已经被占用！",
+        other: "注册失败，请重试！",
+      },
     },
     resources: {
       sidebar: {
@@ -73,7 +82,7 @@ export default {
       description: "为高校设计的云平台",
       contact: {
         title: "联系方式",
-        github:"GitHub - ddadaal",
+        github: "GitHub - ddadaal",
         website: "个人网站 - ddadaal.me",
         linkedin: "LinkedIn - Chen Junda",
       },
