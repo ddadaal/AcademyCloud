@@ -20,10 +20,13 @@ jobs:
           node-version: "10.x"
       - name: npm install
         run: npm install
+        working-directory: ${{ env.working-directory }}
       - name: build
         run: npm run build
+        working-directory: ${{ env.working-directory }}
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
+        working-directory: ${{ env.working-directory }}
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./build
