@@ -18,8 +18,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "10.x"
-      - name: npm install
-        run: npm install
+      - name: install using npm ci 
+        run: npm ci
         working-directory: ${{ env.working-directory }}
       - name: build
         run: npm run build
