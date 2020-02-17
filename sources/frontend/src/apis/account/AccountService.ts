@@ -1,26 +1,25 @@
 import { HttpService, HttpMethod } from "../HttpService";
-import { ScopeableTarget, Scope } from "../../models/account";
+import { Scope } from "../../models/account";
 
 export interface LoginResponse {
   token: string;
-  scope: Scope;
 }
 
 export class AccountService extends HttpService {
-  async getScopeableTargets(username: string, password: string, domainName: string): Promise<ScopeableTarget[]> {
+  async getScopes(username: string, password: string): Promise<Scope[]> {
     const data = await this.fetch({
       method: HttpMethod.GET,
-      params: { username, password, domainName },
-      path: "/account",
+      params: { username, password },
+      path: "/account/scopes",
     });
 
-    return data as ScopeableTarget[];
+    return data as Scope[];
   }
 
-  async login(username: string, password: string, domainName: string, projectName?: string): Promise<LoginResponse> {
+  async login(username: string, password: string, scope: Scope): Promise<LoginResponse> {
     const data = await this.fetch<LoginResponse>({
       method: HttpMethod.POST,
-      params: { username, password, domainName, projectName },
+      body: { username, password, scope },
       path: "/account"
     });
 

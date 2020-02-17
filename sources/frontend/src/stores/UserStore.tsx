@@ -6,7 +6,6 @@ const STORAGE_KEY = "User";
 interface User {
   username: string;
   token: string;
-  scope: Scope;
 }
 
 export function getUserInfoInStorage(): User | null {

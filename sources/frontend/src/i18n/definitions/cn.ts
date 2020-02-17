@@ -22,6 +22,7 @@ export default {
         loginFailTitle: "登录失败",
         noScope:  "您未加入任何学校或者项目！请联系管理员。",
         other: "登录失败",
+        register: "注册",
       }
     },
     resources: {

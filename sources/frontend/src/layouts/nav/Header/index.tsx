@@ -6,12 +6,12 @@ import MediaQuery from "react-responsive";
 import { layoutConstants } from "../../constants";
 import styled from "styled-components";
 import { Location, navigate, Link } from "@reach/router";
-import {ReactComponent as LogoSvg} from "src/assets/logo-horizontal.svg";
+import { ReactComponent as LogoSvg } from "src/assets/logo-horizontal.svg";
 import { LocalizedString } from "src/i18n";
 import { useStore } from "simstate";
 import { NavStore } from "src/layouts/nav/NavStore";
 import HeaderIcon from "./HeaderIcon";
-import { MenuFoldOutlined, MenuUnfoldOutlined }  from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { useLocation } from "src/utils/useLocation";
 import { LanguageSelector } from "./LanguageSelector";
 import { UserIndicator } from "./UserIndicator";
@@ -22,7 +22,7 @@ interface Props {
 
 }
 
-export const MarginedDiv = styled.div<{ margin?: number}>`
+export const MarginedDiv = styled.div<{ margin?: number }>`
 
   display: flex;
   align-items: center;
@@ -122,7 +122,7 @@ const Logo = () => {
   }, [userStore.loggedIn]);
 
   return (
-    <StyledLogo onClick={jump}/>
+    <StyledLogo onClick={jump} />
   );
 };
 
@@ -150,15 +150,14 @@ export const Header: React.FC = () => {
         <Logo />
       </MarginedDiv>
       <MarginedDiv margin={0}>
-        {/* {fixedMenu} */}
-        <FixedMenu/>
-        {/* <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
+        <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
           {(matches) => matches
             ? <>
               <HeaderNavMenu vertical={false} selectedKeys={selectedKeys} to={navigate} />
               <FixedMenu />
             </>
             : <>
+              <FixedMenu />
               <Dropdown overlay={
                 <HeaderNavMenu
                   vertical={true}
@@ -169,7 +168,7 @@ export const Header: React.FC = () => {
               </Dropdown>
             </>
           }
-        </MediaQuery> */}
+        </MediaQuery>
       </MarginedDiv>
     </Head>
   );

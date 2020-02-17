@@ -1,31 +1,25 @@
 import { AccountService, LoginResponse } from "./AccountService";
-import { ScopeableTarget } from "src/models/account";
+import { Scope } from "src/models/account";
 import { delay } from "src/utils/delay";
 
 export class AccountServiceMock extends AccountService {
-  async getScopeableTargets(username: string, password: string, domainName: string): Promise<ScopeableTarget[]> {
+  async getScopes(username: string, password: string): Promise<Scope[]> {
     await delay(1000);
     if (username === "noscope") { return []; }
 
     return [
-      { type: "project", name: "67", id: "67Project" },
-      { type: "domain", name: "NJU", id: "NJUDomain" },
+      { domainId: "NJU", domainName: "NJU", role: "member" },
+      { domainId: "NJU", domainName: "NJU", projectName: "67", projectId: "67", role: "admin" },
     ];
 
   }
 
-  async login(username: string, password: string, domainName: string, projectName?: string): Promise<LoginResponse> {
+  async login(username: string, password: string, scope: Scope): Promise<LoginResponse> {
     if (username === "noscope") { }
     if (username === "401") { }
 
     return {
       token: "testtoken",
-      scope: {
-        type: projectName ? "project" : "domain",
-        name: projectName ?? domainName,
-        id: projectName ? `${projectName}Id` : `${domainName}Id`,
-        role: "admin",
-      }
     }
   }
 

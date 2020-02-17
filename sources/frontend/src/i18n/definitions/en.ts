@@ -22,6 +22,7 @@ export default {
         loginFailTitle: "Login failed.",
         noScope:  "You are not part of any schools or projects. Please contact administrator.",
         other: "Login Failed",
+        register: "Register",
       }
     },
     resources: {

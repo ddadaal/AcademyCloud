@@ -1,5 +1,5 @@
-import { Form, Input, Checkbox, Button, notification } from 'antd';
-import { UserOutlined, LockOutlined, HomeOutlined } from '@ant-design/icons';
+import { Form, Input, Checkbox, notification } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import React, { useState } from "react";
 import { lang, useMultiLocalized, LocalizedString, I18nStore } from "src/i18n";
 import styled from "styled-components";
@@ -7,11 +7,12 @@ import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { getApiService } from "src/apis";
 import { AccountService } from "src/apis/account/AccountService";
-import { navigate } from "@reach/router";
+import { navigate, RouteComponentProps } from "@reach/router";
+import { FormButton } from "src/pages/Home/HomePageLayout";
 
 const root = lang.homepage.loginForm;
 
-export function LoginForm() {
+export const LoginForm: React.FC<RouteComponentProps> = () => {
 
   const userStore = useStore(UserStore);
   const i18nStore = useStore(I18nStore);
@@ -21,13 +22,13 @@ export function LoginForm() {
   // The original signature is any.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = async (values: { [key: string]: any }) => {
-    const { username, password, domain } = values;
+    const { username, password } = values;
     try {
       setLoggingIn(true);
       const accountService = getApiService(AccountService);
-      const targets = await accountService.getScopeableTargets(username, password, domain);
+      const targets = await accountService.getScopes(username, password);
       if (targets.length === 0) {
-        notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.noScope)});
+        notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.noScope) });
         return;
       }
 
@@ -35,14 +36,14 @@ export function LoginForm() {
 
       // randomly select a target to login for now
       const target = targets[0];
-      const loginResponse = await accountService.login(username, password, domain, target.type === "project" ? target.name : undefined);
-      userStore.login({ username, token: loginResponse.token, scope: loginResponse.scope}, values.remember);
+      const loginResponse = await accountService.login(username, password, target);
+      userStore.login({ username, token: loginResponse.token }, values.remember);
 
       console.log("Login success.");
 
       navigate("/resources");
     } catch (e) {
-      notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.other)});
+      notification.error({ message: i18nStore.translate(root.loginFailTitle), description: i18nStore.translate(root.other) });
     } finally {
       setLoggingIn(false);
     }
@@ -55,6 +56,7 @@ export function LoginForm() {
     root.remember,
     root.forget,
     root.login,
+    root.register,
   ) as string[];
 
   return (
@@ -65,12 +67,6 @@ export function LoginForm() {
       onFinish={onFinish}
 
     >
-      <Form.Item
-        name="domain"
-        rules={[{ required: true, message: <LocalizedString id={root.schoolPrompt} /> }]}
-      >
-        <Input disabled={loggingIn} prefix={<HomeOutlined className="site-form-item-icon" />} placeholder={localizedStrings[0]} />
-      </Form.Item>
       <Form.Item
         name="username"
         rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}
@@ -98,17 +94,14 @@ export function LoginForm() {
         </ForgotLink>
       </Form.Item>
       <Form.Item>
-        <LoginFormButton loading={loggingIn} type="primary" htmlType="submit">
+        <FormButton loading={loggingIn} type="primary" htmlType="submit">
           {localizedStrings[5]}
-        </LoginFormButton>
+        </FormButton>
       </Form.Item>
     </Form >
   );
 }
 
-const LoginFormButton = styled(Button)`
-  width: 100%;
-`;
 
 const ForgotLink = styled.a`
   float: right;
