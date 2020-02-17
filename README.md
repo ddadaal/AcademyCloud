@@ -1,10 +1,16 @@
 <img src="sources/frontend/src/assets/logo-horizontal.svg" width="500px"/>
 
-# Graduation Project - AcademyCloud
+# AcademyCloud
 
-My undergraduate graduation project: AcademyCloud.
+AcademyCloud is a public IaaS cloud that is:
 
-## Contents
+- designed for educational institutions
+- built on OpenStack
+- also my undergraduate graduation project
+
+[Opening Proposal](docs/research-proposal.md)
+
+# Contents
 
 - [reports](/reports)
   - daily and periodic reports
@@ -14,7 +20,6 @@ My undergraduate graduation project: AcademyCloud.
   - OpenStack dpeloyment scripts
 - [documentations](/docs)
   - [important talks between me and mentor](docs/important-talks.md)
-  - [research proposal（开题报告）](Docs/research-proposal.md)
 - [sources](/sources)
   - The source code for the project, including
     - [Python backend](sources/backend)
