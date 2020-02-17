@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./sources/frontend
     steps:
       - uses: actions/checkout@v1
         with:
