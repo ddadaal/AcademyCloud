@@ -26,8 +26,7 @@ jobs:
         working-directory: ${{ env.working-directory }}
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
-        working-directory: ${{ env.working-directory }}
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./sources/frontend/build
           force_orphan: true
