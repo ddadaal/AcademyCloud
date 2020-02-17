@@ -1,6 +1,6 @@
 <img src="sources/frontend/src/assets/logo-horizontal.svg" width="500px"/>
 
-# AcademyCloud
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ddadaal/AcademyCloud/frontend%20build%20and%20deploy?label=frontend%20build%20and%20deploy&style=flat-square)
 
 AcademyCloud is a public IaaS cloud that is:
 
@@ -8,7 +8,7 @@ AcademyCloud is a public IaaS cloud that is:
 - built on OpenStack
 - also my undergraduate graduation project
 
-Check the demo version now! http://academycloud.ddadaal.me
+Check the demo version now! https://academycloud.ddadaal.me
 
 [Opening Proposal](docs/research-proposal.md)
 
