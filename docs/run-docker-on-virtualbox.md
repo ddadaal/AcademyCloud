@@ -11,6 +11,7 @@
 5. 运行`docker-machine env default`让`docker-machine`后续操作都在目标主机上
 6. 再运行`& "C:\Program Files\Docker Toolbox\docker-machine.exe" env default | Invoke-Expression`让docker使用目标主机
 7. 运行`vim $PROFILE`打开PowerShell配置文件，然后将以上命令加入配置文件中，使以后PowerShell每次开启时就自动配置环境。
+8. 配置完成。以后每次重启电脑，需要手动运行`docker-machine start`启动虚拟机。
 
 # 设置代理
 
