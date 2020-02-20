@@ -5,7 +5,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{e28bb180-fe5e-4da6-81dc-f59b40c14a83}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>run.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -19,11 +20,11 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="db\models\__pycache__\account.cpython-38.pyc" />
+    <Content Include="db\models\__pycache__\utils.cpython-38.pyc" />
     <Content Include="Pipfile" />
+    <Content Include="README.md" />
     <Content Include="Resources.pyproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="run.py" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include=".venv\">
@@ -35,6 +36,34 @@
       <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
       <Architecture>X64</Architecture>
     </Interpreter>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="client\" />
+    <Folder Include="db\" />
+    <Folder Include="db\models\" />
+    <Folder Include="db\models\__pycache__\" />
+    <Folder Include="resources\" />
+    <Folder Include="utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="app.py" />
+    <Compile Include="client\client.py" />
+    <Compile Include="client\extended_apis.py" />
+    <Compile Include="client\identity.py" />
+    <Compile Include="client\models.py" />
+    <Compile Include="client\__init__.py" />
+    <Compile Include="config.py" />
+    <Compile Include="db\models\account.py" />
+    <Compile Include="db\models\billing.py" />
+    <Compile Include="db\models\resources.py" />
+    <Compile Include="db\models\utils.py" />
+    <Compile Include="db\__init__.py" />
+    <Compile Include="resources\account.py" />
+    <Compile Include="resources\instance.py" />
+    <Compile Include="resources\project.py" />
+    <Compile Include="resources\utils.py" />
+    <Compile Include="resources\__init__.py" />
+    <Compile Include="utils\auth.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

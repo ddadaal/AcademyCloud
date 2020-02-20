@@ -21,7 +21,7 @@ export class AccountService extends HttpService {
     const data = await this.fetch<ScopesResponse>({
       method: HttpMethod.GET,
       params: { username, password },
-      path: "/account/scopes",
+      path: "/auth/scopes",
     });
 
     return data;
@@ -31,7 +31,7 @@ export class AccountService extends HttpService {
     const data = await this.fetch<LoginResponse>({
       method: HttpMethod.POST,
       body: { username, password, scope },
-      path: "/account/token"
+      path: "/auth/token"
     });
 
     if (data.token) {

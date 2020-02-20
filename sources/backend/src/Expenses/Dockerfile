@@ -19,4 +19,4 @@ RUN dotnet publish "Expenses.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Expenses.dll"]
+ENTRYPOINT ["dotnet", "AcademyCloud.Expenses.dll"]

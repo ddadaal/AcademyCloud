@@ -5,6 +5,9 @@ namespace AcademyCloud.API
 {
     public class Program
     {
+
+        public const int Port = 29492;
+
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
