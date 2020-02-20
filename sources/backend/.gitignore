@@ -1,2 +1,8 @@
+.vs
+.vscode
+bin
+obj
+debug
+.venv
 __pycache__
 .idea

@@ -10,8 +10,6 @@ from client.identity import IdentityService
 from client.models import Project, Domain, Token, RoleName
 from openstack.connection import Connection
 import config
-import cachetools
-
 
 @dataclass
 class Scope:
