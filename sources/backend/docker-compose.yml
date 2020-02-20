@@ -18,11 +18,17 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     command: -internal consul://consul:8500
-  api:
-    image: ${DOCKER_REGISTRY-}api
-    hostname: api
+  identity:
+    image: ${DOCKER_REGISTRY-}identity
     depends_on:
       - registrator
+    build:
+      context: .
+      dockerfile: src/Identity/Dockerfile
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    depends_on:
+      - identity
     build:
       context: .
       dockerfile: src/API/Dockerfile
