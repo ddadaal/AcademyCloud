@@ -49,7 +49,7 @@ namespace AcademyCloud.API.Controllers
             // TODO
             var authClient = await factory.GetAuthenticationClientAsync();
 
-            var reply = await authClient.Authenticate(new Identity.Services.AuthenticationRequest()
+            var reply = await authClient.AuthenticateAsync(new Identity.Services.AuthenticationRequest()
             {
                 Username = request.Username,
                 Password = request.Password,
