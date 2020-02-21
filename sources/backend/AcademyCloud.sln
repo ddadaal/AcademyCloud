@@ -29,7 +29,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{850B35C8-632D-4283-BF14-265737D3D5AD}"
 	ProjectSection(SolutionItems) = preProject
 		src\Identity\Protos\authentication.proto = src\Identity\Protos\authentication.proto
-		src\Identity\Protos\usermanagement.proto = src\Identity\Protos\usermanagement.proto
+		src\Identity\Protos\identity_usermanagement.proto = src\Identity\Protos\identity_usermanagement.proto
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AD7366BA-DCFF-4600-842B-4D0EF5D30003}"
+	ProjectSection(SolutionItems) = preProject
+		src\Expenses\Protos\expenses_usermanagement.proto = src\Expenses\Protos\expenses_usermanagement.proto
 	EndProjectSection
 EndProject
 Global
@@ -66,6 +71,7 @@ Global
 		{29804F0C-BE26-4F2B-9141-2C3884174B0A} = {EF9E4CB9-BC4C-432F-9F5C-18811FD35DBB}
 		{67E7B6F9-7A89-4DB7-A7E4-A766F05573CA} = {FCEAADC7-7C2A-4694-A63E-DD3F2ECC66A6}
 		{850B35C8-632D-4283-BF14-265737D3D5AD} = {EF9E4CB9-BC4C-432F-9F5C-18811FD35DBB}
+		{AD7366BA-DCFF-4600-842B-4D0EF5D30003} = {FCEAADC7-7C2A-4694-A63E-DD3F2ECC66A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4C8DBFC9-029B-4DCA-BE08-E6D356381086}
