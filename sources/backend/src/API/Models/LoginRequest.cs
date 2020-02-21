@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.API.Controllers.Authentication
+namespace AcademyCloud.API.Models
 {
     public class LoginRequest
     {
