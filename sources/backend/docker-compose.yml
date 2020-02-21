@@ -12,7 +12,7 @@ services:
   registrator:
     container_name: registrator
     hostname: registrator
-    image: gliderlabs/registrator:latest
+    image: gliderlabs/registrator:master
     depends_on:
       - consul
     volumes:

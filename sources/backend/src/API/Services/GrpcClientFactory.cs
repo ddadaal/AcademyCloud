@@ -20,7 +20,7 @@ namespace AcademyCloud.API.Services
 
         private async Task<GrpcChannel> GetChannel(string serviceName)
         {
-            var response = await client.Catalog.Service(serviceName);
+            var response = await client.Catalog.Service($"{serviceName}-443");
             var service = response.Response.First();
             var address = service.ServiceAddress;
             return GrpcChannel.ForAddress(address);

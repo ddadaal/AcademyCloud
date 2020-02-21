@@ -4,7 +4,10 @@ The backend for AcademyCloud.
 
 # Features
 
-- Heterogeneous microservices with C# and Python which communites with normal HTTP and JSON
+- Heterogeneous microservices with C# and Python which communites via gRPC
+- `docker-compose`
+- `consul` for service registration and discovery
+- `registrator` to automatically register containers when up and de-register when down
 - C# services `API`, `Expenses` and `Identity` features:
 	- **Domain Driven Design** with strictly no dependencies from domain models to anything else
 	- **C# 8** with **nullable reference type** enabled for null safety
@@ -19,3 +22,17 @@ The backend for AcademyCloud.
 # Run
 
 Visual Studio 2019 supports both C# and Python projecs well.
+
+## HTTPS
+
+All projects are setup with HTTPS enabled. 
+
+Make sure `%USERPROFILE%/.aspnet/https/dev.pfx` exists and the password is `test`
+
+Create such a dev certificate:
+
+```powershell
+dotnet dev-certs https --clean
+dotnet dev-certs https --export-path ~/.aspnet/https/dev.pfx -p test
+dotnet dev-certs https --trust
+```
