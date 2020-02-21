@@ -24,12 +24,12 @@ services:
       - registrator
     build:
       context: .
-      dockerfile: src/Identity/Dockerfile
+      dockerfile: src/Identity/Identity.API/Dockerfile
   api:
     image: ${DOCKER_REGISTRY-}api
     depends_on:
       - identity
     build:
       context: .
-      dockerfile: src/API/Dockerfile
+      dockerfile: src/ApiGateway/API/Dockerfile
 

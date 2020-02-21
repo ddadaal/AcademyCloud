@@ -7,11 +7,11 @@
     <DockerfileContext>..\..</DockerfileContext>
     <AssemblyName>AcademyCloud.Identity</AssemblyName>
     <RootNamespace>AcademyCloud.Identity</RootNamespace>
-    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include=".\Protos\*.proto" GrpcServices="Server" />
+    <Protobuf Include="..\Protos\*.proto" GrpcServices="Server" />
   </ItemGroup> 
 
   <ItemGroup>

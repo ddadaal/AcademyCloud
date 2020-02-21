@@ -8,11 +8,11 @@
     <AssemblyName>AcademyCloud.API</AssemblyName>
     <RootNamespace>AcademyCloud.API</RootNamespace>
     <Nullable>enable</Nullable>
-    <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\Identity\Protos\*" GrpcServices="Client" />    
+    <Protobuf Include="..\..\Identity\Protos\*" GrpcServices="Client" />    
   </ItemGroup>
 
   <ItemGroup>
