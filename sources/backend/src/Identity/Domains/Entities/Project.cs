@@ -10,6 +10,8 @@ namespace AcademyCloud.Identity.Domains.Entities
         public Guid Id { get; set; }
         public string Name { get; set; }
 
+        public Domain Domain { get; set; }
+
         public ICollection<UserProjectAssignment> Users { get; set; }
 
     }

@@ -10,6 +10,7 @@ autopep8 = "*"
 openstacksdk = "*"
 flask-restx = "*"
 flask-sqlalchemy = "*"
+grpcio = "*"
 
 [requires]
 python_version = "3.8"
