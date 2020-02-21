@@ -3,49 +3,21 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{e28bb180-fe5e-4da6-81dc-f59b40c14a83}</ProjectGuid>
+    <ProjectGuid>{921af286-a20f-462e-ada1-2ed0a7f4018a}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>app.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId>MSBuild|.venv|$(MSBuildProjectFullPath)</InterpreterId>
-    <Name>Resources.API</Name>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Include="db\models\__pycache__\account.cpython-38.pyc" />
-    <Content Include="db\models\__pycache__\utils.cpython-38.pyc" />
-    <Content Include="Pipfile" />
-    <Content Include="README.md" />
-    <Content Include="Resources.pyproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Interpreter Include=".venv\">
-      <Id>.venv</Id>
-      <Version>3.8</Version>
-      <Description>.venv</Description>
-      <InterpreterPath>scripts\python.exe</InterpreterPath>
-      <WindowsInterpreterPath>scripts\pythonw.exe</WindowsInterpreterPath>
-      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
-      <Architecture>X64</Architecture>
-    </Interpreter>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="client\" />
-    <Folder Include="db\" />
-    <Folder Include="db\models\" />
-    <Folder Include="db\models\__pycache__\" />
-    <Folder Include="resources\" />
-    <Folder Include="utils\" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="app.py" />
     <Compile Include="client\client.py" />
@@ -59,12 +31,52 @@
     <Compile Include="db\models\resources.py" />
     <Compile Include="db\models\utils.py" />
     <Compile Include="db\__init__.py" />
+    <Compile Include="services\g\expenses_usermanagement_pb2.py" />
+    <Compile Include="services\g\expenses_usermanagement_pb2_grpc.py" />
     <Compile Include="resources\account.py" />
     <Compile Include="resources\instance.py" />
     <Compile Include="resources\project.py" />
     <Compile Include="resources\utils.py" />
     <Compile Include="resources\__init__.py" />
+    <Compile Include="services\g\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\user_management.py" />
+    <Compile Include="services\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="utils\auth.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="compile_protos.ps1" />
+    <Content Include="db\models\__pycache__\account.cpython-38.pyc" />
+    <Content Include="db\models\__pycache__\utils.cpython-38.pyc" />
+    <Content Include="Pipfile" />
+    <Content Include="Pipfile.lock" />
+    <Content Include="README.md" />
+    <Content Include="Resources.pyproj" />
+    <Content Include="venv.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="client" />
+    <Folder Include="db" />
+    <Folder Include="db\models" />
+    <Folder Include="db\models\__pycache__" />
+    <Folder Include="services\g\" />
+    <Folder Include="services\" />
+    <Folder Include="resources" />
+    <Folder Include="utils" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include=".venv\">
+      <Id>.venv</Id>
+      <Version>3.8</Version>
+      <Description>.venv</Description>
+      <InterpreterPath>scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

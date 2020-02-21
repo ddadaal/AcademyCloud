@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "AcademyCloud.Resources.Services";
+
+package user_management;
+
+service UserManagement {
+	rpc AddUser (AddUserReply) returns (AddUserReply);
+}
+
+message AddUserRequest {
+	
+}
+
+message AddUserReply {
+	
+}
