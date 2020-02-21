@@ -1,9 +1,12 @@
+using AcademyCloud.API.Services;
+using AcademyCloud.Identity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using NConsul.AspNetCore;
 using System;
 
 namespace AcademyCloud.API
@@ -21,6 +24,11 @@ namespace AcademyCloud.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddConsul("http://consul:8500");
+
+            services.AddSingleton<GrpcClientFactory>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AcademyCloud API", Version = "v1" });
@@ -49,6 +57,7 @@ namespace AcademyCloud.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
             });
         }
     }
