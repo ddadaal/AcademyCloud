@@ -40,6 +40,14 @@ export default {
         other: "Register failed. Please retry.",
       },
     },
+    identity: {
+      sidebar: {
+        account: "Personal Account",
+        domains: "Domains",
+        projects: "Projects",
+        users: "Users",
+      },
+    },
     resources: {
       sidebar: {
         dashboard: "Dashboard",

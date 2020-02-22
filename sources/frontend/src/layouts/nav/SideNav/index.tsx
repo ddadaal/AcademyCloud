@@ -10,8 +10,8 @@ import { flatten, arrayContainsElement, removeFalsy } from "src/utils/Arrays";
 import { LocalizedString } from "src/i18n";
 import { navigate, Link as RouterLink } from "@reach/router";
 
-const {Sider} = Layout;
-const {SubMenu} = Menu;
+const { Sider } = Layout;
+const { SubMenu } = Menu;
 
 const breakpoint = "lg";
 
@@ -43,10 +43,10 @@ const Link: React.FC<{
   path: string; Icon: React.ComponentType; textId: string;
   onClick: (path: string) => (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }> = (props) => {
-  const {path, Icon, textId, onClick} = props;
+  const { path, Icon, textId, onClick } = props;
   return <RouterLink to={path} title={path}>
     <Icon />
-    <LocalizedString id={textId}/>
+    <LocalizedString id={textId} />
   </RouterLink>;
 };
 
@@ -59,7 +59,7 @@ export const SideNav: React.FC<Props> = (props) => {
     navStore.setSidebarCollapsed(broken);
   }, [navStore]);
 
-  const selectedKeys = useMemo(() =>{
+  const selectedKeys = useMemo(() => {
     // root selected keys
     const path = navStore.location.pathname;
     const rootSelected = navStore.sidenavs.filter((x) => x.match(path));
@@ -85,7 +85,7 @@ export const SideNav: React.FC<Props> = (props) => {
   }
   return (
     <>
-      <BodyMask sidebarShown={!navStore.sidebarCollapsed} breakpoint={antdBreakpoints[breakpoint]}/>
+      <BodyMask sidebarShown={!navStore.sidebarCollapsed} breakpoint={antdBreakpoints[breakpoint]} />
       <StyledSider
         onBreakpoint={onBreakpoint}
         collapsed={navStore.sidebarCollapsed}
@@ -96,7 +96,7 @@ export const SideNav: React.FC<Props> = (props) => {
           mode="inline"
           selectedKeys={selectedKeys}
           // theme={'dark'}
-          style={{height: "100%", borderRight: 0}}
+          style={{ height: "100%", borderRight: 0 }}
         >
           {navStore.sidenavs
             .map((x) => {
@@ -104,7 +104,7 @@ export const SideNav: React.FC<Props> = (props) => {
               if (!arrayContainsElement(subs)) {
                 return (
                   <Menu.Item key={x.path}>
-                    <Link path={x.path} textId={x.textId} Icon={x.Icon} onClick={onClick}/>
+                    <Link path={x.path} textId={x.textId} Icon={x.Icon} onClick={onClick} />
                   </Menu.Item>
                 );
               } else {
@@ -112,12 +112,12 @@ export const SideNav: React.FC<Props> = (props) => {
                   <SubMenu key={x.path} title={
                     <span>
                       {React.createElement(x.Icon)}
-                      <span><LocalizedString id={x.textId}/></span>
+                      <span><LocalizedString id={x.textId} /></span>
                     </span>}
                   >
                     {subs.map((sub) =>
                       <Menu.Item key={sub.path}>
-                        <Link path={sub.path} textId={sub.textId} Icon={sub.Icon} onClick={onClick}/>
+                        <Link path={sub.path} textId={sub.textId} Icon={sub.Icon} onClick={onClick} />
                       </Menu.Item>,
                     )}
                   </SubMenu>

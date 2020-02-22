@@ -1,12 +1,8 @@
 import { RouteComponentProps, Router } from "@reach/router";
-import React, { useEffect, Suspense } from "react";
-import FunctionLayout from "src/layouts/FunctionLayout";
-import RootLayout from "src/layouts/RootLayout";
-import { useStore } from "simstate";
-import { NavStore } from "src/layouts/nav/NavStore";
+import React, { } from "react";
 import { lang } from "src/i18n";
 import { DashboardOutlined, DesktopOutlined } from "@ant-design/icons";
-import PageLoading from "src/components/PageLoading";
+import { useSidenavs } from "src/layouts/nav/useSidenavs";
 
 const AsyncDashboard = React.lazy(() => import("./Dashboard"));
 const AsyncInstance = React.lazy(() => import("./Instance"));
@@ -28,20 +24,15 @@ const sidebarRoutes = [
   }
 ];
 
-export default function ResourcesPage(props: RouteComponentProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function ResourcesPage(_: RouteComponentProps) {
 
-  const navStore = useStore(NavStore);
-
-  useEffect(() => {
-    navStore.setSidenavs(sidebarRoutes);
-
-    return () => { navStore.setSidenavs([]);}
-  }, [navStore]);
+  useSidenavs(sidebarRoutes);
 
   return (
     <Router>
-      <AsyncDashboard path="./"/>
-      <AsyncInstance path="instances/*"/>
+      <AsyncDashboard path="./" />
+      <AsyncInstance path="instances/*" />
     </Router>
   )
 };

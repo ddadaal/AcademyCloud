@@ -40,6 +40,14 @@ export default {
         other: "注册失败，请重试！",
       },
     },
+    identity: {
+      sidebar: {
+        account: "个人账号管理",
+        domains: "域管理",
+        projects: "项目管理",
+        users: "用户管理",
+      },
+    },
     resources: {
       sidebar: {
         dashboard: "控制台",
