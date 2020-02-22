@@ -32,6 +32,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
       const registeringResponse = await api.register(username, password);
       userStore.login({
         username,
+        availableScopes: [registeringResponse.scope],
         scope: registeringResponse.scope,
         token: registeringResponse.token
       }, true);

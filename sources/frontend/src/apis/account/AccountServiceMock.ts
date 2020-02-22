@@ -37,7 +37,9 @@ export class AccountServiceMock extends AccountService {
       throw makeHttpError(403);
     }
 
-    return { token: "testtoken", scope: { domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" } }
+    return {
+      token: "testtoken",
+      scope: { domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" } }
   }
 
 }

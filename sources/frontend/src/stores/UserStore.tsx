@@ -6,6 +6,7 @@ const STORAGE_KEY = "User";
 interface User {
   username: string;
   scope: Scope;
+  availableScopes: Scope[];
   token: string;
 }
 
@@ -39,5 +40,6 @@ export function UserStore() {
     }
   }, []);
 
-  return { loggedIn, user, logout, login, changeScope };
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return { loggedIn, user: user!!, logout, login, changeScope };
 }

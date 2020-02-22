@@ -6,6 +6,7 @@ import { allLanguages } from "src/i18n/definition";
 import { RadioChangeEvent } from "antd/lib/radio";
 import { DownOutlined, GlobalOutlined } from '@ant-design/icons';
 import styled from "styled-components";
+import { ClickableA } from "src/utils/ClickableA";
 
 export function HomepageLanguageSelector() {
 
@@ -33,6 +34,3 @@ export function HomepageLanguageSelector() {
 
 }
 
-const ClickableA = styled.a`
-  cursor: pointer;
-`;

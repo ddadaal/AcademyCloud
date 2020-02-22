@@ -21,22 +21,24 @@ export function UserIndicator() {
     navigate("/");
   }, [userStore]);
 
-  const dropdownMenu = <Menu>
-    <Menu.Item key="self">
-      <Link to={"/user"}><LocalizedString id={root.selfCenter}/></Link>
-    </Menu.Item>
-    <Menu.Divider/>
-    <Menu.Item key="logout">
-      <a onClick={logout}><LocalizedString id={root.logout}/></a>
-    </Menu.Item>
-  </Menu>;
+  const dropdownMenu = (
+    <Menu>
+      <Menu.Item key="self">
+        <Link to={"/user"}><LocalizedString id={root.selfCenter} /></Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="logout">
+        <a onClick={logout}><LocalizedString id={root.logout} /></a>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Dropdown overlay={dropdownMenu}>
       <a className="ant-dropdown-link">
-        <Avatar size="default" src={DEFAULT_AVATAR}/>
+        <Avatar size="default" src={DEFAULT_AVATAR} />
         <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
-          <span style={{marginLeft: "8px"}}>
+          <span style={{ marginLeft: "8px" }}>
             {userStore.user?.username ?? "undefined"}
             <DownOutlined />
           </span>
