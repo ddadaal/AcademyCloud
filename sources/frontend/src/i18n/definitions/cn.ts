@@ -14,6 +14,7 @@ export default {
         register: "注册",
       },
       loginForm: {
+        title: "登录",
         username: "用户名",
         usernamePrompt: "请输入用户名",
         password: "密码",
@@ -26,6 +27,7 @@ export default {
         other: "登录失败",
       },
       registerForm: {
+        title: "注册",
         username: "用户名",
         usernamePrompt: "请输入用户名",
         password: "密码",
@@ -47,6 +49,10 @@ export default {
       },
     },
     nav: {
+      scopeIndicator: {
+        projects: "项目",
+        domains: "学校",
+      },
       user: {
         selfCenter: "个人中心",
         logout: "登出",

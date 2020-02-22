@@ -9,6 +9,7 @@ import { getApiService } from "src/apis";
 import { AccountService } from "src/apis/account/AccountService";
 import { navigate, RouteComponentProps } from "@reach/router";
 import { FormButton } from "src/pages/Home/HomePageLayout";
+import { PageMetadata } from "src/utils/PageMetadata";
 
 const root = lang.homepage.loginForm;
 
@@ -57,8 +58,8 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       className="login-form"
       initialValues={{ remember: true }}
       onFinish={onFinish}
-
     >
+      <PageMetadata titleId={root.title} />
       <Form.Item
         name="username"
         rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}

@@ -5,6 +5,7 @@ import { Scope } from "src/models/account";
 import { Menu, Dropdown, Button } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
 import { ClickableA } from "src/utils/ClickableA";
+import { lang, LocalizedString } from "src/i18n";
 
 function scopeId(scope: Scope): string {
   return `${scope.domainId}+${scope.projectId ?? ""}`;
@@ -18,6 +19,8 @@ function scopeName(scope: Scope): string {
   }
 }
 
+const root = lang.nav.scopeIndicator;
+
 export const ScopeIndicator: React.FC = () => {
   const userStore = useStore(UserStore);
 
@@ -30,13 +33,14 @@ export const ScopeIndicator: React.FC = () => {
 
   const menuItems = [] as React.ReactNode[];
 
-  const onChange = (scope: Scope) => (e: unknown) => {
+  const onChange = (scope: Scope) => () => {
     userStore.changeScope(scope);
   };
-if (projectScope.length > 0) {
+
+  if (projectScope.length > 0) {
     menuItems.push(
       <Menu.Item key="projectPrompt" disabled={true}>
-        Projects
+        <LocalizedString id={root.projects} />
       </Menu.Item>
     );
     menuItems.push(...projectScope.map((x) => (
@@ -51,7 +55,7 @@ if (projectScope.length > 0) {
     menuItems.push(
       <Menu.Divider />,
       <Menu.Item key="domainPrompt" disabled={true}>
-        Domains
+        <LocalizedString id={root.domains} />
       </Menu.Item>
     );
     menuItems.push(...domainScope.map((x) => (

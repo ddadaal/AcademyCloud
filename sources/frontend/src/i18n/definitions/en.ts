@@ -14,6 +14,7 @@ export default {
         register: "Register",
       },
       loginForm: {
+        title: "Login",
         username: "Username",
         usernamePrompt: "Please input username.",
         password: "Password",
@@ -26,6 +27,7 @@ export default {
         other: "Login Failed",
       },
       registerForm: {
+        title: "Register",
         username: "Username",
         usernamePrompt: "Please input username.",
         password: "Password",
@@ -47,6 +49,10 @@ export default {
       },
     },
     nav: {
+      scopeIndicator: {
+        projects: "Projects",
+        domains: "Domains",
+      },
       user: {
         selfCenter: "Self Center",
         logout: "Logout",

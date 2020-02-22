@@ -9,6 +9,7 @@ import { getApiService } from "src/apis";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { HttpError } from "src/apis/HttpService";
+import { PageMetadata } from "src/utils/PageMetadata";
 
 const { Item } = Form;
 
@@ -61,6 +62,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
 
   return (
     <Form onFinish={onFinish} name="register">
+      <PageMetadata titleId={root.title} />
       <Item name="username"
         rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}>
         <Input disabled={registering} prefix={<UserOutlined className="site-form-item-icon" />} placeholder={username} />
