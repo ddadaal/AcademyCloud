@@ -1,5 +1,5 @@
 import { HttpService, HttpMethod } from "../HttpService";
-import { Scope } from "../../models/account";
+import { Scope } from 'src/models/Scope';
 
 export interface LoginResponse {
   token: string;

@@ -1,7 +1,7 @@
 import { AccountService, LoginResponse, ScopesResponse, RegisterResponse } from "./AccountService";
-import { Scope } from "src/models/account";
 import { delay } from "src/utils/delay";
 import { makeHttpError } from '../HttpService';
+import { Scope } from "src/models/Scope";
 
 export class AccountServiceMock extends AccountService {
   async getScopes(username: string, password: string): Promise<ScopesResponse> {
@@ -39,7 +39,8 @@ export class AccountServiceMock extends AccountService {
 
     return {
       token: "testtoken",
-      scope: { domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" } }
+      scope: { domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" }
+    }
   }
 
 }

@@ -31,12 +31,13 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
 
     try {
       const registeringResponse = await api.register(username, password);
-      userStore.login({
+      userStore.login(
         username,
-        availableScopes: [registeringResponse.scope],
-        scope: registeringResponse.scope,
-        token: registeringResponse.token
-      }, true);
+        registeringResponse.scope,
+        [registeringResponse.scope],
+        registeringResponse.token,
+        true
+      );
       await navigate("/resources");
     } catch (e) {
       const ex = e as HttpError;

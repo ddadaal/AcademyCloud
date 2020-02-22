@@ -1,8 +1,7 @@
 import React from "react";
 import { useStore } from 'simstate';
 import { UserStore } from 'src/stores/UserStore';
-import { Scope } from "src/models/account";
-import { Menu, Dropdown, Button } from "antd";
+import { Menu, Dropdown } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
 import { ClickableA } from "src/utils/ClickableA";
 import { lang, LocalizedString } from "src/i18n";
@@ -16,15 +15,15 @@ export const ScopeIndicator: React.FC = () => {
 
   if (!user) { return null; }
 
-  const currentScope = new ScopeClass(user.scope);
-  const availableScopes = user.availableScopes.map((s) => new ScopeClass(s));
+
+  const { scope: currentScope, availableScopes } = user;
 
   const projectScope = availableScopes.filter((x) => x.projectId)
   const domainScope = availableScopes.filter((x) => !x.projectId)
 
   const menuItems = [] as React.ReactNode[];
 
-  const onChange = (scope: Scope) => () => {
+  const onChange = (scope: ScopeClass) => () => {
     userStore.changeScope(scope);
   };
 
