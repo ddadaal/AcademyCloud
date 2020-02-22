@@ -60,6 +60,7 @@ export default {
       scopeIndicator: {
         projects: "Projects",
         domains: "Domains",
+        system: "System",
       },
       user: {
         selfCenter: "Self Center",

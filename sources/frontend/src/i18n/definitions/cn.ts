@@ -60,6 +60,7 @@ export default {
       scopeIndicator: {
         projects: "项目",
         domains: "学校",
+        system: "系统",
       },
       user: {
         selfCenter: "个人中心",

@@ -21,3 +21,7 @@ export function scopeName(scope: Scope): string {
     return scope.domainName;
   }
 }
+
+export function isSystemScope(scope: Scope): boolean {
+  return !!scope.system;
+}
