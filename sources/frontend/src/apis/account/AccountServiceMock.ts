@@ -19,9 +19,9 @@ export class AccountServiceMock extends AccountService {
 
     return {
       scopes: [
-        { domainId: "NJU", domainName: "NJU", role: "admin" },
+        { domainId: "NJU", domainName: "NJU", role: "member" },
         { domainId: "NJU", domainName: "NJU", projectName: "67", projectId: "67", role: "admin" },
-        { domainId: "PKU", domainName: "PKU", role: "member" },
+        { domainId: "PKU", domainName: "PKU", role: "admin" },
       ],
       lastLoginScope: {
         domainId: "NJU", domainName: "NJU", role: "member",

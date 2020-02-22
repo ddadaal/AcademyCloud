@@ -61,6 +61,7 @@ export default {
         projects: "项目",
         domains: "学校",
         system: "系统",
+        admin: "管理员",
       },
       user: {
         selfCenter: "个人中心",

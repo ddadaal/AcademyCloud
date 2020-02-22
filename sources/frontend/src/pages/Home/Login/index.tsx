@@ -38,8 +38,9 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
         username,
         scope,
         availableScopes: scopesResp.scopes,
-        token: loginResponse.token
-      }, values.remember);
+        token: loginResponse.token,
+        remember: values.remember,
+      });
 
       await navigate("/resources");
     } catch (e) {

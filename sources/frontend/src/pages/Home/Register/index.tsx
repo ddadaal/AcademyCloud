@@ -36,7 +36,8 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
         scope: registeringResponse.scope,
         availableScopes: [registeringResponse.scope],
         token: registeringResponse.token,
-      }, true);
+        remember: true
+      });
       await navigate("/resources");
     } catch (e) {
       const ex = e as HttpError;

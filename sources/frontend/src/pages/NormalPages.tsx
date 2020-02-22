@@ -11,11 +11,10 @@ const IdentityPage = React.lazy(() => import("./Identity"));
 
 const NormalPages: React.FC<RouteComponentProps> = () => {
   const userStore = useStore(UserStore);
-  console.log(userStore);
 
   if (!userStore.loggedIn) {
     return (
-      <Redirect to="/" />
+      <Redirect noThrow={true} to="/" />
     );
   }
 

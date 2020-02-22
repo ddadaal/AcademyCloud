@@ -8,6 +8,7 @@ interface User {
   scope: Scope;
   availableScopes: Scope[];
   token: string;
+  remember: boolean;
 }
 
 export function getUserInfoInStorage(): User | null {
@@ -19,11 +20,22 @@ export function getUserInfoInStorage(): User | null {
   }
 }
 
+function saveUserInfo(user: User) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+}
+
 export function UserStore() {
   const [user, setUser] = useState(getUserInfoInStorage);
 
   const changeScope = useCallback((scope: Scope) => {
-    setUser((user) => user ? { ...user, scope } : null);
+    setUser((user) => {
+      if (!user) { return null; }
+      const newUser = { ...user, scope };
+      if (user.remember) {
+        saveUserInfo(newUser);
+      }
+      return newUser;
+    });
   }, [setUser]);
 
   const loggedIn = !!user;
@@ -33,10 +45,10 @@ export function UserStore() {
     setUser(null);
   }, []);
 
-  const login = useCallback((user: User, remember: boolean) => {
+  const login = useCallback((user: User) => {
     setUser(user);
-    if (remember) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    if (user.remember) {
+      saveUserInfo(user);
     }
   }, []);
 

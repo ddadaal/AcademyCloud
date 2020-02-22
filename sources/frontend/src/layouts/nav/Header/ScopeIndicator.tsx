@@ -3,9 +3,9 @@ import { useStore } from 'simstate';
 import { UserStore } from 'src/stores/UserStore';
 import { Menu, Dropdown } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
-import { ClickableA } from "src/utils/ClickableA";
 import { lang, LocalizedString } from "src/i18n";
 import { scopeId, scopeName, Scope, isSystemScope } from "src/models/Scope";
+import { ClickableA } from "src/components/ClickableA";
 
 const root = lang.nav.scopeIndicator;
 
@@ -32,6 +32,13 @@ export const ScopeIndicator: React.FC = () => {
 
   const menuItems = [] as React.ReactNode[];
 
+  const scopeNameWithRole = (scope: Scope) => (
+    <>
+      {scopeName(scope)}
+      {scope.role === "admin" ? <> (<LocalizedString id={root.admin} />)</> : null}
+    </>
+  );
+
   const onChange = (scope: Scope) => () => {
     userStore.changeScope(scope);
   };
@@ -44,7 +51,7 @@ export const ScopeIndicator: React.FC = () => {
     );
     menuItems.push(...projectScopes.map((x) => (
       <Menu.Item onClick={onChange(x)} key={scopeId(x)}>
-        {scopeName(x)}
+        {scopeNameWithRole(x)}
       </Menu.Item>
     )));
   }
@@ -59,7 +66,7 @@ export const ScopeIndicator: React.FC = () => {
     );
     menuItems.push(...domainScopes.map((x) => (
       <Menu.Item onClick={onChange(x)} key={scopeId(x)}>
-        {scopeName(x)}
+        {scopeNameWithRole(x)}
       </Menu.Item>
     )));
   }
@@ -73,7 +80,9 @@ export const ScopeIndicator: React.FC = () => {
   return (
     <Dropdown overlay={menu}>
       <ClickableA>
-        <BookOutlined />{scopeName(currentScope)} <DownOutlined />
+        <BookOutlined />
+        {scopeNameWithRole(currentScope)}
+        <DownOutlined />
       </ClickableA>
     </Dropdown>
   )

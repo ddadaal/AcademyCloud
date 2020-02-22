@@ -1,39 +1,29 @@
-import { RouteComponentProps, Router } from "@reach/router";
 import React, { } from "react";
 import { lang } from "src/i18n";
 import { DashboardOutlined, DesktopOutlined } from "@ant-design/icons";
-import { useSidenavs } from "src/layouts/nav/useSidenavs";
-
-const AsyncDashboard = React.lazy(() => import("./Dashboard"));
-const AsyncInstance = React.lazy(() => import("./Instance"));
+import { IndexRoute, indexRoutes } from "src/pages/common/indexRoutes";
 
 const root = lang.resources.sidebar;
 
-const sidebarRoutes = [
+const routes = [
   {
-    path: "",
+    path: "dashboard",
     textId: root.dashboard,
     Icon: DashboardOutlined,
-    match: (path: string) => path === "/resources",
-  },
-  {
+    match: (path: string) => path === "/resources/dashboard",
+    checkScope: () => true,
+    Component: React.lazy(() => import("./Dashboard")),
+  }, {
     path: "instances",
     textId: root.instance,
     Icon: DesktopOutlined,
     match: (path: string) => path === "/resources/instances",
+    checkScope: () => true,
+    Component: React.lazy(() => import("./Instance")),
   }
-];
+] as IndexRoute[];
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function ResourcesPage(_: RouteComponentProps) {
+const ResourcesIndexPage = indexRoutes(routes, "/resources/")
 
-  useSidenavs(sidebarRoutes, "/resources");
-
-  return (
-    <Router>
-      <AsyncDashboard path="./" />
-      <AsyncInstance path="instances/*" />
-    </Router>
-  )
-};
+export default ResourcesIndexPage;
 

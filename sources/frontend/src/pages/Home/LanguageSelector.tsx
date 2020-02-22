@@ -1,12 +1,10 @@
-import React, { useCallback } from "react";
-import { Radio, Dropdown, Menu } from "antd";
+import React from "react";
+import { Dropdown, Menu } from "antd";
 import { I18nStore } from "src/i18n";
 import { useStore } from "simstate";
 import { allLanguages } from "src/i18n/definition";
-import { RadioChangeEvent } from "antd/lib/radio";
 import { DownOutlined, GlobalOutlined } from '@ant-design/icons';
-import styled from "styled-components";
-import { ClickableA } from "src/utils/ClickableA";
+import { ClickableA } from "src/components/ClickableA";
 
 export function HomepageLanguageSelector() {
 
@@ -27,7 +25,7 @@ export function HomepageLanguageSelector() {
         }
       </Menu>)}>
       <ClickableA >
-        <GlobalOutlined />   {currentLanguage.metadata.name} <DownOutlined />
+        <GlobalOutlined /> {currentLanguage.metadata.name} <DownOutlined />
       </ClickableA>
     </Dropdown>
   );

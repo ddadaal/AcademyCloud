@@ -61,6 +61,7 @@ export default {
         projects: "Projects",
         domains: "Domains",
         system: "System",
+        admin: "Admin",
       },
       user: {
         selfCenter: "Self Center",
