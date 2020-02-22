@@ -5,7 +5,7 @@ import { Menu, Dropdown } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
 import { ClickableA } from "src/utils/ClickableA";
 import { lang, LocalizedString } from "src/i18n";
-import { ScopeClass } from "src/models/Scope";
+import { scopeId, scopeName, Scope } from "src/models/Scope";
 
 const root = lang.nav.scopeIndicator;
 
@@ -23,7 +23,7 @@ export const ScopeIndicator: React.FC = () => {
 
   const menuItems = [] as React.ReactNode[];
 
-  const onChange = (scope: ScopeClass) => () => {
+  const onChange = (scope: Scope) => () => {
     userStore.changeScope(scope);
   };
 
@@ -34,8 +34,8 @@ export const ScopeIndicator: React.FC = () => {
       </Menu.Item>
     );
     menuItems.push(...projectScope.map((x) => (
-      <Menu.Item onClick={onChange(x)} key={x.scopeId}>
-        {x.scopeName}
+      <Menu.Item onClick={onChange(x)} key={scopeId(x)}>
+        {scopeName(x)}
       </Menu.Item>
     )));
   }
@@ -49,14 +49,14 @@ export const ScopeIndicator: React.FC = () => {
       </Menu.Item>
     );
     menuItems.push(...domainScope.map((x) => (
-      <Menu.Item onClick={onChange(x)} key={x.scopeId}>
-        {x.scopeName}
+      <Menu.Item onClick={onChange(x)} key={scopeId(x)}>
+        {scopeName(x)}
       </Menu.Item>
     )));
   }
 
   const menu = (
-    <Menu selectedKeys={[currentScope.scopeId]}>
+    <Menu selectedKeys={[scopeId(currentScope)]}>
       {menuItems}
     </Menu>
   );
@@ -64,7 +64,7 @@ export const ScopeIndicator: React.FC = () => {
   return (
     <Dropdown overlay={menu}>
       <ClickableA>
-        <BookOutlined />{currentScope.scopeName} <DownOutlined />
+        <BookOutlined />{scopeName(currentScope)} <DownOutlined />
       </ClickableA>
     </Dropdown>
   )

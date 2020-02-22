@@ -9,33 +9,15 @@ export interface Scope {
   role: UserRole;
 }
 
-export class ScopeClass implements Scope {
-  system?: boolean | undefined;
-  domainId: string;
-  domainName: string;
-  projectId?: string | undefined;
-  projectName?: string | undefined;
-  role: UserRole;
 
-  public constructor(scope: Scope) {
-    this.system = scope.system;
-    this.domainId = scope.domainId;
-    this.domainName = scope.domainName;
-    this.projectId = scope.projectId;
-    this.projectName = scope.projectName;
-    this.role = scope.role;
+export function scopeId(scope: Scope): string {
+  return `${scope.domainId}+${scope.projectId ?? ""}`;
+}
+
+export function scopeName(scope: Scope): string {
+  if (scope.projectName) {
+    return `${scope.domainName} - ${scope.projectName}`;
+  } else {
+    return scope.domainName;
   }
-
-  get scopeId(): string {
-    return `${this.domainId}+${this.projectId ?? ""}`;
-  }
-
-  get scopeName(): string {
-    if (this.projectName) {
-      return `${this.domainName} - ${this.projectName}`;
-    } else {
-      return this.domainName;
-    }
-  }
-
 }

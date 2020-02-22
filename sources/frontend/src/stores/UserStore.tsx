@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
-import { ScopeClass, Scope } from "src/models/Scope";
+import { Scope } from "src/models/Scope";
 
 const STORAGE_KEY = "User";
 
 interface User {
   username: string;
-  scope: ScopeClass;
-  availableScopes: ScopeClass[];
+  scope: Scope;
+  availableScopes: Scope[];
   token: string;
 }
 
@@ -22,7 +22,7 @@ export function getUserInfoInStorage(): User | null {
 export function UserStore() {
   const [user, setUser] = useState(getUserInfoInStorage);
 
-  const changeScope = useCallback((scope: ScopeClass) => {
+  const changeScope = useCallback((scope: Scope) => {
     setUser((user) => user ? { ...user, scope } : null);
   }, [setUser]);
 
@@ -42,8 +42,8 @@ export function UserStore() {
   ) => {
     setUser({
       username,
-      scope: new ScopeClass(scope),
-      availableScopes: availableScopes.map((x) => new ScopeClass(x)),
+      scope,
+      availableScopes,
       token,
     });
     if (remember) {
