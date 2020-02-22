@@ -34,7 +34,12 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       // select default; if not, select lastLogin; if not, the first
       const scope = scopesResp.defaultScope ?? scopesResp.lastLoginScope ?? scopesResp.scopes[0];
       const loginResponse = await accountService.login(username, password, scope);
-      userStore.login(username, scope, scopesResp.scopes, loginResponse.token, values.remember);
+      userStore.login({
+        username,
+        scope,
+        availableScopes: scopesResp.scopes,
+        token: loginResponse.token
+      }, values.remember);
 
       await navigate("/resources");
     } catch (e) {

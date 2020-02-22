@@ -11,13 +11,13 @@ const root = lang.resources.sidebar;
 
 const sidebarRoutes = [
   {
-    path: "/resources",
+    path: "",
     textId: root.dashboard,
     Icon: DashboardOutlined,
     match: (path: string) => path === "/resources",
   },
   {
-    path: "/resources/instances",
+    path: "instances",
     textId: root.instance,
     Icon: DesktopOutlined,
     match: (path: string) => path === "/resources/instances",
@@ -27,7 +27,7 @@ const sidebarRoutes = [
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ResourcesPage(_: RouteComponentProps) {
 
-  useSidenavs(sidebarRoutes);
+  useSidenavs(sidebarRoutes, "/resources");
 
   return (
     <Router>

@@ -7,9 +7,11 @@ import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 
 const ResourcesPage = React.lazy(() => import("./Resources"));
+const IdentityPage = React.lazy(() => import("./Identity"));
 
 const NormalPages: React.FC<RouteComponentProps> = () => {
   const userStore = useStore(UserStore);
+  console.log(userStore);
 
   if (!userStore.loggedIn) {
     return (
@@ -23,6 +25,7 @@ const NormalPages: React.FC<RouteComponentProps> = () => {
         <Suspense fallback={<PageLoading />}>
           <Router>
             <ResourcesPage path="resources/*" />
+            <IdentityPage path="identity/*" />
           </Router>
         </Suspense>
       </FunctionLayout>

@@ -1,4 +1,4 @@
-import { UserRole } from './account';
+import { UserRole } from "src/models/User";
 
 export interface Scope {
   system?: boolean;

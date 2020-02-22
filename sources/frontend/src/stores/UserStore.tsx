@@ -33,19 +33,8 @@ export function UserStore() {
     setUser(null);
   }, []);
 
-  const login = useCallback((
-    username: string,
-    scope: Scope,
-    availableScopes: Scope[],
-    token: string,
-    remember: boolean
-  ) => {
-    setUser({
-      username,
-      scope,
-      availableScopes,
-      token,
-    });
+  const login = useCallback((user: User, remember: boolean) => {
+    setUser(user);
     if (remember) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     }
