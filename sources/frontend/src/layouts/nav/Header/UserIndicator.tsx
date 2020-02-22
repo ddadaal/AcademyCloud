@@ -39,7 +39,7 @@ export function UserIndicator() {
         <Avatar size="default" src={DEFAULT_AVATAR} />
         <MediaQuery minWidth={layoutConstants.menuBreakpoint}>
           <span style={{ marginLeft: "8px" }}>
-            {userStore.user?.username ?? "undefined"}
+            {userStore.user?.username ?? ""}
             <DownOutlined />
           </span>
         </MediaQuery>

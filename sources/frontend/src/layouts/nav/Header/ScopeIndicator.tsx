@@ -21,6 +21,8 @@ function scopeName(scope: Scope): string {
 export const ScopeIndicator: React.FC = () => {
   const userStore = useStore(UserStore);
 
+  if (!userStore.user) { return null; }
+
   const { scope, availableScopes } = userStore.user;
 
   const projectScope = availableScopes.filter((x) => x.projectId)
@@ -31,8 +33,7 @@ export const ScopeIndicator: React.FC = () => {
   const onChange = (scope: Scope) => (e: unknown) => {
     userStore.changeScope(scope);
   };
-
-  if (projectScope.length > 0) {
+if (projectScope.length > 0) {
     menuItems.push(
       <Menu.Item key="projectPrompt" disabled={true}>
         Projects

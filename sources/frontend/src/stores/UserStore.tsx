@@ -41,5 +41,5 @@ export function UserStore() {
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return { loggedIn, user: user!!, logout, login, changeScope };
+  return { loggedIn, user, logout, login, changeScope };
 }
