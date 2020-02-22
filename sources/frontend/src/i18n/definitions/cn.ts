@@ -57,6 +57,11 @@ export default {
       },
     },
     nav: {
+      errorPage: {
+        title: "无权限或不存在",
+        description: "对不起，您所访问的页面不存在或者您没有权限访问",
+        backToHome: "回到资源管理",
+      },
       scopeIndicator: {
         projects: "项目",
         domains: "学校",

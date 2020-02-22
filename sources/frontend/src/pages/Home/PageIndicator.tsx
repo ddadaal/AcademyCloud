@@ -3,7 +3,6 @@ import { useLocation } from "src/utils/useLocation";
 import { Radio } from "antd";
 import { navigate } from "@reach/router";
 import { lang, LocalizedString } from "src/i18n";
-
 const root = lang.homepage.pageIndicator;
 
 export const PageIndicator: React.FC = () => {

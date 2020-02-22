@@ -6,6 +6,7 @@ import { UserStore } from "src/stores/UserStore";
 import { Router, RouteComponentProps, Redirect } from "@reach/router";
 import { useSidenavs } from "src/pages/common/useSidenavs";
 import { pathEquals } from "src/utils/path";
+import { ErrorPage } from "src/pages/common/ErrorPage";
 
 export interface IndexRoute extends NavItemProps {
   checkScope: (scope: Scope) => boolean;
@@ -38,6 +39,7 @@ export function indexRoutes(routes: IndexRoute[], basePath: string) {
         {filteredSidenavs.map(({ Component, path }) => (
           <Component key={path} path={path} />
         ))}
+        <ErrorPage path="*" />
       </Router>
     );
   }

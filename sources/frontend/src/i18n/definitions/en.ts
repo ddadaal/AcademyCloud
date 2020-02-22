@@ -57,6 +57,11 @@ export default {
       },
     },
     nav: {
+      errorPage: {
+        title: "Not Exists Or Not Authorized",
+        description: "Sorry, the page you visited does not exist, or you are not authorized to access it.",
+        backToHome: "Back to resource management",
+      },
       scopeIndicator: {
         projects: "Projects",
         domains: "Domains",
