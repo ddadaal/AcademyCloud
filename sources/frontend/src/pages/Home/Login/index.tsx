@@ -69,7 +69,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       <PageMetadata titleId={root.title} />
       <Form.Item
         name="username"
-        rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}
+        rules={[{ required: true }]}
       >
         <Input
           disabled={loggingIn}
@@ -78,7 +78,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true, message: <LocalizedString id={root.passwordPrompt} /> }]}
+        rules={[{ required: true }]}
       >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}

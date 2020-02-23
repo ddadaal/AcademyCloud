@@ -1,9 +1,22 @@
+import en_US from "antd/es/locale/en_US";
+
 export default {
   metadata: {
     id: "en",
     langStrings: ["en", "en-US"],
     detailedId: "en-US",
     name: "English",
+    antdConfigProvider: {
+      locale: en_US,
+      form: {
+        validateMessages: {
+          required: "Please input ${name}.",
+          types: {
+            email: "Please input a valid email.",
+          }
+        }
+      }
+    },
   },
   definitions: {
     homepage: {
@@ -16,9 +29,7 @@ export default {
       loginForm: {
         title: "Login",
         username: "Username",
-        usernamePrompt: "Please input username.",
         password: "Password",
-        passwordPrompt: "Please input password.",
         login: "Login",
         remember: "Remember me",
         forget: "Forget password",
@@ -29,11 +40,8 @@ export default {
       registerForm: {
         title: "Register",
         username: "Username",
-        usernamePrompt: "Please input username.",
         password: "Password",
-        passwordPrompt: "Please input password.",
         email: "Email",
-        emailPrompt: "Please input email.",
         register: "Register",
         registerFailed: "Register failed",
         conflict: "Username has been token.",
@@ -51,6 +59,30 @@ export default {
         projects: "Projects",
         users: "Users",
       },
+      account: {
+        basic: {
+          profile: {
+            title: "Basic Information",
+            id: "User ID",
+            username: "Username",
+            email: "Email",
+            emailFormat: "Please input an valid email.",
+            update: "Update",
+            success: "Basic information updated successfully!",
+            failed: "Basic information update failed.",
+            failedDescription: "Please retry.",
+          },
+          changePassword: {
+            title: "Change Password",
+            original: "Original password",
+            newPassword: "New password",
+            update: "Update",
+            success: "Password updated successfully!",
+            failed: "Password update failed.",
+            failedDescription: "Please check the original password and retry.",
+          },
+        }
+      }
     },
     resources: {
       sidebar: {

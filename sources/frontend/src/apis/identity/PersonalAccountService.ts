@@ -29,11 +29,11 @@ export class PersonalAccountService extends HttpService {
     return response;
   }
 
-  async updatePassword(password: string): Promise<void> {
+  async updatePassword(original: string, updated: string): Promise<void> {
     await this.fetch({
       method: HttpMethod.PATCH,
       path: "/identity/account/password",
-      body: { password }
+      body: { original, updated }
     });
   }
 }

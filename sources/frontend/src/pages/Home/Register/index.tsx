@@ -66,15 +66,15 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
       {contextHolder}
       <PageMetadata titleId={root.title} />
       <Item name="username"
-        rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}>
+        rules={[{ required: true }]}>
         <Input disabled={registering} prefix={<UserOutlined className="site-form-item-icon" />} placeholder={username} />
       </Item>
-      <Item name="password" rules={[{ required: true, message: <LocalizedString id={root.passwordPrompt} /> }]}>
+      <Item name="password" rules={[{ required: true }]}>
         <Input type="password" disabled={registering} prefix={<LockOutlined className="site-form-item-icon" />} placeholder={password} />
       </Item>
       <Item name="email" rules={[
-        { type: "email", message: <LocalizedString id={root.emailPrompt} /> },
-        { required: true, message: <LocalizedString id={root.emailPrompt} /> }
+        { type: "email" },
+        { required: true }
       ]}>
         <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder={email} />
       </Item>

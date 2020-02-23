@@ -1,10 +1,11 @@
 import React, { Suspense } from 'react';
 import { Router, RouteComponentProps } from "@reach/router";
-import { StoreProvider, createStore } from 'simstate';
+import { StoreProvider, createStore, useStore } from 'simstate';
 import { UserStore } from './stores/UserStore';
 import { I18nStore } from "./i18n";
 import PageLoading from "./components/PageLoading";
 import { NavStore } from "./layouts/nav/NavStore";
+import { ConfigProvider } from "antd";
 
 const AsyncHomePages = React.lazy(() => import("./pages/Home"));
 const AsyncNormalPages = React.lazy(() => import("./pages/NormalPages"));
@@ -24,6 +25,15 @@ const TopLevelRouteSelector: React.FC<RouteComponentProps> = (props) => {
   }
 }
 
+function AntdConfigProvider({ children }) {
+  const i18nStore = useStore(I18nStore);
+  return (
+    <ConfigProvider {...i18nStore.currentLanguage.metadata.antdConfigProvider} >
+      {children}
+    </ConfigProvider>
+  );
+}
+
 function App() {
   const userStore = createStore(UserStore);
   const i18nStore = createStore(I18nStore);
@@ -31,11 +41,13 @@ function App() {
 
   return (
     <StoreProvider stores={[userStore, i18nStore, navStore]}>
-      <Suspense fallback={<PageLoading />}>
-        <Router primary={false} >
-          <TopLevelRouteSelector path="*" />
-        </Router>
-      </Suspense>
+      <AntdConfigProvider>
+        <Suspense fallback={<PageLoading />}>
+          <Router primary={false} >
+            <TopLevelRouteSelector path="*" />
+          </Router>
+        </Suspense>
+      </AntdConfigProvider>
 
     </StoreProvider>
   );

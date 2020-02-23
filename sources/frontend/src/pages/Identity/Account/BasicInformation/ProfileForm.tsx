@@ -4,6 +4,8 @@ import { Profile } from "src/models/Profile";
 import { getApiService } from "src/apis";
 import { PersonalAccountService, ProfileResponse } from "src/apis/identity/PersonalAccountService";
 import { useAsync } from "react-async";
+import { lang, LocalizedString } from "src/i18n";
+import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 
 
 const service = getApiService(PersonalAccountService);
@@ -18,13 +20,20 @@ const updateProfile = async ([email]) => {
   return resp.profile;
 };
 
+const root = lang.identity.account.basic.profile;
+
 export const ProfileForm: React.FC = () => {
 
   const [form] = Form.useForm();
 
+  const [api, contextHolder] = useLocalizedNotification();
+
   const { isPending, run } = useAsync({
     promiseFn: getProfile,
-    onResolve: (profile) => form.setFieldsValue(profile),
+    onResolve: (profile) => {
+      form.setFieldsValue(profile);
+      api.success({ messageId: root.success });
+    },
     deferFn: updateProfile
   });
 
@@ -36,13 +45,17 @@ export const ProfileForm: React.FC = () => {
   return (
     <Spin spinning={isPending}>
       <Form initialValues={undefined} layout="vertical" form={form} onFinish={handleSubmit}>
-        <Form.Item label="User Id" name="id">
+        <Form.Item label={<LocalizedString id={root.id} />} name="id">
           <Input disabled={true} />
         </Form.Item>
-        <Form.Item label="Username" name="username">
+        <Form.Item label={<LocalizedString id={root.username} />} name="username">
           <Input disabled={true} />
         </Form.Item>
-        <Form.Item label="Email" name="email">
+        <Form.Item
+          rules={[{ type: "email", required: true }]}
+          label={<LocalizedString id={root.email} />}
+          name="email"
+        >
           <Input />
         </Form.Item>
         <Form.Item>
@@ -51,6 +64,6 @@ export const ProfileForm: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
-    </Spin>
+    </Spin >
   )
 }

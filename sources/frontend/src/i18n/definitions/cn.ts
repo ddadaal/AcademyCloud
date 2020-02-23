@@ -1,9 +1,22 @@
+import zh_CN from "antd/es/locale/zh_CN";
+
 export default {
   metadata: {
     id: "cn",
     langStrings: ["cn", "zh-CN", "zh"],
     detailedId: "zh-CN",
     name: "简体中文",
+    antdConfigProvider: {
+      locale: zh_CN,
+      form: {
+        validateMessages: {
+          required: "这是必需字段。",
+          types: {
+            email: "请输入有效的电子邮箱地址。",
+          }
+        }
+      }
+    },
   },
   definitions: {
     homepage: {
@@ -16,9 +29,7 @@ export default {
       loginForm: {
         title: "登录",
         username: "用户名",
-        usernamePrompt: "请输入用户名",
         password: "密码",
-        passwordPrompt: "请输入密码",
         login: "登录",
         remember: "记住我",
         forget: "忘记密码",
@@ -29,11 +40,8 @@ export default {
       registerForm: {
         title: "注册",
         username: "用户名",
-        usernamePrompt: "请输入用户名",
         password: "密码",
-        passwordPrompt: "请输入密码",
         email: "电子邮箱",
-        emailPrompt: "请输入电子邮箱",
         register: "注册",
         registerFailed: "注册失败",
         conflict: "用户名已经被占用！",
@@ -51,6 +59,29 @@ export default {
         projects: "项目管理",
         users: "用户管理",
       },
+      account: {
+        basic: {
+          profile: {
+            title: "基本信息",
+            id: "用户ID",
+            username: "用户名",
+            email: "电子邮箱",
+            update: "更新",
+            success: "基本信息修改成功！",
+            failed: "基本信息修改失败！",
+            failedDescription: "请重试。",
+          },
+          changePassword: {
+            title: "修改密码",
+            original: "原密码",
+            newPassword: "新密码",
+            update: "更新",
+            success: "密码修改成功！",
+            failed: "密码修改失败！",
+            failedDescription: "请检查密码是否输入正确，再重试。",
+          },
+        }
+      }
     },
     resources: {
       sidebar: {
