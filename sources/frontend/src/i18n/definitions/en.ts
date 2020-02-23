@@ -83,7 +83,14 @@ export default {
           instance: "Instances",
           network: "Network",
           volume: "Volumes",
-        }
+        },
+        identity: {
+          root: "Identity",
+          account: "Personal Account",
+          domains: "Domains",
+          projects: "Projects",
+          users: "Users",
+        },
       },
       sidenav: {
         resources: {

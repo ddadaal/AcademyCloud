@@ -15,7 +15,13 @@ function getInvreqId(pathname: string) {
 
 export const availableNavPoints = [
   { path: "/resources", textId: root.resources.root },
+  { path: "/resources/dashboard", textId: root.resources.dashboard },
   { path: "/resources/instances", textId: root.resources.instance},
   { path: "/resources/network", textId: root.resources.network},
   { path: "/resources/volumes", textId: root.resources.volume},
+  { path: "/identity", textId: root.identity.root},
+  { path: "/identity/account", textId: root.identity.account},
+  { path: "/identity/projects", textId: root.identity.projects},
+  { path: "/identity/domains", textId: root.identity.domains},
+  { path: "/identity/users", textId: root.identity.users},
 ] as NavPoint[];

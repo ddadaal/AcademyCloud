@@ -98,7 +98,14 @@ export default {
           instance: "实例",
           network: "网络",
           volume: "云硬盘",
-        }
+        },
+        identity: {
+          root: "用户管理",
+          account: "个人账号管理",
+          domains: "域管理",
+          projects: "项目管理",
+          users: "用户管理",
+        },
       }
     },
     header: {
