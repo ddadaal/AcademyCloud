@@ -44,10 +44,12 @@ const Link: React.FC<{
   onClick: (path: string) => (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }> = (props) => {
   const { path, Icon, textId, onClick } = props;
-  return <RouterLink to={path} title={path}>
-    <Icon />
-    <LocalizedString id={textId} />
-  </RouterLink>;
+  return (
+    <RouterLink to={path} title={path}>
+      <Icon />
+      <LocalizedString id={textId} />
+    </RouterLink>
+  );
 };
 
 export const SideNav: React.FC<Props> = (props) => {
@@ -85,7 +87,10 @@ export const SideNav: React.FC<Props> = (props) => {
   }
   return (
     <>
-      <BodyMask sidebarShown={!navStore.sidebarCollapsed} breakpoint={antdBreakpoints[breakpoint]} />
+      <BodyMask
+        sidebarShown={!navStore.sidebarCollapsed}
+        breakpoint={antdBreakpoints[breakpoint]}
+      />
       <StyledSider
         onBreakpoint={onBreakpoint}
         collapsed={navStore.sidebarCollapsed}
@@ -111,7 +116,7 @@ export const SideNav: React.FC<Props> = (props) => {
                 return (
                   <SubMenu key={x.path} title={
                     <span>
-                      {React.createElement(x.Icon)}
+                      <x.Icon />
                       <span><LocalizedString id={x.textId} /></span>
                     </span>}
                   >

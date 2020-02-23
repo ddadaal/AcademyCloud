@@ -42,7 +42,11 @@ export default {
     },
     identity: {
       sidebar: {
-        account: "Personal Account",
+        account: {
+          root: "Personal Account",
+          basic: "Basic Information",
+          domains: "Joined Domains",
+        },
         domains: "Domains",
         projects: "Projects",
         users: "Users",
@@ -86,7 +90,11 @@ export default {
         },
         identity: {
           root: "Identity",
-          account: "Personal Account",
+          account: {
+            root: "Personal Account",
+            basic: "Basic Information",
+            domains: "Joined Domains",
+          },
           domains: "Domains",
           projects: "Projects",
           users: "Users",

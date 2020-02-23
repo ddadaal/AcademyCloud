@@ -42,7 +42,11 @@ export default {
     },
     identity: {
       sidebar: {
-        account: "个人账号管理",
+        account: {
+          root: "个人账号管理",
+          basic: "基本信息",
+          domains: "域认证",
+        },
         domains: "域管理",
         projects: "项目管理",
         users: "用户管理",
@@ -101,7 +105,11 @@ export default {
         },
         identity: {
           root: "用户管理",
-          account: "个人账号管理",
+          account: {
+            root: "个人账号管理",
+            basic: "基本信息",
+            domains: "域认证",
+          },
           domains: "域管理",
           projects: "项目管理",
           users: "用户管理",

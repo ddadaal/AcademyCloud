@@ -7,7 +7,16 @@ export function useSidenavs(sidebarRoutes: NavItemProps[], basePath: string) {
   const navStore = useStore(NavStore);
 
   const routes = useMemo(() => (
-    sidebarRoutes.map((x) => ({ ...x, path: basePath + x.path }))
+    sidebarRoutes.map((x) => ({
+      ...x,
+      path: basePath + x.path,
+      children: x.children?.map((child) => (
+        {
+          ...child,
+          path: `${basePath}${x.path}/${child.path}`,
+        }
+      ))
+    }))
   ), [sidebarRoutes, basePath]);
 
   useEffect(() => {
