@@ -20,9 +20,9 @@ export const ScopeIndicator: React.FC = () => {
 
   const i18nStore = useStore(I18nStore);
 
+  const [api, contextHolder] = notification.useNotification();
 
   if (!user) { return null; }
-
 
   const { scope: currentScope, availableScopes } = user;
 
@@ -48,18 +48,18 @@ export const ScopeIndicator: React.FC = () => {
 
   const onChange = (scope: Scope) => async () => {
     // re-login
-    const api = getApiService(AccountService);
+    const apiService = getApiService(AccountService);
     setChangingTo(scope);
     try {
-      const resp = await api.changeScope(scope);
+      const resp = await apiService.changeScope(scope);
       userStore.login({ ...user, token: resp.token, scope });
 
-      notification.success({
-        message: i18nStore.translate(root.success),
+      api.success({
+        message: <LocalizedString id={root.success} />,
       });
     } catch (e) {
-      notification.error({
-        message: i18nStore.translate(root.fail),
+      api.error({
+        message: <LocalizedString id={root.fail} />,
       });
     } finally {
       setChangingTo(null);
@@ -103,6 +103,7 @@ export const ScopeIndicator: React.FC = () => {
   return (
     <Dropdown overlay={menu}>
       <ClickableA>
+        {contextHolder}
         <BookOutlined />
         {changingTo
           ? <LocalizedString id={root.changing} replacements={[scopeNameWithRole(changingTo)]} />

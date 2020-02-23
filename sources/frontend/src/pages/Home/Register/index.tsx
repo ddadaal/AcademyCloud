@@ -3,7 +3,7 @@ import { RouteComponentProps, navigate } from "@reach/router";
 import { Form, Input, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { FormButton } from "src/pages/Home/HomePageLayout";
-import { lang, LocalizedString, useMultiLocalized, I18nStore } from "src/i18n";
+import { lang, LocalizedString, useMultiLocalized } from "src/i18n";
 import { AccountService } from "src/apis/account/AccountService";
 import { getApiService } from "src/apis";
 import { useStore } from "simstate";
@@ -18,7 +18,7 @@ const root = lang.homepage.registerForm;
 export const RegisterForm: React.FC<RouteComponentProps> = () => {
 
   const userStore = useStore(UserStore);
-  const i18nStore = useStore(I18nStore);
+  const [notifyApi, contextHolder] = notification.useNotification();
   const [registering, setRegistering] = useState(false);
 
   // the origin signature is any
@@ -43,14 +43,14 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
       const ex = e as HttpError;
       if (ex.status === 403) {
         // conflict
-        notification.error({
-          message: i18nStore.translate(root.registerFailed),
-          description: i18nStore.translate(root.conflict)
+        notifyApi.error({
+          message: <LocalizedString id={root.registerFailed} />,
+          description: <LocalizedString id={root.conflict} />,
         });
       } else {
-        notification.error({
-          message: i18nStore.translate(root.registerFailed),
-          description: i18nStore.translate(root.other)
+        notifyApi.error({
+          message: <LocalizedString id={root.registerFailed} />,
+          description: <LocalizedString id={root.other} />,
         });
       }
     } finally {
@@ -63,6 +63,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
 
   return (
     <Form onFinish={onFinish} name="register">
+      {contextHolder}
       <PageMetadata titleId={root.title} />
       <Item name="username"
         rules={[{ required: true, message: <LocalizedString id={root.usernamePrompt} /> }]}>

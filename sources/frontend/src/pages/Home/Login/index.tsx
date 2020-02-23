@@ -16,7 +16,8 @@ const root = lang.homepage.loginForm;
 export const LoginForm: React.FC<RouteComponentProps> = () => {
 
   const userStore = useStore(UserStore);
-  const i18nStore = useStore(I18nStore);
+
+  const [api, contextHolder] = notification.useNotification();
 
   const [loggingIn, setLoggingIn] = useState(false);
 
@@ -41,10 +42,11 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       });
 
       await navigate("/resources");
+
     } catch (e) {
-      notification.error({
-        message: i18nStore.translate(root.loginFailTitle),
-        description: i18nStore.translate(root.other)
+      api.error({
+        message: <LocalizedString id={root.loginFailTitle} />,
+        description: <LocalizedString id={root.other} />,
       });
     } finally {
       setLoggingIn(false);
@@ -63,6 +65,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
+      {contextHolder}
       <PageMetadata titleId={root.title} />
       <Form.Item
         name="username"
