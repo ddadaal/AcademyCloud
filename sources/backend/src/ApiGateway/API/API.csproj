@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>07ccfaa4-77e6-45f8-830a-d707c8372023</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\..</DockerfileContext>
+    <DockerfileContext>..\..\..</DockerfileContext>
     <AssemblyName>AcademyCloud.API</AssemblyName>
     <RootNamespace>AcademyCloud.API</RootNamespace>
     <Nullable>enable</Nullable>
@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.27.0" />
     <PackageReference Include="Grpc.Net.Client" Version="2.27.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="NConsul" Version="0.7.3" />
     <PackageReference Include="NConsul.AspNetCore" Version="0.7.3.1" />
