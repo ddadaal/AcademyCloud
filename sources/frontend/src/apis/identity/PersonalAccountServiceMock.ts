@@ -1,5 +1,6 @@
-import { PersonalAccountService, ProfileResponse, UpdateProfileRequest } from './PersonalAccountService';
+import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetDomainsResponse } from './PersonalAccountService';
 import { delay } from "src/utils/delay";
+import { HttpMethod } from "src/apis/HttpService";
 
 export class PersonalAccountServiceMock extends PersonalAccountService {
   async getProfile(): Promise<ProfileResponse> {
@@ -26,5 +27,14 @@ export class PersonalAccountServiceMock extends PersonalAccountService {
 
   async updatePassword(password: string): Promise<void> {
     await delay(1000);
+  }
+
+  async getDomains(): Promise<GetDomainsResponse> {
+    return {
+      domains: [
+        { domainId: "NJUID", domainName: "NJU", role: "member" },
+        { domainId: "PKUID", domainName: "PKU", role: "admin" },
+      ]
+    }
   }
 }

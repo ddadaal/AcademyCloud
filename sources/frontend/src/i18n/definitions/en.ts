@@ -81,8 +81,18 @@ export default {
             failed: "Password update failed.",
             failedDescription: "Please check the original password and retry.",
           },
-        }
-      }
+        },
+        joinedDomains: {
+          title: "Joined Domains",
+          table: {
+            id: "Domain Id",
+            name: "Domain Name",
+            role: "Role",
+          },
+          join: "Join A New Domain",
+        },
+
+      },
     },
     resources: {
       sidebar: {

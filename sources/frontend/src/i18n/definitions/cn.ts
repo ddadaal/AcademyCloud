@@ -80,7 +80,16 @@ export default {
             failed: "密码修改失败！",
             failedDescription: "请检查密码是否输入正确，再重试。",
           },
-        }
+        },
+        joinedDomains: {
+          title: "加入的域",
+          table: {
+            id: "域ID",
+            name: "域名字",
+            role: "角色",
+          },
+          join: "申请加入新的域",
+        },
       }
     },
     resources: {
