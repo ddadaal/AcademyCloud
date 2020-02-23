@@ -24,7 +24,7 @@ export function UserIndicator() {
   const dropdownMenu = (
     <Menu>
       <Menu.Item key="self">
-        <Link to={"/user"}><LocalizedString id={root.selfCenter} /></Link>
+        <Link to={"/identity"}><LocalizedString id={root.selfCenter} /></Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout">

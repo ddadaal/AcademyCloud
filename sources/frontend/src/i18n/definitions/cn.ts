@@ -107,7 +107,7 @@ export default {
         changing: "正在切换到{}...",
       },
       user: {
-        selfCenter: "个人中心",
+        selfCenter: "账号管理",
         logout: "登出",
       },
       sidenav: {

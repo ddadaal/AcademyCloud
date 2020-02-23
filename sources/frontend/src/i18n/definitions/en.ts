@@ -108,7 +108,7 @@ export default {
         changing: "Switching to {}...",
       },
       user: {
-        selfCenter: "Self Center",
+        selfCenter: "Manage Account",
         logout: "Logout",
       },
       navPoints: {
