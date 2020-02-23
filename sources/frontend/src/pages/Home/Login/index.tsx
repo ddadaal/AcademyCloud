@@ -29,8 +29,6 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       const accountService = getApiService(AccountService);
       const scopesResp = await accountService.getScopes(username, password);
 
-      console.log("response", scopesResp);
-
       // select default; if not, select lastLogin; if not, the first
       const scope = scopesResp.defaultScope ?? scopesResp.lastLoginScope ?? scopesResp.scopes[0];
       const loginResponse = await accountService.login(username, password, scope);

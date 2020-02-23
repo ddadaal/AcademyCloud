@@ -67,6 +67,9 @@ export default {
         domains: "学校",
         system: "系统",
         admin: "管理员",
+        success: "切换成功！",
+        fail: "切换失败，请退出登录重试",
+        changing: "正在切换到{}...",
       },
       user: {
         selfCenter: "个人中心",

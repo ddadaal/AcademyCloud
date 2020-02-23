@@ -27,17 +27,6 @@ function saveUserInfo(user: User) {
 export function UserStore() {
   const [user, setUser] = useState(getUserInfoInStorage);
 
-  const changeScope = useCallback((scope: Scope) => {
-    setUser((user) => {
-      if (!user) { return null; }
-      const newUser = { ...user, scope };
-      if (user.remember) {
-        saveUserInfo(newUser);
-      }
-      return newUser;
-    });
-  }, [setUser]);
-
   const loggedIn = !!user;
 
   const logout = useCallback(() => {
@@ -52,6 +41,5 @@ export function UserStore() {
     }
   }, []);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return { loggedIn, user, logout, login, changeScope };
+  return { loggedIn, user, logout, login };
 }

@@ -40,6 +40,20 @@ export class AccountService extends HttpService {
     return data;
   }
 
+  async changeScope(scope: Scope): Promise<LoginResponse> {
+    const data = await this.fetch<LoginResponse>({
+      method: HttpMethod.POST,
+      body: { scope },
+      path: "/auth/token",
+    });
+
+    if (data.token) {
+      this.setToken(data.token);
+    }
+
+    return data;
+  }
+
   async register(username: string, password: string): Promise<RegisterResponse> {
     const data = await this.fetch<RegisterResponse>({
       method: HttpMethod.POST,

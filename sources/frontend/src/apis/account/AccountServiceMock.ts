@@ -32,6 +32,11 @@ export class AccountServiceMock extends AccountService {
     }
   };
 
+  async changeScope(scope: Scope): Promise<LoginResponse> {
+    await delay(2000);
+    return { token: `testtoken${JSON.stringify(scope)}` };
+  }
+
   async login(username: string, password: string, scope: Scope): Promise<LoginResponse> {
     if (username === "401") {
       throw makeHttpError(401);

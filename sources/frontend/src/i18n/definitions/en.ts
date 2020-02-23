@@ -67,6 +67,9 @@ export default {
         domains: "Domains",
         system: "System",
         admin: "Admin",
+        success: "Switch successful.",
+        fail: "Switch failed. Please retry.",
+        changing: "Switching to {}...",
       },
       user: {
         selfCenter: "Self Center",
