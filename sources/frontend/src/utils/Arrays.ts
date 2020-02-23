@@ -2,7 +2,7 @@ export function flatten<T>(nestedArray: T[][]) {
   return nestedArray.reduce((prev, curr) => [...prev, ...curr], []);
 }
 
-export function arrayContainsElement<T>(array: T[] | null | undefined) {
+export function arrayContainsElement<T>(array: T[] | null | undefined): array is T[] {
   return !!array && array.length > 0;
 }
 
