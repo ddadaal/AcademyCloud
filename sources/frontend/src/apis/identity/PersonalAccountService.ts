@@ -23,9 +23,17 @@ export class PersonalAccountService extends HttpService {
     const response = await this.fetch<ProfileResponse>({
       method: HttpMethod.PATCH,
       path: "/identity/account/profile",
-      body:  request,
+      body: request,
     });
 
     return response;
+  }
+
+  async updatePassword(password: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.PATCH,
+      path: "/identity/account/password",
+      body: { password }
+    });
   }
 }
