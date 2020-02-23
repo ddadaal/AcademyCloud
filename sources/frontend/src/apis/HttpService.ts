@@ -4,7 +4,7 @@ export interface FetchInfo {
   path?: string;
   method?: HttpMethod;
   params?: { [key: string]: string | undefined };
-  body?: { [key: string]: string | number | object };
+  body?: unknown;
   headers?: { [s: string]: string };
 }
 
