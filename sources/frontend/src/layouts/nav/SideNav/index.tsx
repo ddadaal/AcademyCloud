@@ -101,7 +101,7 @@ export const SideNav: React.FC<Props> = (props) => {
         <Menu
           mode="inline"
           selectedKeys={selectedKeys}
-          // theme={'dark'}
+          defaultOpenKeys={navStore.sidenavs.map((x) => x.path)}
           style={{ height: "100%", borderRight: 0 }}
         >
           {navStore.sidenavs
