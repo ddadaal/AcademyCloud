@@ -60,7 +60,7 @@ export const ProfileForm: React.FC = () => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" >
-            Change
+            <LocalizedString id={root.update} />
           </Button>
         </Form.Item>
       </Form>
