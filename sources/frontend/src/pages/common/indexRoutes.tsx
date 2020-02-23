@@ -6,8 +6,8 @@ import { UserStore } from "src/stores/UserStore";
 import { Router, RouteComponentProps, Redirect } from "@reach/router";
 import { useSidenavs } from "src/pages/common/useSidenavs";
 import { pathEquals } from "src/utils/path";
-import { ErrorPage } from "src/pages/common/ErrorPage";
 import { arrayContainsElement } from "src/utils/Arrays";
+import { ErrorPage } from "src/components/ErrorPage";
 
 export interface IndexRoute extends NavItemProps {
   checkScope: (scope: Scope) => boolean;

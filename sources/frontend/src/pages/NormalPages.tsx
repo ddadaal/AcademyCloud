@@ -5,9 +5,11 @@ import { Router, RouteComponentProps, Redirect } from "@reach/router";
 import PageLoading from "src/components/PageLoading";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
+import { ErrorPage } from "src/components/ErrorPage";
 
 const ResourcesPage = React.lazy(() => import("./Resources"));
 const IdentityPage = React.lazy(() => import("./Identity"));
+
 
 const NormalPages: React.FC<RouteComponentProps> = () => {
   const userStore = useStore(UserStore);
@@ -25,6 +27,7 @@ const NormalPages: React.FC<RouteComponentProps> = () => {
           <Router>
             <ResourcesPage path="resources/*" />
             <IdentityPage path="identity/*" />
+            <ErrorPage path="*" />
           </Router>
         </Suspense>
       </FunctionLayout>
