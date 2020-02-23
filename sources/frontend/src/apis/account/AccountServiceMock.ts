@@ -5,7 +5,7 @@ import { Scope } from "src/models/Scope";
 
 export class AccountServiceMock extends AccountService {
   async getScopes(username: string, password: string): Promise<ScopesResponse> {
-    await delay(1000);
+    await this.delay();
     if (username === "system") {
       return {
         scopes: [{
@@ -33,7 +33,7 @@ export class AccountServiceMock extends AccountService {
   };
 
   async changeScope(scope: Scope): Promise<LoginResponse> {
-    await delay(2000);
+    await this.delay();
     return { token: `testtoken${JSON.stringify(scope)}` };
   }
 

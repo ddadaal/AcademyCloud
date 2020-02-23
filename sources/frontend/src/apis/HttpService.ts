@@ -1,4 +1,5 @@
 import axios from "axios";
+import { delay } from 'src/utils/delay';
 
 export interface FetchInfo {
   path?: string;
@@ -37,6 +38,10 @@ export class HttpService {
 
   protected get axios() {
     return axiosInstance;
+  }
+
+  protected async delay(ms = 1000) {
+    await delay(ms);
   }
 
   /**
