@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { Router, RouteComponentProps } from "@reach/router";
 import { StoreProvider, createStore, useStore } from 'simstate';
 import { UserStore } from './stores/UserStore';
@@ -27,8 +27,12 @@ const TopLevelRouteSelector: React.FC<RouteComponentProps> = (props) => {
 
 function AntdConfigProvider({ children }) {
   const i18nStore = useStore(I18nStore);
+  const configs = useMemo(() => (
+    i18nStore.currentLanguage.metadata.antdConfigProvider
+  ), [i18nStore.currentLanguage]);
+
   return (
-    <ConfigProvider {...i18nStore.currentLanguage.metadata.antdConfigProvider} >
+    <ConfigProvider {...configs} >
       {children}
     </ConfigProvider>
   );

@@ -10,7 +10,7 @@ export default {
       locale: en_US,
       form: {
         validateMessages: {
-          required: "Please input ${name}.",
+          required: "Please input this field.",
           types: {
             email: "Please input a valid email.",
           }
