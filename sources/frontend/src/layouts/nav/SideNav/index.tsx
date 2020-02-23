@@ -9,6 +9,7 @@ import { useStore } from "simstate";
 import { flatten, arrayContainsElement, removeFalsy } from "src/utils/Arrays";
 import { LocalizedString } from "src/i18n";
 import { navigate, Link as RouterLink } from "@reach/router";
+import { startsWithMatch } from "src/layouts/nav/utils/matchers";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -64,11 +65,11 @@ export const SideNav: React.FC<Props> = (props) => {
   const selectedKeys = useMemo(() => {
     // root selected keys
     const path = navStore.location.pathname;
-    const rootSelected = navStore.sidenavs.filter((x) => x.match(path));
+    const rootSelected = navStore.sidenavs.filter((x) => startsWithMatch(x, path));
 
     // children selected keys
     const childrenSelected = flatten(rootSelected.map((x) => {
-      return (x.children ?? []).filter((child) => child.match(path));
+      return (x.children ?? []).filter((child) => startsWithMatch(child, path));
     }));
 
     return flatten([rootSelected, childrenSelected]).map((x) => x.path);

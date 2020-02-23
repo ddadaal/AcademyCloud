@@ -6,7 +6,6 @@ import MediaQuery from "react-responsive";
 import { layoutConstants } from "../../constants";
 import styled from "styled-components";
 import { navigate } from "@reach/router";
-import { LocalizedString } from "src/i18n";
 import { useStore } from "simstate";
 import { NavStore } from "src/layouts/nav/NavStore";
 import HeaderIcon from "./HeaderIcon";
@@ -16,6 +15,7 @@ import { UserIndicator } from "./UserIndicator";
 import { Logo } from "src/layouts/nav/Header/Logo";
 import { ScopeIndicator } from "src/layouts/nav/Header/ScopeIndicator";
 import { HeaderCompactMenu, HeaderNavMenu } from "src/layouts/nav/Header/HeaderMenus";
+import { startsWithMatch } from "src/layouts/nav/utils/matchers";
 const { Header: AntdHeader } = Layout;
 
 
@@ -69,7 +69,9 @@ export const Header: React.FC = () => {
   }, [navStore]);
 
 
-  const selectedKeys = mainNavs.filter((x) => x.match(navStore.location.pathname)).map((x) => x.path);
+  const selectedKeys = mainNavs
+    .filter((x) => startsWithMatch(x, navStore.location.pathname))
+    .map((x) => x.path);
 
 
   return (
