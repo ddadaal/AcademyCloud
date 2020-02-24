@@ -13,7 +13,7 @@ const Layout = styled(AntdLayout)`
 `;
 
 const StyledContent = styled(Content)`
-  padding: 24px;
+  padding: 8px 24px;
   margin: 8px;
   // fix min-height is set to 0 at first start
   && {

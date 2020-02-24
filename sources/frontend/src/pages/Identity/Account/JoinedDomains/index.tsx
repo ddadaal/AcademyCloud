@@ -1,18 +1,19 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
-import { PageTitle } from "src/components/PageTitle";
 import { lang, LocalizedString } from "src/i18n";
 import { DomainsTable } from "src/pages/Identity/Account/JoinedDomains/DomainsTable";
 import styled from 'styled-components';
 import { Button } from "antd";
+import { TitleText } from "src/components/pagecomponents/PageTitle";
+import { TitleBar } from "src/components/pagecomponents/TitleBar";
 
 const root = lang.identity.account.joinedDomains;
 
 
-const TitleBar = styled.div`
+const SpaceBetweenTitleBar = styled(TitleBar)`
   display: flex;
   justify-content: space-between;
-  margin: 16px 0;
+  align-items: center;
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -20,12 +21,12 @@ export default function JoinedDomainsPage(_: RouteComponentProps) {
 
   return (
     <div>
-      <TitleBar>
-        <PageTitle><LocalizedString id={root.title} /></PageTitle>
+      <SpaceBetweenTitleBar>
+        <TitleText><LocalizedString id={root.title} /></TitleText>
         <Button type="primary">
           <LocalizedString id={root.join} />
         </Button>
-      </TitleBar>
+      </SpaceBetweenTitleBar>
       <DomainsTable />
     </div>
   );

@@ -1,11 +1,12 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
-import { PageTitle } from "src/components/PageTitle";
 import { ProfileForm } from "src/pages/Identity/Account/BasicInformation/ProfileForm";
 import styled from "styled-components";
 import { Col, Row } from "antd";
 import { ChangePasswordForm } from "src/pages/Identity/Account/BasicInformation/ChangePasswordForm";
 import { lang, LocalizedString } from "src/i18n";
+import { TitleBar } from "src/components/pagecomponents/TitleBar";
+import { TitleText } from "src/components/pagecomponents/PageTitle";
 
 const ProfileFormDiv = styled.div`
   max-width: 400px;
@@ -20,15 +21,21 @@ export default function BasicInformationPage(_: RouteComponentProps) {
     <div>
       <Row gutter={32}>
         <Col xs={24} md={12}>
-          <PageTitle><LocalizedString id={root.profile.title} /></PageTitle>
+          <TitleBar>
+            <TitleText>
+              <LocalizedString id={root.profile.title} />
+            </TitleText>
+          </TitleBar>
           <ProfileFormDiv>
             <ProfileForm />
           </ProfileFormDiv>
         </Col>
         <Col xs={24} md={12}>
-          <PageTitle>
-            <LocalizedString id={root.changePassword.title} />
-          </PageTitle>
+          <TitleBar>
+            <TitleText>
+              <LocalizedString id={root.changePassword.title} />
+            </TitleText>
+          </TitleBar>
           <ProfileFormDiv>
             <ChangePasswordForm />
           </ProfileFormDiv>
