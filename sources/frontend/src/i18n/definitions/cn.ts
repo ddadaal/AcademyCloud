@@ -26,6 +26,7 @@ export default {
         cpu: "CPU核心数",
         memory: "内存 (MB)",
         storage: "存储 (GB)",
+        string: "{} 核，{} GB内存，{} GB存储",
       },
       users: {
         id: "ID",

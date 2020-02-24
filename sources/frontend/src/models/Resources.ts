@@ -3,3 +3,4 @@ export interface Resources {
   memory: number;
   storage: number;
 }
+

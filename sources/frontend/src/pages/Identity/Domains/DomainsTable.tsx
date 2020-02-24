@@ -68,7 +68,10 @@ export const DomainsTable: React.FC = () => {
         <Table.Column title={<Localized id={root.resources} />} dataIndex="resources" key="resources"
           render={(resources: Resources) => (
             <ModalLink api={api} modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
-              {JSON.stringify(resources)}
+              <Localized
+                id={lang.components.resources.string}
+                replacements={[resources.cpu, resources.memory, resources.storage]}
+              />
             </ModalLink>
           )} />
         <Table.Column title={<Localized id={root.actions} />} key="domainId"

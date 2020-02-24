@@ -26,6 +26,7 @@ export default {
         cpu: "CPU Cores",
         memory: "Memory (MB)",
         storage: "Storage (GB)",
+        string: "{} Cores, {} GB Memory, {} GB Storage",
       },
       users: {
         id: "ID",
