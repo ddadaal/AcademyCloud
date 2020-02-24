@@ -1,8 +1,16 @@
 import React from "react";
+import styled from 'styled-components';
+
+const Title = styled.h1`
+  margin: 8px 0;
+
+  font-weight: 700;
+  font-size: 16px;
+`;
 
 export const PageTitle: React.FC = ({ children }) => {
   return (
-    <h1>{children}</h1>
+    <Title>{children}</Title>
   );
 }
 

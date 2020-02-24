@@ -14,6 +14,10 @@ export interface GetDomainsResponse {
   domains: UserDomainAssignment[];
 }
 
+export interface ExitDomainsError {
+  reason: "isPayAccount" | "notJoined";
+}
+
 export class PersonalAccountService extends HttpService {
   async getProfile(): Promise<ProfileResponse> {
     const response = await this.fetch<ProfileResponse>({
@@ -49,5 +53,13 @@ export class PersonalAccountService extends HttpService {
     });
 
     return resp as GetDomainsResponse;
+  }
+
+  // if not successful, throw a ExitDomainsError.
+  async exitDomain(domainId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.DELETE,
+      path: `/identity/account/domains/${domainId}`,
+    });
   }
 }

@@ -87,6 +87,17 @@ export default {
             id: "域ID",
             name: "域名字",
             role: "角色",
+            actions: "操作",
+            exit: "退出域",
+            confirmExit: "确定要退出域 {} 吗？",
+            okText: "确定",
+            cancelText: "取消",
+            success: "退出成功！",
+            error: {
+              title: "退出失败！",
+              isPayAccount: "您是这个域的付款账号。请先将付款账号修改为其他账号，再删除。",
+              notJoined: "您未加入这个域！",
+            }
           },
           join: "申请加入新的域",
         },

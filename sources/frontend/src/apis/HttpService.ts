@@ -17,12 +17,12 @@ export enum HttpMethod {
   PUT = "PUT",
 }
 
-export interface HttpError {
+export interface HttpError<T = unknown>{
   status: number;
-  data?: unknown;
+  data?: T;
 }
 
-export function makeHttpError(status: number, data?: unknown): HttpError {
+export function makeHttpError<T = unknown>(status: number, data?: T): HttpError {
   return { status, data };
 }
 

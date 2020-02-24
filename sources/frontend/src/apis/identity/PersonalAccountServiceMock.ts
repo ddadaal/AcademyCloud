@@ -1,4 +1,5 @@
 import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetDomainsResponse } from './PersonalAccountService';
+import { makeHttpError } from '../HttpService';
 
 export class PersonalAccountServiceMock extends PersonalAccountService {
   async getProfile(): Promise<ProfileResponse> {
@@ -35,5 +36,9 @@ export class PersonalAccountServiceMock extends PersonalAccountService {
         { domainId: "PKUID", domainName: "PKU", role: "admin" },
       ]
     }
+  }
+
+  async exitDomain(domainId: string): Promise<void> {
+    throw makeHttpError(403, { reason: "isPayAccount" });
   }
 }

@@ -88,6 +88,17 @@ export default {
             id: "Domain Id",
             name: "Domain Name",
             role: "Role",
+            actions: "Actions",
+            exit: "Exit Domain",
+            confirmExit: "Confirm to exit domain {} ?",
+            okText: "Confirm",
+            cancelText: "Cancel",
+            success: "Exit Successful!",
+            error: {
+              title: "Exit Failed!",
+              isPayAccount: "You are the pay account for this domain. Please set the pay account of the domain to another account, and then exit.",
+              notJoined: "You have not joined this domain!",
+            }
           },
           join: "Join A New Domain",
         },
