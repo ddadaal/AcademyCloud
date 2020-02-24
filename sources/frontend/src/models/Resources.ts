@@ -4,3 +4,6 @@ export interface Resources {
   storage: number;
 }
 
+export function resourcesString({cpu,memory, storage}: Resources) {
+  return `${cpu} | ${memory} MB | ${storage} GB`;
+}
