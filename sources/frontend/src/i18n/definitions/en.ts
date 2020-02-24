@@ -19,6 +19,21 @@ export default {
     },
   },
   definitions: {
+    components: {
+      resources: {
+        resourceType: "Resource Type",
+        values: "Resource Quantity",
+        cpu: "CPU Cores",
+        memory: "Memory (MB)",
+        storage: "Storage (GB)",
+      },
+      users: {
+        id: "ID",
+        username: "Username",
+        name: "Name",
+        email: "Email",
+      },
+    },
     homepage: {
       title: "AcademyCloud",
       description: "Cloud for Academy",
@@ -96,6 +111,16 @@ export default {
 
         }
       },
+      domains: {
+        title: "Domains Management",
+        id: "Domain ID",
+        name: "Domain Name",
+        admins: "Admins",
+        resources: "Reources",
+        actions: "Actions",
+        setResources: "Set Resources",
+        setAdmins: "Set Admins",
+      }
     },
     resources: {
     },

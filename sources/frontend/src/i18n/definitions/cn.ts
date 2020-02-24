@@ -19,6 +19,21 @@ export default {
     },
   },
   definitions: {
+    components: {
+      resources: {
+        resourceType: "资源类型",
+        values: "资源量",
+        cpu: "CPU核心数",
+        memory: "内存 (MB)",
+        storage: "存储 (GB)",
+      },
+      users: {
+        id: "ID",
+        username: "用户名",
+        name: "姓名",
+        email: "电子邮箱",
+      },
+    },
     homepage: {
       title: "AcademyCloud",
       description: "为大学设计的云平台",
@@ -93,9 +108,18 @@ export default {
         },
         joinDomain: {
           title: "加入一个域",
-
         }
-      }
+      },
+      domains: {
+        title: "域管理",
+        id: "域ID",
+        name: "域名字",
+        admins: "管理员",
+        resources: "分配的资源",
+        actions: "操作",
+        setResources: "分配资源",
+        setAdmins: "设置管理员",
+      },
     },
     resources: {
     },

@@ -4,6 +4,8 @@ import { AccountServiceMock } from "./account/AccountServiceMock";
 import { InstanceService } from "./instance/InstanceService";
 import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { PersonalAccountServiceMock } from "src/apis/identity/PersonalAccountServiceMock";
+import { DomainsService } from "src/apis/identity/DomainsService";
+import { DomainsServiceMock } from "src/apis/identity/DomainsServiceMock";
 
 export const USE_MOCK = true;
 
@@ -11,6 +13,7 @@ const services = [
   [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
   [InstanceService, InstanceService],
   [PersonalAccountService, USE_MOCK ? PersonalAccountServiceMock : PersonalAccountService],
+  [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
 ] as const;
 
 
