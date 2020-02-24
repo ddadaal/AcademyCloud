@@ -5,11 +5,14 @@ import { Table, Modal } from "antd";
 import { Localized, lang } from "src/i18n";
 import { useAsync } from "react-async";
 import { UsersViewTable } from "src/components/users/UsersViewTable";
-import { User } from "src/models/User";
 import { Resources } from "src/models/Resources";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 import { ModalStaticFunctions } from "antd/lib/modal/confirm";
 import { TitleText } from "src/components/pagecomponents/TitleText";
+import { SetResourcesLink } from "src/pages/Identity/Domains/SetResourcesLink";
+import { SetAdminLink } from "src/pages/Identity/Domains/SetAdminLink";
+import { Domain } from "src/models/Domain";
+import { User } from "src/models/User";
 
 const root = lang.identity.domains;
 
@@ -37,7 +40,7 @@ const ModalLink: React.FC<{
 
 export const DomainsTable: React.FC = () => {
 
-  const { data, isPending } = useAsync({ promiseFn: getDomains });
+  const { data, isPending, reload } = useAsync({ promiseFn: getDomains });
 
   const [api, contextHolder] = Modal.useModal();
 
@@ -47,6 +50,15 @@ export const DomainsTable: React.FC = () => {
       <Table dataSource={data?.domains} loading={isPending}>
         <Table.Column title={<Localized id={root.id} />} dataIndex="id" key="domainId" />
         <Table.Column title={<Localized id={root.name} />} dataIndex="name" key="domainName" />
+        <Table.Column title={<Localized id={root.active.title} />} dataIndex="active" key="domainName"
+          render={(active: boolean) => <Localized id={root.active[String(active)]} />}
+        />
+        <Table.Column title={<Localized id={root.payUser} />} dataIndex="payUser" key="payUser"
+          render={(payUser: User) => (
+            <ModalLink api={api} modalTitle={<Localized id={root.payUser} />} modalContent={<UsersViewTable users={[payUser]} />}>
+              {payUser.name}
+            </ModalLink>
+          )} />
         <Table.Column title={<Localized id={root.admins} />} dataIndex="admins" key="admins"
           render={(admins: User[]) => (
             <ModalLink api={api} modalTitle={<Localized id={root.admins} />} modalContent={<UsersViewTable users={admins} />}>
@@ -58,6 +70,14 @@ export const DomainsTable: React.FC = () => {
             <ModalLink api={api} modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
               {JSON.stringify(resources)}
             </ModalLink>
+          )} />
+        <Table.Column title={<Localized id={root.actions} />} key="domainId"
+          render={(_, domain: Domain) => (
+            <span>
+              <SetAdminLink domain={domain} reload={reload} />
+              {" | "}
+              <SetResourcesLink domain={domain} reload={reload} />
+            </span>
           )} />
       </Table>
     </>

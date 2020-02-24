@@ -1,4 +1,4 @@
-import { UserRole } from './User';
+import { UserRole } from "./Scope";
 
 export interface UserDomainAssignment {
   domainId: string;

@@ -7,7 +7,6 @@ import { DomainsTable } from "src/pages/Identity/Domains/DomainsTable";
 
 const root = lang.identity.domains;
 
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function DomainsPage(_: RouteComponentProps) {
   return (

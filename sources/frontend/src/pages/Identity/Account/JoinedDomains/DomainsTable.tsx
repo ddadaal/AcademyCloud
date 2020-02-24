@@ -1,15 +1,13 @@
-import React, { useCallback, useState, useMemo } from "react";
-import { Table, Modal } from "antd";
+import React, { useCallback, useMemo } from "react";
+import { Table } from "antd";
 import { ColumnProps } from "antd/lib/table";
 import { lang, Localized } from "src/i18n";
 import { UserDomainAssignment } from "src/models/UserDomainAssignment";
 import { useAsync } from "react-async";
 import { getApiService } from "src/apis";
-import { PersonalAccountService, ExitDomainsError } from "src/apis/identity/PersonalAccountService";
+import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
-import { Domain } from "domain";
-import { HttpError } from "src/apis/HttpService";
 import { DomainTableExitLink } from "src/pages/Identity/Account/JoinedDomains/DomainTableExitLink";
 
 const root = lang.identity.account.joinedDomains.table;

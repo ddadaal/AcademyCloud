@@ -18,8 +18,6 @@ export const ScopeIndicator: React.FC = () => {
   const userStore = useStore(UserStore);
   const { user } = userStore;
 
-  const i18nStore = useStore(I18nStore);
-
   const [api, contextHolder] = notification.useNotification();
 
   if (!user) { return null; }

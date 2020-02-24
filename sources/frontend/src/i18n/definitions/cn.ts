@@ -32,6 +32,11 @@ export default {
         username: "用户名",
         name: "姓名",
         email: "电子邮箱",
+        active: {
+          title: "状态",
+          true: "可用",
+          false: "停用",
+        },
       },
     },
     homepage: {
@@ -114,11 +119,27 @@ export default {
         title: "域管理",
         id: "域ID",
         name: "域名字",
+        active: {
+          title: "状态",
+          true: "可用",
+          false: "停用",
+        },
+        payUser: "付款用户",
         admins: "管理员",
         resources: "分配的资源",
         actions: "操作",
-        setResources: "分配资源",
-        setAdmins: "设置管理员",
+        setResources: {
+          link: "分配资源",
+          title: "分配资源",
+          success: "分配资源成功！",
+          failed: "分配资源失败。请重试。",
+        },
+        setAdmins: {
+          link: "设置管理员",
+          title: "设置管理员",
+          success: "设置管理员成功",
+          failed: "设置管理员失败，请重试。",
+        },
       },
     },
     resources: {
@@ -194,4 +215,4 @@ export default {
       }
     },
   }
-};
+}

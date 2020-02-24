@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { UserDomainAssignment } from "src/models/UserDomainAssignment";
-import { useAsync } from "react-async";
 import { getApiService } from "src/apis";
-import { PersonalAccountService, ExitDomainsError } from "src/apis/identity/PersonalAccountService";
+import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { Localized, lang } from "src/i18n";
 import { Modal } from "antd";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";

@@ -32,6 +32,11 @@ export default {
         username: "Username",
         name: "Name",
         email: "Email",
+        active: {
+          title: "Status",
+          true: "Active",
+          false: "Inactive",
+        },
       },
     },
     homepage: {
@@ -108,18 +113,33 @@ export default {
         },
         joinDomain: {
           title: "Join A Domain",
-
         }
       },
       domains: {
         title: "Domains Management",
         id: "ID",
         name: "Name",
+        active: {
+          title: "Status",
+          true: "Active",
+          false: "Inactive",
+        },
+        payUser: "Pay User",
         admins: "Admins",
         resources: "Reources",
         actions: "Actions",
-        setResources: "Set Resources",
-        setAdmins: "Set Admins",
+        setResources: {
+          link: "Set Resources",
+          title: "Set Resources",
+          success: "Set Resources successfully!",
+          failed: "Set Resources failed. Please retry."
+        },
+        setAdmins: {
+          link: "Set Admins",
+          title: "Set Admins",
+          success: "Set Admins successfully!",
+          failed: "Set Admins failed. Please retry."
+        },
       }
     },
     resources: {

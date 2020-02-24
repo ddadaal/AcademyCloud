@@ -1,4 +1,5 @@
-import { UserRole } from "src/models/User";
+export type UserRole = "admin" | "member";
+
 
 export interface Scope {
   system?: boolean;
