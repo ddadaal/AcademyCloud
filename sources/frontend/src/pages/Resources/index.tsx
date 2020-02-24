@@ -3,7 +3,7 @@ import { lang } from "src/i18n";
 import { DashboardOutlined, DesktopOutlined } from "@ant-design/icons";
 import { IndexRoute, indexRoutes } from "src/pages/common/indexRoutes";
 
-const root = lang.resources.sidebar;
+const root = lang.nav.sidenav.resources;
 
 const routes = [
   {

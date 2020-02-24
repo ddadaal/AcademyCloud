@@ -49,16 +49,6 @@ export default {
       },
     },
     identity: {
-      sidebar: {
-        account: {
-          root: "Personal Account",
-          basic: "Basic Information",
-          domains: "Joined Domains",
-        },
-        domains: "Domains",
-        projects: "Projects",
-        users: "Users",
-      },
       account: {
         basic: {
           profile: {
@@ -66,7 +56,6 @@ export default {
             id: "User ID",
             username: "Username",
             email: "Email",
-            emailFormat: "Please input an valid email.",
             update: "Update",
             success: "Basic information updated successfully!",
             failed: "Basic information update failed.",
@@ -102,16 +91,9 @@ export default {
           },
           join: "Join A New Domain",
         },
-
       },
     },
     resources: {
-      sidebar: {
-        dashboard: "Dashboard",
-        instance: "Instances",
-        network: "Network",
-        volume: "Volumes",
-      },
     },
     nav: {
       errorPage: {
@@ -132,30 +114,10 @@ export default {
         selfCenter: "Manage Account",
         logout: "Logout",
       },
-      navPoints: {
-        homepage: "Login",
-        resources: {
-          root: "Resources",
-          dashboard: "Dashboard",
-          instance: "Instances",
-          network: "Network",
-          volume: "Volumes",
-        },
-        identity: {
-          root: "Identity",
-          account: {
-            root: "Personal Account",
-            basic: "Basic Information",
-            domains: "Joined Domains",
-          },
-          domains: "Domains",
-          projects: "Projects",
-          users: "Users",
-        },
-      },
       sidenav: {
         resources: {
           root: "Resources",
+          dashboard: "Dashboard",
           instance: "Instances",
           network: "Network",
           volume: "Volume",
@@ -166,10 +128,17 @@ export default {
         identity: {
           root: "Identity",
           selfcenter: "Self Center",
+          account: {
+            root: "Personal Account",
+            basic: "Basic Information",
+            domains: "Joined Domains",
+          },
+          domains: "Domains",
+          projects: "Projects",
+          users: "Users",
         },
       },
     },
-
     header: {
       resources: "Resources",
       expenses: "Expenses",

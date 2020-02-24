@@ -49,16 +49,6 @@ export default {
       },
     },
     identity: {
-      sidebar: {
-        account: {
-          root: "个人账号管理",
-          basic: "基本信息",
-          domains: "域认证",
-        },
-        domains: "域管理",
-        projects: "项目管理",
-        users: "用户管理",
-      },
       account: {
         basic: {
           profile: {
@@ -104,12 +94,6 @@ export default {
       }
     },
     resources: {
-      sidebar: {
-        dashboard: "控制台",
-        instance: "实例",
-        network: "网络",
-        volume: "云硬盘",
-      },
     },
     nav: {
       errorPage: {
@@ -133,6 +117,7 @@ export default {
       sidenav: {
         resources: {
           root: "资源管理",
+          dashboard: "仪表盘",
           instance: "实例",
           network: "网络",
           volume: "云硬盘",
@@ -143,29 +128,16 @@ export default {
         identity: {
           root: "用户管理",
           selfcenter: "个人中心",
-        },
-      },
-      navPoints: {
-        homepage: "登录",
-        resources: {
-          root: "资源管理",
-          dashboard: "控制台",
-          instance: "实例",
-          network: "网络",
-          volume: "云硬盘",
-        },
-        identity: {
-          root: "用户管理",
           account: {
             root: "个人账号管理",
             basic: "基本信息",
-            domains: "域认证",
+            domains: "加入的域",
           },
           domains: "域管理",
           projects: "项目管理",
           users: "用户管理",
         },
-      }
+      },
     },
     header: {
       resources: "资源管理",

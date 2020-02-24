@@ -4,7 +4,7 @@ import { UserOutlined, ProjectOutlined, TeamOutlined, BankOutlined, FormOutlined
 import { Scope, isSystemScope } from "src/models/Scope";
 import { indexRoutes, IndexRoute } from "src/pages/common/indexRoutes";
 
-const root = lang.identity.sidebar;
+const root = lang.nav.sidenav.identity;
 
 const routes = [
   {

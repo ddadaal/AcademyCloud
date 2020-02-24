@@ -6,7 +6,7 @@ export interface NavPoint {
   textId: string; //
 }
 
-const root = lang.nav.navPoints;
+const root= lang.nav.sidenav;
 
 function getInvreqId(pathname: string) {
   const splitted = pathname.split("/").filter((x) => !!x);
