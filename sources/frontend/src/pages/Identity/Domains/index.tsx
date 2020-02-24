@@ -14,7 +14,6 @@ export default function DomainsPage(_: RouteComponentProps) {
     <div>
       <TitleBar>
         <TitleText><LocalizedString id={root.title} /></TitleText>
-
       </TitleBar>
       <DomainsTable />
     </div>
