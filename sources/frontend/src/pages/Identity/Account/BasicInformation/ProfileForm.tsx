@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Form, Input, Button, Spin } from "antd";
-import { Profile } from "src/models/Profile";
 import { getApiService } from "src/apis";
-import { PersonalAccountService, ProfileResponse } from "src/apis/identity/PersonalAccountService";
+import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { useAsync } from "react-async";
 import { lang, Localized } from "src/i18n";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
@@ -28,13 +27,19 @@ export const ProfileForm: React.FC = () => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
-  const { isPending, run } = useAsync({
+  const { isPending, reload } = useAsync({
     promiseFn: getProfile,
+    onResolve: (profile) => {
+      form.setFieldsValue(profile);
+    },
+  });
+
+  const { isPending: updatePending, run, } = useAsync({
+    deferFn: updateProfile,
     onResolve: (profile) => {
       form.setFieldsValue(profile);
       api.success({ messageId: root.success });
     },
-    deferFn: updateProfile
   });
 
 
@@ -43,7 +48,8 @@ export const ProfileForm: React.FC = () => {
   };
 
   return (
-    <Spin spinning={isPending}>
+    <Spin spinning={isPending || updatePending}>
+      {contextHolder}
       <Form initialValues={undefined} layout="vertical" form={form} onFinish={handleSubmit}>
         <Form.Item label={<Localized id={root.id} />} name="id">
           <Input disabled={true} />

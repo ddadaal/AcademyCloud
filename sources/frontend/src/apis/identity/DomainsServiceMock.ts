@@ -7,6 +7,7 @@ const cjy: User = { id: "CJYID", username: "CJY", name: "CJY", active: true };
 
 export class DomainsServiceMock extends DomainsService {
   async getDomains(): Promise<GetDomainsResponse> {
+    await this.delay();
     return {
       domains: [
         {
