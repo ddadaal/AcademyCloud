@@ -91,6 +91,10 @@ export default {
           },
           join: "申请加入新的域",
         },
+        joinDomain: {
+          title: "加入一个域",
+
+        }
       }
     },
     resources: {
@@ -132,6 +136,7 @@ export default {
             root: "个人账号管理",
             basic: "基本信息",
             domains: "加入的域",
+            join: "加入新域",
           },
           domains: "域管理",
           projects: "项目管理",

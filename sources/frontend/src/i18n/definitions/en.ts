@@ -91,6 +91,10 @@ export default {
           },
           join: "Join A New Domain",
         },
+        joinDomain: {
+          title: "Join A Domain",
+
+        }
       },
     },
     resources: {
@@ -132,6 +136,7 @@ export default {
             root: "Personal Account",
             basic: "Basic Information",
             domains: "Joined Domains",
+            join: "Join New Domain",
           },
           domains: "Domains",
           projects: "Projects",

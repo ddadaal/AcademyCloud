@@ -6,7 +6,7 @@ import { Col, Row } from "antd";
 import { ChangePasswordForm } from "src/pages/Identity/Account/BasicInformation/ChangePasswordForm";
 import { lang, LocalizedString } from "src/i18n";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
-import { TitleText } from "src/components/pagecomponents/PageTitle";
+import { TitleText } from "src/components/pagecomponents/TitleText";
 
 const ProfileFormDiv = styled.div`
   max-width: 400px;

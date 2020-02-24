@@ -1,10 +1,10 @@
 import React from "react";
-import { RouteComponentProps } from "@reach/router";
+import { RouteComponentProps, Link } from "@reach/router";
 import { lang, LocalizedString } from "src/i18n";
 import { DomainsTable } from "src/pages/Identity/Account/JoinedDomains/DomainsTable";
 import styled from 'styled-components';
 import { Button } from "antd";
-import { TitleText } from "src/components/pagecomponents/PageTitle";
+import { TitleText } from "src/components/pagecomponents/TitleText";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
 
 const root = lang.identity.account.joinedDomains;
@@ -24,7 +24,9 @@ export default function JoinedDomainsPage(_: RouteComponentProps) {
       <SpaceBetweenTitleBar>
         <TitleText><LocalizedString id={root.title} /></TitleText>
         <Button type="primary">
-          <LocalizedString id={root.join} />
+          <Link to="../joinDomain">
+            <LocalizedString id={root.join} />
+          </Link>
         </Button>
       </SpaceBetweenTitleBar>
       <DomainsTable />
