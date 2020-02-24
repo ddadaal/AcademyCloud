@@ -9,6 +9,7 @@ import { User } from "src/models/User";
 import { Resources } from "src/models/Resources";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 import { ModalStaticFunctions } from "antd/lib/modal/confirm";
+import { TitleText } from "src/components/pagecomponents/TitleText";
 
 const root = lang.identity.domains;
 
@@ -24,7 +25,11 @@ const ModalLink: React.FC<{
   modalContent: React.ReactNode;
 }> = ({ api, children, modalTitle, modalContent }) => {
   return (
-    <a onClick={() => api.info({ icon: null, title: modalTitle, content: modalContent })}>
+    <a onClick={() => api.info({
+      icon: null,
+      title: <TitleText>{modalTitle}</TitleText>,
+      content: modalContent
+    })}>
       {children}
     </a>
   );

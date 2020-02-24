@@ -89,8 +89,8 @@ export default {
         joinedDomains: {
           title: "Joined Domains",
           table: {
-            id: "Domain Id",
-            name: "Domain Name",
+            id: "Id",
+            name: "Name",
             role: "Role",
             actions: "Actions",
             exit: "Exit Domain",
@@ -113,8 +113,8 @@ export default {
       },
       domains: {
         title: "Domains Management",
-        id: "Domain ID",
-        name: "Domain Name",
+        id: "ID",
+        name: "Name",
         admins: "Admins",
         resources: "Reources",
         actions: "Actions",
