@@ -5,12 +5,12 @@ verify_ssl = true
 
 [dev-packages]
 autopep8 = "*"
-grpcio-tools = "*"
 
 [packages]
 openstacksdk = "*"
 sqlalchemy = "*"
 grpcio = "*"
+grpcio-tools = "*"
 
 [requires]
 python_version = "3.8"
