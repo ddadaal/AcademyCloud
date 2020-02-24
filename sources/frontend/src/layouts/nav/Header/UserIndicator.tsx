@@ -4,7 +4,7 @@ import { Dropdown, Avatar, Menu } from "antd";
 import MediaQuery from "react-responsive";
 import { useStore } from "simstate";
 import { Link, navigate } from "@reach/router";
-import { LocalizedString, lang } from "src/i18n";
+import { Localized, lang } from "src/i18n";
 import { layoutConstants } from "src/layouts/constants";
 import { DownOutlined } from "@ant-design/icons";
 
@@ -24,11 +24,11 @@ export function UserIndicator() {
   const dropdownMenu = (
     <Menu>
       <Menu.Item key="self">
-        <Link to={"/identity"}><LocalizedString id={root.selfCenter} /></Link>
+        <Link to={"/identity"}><Localized id={root.selfCenter} /></Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout">
-        <a onClick={logout}><LocalizedString id={root.logout} /></a>
+        <a onClick={logout}><Localized id={root.logout} /></a>
       </Menu.Item>
     </Menu>
   );

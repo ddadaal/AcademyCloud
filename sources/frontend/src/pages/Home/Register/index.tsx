@@ -3,7 +3,7 @@ import { RouteComponentProps, navigate } from "@reach/router";
 import { Form, Input, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { FormButton } from "src/pages/Home/HomePageLayout";
-import { lang, LocalizedString, useMultiLocalized } from "src/i18n";
+import { lang, Localized, useMultiLocalized } from "src/i18n";
 import { AccountService } from "src/apis/account/AccountService";
 import { getApiService } from "src/apis";
 import { useStore } from "simstate";
@@ -44,13 +44,13 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
       if (ex.status === 403) {
         // conflict
         notifyApi.error({
-          message: <LocalizedString id={root.registerFailed} />,
-          description: <LocalizedString id={root.conflict} />,
+          message: <Localized id={root.registerFailed} />,
+          description: <Localized id={root.conflict} />,
         });
       } else {
         notifyApi.error({
-          message: <LocalizedString id={root.registerFailed} />,
-          description: <LocalizedString id={root.other} />,
+          message: <Localized id={root.registerFailed} />,
+          description: <Localized id={root.other} />,
         });
       }
     } finally {
@@ -80,7 +80,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
       </Item>
       <Item>
         <FormButton loading={registering} type="primary" htmlType="submit" className="login-form-button">
-          <LocalizedString id={root.register} />
+          <Localized id={root.register} />
         </FormButton>
       </Item>
     </Form>

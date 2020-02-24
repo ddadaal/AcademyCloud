@@ -3,7 +3,7 @@ import { UserDomainAssignment } from "src/models/UserDomainAssignment";
 import { useAsync } from "react-async";
 import { getApiService } from "src/apis";
 import { PersonalAccountService, ExitDomainsError } from "src/apis/identity/PersonalAccountService";
-import { LocalizedString, lang } from "src/i18n";
+import { Localized, lang } from "src/i18n";
 import { Modal } from "antd";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { ExclamationOutlined } from "@ant-design/icons";
@@ -29,7 +29,7 @@ export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
 
   const onClick = useCallback(() => {
     modalApi.confirm({
-      title: <LocalizedString id={root.confirmExit} replacements={[domain.domainName]} />,
+      title: <Localized id={root.confirmExit} replacements={[domain.domainName]} />,
       icon: <ExclamationOutlined />,
       onOk: () => exitDomain([domain.domainId])
         .then(() => {
@@ -42,8 +42,8 @@ export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
           messageId: root.error.title,
           descriptionId: root.error[data.reason]
         })),
-      okText: <LocalizedString id={root.okText} />,
-      cancelText: <LocalizedString id={root.cancelText} />,
+      okText: <Localized id={root.okText} />,
+      cancelText: <Localized id={root.cancelText} />,
     });
   }, [domain]);
 
@@ -52,7 +52,7 @@ export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
       {contextHolder}
       {modalContextHolder}
       <a onClick={onClick}>
-        <LocalizedString id={root.exit} />
+        <Localized id={root.exit} />
       </a>
     </span>
   );

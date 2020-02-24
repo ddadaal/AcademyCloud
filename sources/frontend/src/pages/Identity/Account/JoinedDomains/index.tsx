@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteComponentProps, Link } from "@reach/router";
-import { lang, LocalizedString } from "src/i18n";
+import { lang, Localized } from "src/i18n";
 import { DomainsTable } from "src/pages/Identity/Account/JoinedDomains/DomainsTable";
 import styled from 'styled-components';
 import { Button } from "antd";
@@ -22,10 +22,10 @@ export default function JoinedDomainsPage(_: RouteComponentProps) {
   return (
     <div>
       <SpaceBetweenTitleBar>
-        <TitleText><LocalizedString id={root.title} /></TitleText>
+        <TitleText><Localized id={root.title} /></TitleText>
         <Button type="primary">
           <Link to="../joinDomain">
-            <LocalizedString id={root.join} />
+            <Localized id={root.join} />
           </Link>
         </Button>
       </SpaceBetweenTitleBar>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "antd";
-import { LocalizedString, lang } from "src/i18n";
+import { Localized, lang } from "src/i18n";
 import { User } from "src/models/User";
 
 const { Column } = Table;
@@ -15,9 +15,9 @@ export const UsersViewTable: React.FC<Props> = (props) => {
 
   return (
     <Table pagination={{ hideOnSinglePage: true }} dataSource={props.users}>
-      <Column title={<LocalizedString id={root.id} />}
+      <Column title={<Localized id={root.id} />}
         dataIndex="id" key="id" />
-      <Column title={<LocalizedString id={root.name} />}
+      <Column title={<Localized id={root.name} />}
         dataIndex="name" key="name" />
     </Table>
   )

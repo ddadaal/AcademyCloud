@@ -1,7 +1,7 @@
 import { Form, Input, Checkbox, notification } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import React, { useState } from "react";
-import { lang, useMultiLocalized, LocalizedString, I18nStore } from "src/i18n";
+import { lang, useMultiLocalized, Localized } from "src/i18n";
 import styled from "styled-components";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
@@ -45,8 +45,8 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
 
     } catch (e) {
       api.error({
-        message: <LocalizedString id={root.loginFailTitle} />,
-        description: <LocalizedString id={root.other} />,
+        message: <Localized id={root.loginFailTitle} />,
+        description: <Localized id={root.other} />,
       });
     } finally {
       setLoggingIn(false);
@@ -89,16 +89,16 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       </Form.Item>
       <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox disabled={loggingIn}><LocalizedString id={root.remember} /></Checkbox>
+          <Checkbox disabled={loggingIn}><Localized id={root.remember} /></Checkbox>
         </Form.Item>
 
         <ForgotLink>
-          <LocalizedString id={root.forget} />
+          <Localized id={root.forget} />
         </ForgotLink>
       </Form.Item>
       <Form.Item>
         <FormButton loading={loggingIn} type="primary" htmlType="submit">
-          <LocalizedString id={root.login} />
+          <Localized id={root.login} />
         </FormButton>
       </Form.Item>
     </Form >

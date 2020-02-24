@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "@reach/router";
 import "./footer.less";
 import logo from "src/assets/logo-horizontal.svg";
-import { lang, LocalizedString } from "src/i18n";
+import { lang, Localized } from "src/i18n";
 
 export interface FooterProps {
   isMobile?: boolean;
@@ -57,7 +57,7 @@ export class Footer extends React.Component<FooterProps, {}> {
     const links = data.contentLink;
     const content = data.content
       .map((item, ii) => {
-        const cItem = <LocalizedString id={item} />;
+        const cItem = <Localized id={item} />;
         const link = links[ii];
         return (
           <li key={ii}>
@@ -70,7 +70,7 @@ export class Footer extends React.Component<FooterProps, {}> {
       });
     return (
       <li key={i} id={`${this.props.id}-block${i}`}>
-        <h2><LocalizedString id={data.title} /></h2>
+        <h2><Localized id={data.title} /></h2>
         <ul>
           {content}
         </ul>
@@ -91,12 +91,12 @@ export class Footer extends React.Component<FooterProps, {}> {
             <LogoContainer>
               <img src={logo} />
             </LogoContainer>
-            <p><LocalizedString id={root.description}/> </p>
+            <p><Localized id={root.description}/> </p>
           </li>
           {liChildrenToRender}
         </ul>
         <p className="copyright">
-          {new Date().getFullYear()} | <LocalizedString id={root.copyright.madeWithLove}/>
+          {new Date().getFullYear()} | <Localized id={root.copyright.madeWithLove}/>
         </p>
       </div>
     );

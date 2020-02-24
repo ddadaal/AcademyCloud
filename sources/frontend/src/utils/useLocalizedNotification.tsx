@@ -1,15 +1,15 @@
 import React from "react";
 import { notification } from "antd";
 import { ArgsProps } from "antd/lib/notification";
-import { LocalizedString } from "src/i18n";
+import { Localized } from "src/i18n";
 
 interface Props extends Omit<ArgsProps, "message"> {
   messageId: string;
   descriptionId?: string;
 }
 
-const createLocalizedStringIfNotNull = (id: string | undefined, targetKey: string) => {
-  return id ? { [targetKey]: <LocalizedString id={id} /> } : undefined
+const createLocalizedIfNotNull = (id: string | undefined, targetKey: string) => {
+  return id ? { [targetKey]: <Localized id={id} /> } : undefined
 }
 
 
@@ -18,8 +18,8 @@ export function useLocalizedNotification() {
 
   const localizedConfig = (config: Props): ArgsProps => ({
     ...config,
-    message: <LocalizedString id={config.messageId} />,
-    ...createLocalizedStringIfNotNull(config.descriptionId, "description"),
+    message: <Localized id={config.messageId} />,
+    ...createLocalizedIfNotNull(config.descriptionId, "description"),
   });
 
   const localizedApi = Object.keys(api).reduce((prev, curr) => ({

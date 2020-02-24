@@ -2,7 +2,7 @@ import React from "react";
 import { getApiService } from "src/apis";
 import { DomainsService } from "src/apis/identity/DomainsService";
 import { Table, Modal } from "antd";
-import { LocalizedString, lang } from "src/i18n";
+import { Localized, lang } from "src/i18n";
 import { useAsync } from "react-async";
 import { UsersViewTable } from "src/components/users/UsersViewTable";
 import { User } from "src/models/User";
@@ -40,17 +40,17 @@ export const DomainsTable: React.FC = () => {
     <>
       {contextHolder}
       <Table dataSource={data?.domains} loading={isPending}>
-        <Table.Column title={<LocalizedString id={root.id} />} dataIndex="id" key="domainId" />
-        <Table.Column title={<LocalizedString id={root.name} />} dataIndex="name" key="domainName" />
-        <Table.Column title={<LocalizedString id={root.admins} />} dataIndex="admins" key="admins"
+        <Table.Column title={<Localized id={root.id} />} dataIndex="id" key="domainId" />
+        <Table.Column title={<Localized id={root.name} />} dataIndex="name" key="domainName" />
+        <Table.Column title={<Localized id={root.admins} />} dataIndex="admins" key="admins"
           render={(admins: User[]) => (
-            <ModalLink api={api} modalTitle={<LocalizedString id={root.admins} />} modalContent={<UsersViewTable users={admins} />}>
+            <ModalLink api={api} modalTitle={<Localized id={root.admins} />} modalContent={<UsersViewTable users={admins} />}>
               {admins.length <= 1 ? admins[0].name : admins.length}
             </ModalLink>
           )} />
-        <Table.Column title={<LocalizedString id={root.resources} />} dataIndex="resources" key="resources"
+        <Table.Column title={<Localized id={root.resources} />} dataIndex="resources" key="resources"
           render={(resources: Resources) => (
-            <ModalLink api={api} modalTitle={<LocalizedString id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
+            <ModalLink api={api} modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
               {JSON.stringify(resources)}
             </ModalLink>
           )} />

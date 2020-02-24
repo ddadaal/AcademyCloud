@@ -4,7 +4,7 @@ import { ProfileForm } from "src/pages/Identity/Account/BasicInformation/Profile
 import styled from "styled-components";
 import { Col, Row } from "antd";
 import { ChangePasswordForm } from "src/pages/Identity/Account/BasicInformation/ChangePasswordForm";
-import { lang, LocalizedString } from "src/i18n";
+import { lang, Localized } from "src/i18n";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
 import { TitleText } from "src/components/pagecomponents/TitleText";
 
@@ -23,7 +23,7 @@ export default function BasicInformationPage(_: RouteComponentProps) {
         <Col xs={24} md={12}>
           <TitleBar>
             <TitleText>
-              <LocalizedString id={root.profile.title} />
+              <Localized id={root.profile.title} />
             </TitleText>
           </TitleBar>
           <ProfileFormDiv>
@@ -33,7 +33,7 @@ export default function BasicInformationPage(_: RouteComponentProps) {
         <Col xs={24} md={12}>
           <TitleBar>
             <TitleText>
-              <LocalizedString id={root.changePassword.title} />
+              <Localized id={root.changePassword.title} />
             </TitleText>
           </TitleBar>
           <ProfileFormDiv>

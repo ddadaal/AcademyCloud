@@ -4,7 +4,7 @@ import { Profile } from "src/models/Profile";
 import { getApiService } from "src/apis";
 import { PersonalAccountService, ProfileResponse } from "src/apis/identity/PersonalAccountService";
 import { useAsync } from "react-async";
-import { lang, LocalizedString } from "src/i18n";
+import { lang, Localized } from "src/i18n";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 
 
@@ -45,22 +45,22 @@ export const ProfileForm: React.FC = () => {
   return (
     <Spin spinning={isPending}>
       <Form initialValues={undefined} layout="vertical" form={form} onFinish={handleSubmit}>
-        <Form.Item label={<LocalizedString id={root.id} />} name="id">
+        <Form.Item label={<Localized id={root.id} />} name="id">
           <Input disabled={true} />
         </Form.Item>
-        <Form.Item label={<LocalizedString id={root.username} />} name="username">
+        <Form.Item label={<Localized id={root.username} />} name="username">
           <Input disabled={true} />
         </Form.Item>
         <Form.Item
           rules={[{ type: "email", required: true }]}
-          label={<LocalizedString id={root.email} />}
+          label={<Localized id={root.email} />}
           name="email"
         >
           <Input />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" >
-            <LocalizedString id={root.update} />
+            <Localized id={root.update} />
           </Button>
         </Form.Item>
       </Form>

@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useMemo } from "react";
 import { Table, Modal } from "antd";
 import { ColumnProps } from "antd/lib/table";
-import { lang, LocalizedString } from "src/i18n";
+import { lang, Localized } from "src/i18n";
 import { UserDomainAssignment } from "src/models/UserDomainAssignment";
 import { useAsync } from "react-async";
 import { getApiService } from "src/apis";
@@ -16,17 +16,17 @@ const root = lang.identity.account.joinedDomains.table;
 
 const commonColumns = [
   {
-    title: <LocalizedString id={root.id} />,
+    title: <Localized id={root.id} />,
     dataIndex: "domainId",
     key: "domainId",
   },
   {
-    title: <LocalizedString id={root.name} />,
+    title: <Localized id={root.name} />,
     dataIndex: "domainName",
     key: "domainName",
   },
   {
-    title: <LocalizedString id={root.role} />,
+    title: <Localized id={root.role} />,
     dataIndex: "role",
     key: "role",
   },
@@ -48,7 +48,7 @@ export function DomainsTable() {
   const columns = useMemo(() => [
     ...commonColumns,
     {
-      title: <LocalizedString id={root.actions} />,
+      title: <Localized id={root.actions} />,
       key: "actions",
       render: (_, domain: UserDomainAssignment) => (
         <DomainTableExitLink domain={domain} reload={reload} />

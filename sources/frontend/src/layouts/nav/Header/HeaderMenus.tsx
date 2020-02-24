@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import { layoutConstants } from 'src/layouts/constants';
 import { mainNavs } from "src/layouts/nav/Header/mainNavs";
-import { LocalizedString } from "src/i18n";
+import { Localized } from "src/i18n";
 import styled from "styled-components";
 
 export const dropdownMenuStyle: React.CSSProperties = {
@@ -32,7 +32,7 @@ export function HeaderNavMenu(props: {
           key={x.path}
           onClick={() => to(x.path)}>
           {React.createElement(x.Icon)}
-          <LocalizedString id={x.textId} />
+          <Localized id={x.textId} />
         </Menu.Item>,
       )}
     </Menu>

@@ -4,7 +4,7 @@ import { getApiService } from "src/apis";
 import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { useAsync } from "react-async";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
-import { lang, LocalizedString } from "src/i18n";
+import { lang, Localized } from "src/i18n";
 
 
 const service = getApiService(PersonalAccountService);
@@ -44,21 +44,21 @@ export const ChangePasswordForm: React.FC = () => {
       <Form initialValues={undefined} layout="vertical" form={form} onFinish={handleSubmit}>
         <Form.Item
           rules={[{ required: true }]}
-          label={<LocalizedString id={root.original} />}
+          label={<Localized id={root.original} />}
           name="original"
         >
           <Input type="password" />
         </Form.Item>
         <Form.Item
           rules={[{ required: true }]}
-          label={<LocalizedString id={root.newPassword} />}
+          label={<Localized id={root.newPassword} />}
           name="updated"
         >
           <Input type="password" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" >
-            <LocalizedString id={root.update} />
+            <Localized id={root.update} />
           </Button>
         </Form.Item>
       </Form>

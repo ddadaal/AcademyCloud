@@ -3,7 +3,7 @@ import { useStore } from 'simstate';
 import { UserStore } from 'src/stores/UserStore';
 import { Menu, Dropdown, notification } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
-import { lang, LocalizedString, I18nStore } from "src/i18n";
+import { lang, Localized, I18nStore } from "src/i18n";
 import { scopeId, scopeName, Scope, isSystemScope } from "src/models/Scope";
 import { ClickableA } from "src/components/ClickableA";
 import { getApiService } from "src/apis";
@@ -29,7 +29,7 @@ export const ScopeIndicator: React.FC = () => {
   if (isSystemScope(currentScope)) {
     return (
       <ClickableA>
-        <BookOutlined /> <LocalizedString id={root.system} />
+        <BookOutlined /> <Localized id={root.system} />
       </ClickableA>
     )
   }
@@ -42,7 +42,7 @@ export const ScopeIndicator: React.FC = () => {
   const scopeNameWithRole = (scope: Scope) => (
     <>
       {scopeName(scope)}
-      {scope.role === "admin" ? <> (<LocalizedString id={root.admin} />)</> : null}
+      {scope.role === "admin" ? <> (<Localized id={root.admin} />)</> : null}
     </>
   );
 
@@ -55,11 +55,11 @@ export const ScopeIndicator: React.FC = () => {
       userStore.login({ ...user, token: resp.token, scope });
 
       api.success({
-        message: <LocalizedString id={root.success} />,
+        message: <Localized id={root.success} />,
       });
     } catch (e) {
       api.error({
-        message: <LocalizedString id={root.fail} />,
+        message: <Localized id={root.fail} />,
       });
     } finally {
       setChangingTo(null);
@@ -69,7 +69,7 @@ export const ScopeIndicator: React.FC = () => {
   if (projectScopes.length > 0) {
     menuItems.push(
       <Menu.Item key="projectPrompt" disabled={true}>
-        <LocalizedString id={root.projects} />
+        <Localized id={root.projects} />
       </Menu.Item>
     );
     menuItems.push(...projectScopes.map((x) => (
@@ -84,7 +84,7 @@ export const ScopeIndicator: React.FC = () => {
     menuItems.push(
       <Menu.Divider />,
       <Menu.Item key="domainPrompt" disabled={true}>
-        <LocalizedString id={root.domains} />
+        <Localized id={root.domains} />
       </Menu.Item>
     );
     menuItems.push(...domainScopes.map((x) => (
@@ -106,7 +106,7 @@ export const ScopeIndicator: React.FC = () => {
         {contextHolder}
         <BookOutlined />
         {changingTo
-          ? <LocalizedString id={root.changing} replacements={[scopeNameWithRole(changingTo)]} />
+          ? <Localized id={root.changing} replacements={[scopeNameWithRole(changingTo)]} />
           : scopeNameWithRole(currentScope)}
         <DownOutlined />
       </ClickableA>

@@ -7,7 +7,7 @@ import { antdBreakpoints, layoutConstants } from "../../constants";
 import BodyMask from "./BodyMask";
 import { useStore } from "simstate";
 import { flatten, arrayContainsElement, removeFalsy } from "src/utils/Arrays";
-import { LocalizedString } from "src/i18n";
+import { Localized } from "src/i18n";
 import { navigate, Link as RouterLink } from "@reach/router";
 import { startsWithMatch } from "src/layouts/nav/utils/matchers";
 
@@ -48,7 +48,7 @@ const Link: React.FC<{
   return (
     <RouterLink to={path} title={path}>
       <Icon />
-      <LocalizedString id={textId} />
+      <Localized id={textId} />
     </RouterLink>
   );
 };
@@ -118,7 +118,7 @@ export const SideNav: React.FC<Props> = (props) => {
                   <SubMenu key={x.path} title={
                     <span>
                       <x.Icon />
-                      <span><LocalizedString id={x.textId} /></span>
+                      <span><Localized id={x.textId} /></span>
                     </span>}
                   >
                     {subs.map((sub) =>
