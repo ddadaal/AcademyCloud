@@ -38,9 +38,13 @@ const ModalLink: React.FC<{
   );
 }
 
-export const DomainsTable: React.FC = () => {
+interface Props {
+  refreshToken: any;
+}
 
-  const { data, isPending, reload } = useAsync({ promiseFn: getDomains });
+export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
+
+  const { data, isPending, reload } = useAsync({ promiseFn: getDomains, watch: refreshToken });
 
   const [api, contextHolder] = Modal.useModal();
 

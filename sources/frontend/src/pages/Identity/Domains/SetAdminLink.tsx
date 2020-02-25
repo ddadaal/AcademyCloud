@@ -15,6 +15,7 @@ interface Props {
   reload: () => void;
 }
 const root = lang.identity.domains.setAdmins;
+const opResult = lang.components.operationResult;
 
 const domainsService = getApiService(DomainsService);
 
@@ -39,10 +40,10 @@ export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
     onResolve: () => {
       reload();
       setModalShown(false);
-      api.success({ messageId: root.success });
+      api.success({ messageId: [opResult.success, [root.title]]});
     },
     onReject: () => {
-      api.error({ messageId: root.failed });
+      api.error({ messageId: [opResult.success, [root.title]]});
     }
   });
 

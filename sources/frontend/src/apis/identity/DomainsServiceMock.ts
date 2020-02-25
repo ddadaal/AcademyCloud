@@ -36,6 +36,11 @@ export class DomainsServiceMock extends DomainsService {
   }
 
   async setAdmins(domainId: string, adminIds: string[]): Promise<void> {
+    await this.delay();
     return undefined;
+  }
+
+  async createDomain(name: string): Promise<void> {
+    await this.delay();
   }
 }

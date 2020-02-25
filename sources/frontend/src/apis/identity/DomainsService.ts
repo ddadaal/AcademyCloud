@@ -31,4 +31,13 @@ export class DomainsService extends HttpService {
       body: { ids: adminIds },
     });
   }
+
+  async createDomain(name: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.POST,
+      path: `/identity/domains`,
+      body: {name },
+    });
+
+  }
 }

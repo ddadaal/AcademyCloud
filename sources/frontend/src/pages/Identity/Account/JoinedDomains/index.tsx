@@ -10,25 +10,19 @@ import { TitleBar } from "src/components/pagecomponents/TitleBar";
 const root = lang.identity.account.joinedDomains;
 
 
-const SpaceBetweenTitleBar = styled(TitleBar)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function JoinedDomainsPage(_: RouteComponentProps) {
 
   return (
     <div>
-      <SpaceBetweenTitleBar>
+      <TitleBar spaceBetween={true}>
         <TitleText><Localized id={root.title} /></TitleText>
         <Button type="primary">
           <Link to="../joinDomain">
             <Localized id={root.join} />
           </Link>
         </Button>
-      </SpaceBetweenTitleBar>
+      </TitleBar>
       <DomainsTable />
     </div>
   );

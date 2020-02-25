@@ -13,6 +13,7 @@ interface Props {
   reload: () => void;
 }
 const root = lang.identity.domains;
+const opResult = lang.components.operationResult;
 
 const service = getApiService(DomainsService);
 
@@ -33,10 +34,10 @@ export const SetResourcesLink: React.FC<Props> = ({ domain, reload }) => {
     onResolve: () => {
       reload();
       setModalShown(false);
-      api.success({ messageId: root.setResources.success });
+      api.success({ messageId: [opResult.success, [root.setAdmins.title]] });
     },
     onReject: () => {
-      api.error({ messageId: root.setResources.failed });
+      api.error({ messageId: [opResult.fail, [root.setAdmins.title]] });
     }
   });
 

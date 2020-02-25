@@ -38,6 +38,11 @@ export default {
           false: "停用",
         },
       },
+      operationResult: {
+        success: "{} 成功！",
+        fail: "{} 失败",
+        retry: "请重试。",
+      },
     },
     homepage: {
       title: "AcademyCloud",
@@ -131,14 +136,17 @@ export default {
         setResources: {
           link: "分配资源",
           title: "分配资源",
-          success: "分配资源成功！",
-          failed: "分配资源失败。请重试。",
         },
         setAdmins: {
           link: "设置管理员",
           title: "设置管理员",
-          success: "设置管理员成功",
-          failed: "设置管理员失败，请重试。",
+        },
+        add: {
+          button: "创建域",
+          title: "创建域",
+          name: "域名字",
+          opName: "创建域",
+          conflict: "已有同名域存在。请更换一个域。",
         },
       },
     },

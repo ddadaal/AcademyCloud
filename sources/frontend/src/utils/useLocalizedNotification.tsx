@@ -1,15 +1,16 @@
 import React from "react";
 import { notification } from "antd";
 import { ArgsProps } from "antd/lib/notification";
-import { Localized } from "src/i18n";
+import { RecursiveLocalized } from "src/i18n";
+import { RecursiveLocalizedId } from "src/i18n/RecursiveLocalized";
 
 interface Props extends Omit<ArgsProps, "message"> {
-  messageId: string;
-  descriptionId?: string;
+  messageId: RecursiveLocalizedId;
+  descriptionId?: RecursiveLocalizedId;
 }
 
-const createLocalizedIfNotNull = (id: string | undefined, targetKey: string) => {
-  return id ? { [targetKey]: <Localized id={id} /> } : undefined
+const createLocalizedIfNotNull = (id: RecursiveLocalizedId | undefined, targetKey: string) => {
+  return id ? { [targetKey]: <RecursiveLocalized id={id} /> } : undefined;
 }
 
 
@@ -18,7 +19,7 @@ export function useLocalizedNotification() {
 
   const localizedConfig = (config: Props): ArgsProps => ({
     ...config,
-    message: <Localized id={config.messageId} />,
+    message: <RecursiveLocalized id={config.messageId} />,
     ...createLocalizedIfNotNull(config.descriptionId, "description"),
   });
 

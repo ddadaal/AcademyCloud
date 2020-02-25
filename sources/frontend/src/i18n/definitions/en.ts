@@ -38,6 +38,11 @@ export default {
           false: "Inactive",
         },
       },
+      operationResult: {
+        success: "{} Success!",
+        fail: "{} Failed.",
+        retry: "Please retry",
+      },
     },
     homepage: {
       title: "AcademyCloud",
@@ -131,15 +136,18 @@ export default {
         setResources: {
           link: "Set Resources",
           title: "Set Resources",
-          success: "Set Resources successfully!",
-          failed: "Set Resources failed. Please retry."
         },
         setAdmins: {
           link: "Set Admins",
           title: "Set Admins",
-          success: "Set Admins successfully!",
-          failed: "Set Admins failed. Please retry."
         },
+        add: {
+          button: "Create a New Domain",
+          title: "Create a New Domain",
+          name: "Name",
+          opName: "Create Domain",
+          conflict: "The domain with the same exists. Please change.",
+        }
       }
     },
     resources: {
