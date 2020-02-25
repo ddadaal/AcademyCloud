@@ -8,6 +8,7 @@ package authentication;
 service Authentication {
   rpc Authenticate (AuthenticationRequest) returns (AuthenticationReply);
   rpc GetScopes (GetScopesRequest) returns (GetScopesReply);
+  rpc GetTokenInfo (GetTokenInfoRequest) returns (GetTokenInfoReply);
 }
 
 message AuthenticationRequest {
@@ -31,14 +32,25 @@ message GetScopesReply {
     repeated Scope scopes = 2;
 }
 
+message GetTokenInfoRequest {
+    string token = 1;
+}
+
+message GetTokenInfoReply {
+    string userId = 1;
+    Scope scope = 2;
+}
+
 enum UserRole {
     Admin = 0;
     Member = 1;
 }
 
 message Scope {
-    string domainId = 1;
-    string projectId = 2;
-    string userId = 3;
-    UserRole role = 4; 
+    bool system = 1;
+    string domainId = 2;
+    string domainName = 3;
+    string projectId = 4;
+    string projectName = 5;
+    UserRole role = 6; 
 }

@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Auth
+namespace AcademyCloud.Shared
 {
     public class JwtSettings
     {
@@ -14,12 +11,14 @@ namespace AcademyCloud.Identity.Auth
 
         public SymmetricSecurityKey Key { get; private set; }
 
-        public JwtSettings(IConfiguration configuration)
+        public JwtSettings(IConfiguration configuration) : this(configuration["Jwt:Issuer"], configuration["Jwt:Key"])
         {
-            Issuer = configuration["Jwt:Issuer"];
-            var key = configuration["Jwt:Key"];
+        }
+
+        public JwtSettings(string issuer = "https//academycloud.com", string key = "this key should be as long as possible hahahahahahaaha")
+        {
+            Issuer = issuer;
             Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         }
     }
 }
-

@@ -14,11 +14,25 @@ namespace AcademyCloud.Identity.Domains.Entities
         public string Password { get; set; }
         public string Email { get; set; }
 
-        public bool IsSystemUser { get; set; }
+        public bool System { get; set; }
 
-        public IEnumerable<UserDomainAssignment> Domains { get; set; }
+        public ICollection<UserDomainAssignment> Domains { get; set; }
 
-        public IEnumerable<UserProjectAssignment> Projects { get; set; }
-        
+        public ICollection<UserProjectAssignment> Projects { get; set; }
+
+        public User(Guid id, string username, string password, string email, bool system, ICollection<UserDomainAssignment> domains, ICollection<UserProjectAssignment> projects)
+        {
+            Id = id;
+            Username = username;
+            Password = password;
+            Email = email;
+            System = system;
+            Domains = domains;
+            Projects = projects;
+        }
+
+        private User()
+        {
+        }
     }
 }

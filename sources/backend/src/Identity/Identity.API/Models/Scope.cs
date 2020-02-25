@@ -8,8 +8,10 @@ namespace AcademyCloud.Identity.Models
 {
     public class Scope
     {
-        public string DomainId { get; set; } = "";
-        public string DomainName { get; set; } = "";
+        public string System { get; set; } = null!;
+
+        public string DomainId { get; set; } = null!;
+        public string DomainName { get; set; } = null!;
 
         public string? ProjectId { get; set; }
         public string? ProjectName { get; set; }

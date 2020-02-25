@@ -14,5 +14,7 @@ namespace AcademyCloud.Identity.Domains.Entities
         public ICollection<UserDomainAssignment> Users { get; set; }
 
         public ICollection<Project> Projects { get; set; }
+
+
     }
 }

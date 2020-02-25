@@ -23,7 +23,6 @@ namespace AcademyCloud.Identity.Data
 
         public DbSet<UserProjectAssignment> UserProjectAssignments { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
 

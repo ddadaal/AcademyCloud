@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AcademyCloud.Identity.Auth;
 using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
+using AcademyCloud.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +38,7 @@ namespace Identity
                 options.UseInMemoryDatabase("Test");
             });
 
-            var jwtSettings = new JwtSettings(Configuration);
+            var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
 
             services.AddAuthorization();
