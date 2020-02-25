@@ -61,7 +61,7 @@ export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
         confirmLoading={isPending}
         destroyOnClose={true}
       >
-        <UsersSelectionMenu getAllUsers={getUsers} selected={admins} onChange={setAdmins}  />
+        <UsersSelectionMenu getUsers={getUsers} value={admins} onChange={setAdmins}  />
       </Modal>
     </>
   );

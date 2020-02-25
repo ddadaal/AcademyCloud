@@ -5,6 +5,7 @@ import { PersonalAccountService } from "src/apis/identity/PersonalAccountService
 import { useAsync } from "react-async";
 import { lang, Localized } from "src/i18n";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
+import { email, required } from "src/utils/validateMessages";
 
 
 const service = getApiService(PersonalAccountService);
@@ -58,7 +59,7 @@ export const ProfileForm: React.FC = () => {
           <Input disabled={true} />
         </Form.Item>
         <Form.Item
-          rules={[{ type: "email", required: true }]}
+          rules={[{ type: "email", message: email }, { required: true, message: required }]}
           label={<Localized id={root.email} />}
           name="email"
         >

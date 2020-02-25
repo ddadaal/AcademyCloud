@@ -8,17 +8,13 @@ export default {
     name: "English",
     antdConfigProvider: {
       locale: en_US,
-      form: {
-        validateMessages: {
-          required: "Please input this field.",
-          types: {
-            email: "Please input a valid email.",
-          }
-        }
-      }
     },
   },
   definitions: {
+    validateMessages: {
+      required: "Please input this field.",
+      email: "Please input a valid email.",
+    },
     components: {
       resources: {
         resourceType: "Resource Type",
@@ -145,6 +141,7 @@ export default {
           button: "Create a New Domain",
           title: "Create a New Domain",
           name: "Name",
+          payUser: "Pay User, also a domain admin",
           opName: "Create Domain",
           conflict: "The domain with the same exists. Please change.",
         }

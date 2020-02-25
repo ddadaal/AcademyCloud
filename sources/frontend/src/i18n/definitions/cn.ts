@@ -8,17 +8,13 @@ export default {
     name: "简体中文",
     antdConfigProvider: {
       locale: zh_CN,
-      form: {
-        validateMessages: {
-          required: "这是必需字段。",
-          types: {
-            email: "请输入有效的电子邮箱地址。",
-          }
-        }
-      }
     },
   },
   definitions: {
+    validateMessages: {
+      email: "请输入有效的电子邮箱地址。",
+      required: "这是必需字段。",
+    },
     components: {
       resources: {
         resourceType: "资源类型",
@@ -145,6 +141,7 @@ export default {
           button: "创建域",
           title: "创建域",
           name: "域名字",
+          payUser: "付款账号，也是域的一个管理员",
           opName: "创建域",
           conflict: "已有同名域存在。请更换一个域。",
         },

@@ -10,6 +10,7 @@ import { AccountService } from "src/apis/account/AccountService";
 import { navigate, RouteComponentProps } from "@reach/router";
 import { FormButton } from "src/pages/Home/HomePageLayout";
 import { PageMetadata } from "src/utils/PageMetadata";
+import { required } from "src/utils/validateMessages";
 
 const root = lang.homepage.loginForm;
 
@@ -69,7 +70,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       <PageMetadata titleId={root.title} />
       <Form.Item
         name="username"
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: required }]}
       >
         <Input
           disabled={loggingIn}
@@ -78,7 +79,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       </Form.Item>
       <Form.Item
         name="password"
-        rules={[{ required: true }]}
+        rules={[{ required: true, message: required }]}
       >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}

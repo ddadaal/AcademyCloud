@@ -13,8 +13,6 @@ const root = lang.components.users;
 
 export const UsersViewTable: React.FC<Props> = (props) => {
 
-  console.log(props.users);
-
   return (
     <Table pagination={{ hideOnSinglePage: true }} dataSource={props.users}>
       <Column title={<Localized id={root.id} />}

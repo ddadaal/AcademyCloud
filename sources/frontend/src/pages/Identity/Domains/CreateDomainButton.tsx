@@ -6,6 +6,11 @@ import { getApiService } from "src/apis";
 import { DomainsService } from "src/apis/identity/DomainsService";
 import { useAsync } from "react-async";
 import { HttpError } from "src/apis/HttpService";
+import { UsersSelectionMenu } from "src/components/users/UsersSelectionMenu";
+import { UsersService } from "src/apis/identity/UsersService";
+import { User } from "src/models/User";
+import { required } from "src/utils/validateMessages";
+import { arrayContainsElement } from "src/utils/Arrays";
 
 interface Props {
   reload: () => void;
@@ -14,10 +19,21 @@ interface Props {
 const root = lang.identity.domains.add;
 const opResult = lang.components.operationResult;
 
-const service = getApiService(DomainsService);
 
-const createDomain = ([name]) => {
-  return service.createDomain(name);
+
+const usersService = getApiService(UsersService);
+const getAccessibleUsers = () => usersService.getAccessibleUsers().then((x) => x.users);
+
+
+const service = getApiService(DomainsService);
+const createDomain = ([name, payUser]: [string, User]) => {
+  return service.createDomain(name, payUser.id);
+}
+
+const userValidator = async (_, value: User[] | undefined) => {
+  if (!arrayContainsElement(value)) {
+    throw new Error("[payUser] is not set.");
+  }
 }
 
 export const CreateDomainButton: React.FC<Props> = (props) => {
@@ -36,6 +52,7 @@ export const CreateDomainButton: React.FC<Props> = (props) => {
       props.reload();
     },
     onReject: (e: any) => {
+      console.log(e);
       const { status } = e.data as HttpError;
       api.error({
         messageId: [opResult.fail, [root.opName]],
@@ -43,6 +60,12 @@ export const CreateDomainButton: React.FC<Props> = (props) => {
       });
     }
   });
+
+  const onOk = () => {
+    form.validateFields()
+      .then((fields) => { console.log(fields); run(fields.name, fields.payUser)})
+      .catch((ex) => console.log(ex));
+  }
 
   return (
     <>
@@ -53,14 +76,24 @@ export const CreateDomainButton: React.FC<Props> = (props) => {
       <Modal
         visible={modalShown}
         title={<Localized id={root.title} />}
-        onOk={() => run(form.getFieldsValue().name)}
+        onOk={onOk}
         onCancel={() => setModalShown(false)}
         destroyOnClose={true}
         confirmLoading={isPending}
       >
-        <Form form={form}>
-          <Form.Item label={<Localized id={root.name}/>} rules={[{required: true}]} name="name">
+        <Form layout="vertical" form={form}>
+          <Form.Item label={<Localized id={root.name}/>} rules={[{required: true, message: required }]} name="name">
             <Input />
+          </Form.Item>
+          <Form.Item label={<Localized id={root.payUser} /> }
+            rules={[{
+              required: true,
+              validator: userValidator,
+              message: required,
+            }]} name="payUser">
+            <UsersSelectionMenu
+              getUsers={getAccessibleUsers}
+              selectionMode="single" />
           </Form.Item>
         </Form>
 

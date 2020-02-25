@@ -10,8 +10,7 @@ import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { HttpError } from "src/apis/HttpService";
 import { PageMetadata } from "src/utils/PageMetadata";
-
-const { Item } = Form;
+import { required, email as emailMessage } from "src/utils/validateMessages";
 
 const root = lang.homepage.registerForm;
 
@@ -65,24 +64,24 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
     <Form onFinish={onFinish} name="register">
       {contextHolder}
       <PageMetadata titleId={root.title} />
-      <Item name="username"
-        rules={[{ required: true }]}>
+      <Form.Item name="username"
+        rules={[{ required: true, message: required }]}>
         <Input disabled={registering} prefix={<UserOutlined className="site-form-item-icon" />} placeholder={username} />
-      </Item>
-      <Item name="password" rules={[{ required: true }]}>
+      </Form.Item>
+      <Form.Item name="password" rules={[{ required: true, message: required }]}>
         <Input type="password" disabled={registering} prefix={<LockOutlined className="site-form-item-icon" />} placeholder={password} />
-      </Item>
-      <Item name="email" rules={[
-        { type: "email" },
-        { required: true }
+      </Form.Item>
+      <Form.Item name="email" rules={[
+        { type: "email", message: emailMessage },
+        { required: true, message: required  }
       ]}>
         <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder={email} />
-      </Item>
-      <Item>
+      </Form.Item>
+      <Form.Item>
         <FormButton loading={registering} type="primary" htmlType="submit" className="login-form-button">
           <Localized id={root.register} />
         </FormButton>
-      </Item>
+      </Form.Item>
     </Form>
   );
 }

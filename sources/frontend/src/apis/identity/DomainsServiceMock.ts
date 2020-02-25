@@ -40,7 +40,7 @@ export class DomainsServiceMock extends DomainsService {
     return undefined;
   }
 
-  async createDomain(name: string): Promise<void> {
+  async createDomain(name: string, payUserId: string): Promise<void> {
     await this.delay();
   }
 }
