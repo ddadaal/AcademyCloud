@@ -22,6 +22,8 @@ const updateProfile = async ([email]) => {
 
 const root = lang.identity.account.basic.profile;
 
+const opResult = lang.components.operationResult;
+
 export const ProfileForm: React.FC = () => {
 
   const [form] = Form.useForm();
@@ -39,7 +41,7 @@ export const ProfileForm: React.FC = () => {
     deferFn: updateProfile,
     onResolve: (profile) => {
       form.setFieldsValue(profile);
-      api.success({ messageId: root.success });
+      api.success({ messageId: [opResult.success, [root.opName]] });
     },
   });
 

@@ -35,8 +35,8 @@ export default {
         },
       },
       operationResult: {
-        success: "{} Success!",
-        fail: "{} Failed.",
+        success: "{} success!",
+        fail: "{} failed.",
         retry: "Please retry",
       },
     },
@@ -78,8 +78,7 @@ export default {
             username: "Username",
             email: "Email",
             update: "Update",
-            success: "Basic information updated successfully!",
-            failed: "Basic information update failed.",
+            opName: "Basic information update",
             failedDescription: "Please retry.",
           },
           changePassword: {
@@ -87,8 +86,7 @@ export default {
             original: "Original password",
             newPassword: "New password",
             update: "Update",
-            success: "Password updated successfully!",
-            failed: "Password update failed.",
+            opName: "Password update",
             failedDescription: "Please check the original password and retry.",
           },
         },
@@ -103,9 +101,8 @@ export default {
             confirmExit: "Confirm to exit domain {} ?",
             okText: "Confirm",
             cancelText: "Cancel",
-            success: "Exit Successful!",
+            opName: "Exit domain",
             error: {
-              title: "Exit Failed!",
               isPayAccount: "You are the pay account for this domain. Please set the pay account of the domain to another account, and then exit.",
               notJoined: "You have not joined this domain!",
             }
@@ -160,8 +157,8 @@ export default {
         domains: "Domains",
         system: "System",
         admin: "Admin",
-        success: "Switch successful.",
-        fail: "Switch failed. Please retry.",
+        opName: "Switch",
+        failDescription: "Please re-login.",
         changing: "Switching to {}...",
       },
       user: {

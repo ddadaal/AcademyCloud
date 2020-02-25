@@ -13,6 +13,7 @@ interface Props {
 }
 
 const root = lang.identity.account.joinedDomains.table;
+const opResult = lang.components.operationResult;
 
 const service = getApiService(PersonalAccountService);
 
@@ -34,11 +35,11 @@ export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
         .then(() => {
           reload();
           api.success({
-            messageId: root.success,
+            messageId: [opResult.success, [root.opName]],
           })
         })
         .catch(({ data }) => api.error({
-          messageId: root.error.title,
+          messageId: [opResult.fail, [root.opName]],
           descriptionId: root.error[data.reason]
         })),
       okText: <Localized id={root.okText} />,

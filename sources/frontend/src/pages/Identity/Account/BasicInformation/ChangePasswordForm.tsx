@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Spin, notification } from "antd";
+import { Form, Input, Button, Spin } from "antd";
 import { getApiService } from "src/apis";
 import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { useAsync } from "react-async";
@@ -16,6 +16,8 @@ const updatePassword = async ([original, updated]) => {
 
 const root = lang.identity.account.basic.changePassword;
 
+const opResult = lang.components.operationResult;
+
 export const ChangePasswordForm: React.FC = () => {
 
   const [form] = Form.useForm();
@@ -25,10 +27,10 @@ export const ChangePasswordForm: React.FC = () => {
   const { isPending, run } = useAsync({
     onResolve: () => {
       form.setFieldsValue({ original: "", updated: "" });
-      api.success({ messageId: root.success });
+      api.success({ messageId: [opResult.success, [root.opName]] });
     },
     onReject: () => {
-      api.error({ messageId: root.failed, descriptionId: root.failedDescription });
+      api.error({ messageId: [opResult.fail, [root.opName]], descriptionId: root.failedDescription });
     },
     deferFn: updatePassword
   });

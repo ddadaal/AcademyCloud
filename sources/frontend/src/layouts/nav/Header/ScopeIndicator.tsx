@@ -12,6 +12,8 @@ import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 
 const root = lang.nav.scopeIndicator;
 
+const opResult = lang.components.operationResult;
+
 export const ScopeIndicator: React.FC = () => {
 
   const [changingTo, setChangingTo] = useState<Scope | null>(null);
@@ -53,11 +55,12 @@ export const ScopeIndicator: React.FC = () => {
       const resp = await apiService.changeScope(scope);
       userStore.login({ ...user, token: resp.token, scope });
       api.success({
-        messageId: root.success,
+        messageId: [opResult.success, [root.opName]],
       });
     } catch (e) {
       api.error({
-        messageId: root.fail,
+        messageId: [opResult.fail, [root.opName]],
+        descriptionId: root.failDescription,
       });
     } finally {
       setChangingTo(null);

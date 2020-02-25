@@ -35,8 +35,8 @@ export default {
         },
       },
       operationResult: {
-        success: "{} 成功！",
-        fail: "{} 失败",
+        success: "{}成功！",
+        fail: "{}失败",
         retry: "请重试。",
       },
     },
@@ -78,8 +78,7 @@ export default {
             username: "用户名",
             email: "电子邮箱",
             update: "更新",
-            success: "基本信息修改成功！",
-            failed: "基本信息修改失败！",
+            opName: "基本信息修改",
             failedDescription: "请重试。",
           },
           changePassword: {
@@ -87,8 +86,7 @@ export default {
             original: "原密码",
             newPassword: "新密码",
             update: "更新",
-            success: "密码修改成功！",
-            failed: "密码修改失败！",
+            opName: "密码修改",
             failedDescription: "请检查密码是否输入正确，再重试。",
           },
         },
@@ -103,9 +101,8 @@ export default {
             confirmExit: "确定要退出域 {} 吗？",
             okText: "确定",
             cancelText: "取消",
-            success: "退出成功！",
+            opName: "退出域",
             error: {
-              title: "退出失败！",
               isPayAccount: "您是这个域的付款账号。请先将付款账号修改为其他账号，再删除。",
               notJoined: "您未加入这个域！",
             }
@@ -160,8 +157,8 @@ export default {
         domains: "学校",
         system: "系统",
         admin: "管理员",
-        success: "切换成功！",
-        fail: "切换失败，请退出登录重试",
+        opName: "切换",
+        failDescription: "请退出登录重试",
         changing: "正在切换到{}...",
       },
       user: {
