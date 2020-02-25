@@ -16,26 +16,25 @@ namespace Identity.Test
     {
         public JwtSettings jwtSettings = new JwtSettings();
 
+        private readonly DbContextOptions<IdentityDbContext> options =
+            new DbContextOptionsBuilder<IdentityDbContext>()
+                    .UseInMemoryDatabase(databaseName: "Identity Database")
+                    .Options;
+
         [TestMethod]
-        public async Task TestAuthenticationSystem()
+        public async Task TestGetScopesSystem1()
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<IdentityDbContext>()
-                .UseInMemoryDatabase(databaseName: "Identity Database")
-                .Options;
-
-            // Act
             using var context = new IdentityDbContext(options);
             context.Users.AddRange(MockDbContext.Users);
             await context.SaveChangesAsync();
-
             var service = new AuthenticationService(context, new NullLogger<AuthenticationService>(), jwtSettings);
 
+            // Act
             var resp = await service.GetScopes(new GetScopesRequest() { Username = "system1", Password = "1" }, TestServerCallContext.Create());
 
             // Assert
             Assert.IsTrue(resp.Success);
-
         }
     }
 }

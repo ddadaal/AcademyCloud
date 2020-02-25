@@ -20,15 +20,17 @@ namespace AcademyCloud.Identity.Domains.Entities
 
         public ICollection<UserProjectAssignment> Projects { get; set; }
 
-        public User(Guid id, string username, string password, string email, bool system, ICollection<UserDomainAssignment> domains, ICollection<UserProjectAssignment> projects)
+        public User(Guid id, string username, string password, string email, bool system,
+            ICollection<UserDomainAssignment> domains = null,
+            ICollection<UserProjectAssignment> projects = null)
         {
             Id = id;
             Username = username;
             Password = password;
             Email = email;
             System = system;
-            Domains = domains;
-            Projects = projects;
+            Domains = domains ?? new List<UserDomainAssignment>();
+            Projects = projects ?? new List<UserProjectAssignment>();
         }
 
         private User()

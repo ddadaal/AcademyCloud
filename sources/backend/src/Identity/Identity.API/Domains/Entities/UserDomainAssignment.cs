@@ -13,9 +13,16 @@ namespace AcademyCloud.Identity.Domains.Entities
         public User User { get; set; }
 
         public Domain Domain { get; set; }
-
+        public UserRole Role { get; set; }
         public DateTime AssignTime { get; set; }
 
-        public UserRole Role { get; set; }
+        public UserDomainAssignment(Guid id, User user, Domain domain, UserRole role, DateTime assignTime)
+        {
+            Id = id;
+            User = user;
+            Domain = domain;
+            Role = role;
+            AssignTime = assignTime;
+        }
     }
 }
