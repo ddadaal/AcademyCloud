@@ -5,8 +5,10 @@ import { getApiService } from "src/apis";
 import { DomainsService } from "src/apis/identity/DomainsService";
 import { useAsync } from "react-async";
 import Modal from "antd/lib/modal/Modal";
-import { ResourcesEditForm } from "src/components/resources/ResourcesEditForm";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
+import { UsersSelectionMenu } from "src/components/users/UsersSelectionMenu";
+import { UsersService } from "src/apis/identity/UsersService";
+import { User } from "src/models/User";
 
 interface Props {
   domain: Domain;
@@ -14,17 +16,21 @@ interface Props {
 }
 const root = lang.identity.domains.setAdmins;
 
-const service = getApiService(DomainsService);
+const domainsService = getApiService(DomainsService);
 
-const updateAdmins = async ([domainId, adminIds]) => {
-  await service.setAdmins(domainId, adminIds);
+const updateAdmins = async ([domainId, admins]: [string, User[]]) => {
+  await domainsService.setAdmins(domainId, admins.map((x) =>x.id));
 }
+
+const usersService = getApiService(UsersService);
+
+const getUsers = () => usersService.getAccessibleUsers().then((resp) => resp.users);
 
 export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
 
   const [modalShown, setModalShown] = useState(false);
 
-  const [resources, setResources] = useState(domain.resources);
+  const [admins, setAdmins] = useState(domain.admins);
 
   const [api, contextHolder] = useLocalizedNotification();
 
@@ -49,11 +55,12 @@ export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
       <Modal
         visible={modalShown}
         title={<Localized id={root.title} />}
-        onOk={() => run(domain.id, resources)}
+        onOk={() => run(domain.id, admins)}
         onCancel={() => setModalShown(false)}
         confirmLoading={isPending}
+        destroyOnClose={true}
       >
-        <ResourcesEditForm initial={resources} onValuesChange={setResources} />
+        <UsersSelectionMenu getAllUsers={getUsers} selected={admins} onChange={setAdmins}  />
       </Modal>
     </>
   );
