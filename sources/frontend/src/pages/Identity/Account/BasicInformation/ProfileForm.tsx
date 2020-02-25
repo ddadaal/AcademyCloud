@@ -27,7 +27,7 @@ export const ProfileForm: React.FC = () => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
-  const { isPending, reload } = useAsync({
+  const { isPending } = useAsync({
     promiseFn: getProfile,
     onResolve: (profile) => {
       form.setFieldsValue(profile);

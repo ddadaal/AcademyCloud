@@ -12,6 +12,10 @@ const ProfileFormDiv = styled.div`
   max-width: 400px;
 `;
 
+const WidthLimitedRow = styled(Row)`
+  max-width: 1000px;
+`;
+
 const root = lang.identity.account.basic;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,7 +23,7 @@ export default function BasicInformationPage(_: RouteComponentProps) {
 
   return (
     <div>
-      <Row gutter={32}>
+      <WidthLimitedRow gutter={32}>
         <Col xs={24} md={12}>
           <TitleBar>
             <TitleText>
@@ -40,7 +44,7 @@ export default function BasicInformationPage(_: RouteComponentProps) {
             <ChangePasswordForm />
           </ProfileFormDiv>
         </Col>
-      </Row>
+      </WidthLimitedRow>
     </div>
   );
 }

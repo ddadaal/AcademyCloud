@@ -40,7 +40,7 @@ export class HttpService {
     return axiosInstance;
   }
 
-  protected async delay(ms = 1000) {
+  protected async delay(ms = 500) {
     await delay(ms);
   }
 
