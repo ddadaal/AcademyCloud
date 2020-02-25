@@ -47,31 +47,31 @@ export const DomainsTable: React.FC = () => {
   return (
     <>
       {contextHolder}
-      <Table dataSource={data?.domains} loading={isPending}>
-        <Table.Column title={<Localized id={root.id} />} dataIndex="id" key="domainId" />
-        <Table.Column title={<Localized id={root.name} />} dataIndex="name" key="domainName" />
-        <Table.Column title={<Localized id={root.active.title} />} dataIndex="active" key="domainName"
+      <Table dataSource={data?.domains} loading={isPending} rowKey="id">
+        <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
+        <Table.Column title={<Localized id={root.name} />} dataIndex="name" />
+        <Table.Column title={<Localized id={root.active.title} />} dataIndex="active"
           render={(active: boolean) => <Localized id={root.active[String(active)]} />}
         />
-        <Table.Column title={<Localized id={root.payUser} />} dataIndex="payUser" key="payUser"
+        <Table.Column title={<Localized id={root.payUser} />} dataIndex="payUser"
           render={(payUser: User) => (
             <ModalLink api={api} modalTitle={<Localized id={root.payUser} />} modalContent={<UsersViewTable users={[payUser]} />}>
               {payUser.name}
             </ModalLink>
           )} />
-        <Table.Column title={<Localized id={root.admins} />} dataIndex="admins" key="admins"
+        <Table.Column title={<Localized id={root.admins} />} dataIndex="admins"
           render={(admins: User[]) => (
             <ModalLink api={api} modalTitle={<Localized id={root.admins} />} modalContent={<UsersViewTable users={admins} />}>
               {admins.length <= 1 ? admins[0].name : admins.length}
             </ModalLink>
           )} />
-        <Table.Column title={<Localized id={root.resources} />} dataIndex="resources" key="resources"
+        <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
           render={(resources: Resources) => (
             <ModalLink api={api} modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
               {resourcesString(resources)}
             </ModalLink>
           )} />
-        <Table.Column title={<Localized id={root.actions} />} key="domainId"
+        <Table.Column title={<Localized id={root.actions} />}
           render={(_, domain: Domain) => (
             <span>
               <SetAdminLink domain={domain} reload={reload} />

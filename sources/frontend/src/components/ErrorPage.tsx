@@ -8,17 +8,18 @@ const root = lang.nav.errorPage;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const ErrorPage = (_: RouteComponentProps) => {
   return (
-    <Result
-      status={404}
-      title={<Localized id={root.title} />}
-      subTitle={<Localized id={root.description} />}
-      extra={(
-        <Button type="primary" >
-          <Link to="/resources">
-            <Localized id={root.backToHome} />
-          </Link>
-        </Button>
-      )}
-    />
+    <div>404</div>
+    // <Result
+    //   status={404}
+    //   title={<Localized id={root.title} />}
+    //   subTitle={<Localized id={root.description} />}
+    //   extra={(
+    //     <Button type="primary" >
+    //       <Link to="/resources">
+    //         <Localized id={root.backToHome} />
+    //       </Link>
+    //     </Button>
+    //   )}
+    // />
   )
 }

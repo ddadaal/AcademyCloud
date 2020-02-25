@@ -45,7 +45,7 @@ export function indexRoutes(routes: IndexRoute[], basePath: string) {
         {filteredSidenavs.map(({ Component, path, children }) => {
           if (arrayContainsElement(children)) {
             return (
-              <EmptyRoot path={path}>
+              <EmptyRoot key={path} path={path}>
                 <Redirect noThrow={true} from="/" to={children[0].path} />
                 {children.map((x) => (
                   <x.Component key={x.path} path={x.path} />

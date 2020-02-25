@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { navigate } from "@reach/router";
 import { useStore } from "simstate";
 import { NavStore } from "src/layouts/nav/NavStore";
-import HeaderIcon from "./HeaderIcon";
+import { HeaderIcon } from "./HeaderIcon";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { LanguageSelector } from "./LanguageSelector";
 import { UserIndicator } from "./UserIndicator";

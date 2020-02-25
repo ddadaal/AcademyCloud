@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { layoutConstants } from "src/layouts/constants";
 
-const HeaderItemContainer = styled.div`
+export const HeaderItemContainer = styled.div`
   :hover {
     background-color: ${layoutConstants.headerIconBackgroundColor};
     cursor: pointer;
@@ -11,4 +11,3 @@ const HeaderItemContainer = styled.div`
   padding-right: 8px;
 `;
 
-export default HeaderItemContainer;
