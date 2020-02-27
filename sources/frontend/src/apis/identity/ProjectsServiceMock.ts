@@ -1,6 +1,7 @@
 import { ProjectsService, GetAccessibleProjectsResponse } from "src/apis/identity/ProjectsService";
 import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
+import { Resources } from "src/models/Resources";
 
 const cjd: User = { id: "CJDID", username: "CJD", name: "CJD", active: true };
 const cjy: User = { id: "CJYID", username: "CJY", name: "CJY", active: true };
@@ -29,5 +30,9 @@ export class ProjectsServiceMock extends ProjectsService {
   async removeUser(projectId: string, userId: string): Promise<void> {
     await this.delay();
     throw { code: "onlyAdmin" };
+  }
+
+  async setResources(projectId: string, resources: Resources): Promise<void> {
+    await this.delay();
   }
 }

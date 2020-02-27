@@ -1,6 +1,7 @@
 import { HttpService, HttpMethod } from "../HttpService";
 import { Project } from "src/models/Project";
 import { UserRole } from "src/models/Scope";
+import { Resources } from 'src/models/Resources';
 
 export interface GetAccessibleProjectsResponse {
   projects: Project[];
@@ -38,6 +39,14 @@ export class ProjectsService extends HttpService {
     await this.fetch({
       method: HttpMethod.DELETE,
       path: `/identity/projects/${projectId}/users/${userId}`,
+    });
+  }
+
+  async setResources(projectId: string, resources: Resources): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.PATCH,
+      path: `/identity/projects/${projectId}/resources`,
+      body: { resources }
     });
   }
 

@@ -199,6 +199,10 @@ export default {
           manageUsers: {
             link: "管理用户",
           },
+          setResources: {
+            link: "分配资源",
+            title: "分配资源",
+          },
         },
       },
     },

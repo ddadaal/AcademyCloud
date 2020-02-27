@@ -199,6 +199,10 @@ export default {
           manageUsers: {
             link: "Manage users",
           },
+          setResources: {
+            link: "Set Resources",
+            title: "Set Resources",
+          },
         },
       },
     },
