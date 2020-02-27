@@ -38,8 +38,31 @@ export default {
           admin: "Admin",
           member: "Member",
         },
+        addUser: {
+          button: "Add user",
+          selectUser: "Select user (users already in are not shown)",
+          selectRole: "Select role",
+        },
+        actions: "Actions",
+        remove: {
+          link: "Remove",
+          opName: "Remove",
+          prompt: "Sure to remove?",
+          errors: {
+            payUser: "Can't remove the pay user. Please change the pay user and try again.",
+            onlyAdmin: "Can't remove the only admin. Please set more admins and try again.",
+          },
+        },
+        changeRole: {
+          opName: "Change role",
+          errors: {
+            payUser: "Can't change the role of pay user. Please change the pay user and try again.",
+            onlyAdmin: "Can't change the role of the only admin. Please set more admins and try again.",
+          },
+        },
       },
       operationResult: {
+        inProgress: "{} in progress...",
         success: "{} success!",
         fail: "{} failed.",
         retry: "Please retry",
@@ -170,8 +193,12 @@ export default {
           },
           payUser: "Pay User",
           users: "Users",
-          actions: "Action",
           resources: "Reources",
+          actions: "Action",
+          edit: "Edit",
+          manageUsers: {
+            link: "Manage users",
+          },
         },
       },
     },

@@ -13,6 +13,7 @@ import { resourcesString, Resources } from "src/models/Resources";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 import { Project } from "src/models/Project";
+import { EditLink } from "src/pages/Identity/Projects/EditLink";
 
 interface Props {
   refreshToken: any;
@@ -26,12 +27,14 @@ export const ProjectsTable: React.FC<Props> = (props) => {
 
   const userStore = useStore(UserStore);
 
+  const { user } = userStore;
+
   const getAccessibleProjects = useCallback(async () => {
     const x = await service.getAccessibleProjects();
     return x.projects;
-  }, [userStore.user]);
+  }, [user]);
 
-  const { data, isPending } = useAsync({ promiseFn: getAccessibleProjects });
+  const { data, isPending, reload } = useAsync({ promiseFn: getAccessibleProjects });
 
   return (
     <Table dataSource={data} loading={isPending}>
@@ -58,6 +61,15 @@ export const ProjectsTable: React.FC<Props> = (props) => {
             {resourcesString(resources)}
           </ModalLink>
         )} />
+      // ensure its an domain admin
+      {((user) && (!!user.scope.projectId) && (user.scope.role === "admin"))
+        ? (
+          <Table.Column title={<Localized id={root.actions} />}
+            render={(_, project: Project) => (
+              <EditLink project={project} reload={reload} />
+            )} />
+        )
+        : null}
     </Table>
   );
 }

@@ -17,7 +17,7 @@ export enum HttpMethod {
   PUT = "PUT",
 }
 
-export interface HttpError<T = unknown>{
+export interface HttpError<T = any> {
   status: number;
   data?: T;
 }

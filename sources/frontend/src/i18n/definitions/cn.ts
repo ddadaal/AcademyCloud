@@ -38,8 +38,31 @@ export default {
           admin: "管理员",
           member: "成员",
         },
+        addUser: {
+          button: "增加成员",
+          selectUser: "选择用户（已加入的成员不显示）",
+          selectRole: "选择角色",
+        },
+        actions: "操作",
+        remove: {
+          link: "移除",
+          opName: "移除",
+          prompt: "确定要移除吗？",
+          errors: {
+            payUser: "不能移除付费用户。请先将付费用户修改为他人后再尝试。",
+            onlyAdmin: "不能移除唯一的管理员。请先设置其他管理员再尝试。",
+          },
+        },
+        changeRole: {
+          opName: "修改权限",
+          errors: {
+            payUser: "不能修改付费用户的角色。请先将付费用户修改为他人后再尝试。",
+            onlyAdmin: "不能修改唯一的管理员的角色。请先设置其他管理员再尝试。",
+          },
+        },
       },
       operationResult: {
+        inProgress: "{}中……",
         success: "{}成功！",
         fail: "{}失败",
         retry: "请重试。",
@@ -172,6 +195,10 @@ export default {
           users: "用户",
           actions: "操作",
           resources: "分配的资源",
+          edit: "编辑",
+          manageUsers: {
+            link: "管理用户",
+          },
         },
       },
     },
