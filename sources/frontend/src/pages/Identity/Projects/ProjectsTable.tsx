@@ -11,6 +11,8 @@ import { User } from "src/models/User";
 import { UsersViewTable } from "src/components/users/UsersViewTable";
 import { resourcesString, Resources } from "src/models/Resources";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
+import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
+import { Project } from "src/models/Project";
 
 interface Props {
   refreshToken: any;
@@ -44,16 +46,10 @@ export const ProjectsTable: React.FC<Props> = (props) => {
             {payUser.name}
           </ModalLink>
         )} />
-      <Table.Column title={<Localized id={root.admins} />} dataIndex="admins"
-        render={(admins: User[]) => (
-          <ModalLink modalTitle={<Localized id={root.admins} />} modalContent={<UsersViewTable users={admins} />}>
-            {admins.length <= 1 ? admins[0].name : admins.length}
-          </ModalLink>
-        )} />
-      <Table.Column title={<Localized id={root.members} />} dataIndex="members"
-        render={(members: User[]) => (
-          <ModalLink modalTitle={<Localized id={root.members} />} modalContent={<UsersViewTable users={members} />}>
-            {members.length <= 1 ? members[0].name : members.length}
+      <Table.Column title={<Localized id={root.users} />}
+        render={(_, project: Project) => (
+          <ModalLink modalTitle={<Localized id={root.users} />} modalContent={<UsersRoleViewTable admins={project.admins} members={project.members} />}>
+            {project.admins.length + project.members.length}
           </ModalLink>
         )} />
       <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"

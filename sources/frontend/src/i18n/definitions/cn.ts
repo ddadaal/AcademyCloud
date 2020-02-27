@@ -33,6 +33,11 @@ export default {
           true: "可用",
           false: "停用",
         },
+        role: {
+          title: "角色",
+          admin: "管理员",
+          member: "成员",
+        },
       },
       operationResult: {
         success: "{}成功！",
@@ -163,9 +168,8 @@ export default {
             true: "可用",
             false: "停用",
           },
-          admins: "管理员",
           payUser: "付款用户",
-          members: "成员",
+          users: "用户",
           actions: "操作",
           resources: "分配的资源",
         },

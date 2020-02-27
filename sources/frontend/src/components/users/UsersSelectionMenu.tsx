@@ -1,5 +1,4 @@
-import React from "react";
-import { User } from "src/models/User";
+import React from "react"; import { User } from "src/models/User";
 import { lang, Localized } from "src/i18n";
 import { useAsync } from "react-async";
 import { Table } from "antd";

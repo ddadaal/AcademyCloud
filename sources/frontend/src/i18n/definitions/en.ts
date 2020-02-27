@@ -33,6 +33,11 @@ export default {
           true: "Active",
           false: "Inactive",
         },
+        role: {
+          title: "Role",
+          admin: "Admin",
+          member: "Member",
+        },
       },
       operationResult: {
         success: "{} success!",
@@ -163,9 +168,8 @@ export default {
             true: "Active",
             false: "Inactive",
           },
-          admins: "Admins",
           payUser: "Pay User",
-          members: "Members",
+          users: "Users",
           actions: "Action",
           resources: "Reources",
         },
