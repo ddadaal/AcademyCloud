@@ -14,20 +14,20 @@ interface Props {
   domain: Domain;
   reload: () => void;
 }
-const root = lang.identity.domains.setAdmins;
+const root = lang.identity.domains.setPayUser;
 const opResult = lang.components.operationResult;
 
 const domainsService = getApiService(DomainsService);
 
-const updateAdmins = async ([domainId, admins]: [string, User[]]) => {
-  await domainsService.setAdmins(domainId, admins.map((x) => x.id));
+const updatePayUser = async ([domainId, payUserId]: [string, string]) => {
+  await domainsService.setPayUser(domainId, payUserId);
 }
 
 const usersService = getApiService(UsersService);
 
 const getUsers = () => usersService.getAccessibleUsers().then((resp) => resp.users);
 
-export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
+export const SetPayUserLink: React.FC<Props> = ({ domain, reload }) => {
 
   const [modalShown, setModalShown] = useState(false);
 
@@ -36,7 +36,7 @@ export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
   const [api, contextHolder] = useLocalizedNotification();
 
   const { run, isPending } = useAsync({
-    deferFn: updateAdmins,
+    deferFn: updatePayUser,
     onResolve: () => {
       reload();
       setModalShown(false);
@@ -61,15 +61,11 @@ export const SetAdminLink: React.FC<Props> = ({ domain, reload }) => {
         confirmLoading={isPending}
         destroyOnClose={true}
       >
-        <p>
-          <Localized id={root.payUserMustBeSelected} />
-        </p>
         <UsersSelectionMenu
-          getCheckboxProps={(u) => ({ disabled: u.id === domain.payUser.id })}
+          selectionMode="single"
           getUsers={getUsers}
           value={admins}
-          onChange={setAdmins}
-        />
+          onChange={setAdmins} />
       </Modal>
     </>
   );

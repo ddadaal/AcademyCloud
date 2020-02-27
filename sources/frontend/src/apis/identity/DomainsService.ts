@@ -32,6 +32,14 @@ export class DomainsService extends HttpService {
     });
   }
 
+  async setPayUser(domainId: string, payUserId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.PATCH,
+      path: `/identity/domains/${domainId}/payUser`,
+      body: { payUserId },
+    });
+  }
+
   async createDomain(name: string, payUserId: string): Promise<void> {
     await this.fetch({
       method: HttpMethod.POST,

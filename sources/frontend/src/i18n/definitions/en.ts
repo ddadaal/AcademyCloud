@@ -126,6 +126,7 @@ export default {
         admins: "Admins",
         resources: "Reources",
         actions: "Actions",
+        edit: "Edit",
         setResources: {
           link: "Set Resources",
           title: "Set Resources",
@@ -133,6 +134,11 @@ export default {
         setAdmins: {
           link: "Set Admins",
           title: "Set Admins",
+          payUserMustBeSelected: "Pay User must be an admin.",
+        },
+        setPayUser: {
+          link: "Set Pay User",
+          title: "Set Pay User",
         },
         add: {
           button: "Create a New Domain",

@@ -9,10 +9,9 @@ import { Resources, resourcesString } from "src/models/Resources";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 import { ModalStaticFunctions } from "antd/lib/modal/confirm";
 import { TitleText } from "src/components/pagecomponents/TitleText";
-import { SetResourcesLink } from "src/pages/Identity/Domains/SetResourcesLink";
-import { SetAdminLink } from "src/pages/Identity/Domains/SetAdminLink";
 import { Domain } from "src/models/Domain";
 import { User } from "src/models/User";
+import { EditLink } from "src/pages/Identity/Domains/EditLink";
 
 const root = lang.identity.domains;
 
@@ -77,11 +76,7 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
           )} />
         <Table.Column title={<Localized id={root.actions} />}
           render={(_, domain: Domain) => (
-            <span>
-              <SetAdminLink domain={domain} reload={reload} />
-              {" | "}
-              <SetResourcesLink domain={domain} reload={reload} />
-            </span>
+            <EditLink domain={domain} reload={reload} />
           )} />
       </Table>
     </>

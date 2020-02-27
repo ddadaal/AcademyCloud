@@ -126,6 +126,7 @@ export default {
         admins: "管理员",
         resources: "分配的资源",
         actions: "操作",
+        edit: "编辑",
         setResources: {
           link: "分配资源",
           title: "分配资源",
@@ -133,6 +134,11 @@ export default {
         setAdmins: {
           link: "设置管理员",
           title: "设置管理员",
+          payUserMustBeSelected: "付款用户必须是管理员。",
+        },
+        setPayUser: {
+          link: "设置付款用户",
+          title: "设置付款用户",
         },
         add: {
           button: "创建域",
