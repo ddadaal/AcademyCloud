@@ -54,6 +54,7 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
           </ModalLink>
         )} />
       <Table.Column title={<Localized id={root.actions} />}
+        dataIndex="id"
         render={(_, domain: Domain) => (
           <EditLink domain={domain} reload={reload} />
         )} />

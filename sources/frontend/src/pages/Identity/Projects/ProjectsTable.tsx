@@ -34,21 +34,26 @@ export const ProjectsTable: React.FC<Props> = (props) => {
     return x.projects;
   }, [user]);
 
+  const isDomainAdmin = (user) && (!user.scope.projectId) && (user.scope.role === "admin");
+
   const { data, isPending, reload } = useAsync({ promiseFn: getAccessibleProjects });
 
   return (
-    <Table dataSource={data} loading={isPending}>
+    <Table dataSource={data} loading={isPending} rowKey="id">
       <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
       <Table.Column title={<Localized id={root.name} />} dataIndex="name" />
       <Table.Column title={<Localized id={root.active.title} />} dataIndex="active"
         render={(active: boolean) => <Localized id={root.active[String(active)]} />}
       />
-      <Table.Column title={<Localized id={root.payUser} />} dataIndex="payUser"
-        render={(payUser: User) => (
-          <ModalLink modalTitle={<Localized id={root.payUser} />} modalContent={<UsersViewTable users={[payUser]} />}>
-            {payUser.name}
-          </ModalLink>
-        )} />
+      {isDomainAdmin
+        ? (
+          <Table.Column title={<Localized id={root.payUser} />} dataIndex="payUser"
+            render={(payUser: User) => (
+              <ModalLink modalTitle={<Localized id={root.payUser} />} modalContent={<UsersViewTable users={[payUser]} />}>
+                {payUser.name}
+              </ModalLink>
+            )} />
+        ) : null}
       <Table.Column title={<Localized id={root.users} />}
         render={(_, project: Project) => (
           <ModalLink modalTitle={<Localized id={root.users} />} modalContent={<UsersRoleViewTable admins={project.admins} members={project.members} />}>
@@ -61,8 +66,7 @@ export const ProjectsTable: React.FC<Props> = (props) => {
             {resourcesString(resources)}
           </ModalLink>
         )} />
-      // ensure its an domain admin
-      {((user) && (!!user.scope.projectId) && (user.scope.role === "admin"))
+      {isDomainAdmin
         ? (
           <Table.Column title={<Localized id={root.actions} />}
             render={(_, project: Project) => (
