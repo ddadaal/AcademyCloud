@@ -32,16 +32,22 @@ const commonColumns = [
 
 const service = getApiService(PersonalAccountService);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function DomainsTable() {
+interface Props {
+  refreshToken: any;
+}
+
+export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
 
   const userStore = useStore(UserStore);
 
   const getDomains = useCallback(async () => {
-    return await service.getDomains();
+    return await service.getJoinedDomains();
   }, [userStore.user]);
 
-  const { data, isPending, reload } = useAsync({ promiseFn: getDomains });
+  const { data, isPending, reload } = useAsync({
+    promiseFn: getDomains,
+    watch: refreshToken,
+  });
 
   const columns = useMemo(() => [
     ...commonColumns,

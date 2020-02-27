@@ -107,10 +107,13 @@ export default {
               notJoined: "您未加入这个域！",
             }
           },
-          join: "申请加入新的域",
         },
         joinDomain: {
+          link: "申请加入新的域",
           title: "加入一个域",
+          name: "域名",
+          prompt: "请选择要加入的域",
+          opName: "加入域",
         }
       },
       domains: {

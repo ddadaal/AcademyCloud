@@ -17,11 +17,15 @@ const root = lang.components.users;
 
 export const UsersSelectionMenu: React.FC<Props> = (props) => {
 
-  const { value = [], getUsers, onChange = () => { }, selectionMode = "multiple" } = props;
+  const {
+    value = [],
+    getUsers,
+    onChange = () => { },
+    selectionMode = "multiple",
+    getCheckboxProps,
+  } = props;
 
   const { data, isPending } = useAsync({ promiseFn: getUsers });
-
-  console.log(data);
 
   return (
     <div>
@@ -29,7 +33,7 @@ export const UsersSelectionMenu: React.FC<Props> = (props) => {
         type: selectionMode === "multiple" ? "checkbox" : "radio",
         selectedRowKeys: value.map((x) => x.id),
         onChange: (e) => onChange(data?.filter((x) => e.includes(x.id)) ?? []),
-        getCheckboxProps: props.getCheckboxProps,
+        getCheckboxProps: getCheckboxProps,
       }} size="small" dataSource={data} loading={isPending} rowKey="id">
         <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
         <Table.Column title={<Localized id={root.name} />} dataIndex="name" />

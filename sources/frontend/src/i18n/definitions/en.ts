@@ -107,10 +107,13 @@ export default {
               notJoined: "You have not joined this domain!",
             }
           },
-          join: "Join A New Domain",
         },
         joinDomain: {
+          link: "Join A New Domain",
           title: "Join A Domain",
+          name: "Domain Name",
+          prompt: "Select the domain you'd like to join",
+          opName: "Join a domain",
         }
       },
       domains: {

@@ -1,4 +1,4 @@
-import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetDomainsResponse } from './PersonalAccountService';
+import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetJoinedDomainsResponse, GetJoinableDomainsResponse } from './PersonalAccountService';
 import { makeHttpError } from '../HttpService';
 
 export class PersonalAccountServiceMock extends PersonalAccountService {
@@ -28,7 +28,7 @@ export class PersonalAccountServiceMock extends PersonalAccountService {
     await this.delay();
   }
 
-  async getDomains(): Promise<GetDomainsResponse> {
+  async getJoinedDomains(): Promise<GetJoinedDomainsResponse> {
     await this.delay();
     return {
       domains: [
@@ -40,5 +40,19 @@ export class PersonalAccountServiceMock extends PersonalAccountService {
 
   async exitDomain(domainId: string): Promise<void> {
     throw makeHttpError(403, { reason: "isPayAccount" });
+  }
+
+  async getJoinableDomains(): Promise<GetJoinableDomainsResponse> {
+    await this.delay();
+    return {
+      domains: [
+        { id: "NJUID", name: "NJU" },
+        { id: "PKUID", name: "PKU" },
+      ]
+    };
+  }
+
+  async joinDomain(domainId: string): Promise<void> {
+    await this.delay();
   }
 }

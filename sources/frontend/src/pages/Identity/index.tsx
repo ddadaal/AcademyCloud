@@ -1,6 +1,6 @@
 import React from "react";
 import { lang } from "src/i18n";
-import { UserOutlined, ProjectOutlined, TeamOutlined, BankOutlined, FormOutlined, PlusOutlined } from "@ant-design/icons";
+import { UserOutlined, ProjectOutlined, TeamOutlined, BankOutlined, FormOutlined } from "@ant-design/icons";
 import { Scope, isSystemScope } from "src/models/Scope";
 import { indexRoutes, IndexRoute } from "src/pages/common/indexRoutes";
 
@@ -24,13 +24,7 @@ const routes = [
         Icon: BankOutlined,
         checkScope: (scope: Scope) => !isSystemScope(scope),
         Component: React.lazy(() => import("./Account/JoinedDomains")),
-      }, {
-        path: "joinDomain",
-        textId: root.account.join,
-        Icon: PlusOutlined,
-        checkScope: (scope: Scope) => !isSystemScope(scope),
-        Component: React.lazy(() => import("./Account/JoinDomain")),
-      }
+      },
     ],
     checkScope: () => true,
     Component: React.lazy(() => import("./Account"))

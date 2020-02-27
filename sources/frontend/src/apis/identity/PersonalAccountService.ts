@@ -10,12 +10,16 @@ export interface UpdateProfileRequest {
   email?: string;
 }
 
-export interface GetDomainsResponse {
+export interface GetJoinedDomainsResponse {
   domains: UserDomainAssignment[];
 }
 
 export interface ExitDomainsError {
   reason: "isPayAccount" | "notJoined";
+}
+
+export interface GetJoinableDomainsResponse {
+  domains: { id: string; name: string }[];
 }
 
 export class PersonalAccountService extends HttpService {
@@ -46,20 +50,36 @@ export class PersonalAccountService extends HttpService {
     });
   }
 
-  async getDomains(): Promise<GetDomainsResponse> {
+  async getJoinedDomains(): Promise<GetJoinedDomainsResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: "/identity/account/domains",
+      path: "/identity/account/joinedDomains",
     });
 
-    return resp as GetDomainsResponse;
+    return resp as GetJoinedDomainsResponse;
   }
 
   // if not successful, throw a ExitDomainsError.
   async exitDomain(domainId: string): Promise<void> {
     await this.fetch({
       method: HttpMethod.DELETE,
-      path: `/identity/account/domains/${domainId}`,
+      path: `/identity/account/joinedDomains/${domainId}`,
+    });
+  }
+
+  async getJoinableDomains(): Promise<GetJoinableDomainsResponse> {
+    const resp = await this.fetch({
+      method: HttpMethod.GET,
+      path: `identity/account/joinableDomains`,
+    });
+
+    return resp as GetJoinableDomainsResponse;
+  }
+
+  async joinDomain(domainId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.POST,
+      path: `identity/account/joinableDomains/${domainId}`,
     });
   }
 }
