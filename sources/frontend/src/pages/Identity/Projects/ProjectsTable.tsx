@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { getApiService } from "src/apis";
-import { DomainsService } from "src/apis/identity/DomainsService";
-import { Table } from "antd";
-import { Localized, lang } from "src/i18n";
+import { ProjectsService } from "src/apis/identity/ProjectsService";
+import { useStore } from "simstate";
+import { UserStore } from "src/stores/UserStore";
 import { useAsync } from "react-async";
-import { UsersViewTable } from "src/components/users/UsersViewTable";
-import { Resources, resourcesString } from "src/models/Resources";
-import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
-import { Domain } from "src/models/Domain";
-import { User } from "src/models/User";
-import { EditLink } from "src/pages/Identity/Domains/EditLink";
+import { Table } from "antd";
+import { lang, Localized } from "src/i18n";
 import { ModalLink } from "src/components/ModalLink";
-
-const root = lang.identity.domains;
-
-const service = getApiService(DomainsService);
-
-const getDomains = () => {
-  return service.getDomains();
-}
+import { User } from "src/models/User";
+import { UsersViewTable } from "src/components/users/UsersViewTable";
+import { resourcesString, Resources } from "src/models/Resources";
+import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 
 interface Props {
   refreshToken: any;
 }
 
-export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
+const root = lang.identity.projects.table;
 
-  const { data, isPending, reload } = useAsync({ promiseFn: getDomains, watch: refreshToken });
+const service = getApiService(ProjectsService);
+
+export const ProjectsTable: React.FC<Props> = (props) => {
+
+  const userStore = useStore(UserStore);
+
+  const getAccessibleProjects = useCallback(async () => {
+    const x = await service.getAccessibleProjects();
+    return x.projects;
+  }, [userStore.user]);
+
+  const { data, isPending } = useAsync({ promiseFn: getAccessibleProjects });
 
   return (
-    <Table dataSource={data?.domains} loading={isPending} rowKey="id">
+    <Table dataSource={data} loading={isPending}>
       <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
       <Table.Column title={<Localized id={root.name} />} dataIndex="name" />
       <Table.Column title={<Localized id={root.active.title} />} dataIndex="active"
@@ -47,17 +50,18 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
             {admins.length <= 1 ? admins[0].name : admins.length}
           </ModalLink>
         )} />
+      <Table.Column title={<Localized id={root.members} />} dataIndex="members"
+        render={(members: User[]) => (
+          <ModalLink modalTitle={<Localized id={root.members} />} modalContent={<UsersViewTable users={members} />}>
+            {members.length <= 1 ? members[0].name : members.length}
+          </ModalLink>
+        )} />
       <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
         render={(resources: Resources) => (
           <ModalLink modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
             {resourcesString(resources)}
           </ModalLink>
         )} />
-      <Table.Column title={<Localized id={root.actions} />}
-        render={(_, domain: Domain) => (
-          <EditLink domain={domain} reload={reload} />
-        )} />
     </Table>
   );
-
 }

@@ -152,6 +152,24 @@ export default {
           conflict: "已有同名域存在。请更换一个域。",
         },
       },
+      projects: {
+        title: "项目管理",
+        create: "创建项目",
+        table: {
+          id: "项目ID",
+          name: "项目名",
+          active: {
+            title: "状态",
+            true: "可用",
+            false: "停用",
+          },
+          admins: "管理员",
+          payUser: "付款用户",
+          members: "成员",
+          actions: "操作",
+          resources: "分配的资源",
+        },
+      },
     },
     resources: {
     },

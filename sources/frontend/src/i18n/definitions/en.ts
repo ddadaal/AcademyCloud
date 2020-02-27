@@ -151,7 +151,25 @@ export default {
           opName: "Create Domain",
           conflict: "The domain with the same exists. Please change.",
         }
-      }
+      },
+      projects: {
+        title: "Projects",
+        create: "Create New Project",
+        table: {
+          id: "ID",
+          name: "Name",
+          active: {
+            title: "Status",
+            true: "Active",
+            false: "Inactive",
+          },
+          admins: "Admins",
+          payUser: "Pay User",
+          members: "Members",
+          actions: "Action",
+          resources: "Reources",
+        },
+      },
     },
     resources: {
     },
