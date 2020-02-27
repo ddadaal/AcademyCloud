@@ -11,7 +11,6 @@ import { UserStore } from "src/stores/UserStore";
 
 const root = lang.identity.projects;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function ProjectsPage(_: RouteComponentProps) {
 
   const userStore = useStore(UserStore);

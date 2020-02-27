@@ -5,6 +5,8 @@
     "useJSXTextNode": true
   },
   "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended"
   ],
@@ -24,9 +26,13 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-unused-vars": ["warn", {
-      "varsIgnorePattern": "_+"
-    }],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
     "react/display-name": "off",
     "react/prop-types": "off"
   }
