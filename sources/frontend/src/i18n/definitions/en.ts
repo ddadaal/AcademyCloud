@@ -177,12 +177,18 @@ export default {
           name: "Name",
           payUser: "Pay User, also a domain admin",
           opName: "Create Domain",
-          conflict: "The domain with the same exists. Please change.",
+          conflict: "The domain with the same name already exists. Please choose another name.",
         }
       },
       projects: {
         title: "Projects",
-        create: "Create New Project",
+        create: {
+          button: "Create New Project",
+          opName: "Create project",
+          name: "Name",
+          payUser: "Pay User, also a domain admin",
+          conflict: "A project with the same name already exists in the domain. Please choose another name",
+        },
         table: {
           id: "ID",
           name: "Name",

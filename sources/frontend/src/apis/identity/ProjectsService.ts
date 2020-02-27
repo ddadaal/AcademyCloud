@@ -50,4 +50,12 @@ export class ProjectsService extends HttpService {
     });
   }
 
+  async createProject(name: string, payUserId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.POST,
+      path: `/identity/projects/`,
+      body: { name, payUserId }
+    });
+  }
+
 }

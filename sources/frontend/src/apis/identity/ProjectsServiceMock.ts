@@ -35,4 +35,8 @@ export class ProjectsServiceMock extends ProjectsService {
   async setResources(projectId: string, resources: Resources): Promise<void> {
     await this.delay();
   }
+
+  async createProject(name: string, payUserId: string): Promise<void> {
+    await this.delay();
+  }
 }

@@ -14,29 +14,30 @@ import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable"
 import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 import { Project } from "src/models/Project";
 import { EditLink } from "src/pages/Identity/Projects/EditLink";
+import { Scope } from "src/models/Scope";
 
 interface Props {
   refreshToken: any;
+  scope: Scope;
 }
 
 const root = lang.identity.projects.table;
 
 const service = getApiService(ProjectsService);
 
-export const ProjectsTable: React.FC<Props> = (props) => {
-
-  const userStore = useStore(UserStore);
-
-  const { user } = userStore;
+export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
 
   const getAccessibleProjects = useCallback(async () => {
     const x = await service.getAccessibleProjects();
     return x.projects;
-  }, [user]);
+  }, [scope]);
 
-  const isDomainAdmin = (user) && (!user.scope.projectId) && (user.scope.role === "admin");
+  const isDomainAdmin = (!scope.projectId) && (scope.role === "admin");
 
-  const { data, isPending, reload } = useAsync({ promiseFn: getAccessibleProjects });
+  const { data, isPending, reload } = useAsync({
+    promiseFn: getAccessibleProjects,
+    watch: refreshToken,
+  });
 
   return (
     <Table dataSource={data} loading={isPending} rowKey="id">

@@ -182,7 +182,13 @@ export default {
       },
       projects: {
         title: "项目管理",
-        create: "创建项目",
+        create: {
+          button: "创建项目",
+          opName: "创建项目",
+          name: "项目名",
+          payUser: "付款账号，也是域的一个管理员",
+          conflict: "已有同名项目存在。请更换一个名字。",
+        },
         table: {
           id: "项目ID",
           name: "项目名",
