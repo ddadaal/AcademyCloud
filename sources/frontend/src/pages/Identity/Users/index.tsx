@@ -5,14 +5,14 @@ import { UserStore } from "src/stores/UserStore";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
 import { TitleText } from "src/components/pagecomponents/TitleText";
 import { Localized, lang } from "src/i18n";
-import { isSocialScope } from "src/models/Scope";
+import { isSocialScope, isSystemScope } from "src/models/Scope";
 import { ProjectUsersTable } from "src/pages/Identity/Users/ProjectUsersTable";
-import { SystemAndDomainUsersTable } from "src/pages/Identity/Users/SystemAndDomainUsersTable";
 import { useRefreshToken } from "src/utils/refreshToken";
+import { SystemUsersTable } from "src/pages/Identity/Users/SystemUsersTable";
+import { DomainUsersTable } from "src/pages/Identity/Users/DomainUsersTable";
 
 const root = lang.identity.users;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function UsersPage(_: RouteComponentProps) {
 
   const [refreshToken, update] = useRefreshToken();
@@ -38,7 +38,11 @@ export default function UsersPage(_: RouteComponentProps) {
             isAdmin={scope.role === "admin"}
             projectId={scope.projectId!!}
           />
-          : <SystemAndDomainUsersTable refreshToken={refreshToken} scope={scope} />
+          : (
+            isSystemScope(scope)
+              ? <SystemUsersTable refreshToken={refreshToken} />
+              : <DomainUsersTable refreshToken={refreshToken} domainId={scope.domainId} isAdmin={scope.role === "admin"} />
+          )
       }
     </div>
   );

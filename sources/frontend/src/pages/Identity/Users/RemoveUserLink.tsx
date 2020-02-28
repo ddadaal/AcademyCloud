@@ -13,7 +13,8 @@ const root = lang.identity.users.remove;
 const opResult = lang.components.operationResult;
 
 interface Props {
-  scope: Scope;
+  isSystem: boolean;
+  domainId: string;
   user: User;
   reload: () => void;
 }
@@ -21,19 +22,19 @@ interface Props {
 const usersService = getApiService(UsersService);
 const domainsService = getApiService(DomainsService);
 
-export const RemoveUserLink: React.FC<Props> = ({ scope, user, reload }) => {
+export const RemoveUserLink: React.FC<Props> = ({ isSystem, domainId, user, reload }) => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
   const [modalApi, modalContextHolder] = Modal.useModal();
 
   const removeUser = useCallback(async ([userId]: [string]) => {
-    if (isSystemScope(scope)) {
+    if (isSystem) {
       await usersService.removeUserFromSystem(userId);
     } else {
-      await domainsService.removeUser(scope.domainId, userId);
+      await domainsService.removeUser(domainId, userId);
     }
-  }, [scope])
+  }, [isSystem, domainId])
 
   const onClick = useCallback(() => {
     modalApi.confirm({

@@ -1,6 +1,7 @@
-import { DomainsService, GetDomainsResponse } from './DomainsService';
+import { DomainsService, GetDomainsResponse, UsersResponse } from './DomainsService';
 import { Resources } from "src/models/Resources";
 import { User } from "src/models/User";
+import { UserRole } from "src/models/Scope";
 
 const cjd: User = { id: "CJDID", username: "CJD", name: "CJD", active: true };
 const cjy: User = { id: "CJYID", username: "CJY", name: "CJY", active: true };
@@ -28,6 +29,22 @@ export class DomainsServiceMock extends DomainsService {
         }
       ]
     };
+  }
+
+  async getUsersOfDomain(domainId: string): Promise<UsersResponse> {
+    await this.delay();
+    return {
+      admins: [cjd],
+      members: [cjy],
+      payUser: cjd,
+    }
+  }
+  async addUserToProject(domainId: string, userId: string, role: UserRole): Promise<void> {
+    await this.delay();
+  }
+
+  async changeUserRole(domainId: string, userId: string, role: UserRole): Promise<void> {
+    await this.delay();
   }
 
   async setResources(domainId: string, resources: Resources): Promise<void> {

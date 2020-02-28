@@ -1,9 +1,17 @@
 import { HttpService, HttpMethod } from "../HttpService";
 import { Domain } from "src/models/Domain";
 import { Resources } from 'src/models/Resources';
+import { User } from "src/models/User";
+import { UserRole } from "src/models/Scope";
 
 export interface GetDomainsResponse {
   domains: Domain[];
+}
+
+export interface UsersResponse {
+  admins: User[];
+  members: User[];
+  payUser: User;
 }
 
 export class DomainsService extends HttpService {
@@ -15,6 +23,33 @@ export class DomainsService extends HttpService {
 
     return resp;
   }
+
+  async getUsersOfDomain(domainId: string): Promise<UsersResponse> {
+    const resp = await this.fetch<UsersResponse>({
+      method: HttpMethod.GET,
+      path: `/identity/domains/${domainId}/users`,
+    });
+
+    return resp;
+  }
+
+  async addUserToDomain(domainId: string, userId: string, role: UserRole): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.POST,
+      path: `/identity/domains/${domainId}/users/${userId}`,
+      body: { role },
+    });
+  }
+
+  // error: status code 400, { code: "payUser" | "onlyAdmin" }
+  async changeUserRole(domainId: string, userId: string, role: UserRole): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.PATCH,
+      path: `/identity/domains/${domainId}/users/${userId}/role`,
+      body: { role },
+    });
+  }
+
 
   async setResources(domainId: string, resources: Resources): Promise<void> {
     await this.fetch({
@@ -64,5 +99,6 @@ export class DomainsService extends HttpService {
       path: `/identity/domains/${domainId}/users/${userId}`,
     });
   }
+
 
 }
