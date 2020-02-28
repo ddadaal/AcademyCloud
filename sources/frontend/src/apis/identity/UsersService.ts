@@ -14,4 +14,14 @@ export class UsersService extends HttpService {
 
     return resp;
   }
+
+  // 400, { code: "inactive" } | { code: "onlyAdmin" }
+  async removeUserFromSystem(userId: string): Promise<void> {
+    const resp = this.fetch({
+      method: HttpMethod.DELETE,
+      path: `/identity/users/${userId}`,
+    });
+  }
+
+
 }

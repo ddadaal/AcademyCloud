@@ -225,6 +225,24 @@ export default {
           },
         },
       },
+      users: {
+        title: "用户管理",
+        id: "ID",
+        username: "用户名",
+        name: "姓名",
+        email: "电子邮箱",
+        active: {
+          title: "状态",
+          true: "可用",
+          false: "停用",
+        },
+        actions: "操作",
+        remove: {
+          link: "移除用户",
+          confirmPrompt: "确定要移除用户 {} 吗？",
+          opName: "移除用户",
+        }
+      },
     },
     resources: {
     },

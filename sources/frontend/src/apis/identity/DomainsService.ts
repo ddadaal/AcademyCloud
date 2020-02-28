@@ -56,4 +56,13 @@ export class DomainsService extends HttpService {
       path: `/identity/domains/${domainId}`,
     });
   }
+
+  // 400, { code: "payUser" | "onlyAdmin" }
+  async removeUser(domainId: string, userId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.DELETE,
+      path: `/identity/domains/${domainId}/users/${userId}`,
+    });
+  }
+
 }

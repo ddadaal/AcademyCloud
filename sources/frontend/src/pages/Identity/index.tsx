@@ -44,8 +44,8 @@ const routes = [
     path: "users",
     textId: root.users,
     Icon: TeamOutlined,
-    // domain member (user not in a project) and social scope can't enter users
-    checkScope: (scope: Scope) => !(!scope.projectId && scope.role === "member") && !isSocialScope(scope),
+    // social scope can't enter users
+    checkScope: (scope: Scope) => !isSocialScope(scope),
     Component: React.lazy(() => import("./Users"))
   },
 ] as IndexRoute[];

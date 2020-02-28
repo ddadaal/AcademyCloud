@@ -225,6 +225,24 @@ export default {
           },
         },
       },
+      users: {
+        title: "User Management",
+        id: "ID",
+        username: "Username",
+        name: "Name",
+        email: "Email",
+        active: {
+          title: "Status",
+          true: "Active",
+          false: "Inactive",
+        },
+        actions: "Actions",
+        remove: {
+          link: "Remove user",
+          confirmPrompt: "Confirm to remove user {}?",
+          opName: "Remove user",
+        },
+      },
     },
     resources: {
     },

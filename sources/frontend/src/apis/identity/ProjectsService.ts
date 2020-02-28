@@ -2,9 +2,15 @@ import { HttpService, HttpMethod } from "../HttpService";
 import { Project } from "src/models/Project";
 import { UserRole } from "src/models/Scope";
 import { Resources } from 'src/models/Resources';
+import { User } from "src/models/User";
 
 export interface GetAccessibleProjectsResponse {
   projects: Project[];
+}
+
+export interface UsersResponse {
+  admins: User[];
+  members: User[];
 }
 
 export class ProjectsService extends HttpService {
@@ -15,6 +21,15 @@ export class ProjectsService extends HttpService {
     });
 
     return resp as GetAccessibleProjectsResponse;
+  }
+
+  async getUsersOfProject(projectId: string): Promise<UsersResponse> {
+    const resp = await this.fetch({
+      method: HttpMethod.GET,
+      path: `/identity/projects/${projectId}/users`,
+    });
+
+    return resp as UsersResponse;
   }
 
   async addUserToProject(projectId: string, userId: string, role: UserRole): Promise<void> {

@@ -1,4 +1,4 @@
-import { ProjectsService, GetAccessibleProjectsResponse } from "src/apis/identity/ProjectsService";
+import { ProjectsService, GetAccessibleProjectsResponse, UsersResponse } from "src/apis/identity/ProjectsService";
 import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
 import { Resources } from "src/models/Resources";
@@ -43,4 +43,13 @@ export class ProjectsServiceMock extends ProjectsService {
   async deleteProject(projectId: string): Promise<void> {
     await this.delay();
   }
+
+  async getUsersOfProject(projectId: string): Promise<UsersResponse> {
+    await this.delay();
+    return {
+      admins: [lq],
+      members: [cjd, cjy],
+    }
+  }
 }
+

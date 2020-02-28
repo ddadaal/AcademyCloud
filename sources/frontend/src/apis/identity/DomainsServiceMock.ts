@@ -51,4 +51,9 @@ export class DomainsServiceMock extends DomainsService {
   async deleteDomain(domainId: string): Promise<void> {
     await this.delay();
   }
+
+  // 400, { code: "payUser" | "onlyAdmin" }
+  async removeUser(domainId: string, userId: string): Promise<void> {
+    await this.delay();
+  }
 }

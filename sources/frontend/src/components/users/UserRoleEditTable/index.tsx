@@ -6,8 +6,6 @@ import { AddButton } from "src/components/users/UserRoleEditTable/AddButton";
 import { ExistingTable } from "src/components/users/UserRoleEditTable/ExistingTable";
 import { mergeAdminAndMember } from "src/components/users/UserWithRole";
 
-const root = lang.components.users;
-
 interface Props {
   admins: User[];
   members: User[];
