@@ -4,7 +4,7 @@ import { UserStore } from 'src/stores/UserStore';
 import { Menu, Dropdown } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
 import { lang, Localized } from "src/i18n";
-import { scopeId, scopeName, Scope, isSystemScope } from "src/models/Scope";
+import { scopeId, scopeName, Scope, isSystemScope, isSocialScope } from "src/models/Scope";
 import { ClickableA } from "src/components/ClickableA";
 import { getApiService } from "src/apis";
 import { AccountService } from "src/apis/account/AccountService";
@@ -35,7 +35,7 @@ export const ScopeIndicator: React.FC = () => {
     );
   }
 
-  const socialScope = availableScopes.find((x) => x.social);
+  const socialScope = availableScopes.find(isSocialScope);
   const projectScopes = availableScopes.filter((x) => x.projectId && !x.social)
   const domainScopes = availableScopes.filter((x) => !x.projectId)
 
@@ -44,7 +44,7 @@ export const ScopeIndicator: React.FC = () => {
   const scopeNameWithRole = (scope: Scope) => (
     <Fragment key={scopeId(scope)}>
       {
-        scope.social
+        isSocialScope(scope)
           ? <Localized id={root.social} />
           : (
             <>

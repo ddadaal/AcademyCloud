@@ -27,3 +27,6 @@ export function scopeName(scope: Scope): string {
 export function isSystemScope(scope: Scope): boolean {
   return !!scope.system;
 }
+export function isSocialScope(scope: Scope): boolean {
+  return !!scope.social;
+}

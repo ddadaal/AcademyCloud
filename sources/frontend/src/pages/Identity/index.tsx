@@ -1,7 +1,7 @@
 import React from "react";
 import { lang } from "src/i18n";
 import { UserOutlined, ProjectOutlined, TeamOutlined, BankOutlined, FormOutlined } from "@ant-design/icons";
-import { Scope, isSystemScope } from "src/models/Scope";
+import { Scope, isSystemScope, isSocialScope } from "src/models/Scope";
 import { indexRoutes, IndexRoute } from "src/pages/common/indexRoutes";
 
 const root = lang.nav.sidenav.identity;
@@ -38,14 +38,14 @@ const routes = [
     path: "projects",
     textId: root.projects,
     Icon: ProjectOutlined,
-    checkScope: (scope: Scope) => !isSystemScope(scope),
+    checkScope: (scope: Scope) => !isSystemScope(scope) && !isSocialScope(scope),
     Component: React.lazy(() => import("./Projects"))
   }, {
     path: "users",
     textId: root.users,
     Icon: TeamOutlined,
-    // domain member (user not in a project) can't enter users
-    checkScope: (scope: Scope) => !(!scope.projectId && scope.role === "member"),
+    // domain member (user not in a project) and social scope can't enter users
+    checkScope: (scope: Scope) => !(!scope.projectId && scope.role === "member") && !isSocialScope(scope),
     Component: React.lazy(() => import("./Users"))
   },
 ] as IndexRoute[];
