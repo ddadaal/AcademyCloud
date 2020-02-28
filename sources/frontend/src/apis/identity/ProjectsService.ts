@@ -58,4 +58,12 @@ export class ProjectsService extends HttpService {
     });
   }
 
+  // 400, { code:  }
+  async deleteProject(projectId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.DELETE,
+      path: `/identity/projects/${projectId}`,
+    });
+  }
+
 }

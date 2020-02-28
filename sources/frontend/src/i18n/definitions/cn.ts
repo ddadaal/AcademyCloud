@@ -209,6 +209,12 @@ export default {
             link: "分配资源",
             title: "分配资源",
           },
+          delete: {
+            link: "删除",
+            opName: "删除项目",
+            confirmPrompt: "确定要删除项目 {} 吗？",
+            inactive: "项目正处于不可用状态，请先充值将项目启用，再进行删除。",
+          },
         },
       },
     },

@@ -4,7 +4,7 @@ import { ProjectsService } from "src/apis/identity/ProjectsService";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { useAsync } from "react-async";
-import { Table } from "antd";
+import { Table, Divider } from "antd";
 import { lang, Localized } from "src/i18n";
 import { ModalLink } from "src/components/ModalLink";
 import { User } from "src/models/User";
@@ -15,6 +15,7 @@ import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 import { Project } from "src/models/Project";
 import { EditLink } from "src/pages/Identity/Projects/EditLink";
 import { Scope } from "src/models/Scope";
+import { DeleteProjectLink } from "src/pages/Identity/Projects/DeleteProjectLink";
 
 interface Props {
   refreshToken: any;
@@ -71,7 +72,11 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
         ? (
           <Table.Column title={<Localized id={root.actions} />}
             render={(_, project: Project) => (
-              <EditLink project={project} reload={reload} />
+              <span>
+                <EditLink project={project} reload={reload} />
+                <Divider type="vertical" />
+                <DeleteProjectLink project={project} reload={reload} />
+              </span>
             )} />
         )
         : null}

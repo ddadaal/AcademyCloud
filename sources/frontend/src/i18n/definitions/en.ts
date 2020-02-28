@@ -209,6 +209,12 @@ export default {
             link: "Set Resources",
             title: "Set Resources",
           },
+          delete: {
+            link: "Delete",
+            opName: "Delete project",
+            confirmPrompt: "Confirm to delete project {}?",
+            inactive: "Project is inactive. Please active the project by paying the debt, and then try again.",
+          },
         },
       },
     },

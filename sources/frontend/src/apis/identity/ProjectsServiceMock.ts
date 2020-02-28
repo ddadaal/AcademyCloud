@@ -39,4 +39,8 @@ export class ProjectsServiceMock extends ProjectsService {
   async createProject(name: string, payUserId: string): Promise<void> {
     await this.delay();
   }
+
+  async deleteProject(projectId: string): Promise<void> {
+    await this.delay();
+  }
 }
