@@ -171,6 +171,12 @@ export default {
           link: "Set Pay User",
           title: "Set Pay User",
         },
+        delete: {
+          link: "Delete",
+          opName: "Delete domain",
+          confirmPrompt: "Confirm to delete domain {}?",
+          inactive: "Domain is inactive. Please active the domain by paying the debt, and then try again.",
+        },
         add: {
           button: "Create a New Domain",
           title: "Create a New Domain",

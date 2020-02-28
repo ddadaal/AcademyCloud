@@ -48,4 +48,12 @@ export class DomainsService extends HttpService {
     });
 
   }
+
+  // 400, { code:  }
+  async deleteDomain(domainId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.DELETE,
+      path: `/identity/domains/${domainId}`,
+    });
+  }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { getApiService } from "src/apis";
 import { DomainsService } from "src/apis/identity/DomainsService";
-import { Table } from "antd";
+import { Table, Divider } from "antd";
 import { Localized, lang } from "src/i18n";
 import { useAsync } from "react-async";
 import { UsersViewTable } from "src/components/users/UsersViewTable";
@@ -11,6 +11,7 @@ import { Domain } from "src/models/Domain";
 import { User } from "src/models/User";
 import { EditLink } from "src/pages/Identity/Domains/EditLink";
 import { ModalLink } from "src/components/ModalLink";
+import { DeleteDomainLink } from './DeleteDomainLink';
 
 const root = lang.identity.domains;
 
@@ -56,7 +57,11 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
       <Table.Column title={<Localized id={root.actions} />}
         dataIndex="id"
         render={(_, domain: Domain) => (
-          <EditLink domain={domain} reload={reload} />
+          <span>
+            <EditLink domain={domain} reload={reload} />
+            <Divider type="vertical" />
+            <DeleteDomainLink domain={domain} reload={reload} />
+          </span>
         )} />
     </Table>
   );

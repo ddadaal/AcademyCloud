@@ -171,6 +171,12 @@ export default {
           link: "设置付款用户",
           title: "设置付款用户",
         },
+        delete: {
+          link: "删除",
+          opName: "删除域",
+          confirmPrompt: "确定要删除域 {} 吗？",
+          inactive: "域正处于不可用状态，请先充值将项目启用，再进行删除。",
+        },
         add: {
           button: "创建域",
           title: "创建域",
