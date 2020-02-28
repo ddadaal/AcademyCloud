@@ -17,8 +17,6 @@ interface Props {
   onRemove: (userId: string) => Promise<void>;
 
   getAccessibleUsers: () => Promise<User[]>;
-
-  refresh: () => void;
 }
 
 export const UserRoleEditTable: React.FC<Props> = (props) => {

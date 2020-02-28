@@ -204,6 +204,8 @@ export default {
           edit: "编辑",
           manageUsers: {
             link: "管理用户",
+            close: "关闭",
+            closeAndRefresh: "关闭并刷新",
           },
           setResources: {
             link: "分配资源",

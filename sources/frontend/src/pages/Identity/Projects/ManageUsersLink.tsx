@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Project } from 'src/models/Project';
 import { lang, Localized } from "src/i18n";
-import { Modal } from "antd";
+import { Modal, Button } from "antd";
 import { UserRoleEditTable } from "src/components/users/UserRoleEditTable";
 import { getApiService } from "src/apis";
 import { UsersService } from "src/apis/identity/UsersService";
 import { ProjectsService } from "src/apis/identity/ProjectsService";
+import { UserRole } from "src/models/Scope";
 
 interface Props {
   project: Project;
@@ -24,7 +25,28 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
 
   const [modalShown, setModalShown] = useState(false);
 
+  const [changed, setChanged] = useState(false);
 
+  const onAdd = useCallback(async (userId: string, role: UserRole) => {
+    await projectsService.addUserToProject(project.id, userId, role);
+    setChanged(true);
+  }, [project]);
+  const onRoleChange = useCallback(async (userId: string, role: UserRole) => {
+    await projectsService.changeUserRole(project.id, userId, role);
+    setChanged(true);
+  }, [project]);
+
+  const onRemove = useCallback(async (userId: string) => {
+    await projectsService.removeUser(project.id, userId);
+    setChanged(true);
+  }, [project]);
+
+  const close = useCallback(() => {
+    setModalShown(false);
+    if (changed) {
+      reload();
+    }
+  }, [changed]);
 
   return (
     <>
@@ -34,18 +56,22 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
       <Modal
         title={<Localized id={root.link} />}
         visible={modalShown}
-        onOk={() => setModalShown(false)}
-        onCancel={() => setModalShown(false)}
+        onOk={close}
+        onCancel={close}
+        footer={[
+          <Button key="close" type="primary" onClick={close}>
+            <Localized id={changed ? root.closeAndRefresh : root.close} />
+          </Button>
+        ]}
         destroyOnClose={true}
       >
         <UserRoleEditTable
           admins={project.admins}
           members={project.members}
-          onAdd={(userId, role) => projectsService.addUserToProject(project.id, userId, role)}
-          onRoleChange={(userId, role) => projectsService.changeUserRole(project.id, userId, role)}
-          onRemove={(userId) => projectsService.removeUser(project.id, userId)}
+          onAdd={onAdd}
+          onRoleChange={onRoleChange}
+          onRemove={onRemove}
           getAccessibleUsers={getAccessibleUsers}
-          refresh={reload}
         />
       </Modal>
     </>

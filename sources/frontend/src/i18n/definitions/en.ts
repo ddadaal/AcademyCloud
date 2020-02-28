@@ -204,6 +204,8 @@ export default {
           edit: "Edit",
           manageUsers: {
             link: "Manage users",
+            close: "Close",
+            closeAndRefresh: "Close and refresh",
           },
           setResources: {
             link: "Set Resources",
