@@ -227,6 +227,7 @@ export default {
       },
       users: {
         title: "User Management",
+        refresh: "Refresh",
         id: "ID",
         username: "Username",
         name: "Name",

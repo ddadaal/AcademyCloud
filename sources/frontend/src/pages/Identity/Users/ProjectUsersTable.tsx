@@ -11,6 +11,7 @@ import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 interface Props {
   projectId: string;
   isAdmin: boolean;
+  refreshToken: any;
 }
 
 const projectsService = getApiService(ProjectsService);
@@ -24,13 +25,13 @@ const getAccessibleUsers = async () => {
 }
 
 
-export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin }) => {
+export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refreshToken }) => {
 
   const getUsers = useCallback(async () => {
     return await projectsService.getUsersOfProject(projectId);
   }, [projectId]);
 
-  const { data, isPending } = useAsync({ promiseFn: getUsers });
+  const { data, isPending } = useAsync({ promiseFn: getUsers, watch: refreshToken });
 
   const onAdd = useCallback(async (userId: string, role: UserRole) => {
     await projectsService.addUserToProject(projectId, userId, role);

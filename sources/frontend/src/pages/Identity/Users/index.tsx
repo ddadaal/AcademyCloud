@@ -8,11 +8,15 @@ import { Localized, lang } from "src/i18n";
 import { isSocialScope } from "src/models/Scope";
 import { ProjectUsersTable } from "src/pages/Identity/Users/ProjectUsersTable";
 import { SystemAndDomainUsersTable } from "src/pages/Identity/Users/SystemAndDomainUsersTable";
+import { useRefreshToken } from "src/utils/refreshToken";
 
 const root = lang.identity.users;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function UsersPage(_: RouteComponentProps) {
+
+  const [refreshToken, update] = useRefreshToken();
+
   const userStore = useStore(UserStore);
 
   if (!userStore.user) { return <div />; }
@@ -25,11 +29,16 @@ export default function UsersPage(_: RouteComponentProps) {
     <div>
       <TitleBar spaceBetween={true}>
         <TitleText><Localized id={root.title} /></TitleText>
+        <a onClick={update}><Localized id={root.refresh} /></a>
       </TitleBar>
       {
         isProject
-          ? <ProjectUsersTable isAdmin={scope.role === "admin"} projectId={scope.projectId!!} />
-          : <SystemAndDomainUsersTable scope={scope} />
+          ? <ProjectUsersTable
+            refreshToken={refreshToken}
+            isAdmin={scope.role === "admin"}
+            projectId={scope.projectId!!}
+          />
+          : <SystemAndDomainUsersTable refreshToken={refreshToken} scope={scope} />
       }
     </div>
   );

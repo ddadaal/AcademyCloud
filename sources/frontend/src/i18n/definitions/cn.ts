@@ -227,6 +227,7 @@ export default {
       },
       users: {
         title: "用户管理",
+        refresh: "刷新",
         id: "ID",
         username: "用户名",
         name: "姓名",

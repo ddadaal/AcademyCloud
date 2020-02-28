@@ -12,6 +12,7 @@ const { Column } = Table;
 
 interface Props {
   scope: Scope;
+  refreshToken: any;
 }
 
 const root = lang.identity.users;
@@ -23,9 +24,12 @@ const getAccessibleUsers = async () => {
   return resp.users;
 }
 
-export const SystemAndDomainUsersTable: React.FC<Props> = ({ scope }) => {
+export const SystemAndDomainUsersTable: React.FC<Props> = ({ scope, refreshToken }) => {
 
-  const { data, isPending, reload } = useAsync({ promiseFn: getAccessibleUsers });
+  const { data, isPending, reload } = useAsync({
+    promiseFn: getAccessibleUsers,
+    watch: refreshToken,
+  });
 
   const isAdmin = scope.role === "admin";
 
