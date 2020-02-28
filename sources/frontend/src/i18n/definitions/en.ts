@@ -22,6 +22,10 @@ export default {
         cpu: "CPU Cores",
         memory: "Memory (MB)",
         storage: "Storage (GB)",
+        setResources: {
+          link: "Set Resources",
+          title: "Set Resources",
+        },
       },
       users: {
         id: "ID",
@@ -169,10 +173,6 @@ export default {
         resources: "Reources",
         actions: "Actions",
         edit: "Edit",
-        setResources: {
-          link: "Set Resources",
-          title: "Set Resources",
-        },
         setAdmins: {
           link: "Set Admins",
           title: "Set Admins",
@@ -223,10 +223,6 @@ export default {
             link: "Manage users",
             close: "Close",
             closeAndRefresh: "Close and refresh",
-          },
-          setResources: {
-            link: "Set Resources",
-            title: "Set Resources",
           },
           delete: {
             link: "Delete",

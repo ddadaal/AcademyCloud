@@ -34,7 +34,7 @@ export class ProjectsService extends HttpService {
     return resp as UsersResponse;
   }
 
-  async changeResources(projectId: string, userId: string, resources: Resources): Promise<void> {
+  async setResourcesOfUser(projectId: string, userId: string, resources: Resources): Promise<void> {
     await this.fetch({
       method: HttpMethod.PATCH,
       path: `/identity/projects/${projectId}/users/${userId}/resources`,

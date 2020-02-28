@@ -22,6 +22,10 @@ export default {
         cpu: "CPU核心数",
         memory: "内存 (MB)",
         storage: "存储 (GB)",
+        setResources: {
+          link: "分配资源",
+          title: "分配资源",
+        },
       },
       users: {
         id: "ID",
@@ -169,10 +173,6 @@ export default {
         resources: "分配的资源",
         actions: "操作",
         edit: "编辑",
-        setResources: {
-          link: "分配资源",
-          title: "分配资源",
-        },
         setAdmins: {
           link: "设置管理员",
           title: "设置管理员",
@@ -223,10 +223,6 @@ export default {
             link: "管理用户",
             close: "关闭",
             closeAndRefresh: "关闭并刷新",
-          },
-          setResources: {
-            link: "分配资源",
-            title: "分配资源",
           },
           delete: {
             link: "删除",

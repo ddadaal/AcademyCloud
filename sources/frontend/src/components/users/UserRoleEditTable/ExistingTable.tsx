@@ -12,6 +12,7 @@ import { Resources, resourcesString } from "src/models/Resources";
 import { FullUser, mergeInformation } from "../FullUser";
 import { ModalLink } from "src/components/ModalLink";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
+import { SetUserResourcesLink } from "src/components/users/UserRoleEditTable/SetUserResources";
 
 const root = lang.components.users;
 
@@ -112,7 +113,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
                   <DisabledA disabled={true} >
                     <Localized id={root.setAsPayUser.link} />
                   </DisabledA>
-
+                  <SetUserResourcesLink user={user} onConfirm={onResourcesChange} />
                 </span>
               )
               : (
@@ -120,6 +121,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
                   <RemoveLink user={user} onRemove={handleRemove} disabled={!!settingPayUserId || removingId === user.id} />
                   <Divider type="vertical" />
                   <SetAsPayUserLink user={user} onSet={handleSetPayUser} disabled={!!settingPayUserId || removingId === user.id} />
+                  <SetUserResourcesLink user={user} onConfirm={onResourcesChange}/>
                 </span>
               )
 

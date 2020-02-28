@@ -51,7 +51,7 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
   }, [projectId]);
 
   const onResourcesChange = useCallback(async (userId: string, resources: Resources) => {
-    await projectsService.changeResources(projectId, userId, resources);
+    await projectsService.setResourcesOfUser(projectId, userId, resources);
   }, [projectId]);
 
   if (isPending) {

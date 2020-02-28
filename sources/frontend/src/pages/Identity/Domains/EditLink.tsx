@@ -4,8 +4,8 @@ import { DownOutlined } from "@ant-design/icons";
 import { lang, Localized } from "src/i18n";
 import { SetAdminLink } from "src/pages/Identity/Domains/SetAdminLink";
 import { Domain } from "src/models/Domain";
-import { SetResourcesLink } from "src/pages/Identity/Domains/SetResourcesLink";
 import { SetPayUserLink } from "src/pages/Identity/Domains/SetPayUserLink";
+import { SetDomainResourcesLink } from './SetDomainResourcesLink';
 
 const root = lang.identity.domains;
 
@@ -25,7 +25,7 @@ export const EditLink: React.FC<Props> = ({ domain, reload }) => {
           <SetAdminLink domain={domain} reload={reload} />
         </Menu.Item>
         <Menu.Item>
-          <SetResourcesLink domain={domain} reload={reload} />
+          <SetDomainResourcesLink domain={domain} reload={reload} />
         </Menu.Item>
       </Menu>
     )}>

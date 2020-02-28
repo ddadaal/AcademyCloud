@@ -1,56 +1,51 @@
-import React, { useState } from "react";
-import { Domain } from "src/models/Domain";
+import React, { useState, useCallback } from "react";
 import { Localized, lang } from "src/i18n";
-import { getApiService } from "src/apis";
-import { DomainsService } from "src/apis/identity/DomainsService";
 import { useAsync } from "react-async";
 import Modal from "antd/lib/modal/Modal";
 import { ResourcesEditForm } from "src/components/resources/ResourcesEditForm";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
+import { Resources } from "src/models/Resources";
 
 interface Props {
-  domain: Domain;
-  reload: () => void;
+  initial: Resources;
+  onConfirm: (resources: Resources) => Promise<void>;
 }
-const root = lang.identity.domains;
+const root = lang.components.resources.setResources;
 const opResult = lang.components.operationResult;
 
-const service = getApiService(DomainsService);
-
-const updateResources = async ([domainId, resources]) => {
-  await service.setResources(domainId, resources);
-}
-
-export const SetResourcesLink: React.FC<Props> = ({ domain, reload }) => {
+export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm }) => {
 
   const [modalShown, setModalShown] = useState(false);
 
-  const [resources, setResources] = useState(domain.resources);
+  const [resources, setResources] = useState(initial);
 
   const [api, contextHolder] = useLocalizedNotification();
 
+  const deferFn = useCallback(async ([resources]: [Resources]) => {
+    await onConfirm(resources);
+  }, [onConfirm])
+
   const { run, isPending } = useAsync({
-    deferFn: updateResources,
+    deferFn,
     onResolve: () => {
-      reload();
       setModalShown(false);
-      api.success({ messageId: [opResult.success, [root.setResources.title]] });
+      api.success({ messageId: [opResult.success, [root.title]] });
     },
     onReject: () => {
-      api.error({ messageId: [opResult.fail, [root.setResources.title]] });
+      api.error({ messageId: [opResult.fail, [root.title]] });
     }
   });
 
   return (
     <>
       <a onClick={() => setModalShown(true)}>
-        <Localized id={root.setResources.title} />
+        <Localized id={root.title} />
       </a>
       {contextHolder}
       <Modal
         visible={modalShown}
-        title={<Localized id={root.setResources.title} />}
-        onOk={() => run(domain.id, resources)}
+        title={<Localized id={root.title} />}
+        onOk={() => run(resources)}
         onCancel={() => setModalShown(false)}
         confirmLoading={isPending}
       >
