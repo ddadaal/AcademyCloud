@@ -10,6 +10,8 @@ import { DisabledA } from "src/components/DisabledA";
 import { SetAsPayUserLink } from "src/components/users/UserRoleEditTable/SetAsPayUserLink";
 import { Resources, resourcesString } from "src/models/Resources";
 import { FullUser, mergeInformation } from "../FullUser";
+import { ModalLink } from "src/components/ModalLink";
+import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 
 const root = lang.components.users;
 
@@ -82,9 +84,9 @@ export const ExistingTable: React.FC<Props> = (props) => {
               <Table.Column title={<Localized id={root.resources} />}
                 dataIndex="resources"
                 render={(resources: Resources) => (
-                  <a>
+                  <ModalLink modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
                     {resourcesString(resources)}
-                  </a>
+                  </ModalLink>
                 )} />
             ) : null}
         <Table.Column title={<Localized id={root.role.title} />}
