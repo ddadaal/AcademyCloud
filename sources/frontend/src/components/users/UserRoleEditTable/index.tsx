@@ -9,16 +9,18 @@ import { mergeAdminAndMember } from "src/components/users/UserWithRole";
 interface Props {
   admins: User[];
   members: User[];
+  payUser: User;
 
   onAdd: (userId: string, role: UserRole) => Promise<void>;
   onRoleChange: (userId: string, role: UserRole) => Promise<void>;
   onRemove: (userId: string) => Promise<void>;
+  onPayUserSet: (userId: string) => Promise<void>;
 
   getAccessibleUsers: () => Promise<User[]>;
 }
 
 export const UserRoleEditTable: React.FC<Props> = (props) => {
-  const { admins, members, onAdd, onRoleChange, getAccessibleUsers, onRemove } = props;
+  const { admins, members, onAdd, onRoleChange, getAccessibleUsers, onRemove, payUser, onPayUserSet } = props;
 
   const [allUsers, setAllUsers] = useState(() => mergeAdminAndMember(admins, members));
 
@@ -41,7 +43,7 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
   return (
     <div>
       <AddButton onAdd={handleAdd} getUsers={getAccessibleUsersExceptAlreadyJoined} />
-      <ExistingTable allUsers={allUsers} onRoleChange={onRoleChange} onRemove={handleRemove} />
+      <ExistingTable payUser={payUser} allUsers={allUsers} onRoleChange={onRoleChange} onRemove={handleRemove} onPayUserSet={onPayUserSet} />
     </div>
   )
 }

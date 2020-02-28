@@ -49,7 +49,11 @@ export class ProjectsServiceMock extends ProjectsService {
     return {
       admins: [lq],
       members: [cjd, cjy],
+      payUser: lq,
     }
+  }
+  async setPayUser(projectId: string, userId: string): Promise<void> {
+    await this.delay();
   }
 }
 

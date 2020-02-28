@@ -28,6 +28,11 @@ export default {
         username: "Username",
         name: "Name",
         email: "Email",
+        setAsPayUser: {
+          link: "Set As Pay User",
+          prompt: "Confirm to set this user as the pay user?",
+          opName: "Set pay user",
+        },
         active: {
           title: "Status",
           true: "Active",
@@ -37,6 +42,10 @@ export default {
           title: "Role",
           admin: "Admin",
           member: "Member",
+        },
+        payUser: {
+          title: "Pay User",
+          yes: "Yes",
         },
         addUser: {
           button: "Add user",

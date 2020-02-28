@@ -41,6 +41,11 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
     setChanged(true);
   }, [project]);
 
+  const onPayUserSet = useCallback(async (userId: string) => {
+    await projectsService.setPayUser(project.id, userId);
+    setChanged(true);
+  }, [project]);
+
   const close = useCallback(() => {
     setModalShown(false);
     if (changed) {
@@ -68,9 +73,11 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
         <UserRoleEditTable
           admins={project.admins}
           members={project.members}
+          payUser={project.payUser}
           onAdd={onAdd}
           onRoleChange={onRoleChange}
           onRemove={onRemove}
+          onPayUserSet={onPayUserSet}
           getAccessibleUsers={getAccessibleUsers}
         />
       </Modal>

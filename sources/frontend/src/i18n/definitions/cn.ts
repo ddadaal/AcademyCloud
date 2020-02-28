@@ -28,6 +28,11 @@ export default {
         username: "用户名",
         name: "姓名",
         email: "电子邮箱",
+        setAsPayUser: {
+          link: "设置为付款用户",
+          prompt: "确定把这个用户设定为付款用户吗？",
+          opName: "设置付款用户",
+        },
         active: {
           title: "状态",
           true: "可用",
@@ -37,6 +42,10 @@ export default {
           title: "角色",
           admin: "管理员",
           member: "成员",
+        },
+        payUser: {
+          title: "付款用户",
+          yes: "是",
         },
         addUser: {
           button: "增加成员",

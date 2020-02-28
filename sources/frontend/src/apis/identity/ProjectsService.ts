@@ -11,6 +11,7 @@ export interface GetAccessibleProjectsResponse {
 export interface UsersResponse {
   admins: User[];
   members: User[];
+  payUser: User;
 }
 
 export class ProjectsService extends HttpService {
@@ -79,6 +80,14 @@ export class ProjectsService extends HttpService {
       method: HttpMethod.DELETE,
       path: `/identity/projects/${projectId}`,
     });
+  }
+
+  async setPayUser(projectId: string, userId: string): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.PATCH,
+      path: `/identity/projects/${projectId}/payUser`,
+      body: { userId },
+    })
   }
 
 }

@@ -2,68 +2,59 @@ import React, { useMemo, useState, useCallback } from "react";
 import { User } from 'src/models/User';
 import { UserRole } from "src/models/Scope";
 import { lang, Localized } from "src/i18n";
-import { Table, Popconfirm, notification } from "antd";
+import { Table, Popconfirm, notification, Tooltip, Divider } from "antd";
 import { mergeAdminAndMember, UserWithRole } from "src/components/users/UserWithRole";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { RoleChangeSelect } from "src/components/users/UserRoleEditTable/RoleChangeSelect";
 import { HttpError } from "src/apis/HttpService";
+import { RemoveLink } from "src/components/users/UserRoleEditTable/RemoveLink";
+import { DisabledA } from "src/components/DisabledA";
+import { SetAsPayUserLink } from "src/components/users/UserRoleEditTable/SetAsPayUserLink";
 
 const root = lang.components.users;
 
 const opResult = lang.components.operationResult;
 
-const removeInProgressKey = "removeInProgress";
-
 interface Props {
 
   allUsers: UserWithRole[];
 
+  payUser: User;
+
   onRoleChange: (userId: string, role: UserRole) => Promise<void>;
+  onPayUserSet: (userId: string) => Promise<void>;
   onRemove: (userId: string) => Promise<void>;
 }
 
-const RemoveLink: React.FC<{
-  user: User;
-  onRemove: (userId: string) => void;
-  removing: boolean;
-}> = ({ user, onRemove, removing }) => {
+function useLoading(api: ReturnType<typeof useLocalizedNotification>[0], handler: (id: string) => Promise<void>, opName: string) {
 
-  return (
-    <Popconfirm
-      disabled={removing}
-      title={<Localized id={root.remove.prompt} />}
-      onConfirm={() => onRemove(user.id)}>
-      <a>
-        <Localized id={root.remove.link} />
-      </a>
-    </Popconfirm>
-  );
+  const [id, setId] = useState<string | undefined>(undefined);
+  const handle = useCallback(async (id: string) => {
+    try {
+      api.info({ messageId: [opResult.inProgress, [opName]] });
+      setId(id);
+      await handler(id);
+      api.success({ messageId: [opResult.success, [opName]] })
+    } catch (e) {
+      api.error({
+        messageId: [opResult.fail, [opName]],
+      });
+    } finally {
+      setId(undefined);
+    }
+  }, [handler]);
+
+  return [id, handle] as const;
 }
 
 
 export const ExistingTable: React.FC<Props> = (props) => {
-  const { allUsers, onRoleChange, onRemove } = props;
-
-  const [removingId, setRemovingId] = useState<string | undefined>(undefined);
-
+  const { allUsers, onRoleChange, onRemove, payUser, onPayUserSet } = props;
   const [api, contextHolder] = useLocalizedNotification();
 
-  const handleRemove = useCallback(async (id: string) => {
-    try {
-      api.info({ key: removeInProgressKey, messageId: [opResult.inProgress, [root.remove.opName]] });
-      setRemovingId(id);
-      await onRemove(id);
-      notification.close(removeInProgressKey);
-      api.success({ messageId: [opResult.success, [root.remove.opName]] })
-    } catch (e) {
-      api.error({
-        messageId: [opResult.fail, [root.remove.opName]],
-        descriptionId: root.remove.errors[e.code],
-      });
-    } finally {
-      setRemovingId(undefined);
-    }
-  }, [onRemove]);
+  const [removingId, handleRemove] = useLoading(api, onRemove, root.remove.opName);
+
+  const [settingPayUserId, handleSetPayUser] = useLoading(api, onPayUserSet, root.setAsPayUser.opName);
 
   return (
     <>
@@ -76,17 +67,44 @@ export const ExistingTable: React.FC<Props> = (props) => {
           render={(active: boolean) => (
             <Localized id={root.active[String(active)]} />
           )} />
+        <Table.Column title={<Localized id={root.payUser.title} />}
+          dataIndex="role"
+          render={(_, user: User) => (
+            user.id === payUser.id ? <Localized id={root.payUser.yes} /> : null
+          )} />
         <Table.Column title={<Localized id={root.role.title} />}
           dataIndex="role"
           render={(role: UserRole, user: User) => (
-            <RoleChangeSelect disabled={removingId === user.id} user={user} initialRole={role} onChange={onRoleChange} />
+            <RoleChangeSelect
+              disabled={!!settingPayUserId || removingId === user.id || user.id === payUser.id}
+              user={user}
+              initialRole={role}
+              onChange={onRoleChange}
+            />
           )} />
         <Table.Column title={<Localized id={root.actions} />}
           dataIndex="role"
           render={(_, user: User) => (
-            <span>
-              <RemoveLink user={user} onRemove={handleRemove} removing={removingId === user.id} />
-            </span>
+            user.id === payUser.id
+              ? (
+                <span>
+                  <DisabledA disabled={true} message={<Localized id={root.remove.errors.payUser} />}>
+                    <Localized id={root.remove.link} />
+                  </DisabledA>
+                  <Divider type="vertical" />
+                  <DisabledA disabled={true} message={<Localized id={root.remove.errors.payUser} />}>
+                    <Localized id={root.setAsPayUser.link} />
+                  </DisabledA>
+                </span>
+              )
+              : (
+                <span>
+                  <RemoveLink user={user} onRemove={handleRemove} disabled={!!settingPayUserId || removingId === user.id} />
+                  <Divider type="vertical" />
+                  <SetAsPayUserLink user={user} onSet={handleSetPayUser} disabled={!!settingPayUserId || removingId === user.id} />
+                </span>
+              )
+
           )} />
       </Table>
     </>

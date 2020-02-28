@@ -45,6 +45,9 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
     await projectsService.removeUser(projectId, userId);
   }, [projectId]);
 
+  const onPayUserSet = useCallback(async (userId: string) => {
+    await projectsService.setPayUser(projectId, userId);
+  }, [projectId]);
 
   if (isPending) {
     return (<Spin spinning={true} />);
@@ -55,9 +58,11 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
       <UserRoleEditTable
         admins={data!!.admins}
         members={data!!.members}
+        payUser={data!!.payUser}
         onAdd={onAdd}
         onRoleChange={onRoleChange}
         onRemove={onRemove}
+        onPayUserSet={onPayUserSet}
         getAccessibleUsers={getAccessibleUsers}
       />
     );
