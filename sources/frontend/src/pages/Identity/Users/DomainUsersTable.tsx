@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { getApiService } from "src/apis";
-import { ProjectsService } from "src/apis/identity/ProjectsService";
 import { useAsync } from "react-async";
 import { UserRoleEditTable } from "src/components/users/UserRoleEditTable";
 import { UserRole } from "src/models/Scope";

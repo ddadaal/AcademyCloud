@@ -6,7 +6,7 @@ import { DisabledA } from "src/components/DisabledA";
 
 interface Props {
   user: User;
-  onRemove: (userId: string) => void;
+  onRemove: (user: User) => void;
   disabled: boolean;
 }
 
@@ -18,7 +18,7 @@ export const RemoveLink: React.FC<Props> = ({ user, onRemove, disabled }) => {
     <Popconfirm
       disabled={disabled}
       title={<Localized id={root.remove.prompt} />}
-      onConfirm={() => onRemove(user.id)}>
+      onConfirm={() => onRemove(user)}>
       <DisabledA disabled={disabled}>
         <Localized id={root.remove.link} />
       </DisabledA>

@@ -6,7 +6,7 @@ import { DisabledA } from "src/components/DisabledA";
 
 interface Props {
   user: User;
-  onSet: (userId: string) => void;
+  onSet: (user: User) => void;
   disabled: boolean;
 }
 
@@ -18,7 +18,7 @@ export const SetAsPayUserLink: React.FC<Props> = ({ user, onSet, disabled: disab
     <Popconfirm
       disabled={disabled}
       title={<Localized id={root.prompt} />}
-      onConfirm={() => onSet(user.id)}>
+      onConfirm={() => onSet(user)}>
       <DisabledA disabled={disabled}>
         <Localized id={root.link} />
       </DisabledA>

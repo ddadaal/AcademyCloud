@@ -17,23 +17,23 @@ const opResult = lang.components.operationResult;
 
 interface Props {
 
-  allUsers: UserWithRole[];
-
+  admins: User[];
+  members: User[];
   payUser: User;
 
   onRoleChange: (userId: string, role: UserRole) => Promise<void>;
-  onPayUserSet: (userId: string) => Promise<void>;
-  onRemove: (userId: string) => Promise<void>;
+  onPayUserSet: (user: User) => Promise<void>;
+  onRemove: (user: User) => Promise<void>;
 }
 
-function useLoading(api: ReturnType<typeof useLocalizedNotification>[0], handler: (id: string) => Promise<void>, opName: string) {
+function useLoading(api: ReturnType<typeof useLocalizedNotification>[0], handler: (user: User) => Promise<void>, opName: string) {
 
   const [id, setId] = useState<string | undefined>(undefined);
-  const handle = useCallback(async (id: string) => {
+  const handle = useCallback(async (user: User) => {
     try {
       api.info({ messageId: [opResult.inProgress, [opName]] });
       setId(id);
-      await handler(id);
+      await handler(user);
       api.success({ messageId: [opResult.success, [opName]] })
     } catch (e) {
       api.error({
@@ -49,7 +49,10 @@ function useLoading(api: ReturnType<typeof useLocalizedNotification>[0], handler
 
 
 export const ExistingTable: React.FC<Props> = (props) => {
-  const { allUsers, onRoleChange, onRemove, payUser, onPayUserSet } = props;
+  const { admins, members, onRoleChange, onRemove, payUser, onPayUserSet } = props;
+
+  const allUsers = useMemo(() => mergeAdminAndMember(admins, members), [admins, members]);
+
   const [api, contextHolder] = useLocalizedNotification();
 
   const [removingId, handleRemove] = useLoading(api, onRemove, root.remove.opName);
