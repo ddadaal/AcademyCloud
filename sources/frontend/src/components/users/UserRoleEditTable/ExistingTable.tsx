@@ -2,14 +2,14 @@ import React, { useMemo, useState, useCallback } from "react";
 import { User } from 'src/models/User';
 import { UserRole } from "src/models/Scope";
 import { lang, Localized } from "src/i18n";
-import { Table, Popconfirm, notification, Tooltip, Divider } from "antd";
-import { mergeAdminAndMember, UserWithRole } from "src/components/users/UserWithRole";
+import { Table, Divider } from "antd";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { RoleChangeSelect } from "src/components/users/UserRoleEditTable/RoleChangeSelect";
-import { HttpError } from "src/apis/HttpService";
 import { RemoveLink } from "src/components/users/UserRoleEditTable/RemoveLink";
 import { DisabledA } from "src/components/DisabledA";
 import { SetAsPayUserLink } from "src/components/users/UserRoleEditTable/SetAsPayUserLink";
+import { Resources, resourcesString } from "src/models/Resources";
+import { FullUser, mergeInformation } from "../FullUser";
 
 const root = lang.components.users;
 
@@ -20,7 +20,9 @@ interface Props {
   admins: User[];
   members: User[];
   payUser: User;
+  userResources?: { [userId: string]: Resources };
 
+  onResourcesChange?: (user: User, resources: Resources) => Promise<void>;
   onRoleChange: (user: User, role: UserRole) => Promise<void>;
   onPayUserSet: (user: User) => Promise<void>;
   onRemove: (user: User) => Promise<void>;
@@ -47,11 +49,10 @@ function useLoading(api: ReturnType<typeof useLocalizedNotification>[0], handler
   return [id, handle] as const;
 }
 
-
 export const ExistingTable: React.FC<Props> = (props) => {
-  const { admins, members, onRoleChange, onRemove, payUser, onPayUserSet } = props;
+  const { admins, members, userResources, onResourcesChange, onRoleChange, onRemove, payUser, onPayUserSet } = props;
 
-  const allUsers = useMemo(() => mergeAdminAndMember(admins, members), [admins, members]);
+  const allUsers = useMemo(() => mergeInformation(admins, members, userResources), [admins, members, userResources]);
 
   const [api, contextHolder] = useLocalizedNotification();
 
@@ -72,12 +73,23 @@ export const ExistingTable: React.FC<Props> = (props) => {
           )} />
         <Table.Column title={<Localized id={root.payUser.title} />}
           dataIndex="role"
-          render={(_, user: UserWithRole) => (
+          render={(_, user: FullUser) => (
             user.id === payUser.id ? <Localized id={root.payUser.yes} /> : null
           )} />
+        {
+          onResourcesChange
+            ? (
+              <Table.Column title={<Localized id={root.resources} />}
+                dataIndex="resources"
+                render={(resources: Resources) => (
+                  <a>
+                    {resourcesString(resources)}
+                  </a>
+                )} />
+            ) : null}
         <Table.Column title={<Localized id={root.role.title} />}
           dataIndex="role"
-          render={(role: UserRole, user: UserWithRole) => (
+          render={(role: UserRole, user: FullUser) => (
             <RoleChangeSelect
               disabled={!!settingPayUserId || removingId === user.id || user.id === payUser.id}
               user={user}
@@ -87,7 +99,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
           )} />
         <Table.Column title={<Localized id={root.actions} />}
           dataIndex="role"
-          render={(_, user: UserWithRole) => (
+          render={(_, user: FullUser) => (
             user.id === payUser.id
               ? (
                 <span>
@@ -98,6 +110,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
                   <DisabledA disabled={true} >
                     <Localized id={root.setAsPayUser.link} />
                   </DisabledA>
+
                 </span>
               )
               : (

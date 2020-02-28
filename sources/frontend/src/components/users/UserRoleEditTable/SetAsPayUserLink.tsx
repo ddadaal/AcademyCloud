@@ -3,10 +3,10 @@ import { Popconfirm } from "antd";
 import { Localized, lang } from "src/i18n";
 import { User } from "src/models/User";
 import { DisabledA } from "src/components/DisabledA";
-import { UserWithRole } from "../UserWithRole";
+import { FullUser } from "../FullUser";
 
 interface Props {
-  user: UserWithRole;
+  user: FullUser;
   onSet: (user: User) => void;
   disabled: boolean;
 }
@@ -14,7 +14,6 @@ interface Props {
 const root = lang.components.users.setAsPayUser;
 
 export const SetAsPayUserLink: React.FC<Props> = ({ user, onSet, disabled }) => {
-  console.log(user);
   if (user.role !== "admin") {
     return (
       <DisabledA disabled={true} message={<Localized id={root.mustAdmin}/>}>

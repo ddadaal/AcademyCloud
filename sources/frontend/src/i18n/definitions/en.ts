@@ -39,6 +39,7 @@ export default {
           true: "Active",
           false: "Inactive",
         },
+        resources: "Resources",
         role: {
           title: "Role",
           admin: "Admin",

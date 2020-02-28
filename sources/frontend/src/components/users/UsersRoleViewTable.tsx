@@ -4,7 +4,7 @@ import { Table } from "antd";
 import { Localized, lang } from "src/i18n";
 import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
-import { mergeAdminAndMember } from "src/components/users/UserWithRole";
+import { mergeInformation } from "src/components/users/FullUser";
 
 const { Column } = Table;
 
@@ -19,7 +19,7 @@ export const UsersRoleViewTable: React.FC<Props> = (props) => {
 
   const { admins, members } = props;
 
-  const allUsers = useMemo(() => mergeAdminAndMember(admins, members), [admins, members]);
+  const allUsers = useMemo(() => mergeInformation(admins, members), [admins, members]);
 
   return (
     <Table pagination={{ hideOnSinglePage: true }} dataSource={allUsers} rowKey="id">

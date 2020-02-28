@@ -9,4 +9,7 @@ export interface Project {
   payUser: User;
   members: User[];
   resources: Resources;
+
+  userResources: {[id: string]: Resources};
+
 }

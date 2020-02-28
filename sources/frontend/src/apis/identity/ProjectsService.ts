@@ -12,6 +12,7 @@ export interface UsersResponse {
   admins: User[];
   members: User[];
   payUser: User;
+  userResources: { [userId: string]: Resources };
 }
 
 export class ProjectsService extends HttpService {
@@ -31,6 +32,14 @@ export class ProjectsService extends HttpService {
     });
 
     return resp as UsersResponse;
+  }
+
+  async changeResources(projectId: string, userId: string, resources: Resources): Promise<void> {
+    await this.fetch({
+      method: HttpMethod.PATCH,
+      path: `/identity/projects/${projectId}/users/${userId}/resources`,
+      body: { resources },
+    });
   }
 
   async addUserToProject(projectId: string, userId: string, role: UserRole): Promise<void> {

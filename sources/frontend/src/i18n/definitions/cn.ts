@@ -39,6 +39,7 @@ export default {
           true: "可用",
           false: "停用",
         },
+        resources: "资源",
         role: {
           title: "角色",
           admin: "管理员",

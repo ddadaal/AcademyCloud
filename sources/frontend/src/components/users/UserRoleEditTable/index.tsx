@@ -3,6 +3,7 @@ import { User } from 'src/models/User';
 import { UserRole } from "src/models/Scope";
 import { AddButton } from "src/components/users/UserRoleEditTable/AddButton";
 import { ExistingTable } from "src/components/users/UserRoleEditTable/ExistingTable";
+import { Resources } from "src/models/Resources";
 
 interface Props {
   admins: User[];
@@ -14,21 +15,26 @@ interface Props {
   onRemove: (userId: string) => Promise<void>;
   onPayUserSet: (userId: string) => Promise<void>;
 
+  userResources?: { [userId: string]: Resources };
+  onResourcesChange?: (userId: string, resources: Resources) => Promise<void>;
+
   getAccessibleUsers: () => Promise<User[]>;
 }
 
 export const UserRoleEditTable: React.FC<Props> = (props) => {
-  const { admins, members, onAdd, onRoleChange, getAccessibleUsers, onRemove, payUser, onPayUserSet } = props;
+  const { admins, members, onAdd, onRoleChange, getAccessibleUsers, onRemove, payUser, onPayUserSet, onResourcesChange } = props;
 
   const [allUsers, setAllUsers] = useState(() => ({ admins, members, payUser }));
+  const [userResources, setUserResources] = useState(props.userResources);
 
   const handleAdd = useCallback(async (user: User, role: UserRole) => {
     await onAdd(user.id, role);
     if (role === "admin") {
-      setAllUsers((users) => ({ ...users, admins: [...users.admins, user ]}));
+      setAllUsers((users) => ({ ...users, admins: [...users.admins, user] }));
     } else {
-      setAllUsers((users) => ({ ...users, members: [...users.members, user ]}));
+      setAllUsers((users) => ({ ...users, members: [...users.members, user] }));
     }
+    setUserResources((resources) => ({ ...resources, [user.id]: { cpu: 0, memory: 0, storage: 0 } }));
   }, [onAdd]);
 
   const handleRemove = useCallback(async (user: User) => {
@@ -62,6 +68,13 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
     }
   }, [onRoleChange]);
 
+  const handleResourcesChange = useCallback(async (user: User, resources: Resources) => {
+    if (onResourcesChange && userResources) {
+      await onResourcesChange(user.id, resources);
+      setUserResources((userResources) => ({ ...userResources, [user.id]: resources }));
+    }
+  }, [onResourcesChange, userResources]);
+
   const getAccessibleUsersExceptAlreadyJoined = useCallback(async () => {
     const users = await getAccessibleUsers();
 
@@ -76,6 +89,8 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
         payUser={allUsers.payUser}
         members={allUsers.members}
         admins={allUsers.admins}
+        userResources={userResources}
+        onResourcesChange={onResourcesChange ? handleResourcesChange : undefined}
         onRoleChange={handleRoleChange}
         onRemove={handleRemove}
         onPayUserSet={handleSetPayUser}

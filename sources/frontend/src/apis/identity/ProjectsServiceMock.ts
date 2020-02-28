@@ -13,12 +13,22 @@ export class ProjectsServiceMock extends ProjectsService {
     await this.delay();
     return {
       projects: [
-        { id: "67ID", name: "67", active: true, admins: [lq], payUser: lq, members: [cjd, cjy], resources: { cpu: 4, memory: 8, storage: 512, } },
-        { id: "fghID", name: "fgh", active: false, admins: [fgh], payUser: fgh, members: [cjy], resources: { cpu: 4, memory: 8, storage: 512, } },
+        {
+          id: "67ID", name: "67", active: true, admins: [lq], payUser: lq, members: [cjd, cjy], resources: { cpu: 4, memory: 8, storage: 512, },
+          userResources: { "lqID": { cpu: 1, memory: 4, storage: 256 }, "CJDID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
+        },
+        {
+          id: "fghID", name: "fgh", active: false, admins: [fgh], payUser: fgh, members: [cjy], resources: { cpu: 4, memory: 8, storage: 512, },
+          userResources: { "fghID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
+        },
       ]
     }
   }
   async addUserToProject(projectId: string, userId: string, role: UserRole): Promise<void> {
+    await this.delay();
+  }
+
+  async changeResources(projectId: string, userId: string, resources: Resources): Promise<void> {
     await this.delay();
   }
 
@@ -50,6 +60,8 @@ export class ProjectsServiceMock extends ProjectsService {
       admins: [lq],
       members: [cjd, cjy],
       payUser: lq,
+
+      userResources: { "lqID": { cpu: 1, memory: 4, storage: 256 }, "CJDID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
     }
   }
   async setPayUser(projectId: string, userId: string): Promise<void> {

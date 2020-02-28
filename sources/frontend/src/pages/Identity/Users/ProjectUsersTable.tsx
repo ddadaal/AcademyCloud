@@ -7,6 +7,7 @@ import { UserRole } from "src/models/Scope";
 import { UsersService } from "src/apis/identity/UsersService";
 import { Spin } from "antd";
 import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
+import { Resources } from "src/models/Resources";
 
 interface Props {
   projectId: string;
@@ -49,6 +50,10 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
     await projectsService.setPayUser(projectId, userId);
   }, [projectId]);
 
+  const onResourcesChange = useCallback(async (userId: string, resources: Resources) => {
+    await projectsService.changeResources(projectId, userId, resources);
+  }, [projectId]);
+
   if (isPending) {
     return (<Spin spinning={true} />);
   }
@@ -59,6 +64,8 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
         admins={data!!.admins}
         members={data!!.members}
         payUser={data!!.payUser}
+        userResources={data!!.userResources}
+        onResourcesChange={data!!.userResources ? onResourcesChange : undefined}
         onAdd={onAdd}
         onRoleChange={onRoleChange}
         onRemove={onRemove}
