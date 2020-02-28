@@ -22,6 +22,7 @@ export class AccountServiceMock extends AccountService {
         { domainId: "NJU", domainName: "NJU", role: "member" },
         { domainId: "NJU", domainName: "NJU", projectName: "67", projectId: "67", role: "admin" },
         { domainId: "PKU", domainName: "PKU", role: "admin" },
+        { social: true, domainId: "social", domainName: "social", projectName: username, projectId: username, role: "admin" },
       ],
       lastLoginScope: {
         domainId: "NJU", domainName: "NJU", role: "member",
@@ -30,7 +31,7 @@ export class AccountServiceMock extends AccountService {
         domainId: "NJU", domainName: "NJU", role: "member",
       }
     }
-  };
+  }
 
   async changeScope(scope: Scope): Promise<LoginResponse> {
     await this.delay();

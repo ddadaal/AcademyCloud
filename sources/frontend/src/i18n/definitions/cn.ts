@@ -237,6 +237,7 @@ export default {
       scopeIndicator: {
         projects: "项目",
         domains: "学校",
+        social: "公开",
         system: "系统",
         admin: "管理员",
         opName: "切换",

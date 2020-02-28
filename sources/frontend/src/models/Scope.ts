@@ -3,6 +3,7 @@ export type UserRole = "admin" | "member";
 
 export interface Scope {
   system?: boolean;
+  social?: boolean;
   domainId: string;
   domainName: string;
   projectId?: string;

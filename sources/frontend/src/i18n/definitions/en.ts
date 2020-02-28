@@ -237,6 +237,7 @@ export default {
       scopeIndicator: {
         projects: "Projects",
         domains: "Domains",
+        social: "Public",
         system: "System",
         admin: "Admin",
         opName: "Switch",

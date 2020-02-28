@@ -35,15 +35,24 @@ export const ScopeIndicator: React.FC = () => {
     );
   }
 
-  const projectScopes = availableScopes.filter((x) => x.projectId)
+  const socialScope = availableScopes.find((x) => x.social);
+  const projectScopes = availableScopes.filter((x) => x.projectId && !x.social)
   const domainScopes = availableScopes.filter((x) => !x.projectId)
 
   const menuItems = [] as React.ReactNode[];
 
   const scopeNameWithRole = (scope: Scope) => (
     <Fragment key={scopeId(scope)}>
-      {scopeName(scope)}
-      {scope.role === "admin" ? <> (<Localized id={root.admin} />)</> : null}
+      {
+        scope.social
+          ? <Localized id={root.social} />
+          : (
+            <>
+              {scopeName(scope)}
+              {scope.role === "admin" ? <> (<Localized id={root.admin} />)</> : null}
+            </>
+          )
+      }
     </Fragment>
   );
 
@@ -92,6 +101,16 @@ export const ScopeIndicator: React.FC = () => {
         {scopeNameWithRole(x)}
       </Menu.Item>
     )));
+  }
+
+  // add social scope
+  if (socialScope) {
+    menuItems.push(
+      <Menu.Divider key="social" />,
+      <Menu.Item disabled={!!changingTo} onClick={onChange(socialScope)} key={scopeId(socialScope)}>
+        {scopeNameWithRole(socialScope)}
+      </Menu.Item>
+    );
   }
 
   const menu = (
