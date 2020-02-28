@@ -45,6 +45,23 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
     setAllUsers((users) => ({ ...users, payUser: user }));
   }, [onPayUserSet]);
 
+  const handleRoleChange = useCallback(async (user: User, role: UserRole) => {
+    await onRoleChange(user.id, role);
+    if (role === "admin") {
+      setAllUsers((users) => ({
+        ...users,
+        admins: [...users.admins, user],
+        members: users.members.filter((x) => x.id !== user.id),
+      }));
+    } else {
+      setAllUsers((users) => ({
+        ...users,
+        admins: users.admins.filter((x) => x.id !== user.id),
+        members: [...users.members, user],
+      }));
+    }
+  }, [onRoleChange]);
+
   const getAccessibleUsersExceptAlreadyJoined = useCallback(async () => {
     const users = await getAccessibleUsers();
 
@@ -59,7 +76,7 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
         payUser={allUsers.payUser}
         members={allUsers.members}
         admins={allUsers.admins}
-        onRoleChange={onRoleChange}
+        onRoleChange={handleRoleChange}
         onRemove={handleRemove}
         onPayUserSet={handleSetPayUser}
       />

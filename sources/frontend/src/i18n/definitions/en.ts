@@ -32,6 +32,7 @@ export default {
           link: "Set As Pay User",
           prompt: "Confirm to set this user as the pay user?",
           opName: "Set pay user",
+          mustAdmin: "Pay user must be an admin.",
         },
         active: {
           title: "Status",

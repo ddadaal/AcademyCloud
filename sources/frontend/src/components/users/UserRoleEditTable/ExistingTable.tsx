@@ -21,7 +21,7 @@ interface Props {
   members: User[];
   payUser: User;
 
-  onRoleChange: (userId: string, role: UserRole) => Promise<void>;
+  onRoleChange: (user: User, role: UserRole) => Promise<void>;
   onPayUserSet: (user: User) => Promise<void>;
   onRemove: (user: User) => Promise<void>;
 }
@@ -72,22 +72,22 @@ export const ExistingTable: React.FC<Props> = (props) => {
           )} />
         <Table.Column title={<Localized id={root.payUser.title} />}
           dataIndex="role"
-          render={(_, user: User) => (
+          render={(_, user: UserWithRole) => (
             user.id === payUser.id ? <Localized id={root.payUser.yes} /> : null
           )} />
         <Table.Column title={<Localized id={root.role.title} />}
           dataIndex="role"
-          render={(role: UserRole, user: User) => (
+          render={(role: UserRole, user: UserWithRole) => (
             <RoleChangeSelect
               disabled={!!settingPayUserId || removingId === user.id || user.id === payUser.id}
               user={user}
-              initialRole={role}
+              role={role}
               onChange={onRoleChange}
             />
           )} />
         <Table.Column title={<Localized id={root.actions} />}
           dataIndex="role"
-          render={(_, user: User) => (
+          render={(_, user: UserWithRole) => (
             user.id === payUser.id
               ? (
                 <span>
@@ -95,7 +95,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
                     <Localized id={root.remove.link} />
                   </DisabledA>
                   <Divider type="vertical" />
-                  <DisabledA disabled={true} message={<Localized id={root.remove.errors.payUser} />}>
+                  <DisabledA disabled={true} >
                     <Localized id={root.setAsPayUser.link} />
                   </DisabledA>
                 </span>

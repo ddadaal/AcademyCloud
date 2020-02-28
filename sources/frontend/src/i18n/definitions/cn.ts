@@ -32,6 +32,7 @@ export default {
           link: "设置为付款用户",
           prompt: "确定把这个用户设定为付款用户吗？",
           opName: "设置付款用户",
+          mustAdmin: "付款用户必须是管理员。",
         },
         active: {
           title: "状态",
