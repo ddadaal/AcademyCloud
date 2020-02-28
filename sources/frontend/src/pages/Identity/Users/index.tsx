@@ -28,7 +28,7 @@ export default function UsersPage(_: RouteComponentProps) {
       </TitleBar>
       {
         isProject
-          ? <ProjectUsersTable />
+          ? <ProjectUsersTable isAdmin={scope.role === "admin"} projectId={scope.projectId!!} />
           : <SystemAndDomainUsersTable scope={scope} />
       }
     </div>
