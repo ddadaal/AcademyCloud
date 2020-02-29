@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Domains.Entities;
+using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using System;
@@ -13,10 +14,12 @@ namespace AcademyCloud.Identity.Services
     {
 
         private readonly IdentityDbContext dbContext;
+        private readonly JwtSettings jwtSettings;
 
-        public AccountService(IdentityDbContext dbContext)
+        public AccountService(IdentityDbContext dbContext, JwtSettings jwtSettings)
         {
             this.dbContext = dbContext;
+            this.jwtSettings = jwtSettings;
         }
 
         [Authorize]

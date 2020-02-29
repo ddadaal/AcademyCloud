@@ -1,5 +1,4 @@
 ﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Models;
 using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -67,22 +66,14 @@ namespace AcademyCloud.Identity.Services
                 UserId = user.Id.ToString(),
                 DomainId = scope.DomainId,
                 ProjectId = scope.ProjectId,
-                Role = (Shared.UserRole) scope.Role,
+                Role = (Shared.UserRole)scope.Role,
                 System = scope.System,
-            }.ToClaims();
-
-            var creds = new SigningCredentials(jwtSettings.Key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: jwtSettings.Issuer,
-                audience: jwtSettings.Issuer,
-                claims: claims,
-                signingCredentials: creds
-                );
+            };
 
             return new AuthenticationReply
             {
                 Success = false,
-                Token = token.ToString()
+                Token = jwtSettings.GenerateToken(claims),
             };
 
         }
@@ -160,7 +151,7 @@ namespace AcademyCloud.Identity.Services
                     System = tokenClaims.System,
                     DomainId = tokenClaims.DomainId,
                     ProjectId = tokenClaims.ProjectId,
-                    Role = (UserRole) tokenClaims.Role,
+                    Role = (UserRole)tokenClaims.Role,
                 }
             });
         }

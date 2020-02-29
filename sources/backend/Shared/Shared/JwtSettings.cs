@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace AcademyCloud.Shared
@@ -19,6 +20,19 @@ namespace AcademyCloud.Shared
         {
             Issuer = issuer;
             Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        }
+
+        public string GenerateToken(TokenClaims claims)
+        {
+            var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                issuer: Issuer,
+                audience: Issuer,
+                claims: claims.ToClaims(),
+                signingCredentials: creds
+                );
+
+            return token.ToString();
         }
     }
 }
