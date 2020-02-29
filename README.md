@@ -24,8 +24,19 @@ Check the demo version now! https://academycloud.ddadaal.me
   - [important talks between me and mentor](docs/important-talks.md)
 - [sources](/sources)
   - The source code for the project, including
-    - [Python backend](sources/backend)
-    - [React frontend](sources/frontend)
+    - [backend](sources/backend)
+      - Microservices communicating with each other by `gRPC`
+      - `C# ASP.NET Core 3.1` used in 2 microservices + 1 API Gateway
+      - `Python` used in 1 microservices
+      - `consul` for service registration and discovery
+      - `registrator` to automatically register containers when up and de-register when down
+      - `docker-compose` for dev environment 
+    - [frontend](sources/frontend)
+      - `React` + `TypeScript` + `ant-design`
+      - complete mock data for backend-less development
+      - self-made [simstate](https://github.com/ddadaal/simstate) for state management
+      - self-made **i18n solution** based on simstate
+      - **All hooks** projects with no use of class components whatsoever
 
 ## License
 
