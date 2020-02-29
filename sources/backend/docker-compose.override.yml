@@ -5,37 +5,19 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=test
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev.pfx
     ports:
       - "80"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${USERPROFILE}/.aspnet/https:/https/:ro
-
-  identity.api:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  identity.service:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=test
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev.pfx
     ports:
       - "80"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${USERPROFILE}/.aspnet/https:/https/:ro
-
-  expenses.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=test
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/dev.pfx
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${USERPROFILE}/.aspnet/https:/https/:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -1,41 +1,15 @@
 version: '3.4'
 
 services:
-  consul:
-    image: consul:latest
-    ports: 
-      - "8500:8500"
-      - "8300:8300"
-    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
-  registrator:
-    image: gliderlabs/registrator:master
-    depends_on:
-      - consul
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    command: -internal consul://consul:8500
-  expenses.api:
-    image: ${DOCKER_REGISTRY-}expensesapi
-    build:
-      context: .
-      dockerfile: src/Expenses/Expenses.API/Dockerfile
-  identity.api:
-    image: ${DOCKER_REGISTRY-}identityapi
-    depends_on:
-      - registrator
-    build:
-      context: .
-      dockerfile: src/Identity/Identity.API/Dockerfile
   api:
     image: ${DOCKER_REGISTRY-}api
-    depends_on:
-      - identity.api
-      - expenses.api
     build:
       context: .
-      dockerfile: src/ApiGateway/API/Dockerfile
+      dockerfile: API/Dockerfile
 
-
-
-
+  identity.service:
+    image: ${DOCKER_REGISTRY-}identityservice
+    build:
+      context: .
+      dockerfile: Identity/Identity.Service/Dockerfile
 
