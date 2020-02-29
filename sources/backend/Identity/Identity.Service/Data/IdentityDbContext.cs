@@ -9,6 +9,9 @@ namespace AcademyCloud.Identity.Data
 {
     public class IdentityDbContext : DbContext
     {
+
+        public static readonly Guid SocialDomainId = new Guid("A7476756-858C-44C5-BC77-4C41212B364D");
+
         public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
         }
@@ -23,9 +26,11 @@ namespace AcademyCloud.Identity.Data
 
         public DbSet<UserProjectAssignment> UserProjectAssignments { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<Domain>().HasData(
+                new Domain(SocialDomainId, "Social")
+            );
         }
     }
 }

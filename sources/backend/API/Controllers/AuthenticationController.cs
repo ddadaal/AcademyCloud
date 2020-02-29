@@ -35,7 +35,7 @@ namespace AcademyCloud.API.Controllers
 
             if (reply.Success)
             {
-                return new ScopesResponse(reply.Scopes, reply.Scopes[0], reply.Scopes[1]);
+                return new ScopesResponse(reply.Scopes, reply.Scopes[0], reply.Scopes[0]);
             }
             else
             {

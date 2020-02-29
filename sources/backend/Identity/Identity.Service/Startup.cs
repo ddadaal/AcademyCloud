@@ -25,6 +25,7 @@ namespace AcademyCloud.Identity
             services.AddGrpc();
             services.AddDbContext<IdentityDbContext>(options =>
             {
+                options.UseLazyLoadingProxies();
                 options.UseInMemoryDatabase("Test");
             });
 
@@ -49,18 +50,22 @@ namespace AcademyCloud.Identity
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IdentityDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            // temp: to generate data into the test db
+            dbContext.Database.EnsureCreated();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<AccountService>();
+                endpoints.MapGrpcService<AuthenticationService>();
 
                 endpoints.MapGet("/", async context =>
                 {

@@ -10,18 +10,18 @@ namespace AcademyCloud.Identity.Domains.Entities
         public Guid Id { get; set; }
         public string Name { get; set; }
 
-        public Domain Domain { get; set; }
+        public virtual Domain Domain { get; set; }
 
-        public ICollection<UserProjectAssignment> Users { get; set; }
+        public virtual ICollection<UserProjectAssignment> Users { get; set; }
 
-        public Project(Guid id, string name, Domain domain, ICollection<UserProjectAssignment> users)
+        public Project(Guid id, string name, Domain domain, ICollection<UserProjectAssignment> users = null)
         {
             Id = id;
             Name = name;
             Domain = domain;
-            Users = users;
+            Users = users ?? new List<UserProjectAssignment>();
         }
 
-        private Project() { }
+        public Project() { }
     }
 }

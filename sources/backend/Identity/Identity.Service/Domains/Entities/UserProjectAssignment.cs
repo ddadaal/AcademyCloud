@@ -10,10 +10,22 @@ namespace AcademyCloud.Identity.Domains.Entities
     {
         public Guid Id { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
 
         public UserRole Role { get; set; }
+
+        public UserProjectAssignment(Guid id, User user, Project project, UserRole role)
+        {
+            Id = id;
+            User = user;
+            Project = project;
+            Role = role;
+        }
+
+        public UserProjectAssignment()
+        {
+        }
     }
 }

@@ -16,9 +16,9 @@ namespace AcademyCloud.Identity.Domains.Entities
 
         public bool System { get; set; }
 
-        public ICollection<UserDomainAssignment> Domains { get; set; }
+        public virtual ICollection<UserDomainAssignment> Domains { get; set; }
 
-        public ICollection<UserProjectAssignment> Projects { get; set; }
+        public virtual ICollection<UserProjectAssignment> Projects { get; set; }
 
         public User(Guid id, string username, string password, string email, bool system,
             ICollection<UserDomainAssignment> domains = null,
@@ -33,7 +33,7 @@ namespace AcademyCloud.Identity.Domains.Entities
             Projects = projects ?? new List<UserProjectAssignment>();
         }
 
-        private User()
+        public User()
         {
         }
     }

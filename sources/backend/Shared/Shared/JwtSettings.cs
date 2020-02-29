@@ -24,6 +24,8 @@ namespace AcademyCloud.Shared
 
         public string GenerateToken(TokenClaims claims)
         {
+            var handler = new JwtSecurityTokenHandler();
+
             var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(
                 issuer: Issuer,
@@ -32,7 +34,7 @@ namespace AcademyCloud.Shared
                 signingCredentials: creds
                 );
 
-            return token.ToString();
+            return handler.WriteToken(token);
         }
     }
 }

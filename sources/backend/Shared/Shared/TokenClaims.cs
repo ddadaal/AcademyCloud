@@ -18,6 +18,15 @@ namespace AcademyCloud.Shared
 
         public UserRole Role { get; set; }
 
+        public TokenClaims(bool system, string userId, string domainId, string? projectId, UserRole role)
+        {
+            System = system;
+            UserId = userId;
+            DomainId = domainId;
+            ProjectId = projectId;
+            Role = role;
+        }
+
         public List<Claim> ToClaims()
         {
             return new List<Claim>()
@@ -26,20 +35,28 @@ namespace AcademyCloud.Shared
                 new Claim(nameof(UserId), UserId),
                 new Claim(nameof(DomainId), DomainId),
                 new Claim(nameof(ProjectId), ProjectId),
+                new Claim(nameof(Role), Role.ToString()),
             };
         }
 
         public static TokenClaims FromClaimPrincinpal(ClaimsPrincipal claims)
         {
-            return new TokenClaims()
-            {
-                System = Convert.ToBoolean(claims.FindFirst(nameof(System)).Value),
-                UserId = claims.FindFirst(nameof(UserId)).Value,
-                DomainId = claims.FindFirst(nameof(DomainId)).Value,
-                ProjectId = claims.FindFirst(nameof(ProjectId)).Value,
-            };
+            return new TokenClaims(
+                system: Convert.ToBoolean(claims.GetClaimValue(nameof(System))),
+                userId: claims.GetClaimValue(nameof(UserId)),
+                domainId:claims.GetClaimValue(nameof(DomainId)),
+                projectId: claims.GetClaimValue(nameof(ProjectId)),
+                role: (UserRole)Enum.Parse(typeof(UserRole), claims.GetClaimValue(nameof(Role)))
+            );
+
         }
+    }
 
-
+    public static class ClaimsPrincipalExtensions
+    {
+        public static string GetClaimValue(this ClaimsPrincipal claims, string name)
+        {
+            return claims.FindFirst(name).Value;
+        }
     }
 }

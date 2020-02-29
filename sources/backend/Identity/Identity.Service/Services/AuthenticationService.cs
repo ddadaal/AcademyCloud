@@ -16,13 +16,11 @@ namespace AcademyCloud.Identity.Services
     public class AuthenticationService : Authentication.AuthenticationBase
     {
         private readonly IdentityDbContext dbContext;
-        private ILogger logger;
         private JwtSettings jwtSettings;
 
-        public AuthenticationService(IdentityDbContext dbContext, ILogger logger, JwtSettings jwtSettings)
+        public AuthenticationService(IdentityDbContext dbContext, JwtSettings jwtSettings)
         {
             this.dbContext = dbContext;
-            this.logger = logger;
             this.jwtSettings = jwtSettings;
         }
 
@@ -31,7 +29,7 @@ namespace AcademyCloud.Identity.Services
             var scope = request.Scope;
 
             // find the user
-            var user = await dbContext.Users.FirstAsync(u => u.Username == request.Username && u.Password == request.Password);
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
 
             if (user == null)
             {
@@ -61,18 +59,11 @@ namespace AcademyCloud.Identity.Services
             }
 
             // auth successful. generate token accorind to token claims
-            var claims = new TokenClaims()
-            {
-                UserId = user.Id.ToString(),
-                DomainId = scope.DomainId,
-                ProjectId = scope.ProjectId,
-                Role = (Shared.UserRole)scope.Role,
-                System = scope.System,
-            };
+            var claims = new TokenClaims(scope.System, user.Id.ToString(), scope.DomainId, scope.ProjectId, (Shared.UserRole)scope.Role);
 
             return new AuthenticationReply
             {
-                Success = false,
+                Success = true,
                 Token = jwtSettings.GenerateToken(claims),
             };
 
@@ -80,7 +71,7 @@ namespace AcademyCloud.Identity.Services
 
         public override async Task<GetScopesReply> GetScopes(GetScopesRequest request, ServerCallContext context)
         {
-            var user = await dbContext.Users.FirstAsync(u => u.Username == request.Username && u.Password == request.Password);
+            var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Username == request.Username && u.Password == request.Password);
 
             if (user == null)
             {
@@ -90,7 +81,6 @@ namespace AcademyCloud.Identity.Services
             // if the user is system user,
             if (user.System)
             {
-
                 return new GetScopesReply()
                 {
                     Scopes = {
@@ -110,6 +100,7 @@ namespace AcademyCloud.Identity.Services
             var scopes = user.Projects.Select(x => new Scope()
             {
                 System = false,
+                Social = x.Project.Domain.Id == IdentityDbContext.SocialDomainId,
                 DomainId = x.Project.Domain.Id.ToString(),
                 DomainName = x.Project.Domain.Name,
                 ProjectId = x.Project.Id.ToString(),
@@ -117,18 +108,20 @@ namespace AcademyCloud.Identity.Services
                 Role = (UserRole)x.Role,
             }).ToList();
 
+            // load 
+
             // add domains that are either admin, or not the domain of a project scopes.
-            scopes.AddRange(user.Domains
+            scopes.AddRange(user.Domains.AsEnumerable()
                 .Where(x =>
-                x.Role == Domains.ValueObjects.UserRole.Admin ||
-                scopes.Exists(project => project.DomainId == x.Domain.Id.ToString()))
+                    x.Role == Domains.ValueObjects.UserRole.Admin ||
+                    !scopes.Exists(project => project.DomainId == x.Domain.Id.ToString())
+                )
                 .Select(x => new Scope()
                 {
                     System = false,
+                    Social = x.Domain.Id == IdentityDbContext.SocialDomainId,
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
-                    ProjectId = null,
-                    ProjectName = null,
                     Role = (UserRole)x.Role,
                 }));
 
