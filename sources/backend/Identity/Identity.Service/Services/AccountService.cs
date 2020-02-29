@@ -57,8 +57,6 @@ namespace AcademyCloud.Identity.Services
 
             await dbContext.SaveChangesAsync();
 
-            // console.log
-
             return new RegisterResponse();
 
         }

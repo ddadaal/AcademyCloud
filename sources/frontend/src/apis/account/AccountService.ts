@@ -54,11 +54,11 @@ export class AccountService extends HttpService {
     return data;
   }
 
-  async register(username: string, password: string): Promise<RegisterResponse> {
+  async register(username: string, password: string, email: string): Promise<RegisterResponse> {
     const data = await this.fetch<RegisterResponse>({
       method: HttpMethod.POST,
-      body: { username, password },
-      path: "/account"
+      body: { username, password, email },
+      path: "/identity/account"
     });
 
     if (data.token) {

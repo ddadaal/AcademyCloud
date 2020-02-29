@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{84319DE4-6EB4-43EE-BEEA-7C23D227972F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D48A7F5-EB13-460E-8323-B14D4806D121} = {4D48A7F5-EB13-460E-8323-B14D4806D121}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{78B085ED-AD13-4610-8B83-1968C99339C9}"
 EndProject
@@ -16,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AF1A03
 		Identity\Protos\account.proto = Identity\Protos\account.proto
 		Identity\Protos\authentication.proto = Identity\Protos\authentication.proto
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared\Shared.csproj", "{4D48A7F5-EB13-460E-8323-B14D4806D121}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +40,10 @@ Global
 		{36DE57D3-B2CA-4398-819B-5C19CC6A77CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36DE57D3-B2CA-4398-819B-5C19CC6A77CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36DE57D3-B2CA-4398-819B-5C19CC6A77CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

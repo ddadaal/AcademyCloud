@@ -4,12 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
+using AcademyCloud.Shared;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AcademyCloud.Identity
 {
@@ -24,6 +27,25 @@ namespace AcademyCloud.Identity
             {
                 options.UseInMemoryDatabase("Test");
             });
+
+            var jwtSettings = new JwtSettings();
+            services.AddSingleton(jwtSettings);
+
+            services.AddAuthorization();
+
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(config =>
+                {
+                    config.RequireHttpsMetadata = false;
+                    config.SaveToken = true;
+                    config.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Issuer,
+                        IssuerSigningKey = jwtSettings.Key,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
