@@ -23,13 +23,13 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
   // the origin signature is any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = useCallback(async (values: { [key: string]: any }) => {
-    const { username, password } = values;
+    const { username, password, email } = values;
     setRegistering(true);
 
     const api = getApiService(AccountService);
 
     try {
-      const registeringResponse = await api.register(username, password);
+      const registeringResponse = await api.register(username, password, email);
       userStore.login({
         username,
         scope: registeringResponse.scope,
