@@ -4,12 +4,12 @@
   "private": true,
   "homepage": "https://academycloud.ddadaal.me",
   "dependencies": {
-    "@reach/router": "^1.3.1",
+    "@reach/router": "^1.3.3",
     "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^10.0.0",
     "@types/reach__router": "^1.3.0",
-    "antd": "^4.0.0-rc.6",
+    "antd": "^4.0.0",
     "axios": "^0.19.2",
     "less": "^3.11.1",
     "react": "^16.13.0",
@@ -20,12 +20,12 @@
     "react-scripts": "3.4.0",
     "simstate": "^3.0.0",
     "styled-components": "^5.0.1",
-    "tslib": "^1.11.0",
-    "typescript": "^3.8.2"
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "@types/jest": "^25.1.3",
-    "@types/node": "^13.7.6",
+    "@types/node": "^13.7.7",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
     "@types/react-helmet": "^5.0.15",
