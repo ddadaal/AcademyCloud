@@ -1,6 +1,6 @@
 using System;
 
-namespace API
+namespace AcademyCloud.API
 {
     public class WeatherForecast
     {

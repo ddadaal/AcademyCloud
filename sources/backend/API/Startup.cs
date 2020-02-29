@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.API.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,8 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NConsul.AspNetCore;
 
-namespace API
+namespace AcademyCloud.API
 {
     public class Startup
     {
@@ -26,6 +28,10 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddConsul("http://consul:8500");
+
+            services.AddSingleton<ServiceClientFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
