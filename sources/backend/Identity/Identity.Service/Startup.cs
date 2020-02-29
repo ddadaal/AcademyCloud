@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,6 +20,10 @@ namespace AcademyCloud.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGrpc();
+            services.AddDbContext<IdentityDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("Test");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,7 +38,7 @@ namespace AcademyCloud.Identity
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<AccountService>();
 
                 endpoints.MapGet("/", async context =>
                 {

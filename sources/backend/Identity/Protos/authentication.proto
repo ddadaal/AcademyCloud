@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option csharp_namespace = "AcademyCloud.Identity.Services";
+
+package authentication;
+
+// The greeting service definition.
+service Authentication {
+  rpc Authenticate (AuthenticationRequest) returns (AuthenticationReply);
+  rpc GetScopes (GetScopesRequest) returns (GetScopesReply);
+  rpc GetTokenInfo (GetTokenInfoRequest) returns (GetTokenInfoReply);
+}
+
+message AuthenticationRequest {
+    string username = 1;
+    string password = 2;
+    Scope scope = 3;
+}
+
+message AuthenticationReply {
+    bool success = 1;
+    string token = 2;
+}
+
+message GetScopesRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message GetScopesReply {
+    bool success = 1;
+    repeated Scope scopes = 2;
+}
+
+message GetTokenInfoRequest {
+    string token = 1;
+}
+
+message GetTokenInfoReply {
+    string userId = 1;
+    Scope scope = 2;
+}
+
+enum UserRole {
+    Admin = 0;
+    Member = 1;
+}
+
+message Scope {
+    bool system = 1;
+    bool social = 2;
+    string domainId = 3;
+    string domainName = 4;
+    string projectId = 5;
+    string projectName = 6;
+    UserRole role = 7; 
+}

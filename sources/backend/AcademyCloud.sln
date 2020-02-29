@@ -13,7 +13,8 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AF1A030E-BC6C-4C70-88D3-6E65F00B6395}"
 	ProjectSection(SolutionItems) = preProject
-		Identity\Protos\greet.proto = Identity\Protos\greet.proto
+		Identity\Protos\account.proto = Identity\Protos\account.proto
+		Identity\Protos\authentication.proto = Identity\Protos\authentication.proto
 	EndProjectSection
 EndProject
 Global

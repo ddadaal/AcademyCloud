@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Services;
 
+
 namespace AcademyCloud.API.Utils
 {
     public class ServiceClientFactory
@@ -20,27 +21,27 @@ namespace AcademyCloud.API.Utils
                 "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
         }
 
+        /// <summary>
+        /// Create a insecure channel for simpler development.
+        /// Took an whole afternoon trying to get SSL working but no
+        /// Believe it's a ASP.NET Core problem
+        /// </summary>
+        /// <param name="serviceName"></param>
+        /// <returns></returns>
         private async Task<GrpcChannel> GetChannel(string serviceName)
         {
             var response = await client.Catalog.Service($"{serviceName}-80");
             var service = response.Response.First();
             return GrpcChannel.ForAddress($"http://{service.ServiceAddress}:{service.ServicePort}");
         }
-
-        public async Task<Greeter.GreeterClient> GetGreeterClientAsync()
+        public async Task<Authentication.AuthenticationClient> GetAuthenticationClientAsync()
         {
-            return new Greeter.GreeterClient(await GetChannel("identityservice"));
+            return new Authentication.AuthenticationClient(await GetChannel("identityservice"));
         }
 
-
-        //public async Task<Authentication.AuthenticationClient> GetAuthenticationClientAsync()
-        //{
-        //    return new Authentication.AuthenticationClient(await GetChannel("identityapi"));
-        //}
-
-        //public async Task<Account.AccountClient> GetAccountClientAsync()
-        //{
-        //    return new Account.AccountClient(await GetChannel("identityapi"));
-        //}
+        public async Task<Account.AccountClient> GetAccountClientAsync()
+        {
+            return new Account.AccountClient(await GetChannel("identityservice"));
+        }
     }
 }

@@ -10,11 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\Protos\greet.proto" GrpcServices="Server" />
+    <Protobuf Include="..\Protos\*.proto" GrpcServices="Server" ProtoRoot="..\Protos" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
   </ItemGroup>
 
