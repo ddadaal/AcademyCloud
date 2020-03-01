@@ -73,20 +73,6 @@ namespace AcademyCloud.API
                         RequireExpirationTime = false,
                         ClockSkew = TimeSpan.Zero,
                     };
-
-                    config.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = c =>
-                        {
-                            Console.WriteLine(c);
-                            return Task.CompletedTask;
-                        },
-                        OnChallenge = c =>
-                        {
-                            Console.WriteLine(c);
-                            return Task.CompletedTask;
-                        }
-                    };
                 });
 
             services.AddSwaggerGen(c =>
