@@ -27,7 +27,7 @@ export function makeHttpError<T = unknown>(status: number, data?: T): HttpError 
 }
 
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://localhost:8080";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

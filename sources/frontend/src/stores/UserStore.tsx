@@ -1,5 +1,7 @@
 import { useState, useCallback } from "react";
 import { Scope } from "src/models/Scope";
+import { getApiService } from "src/apis";
+import { AccountService } from "src/apis/account/AccountService";
 
 const STORAGE_KEY = "User";
 
@@ -11,10 +13,14 @@ interface User {
   remember: boolean;
 }
 
+const accountService = getApiService(AccountService);
+
 export function getUserInfoInStorage(): User | null {
   const data = localStorage.getItem(STORAGE_KEY);
   if (data) {
-    return JSON.parse(data) as User;
+    const user =  JSON.parse(data) as User;
+    accountService.setToken(user.token);
+    return user;
   } else {
     return null;
   }

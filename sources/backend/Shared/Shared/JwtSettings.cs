@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace AcademyCloud.Shared
@@ -10,7 +11,9 @@ namespace AcademyCloud.Shared
     {
         public string Issuer { get; private set; }
 
-        public SymmetricSecurityKey Key { get; private set; }
+        public string KeyString { get; private set; }
+
+        public SymmetricSecurityKey Key => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KeyString));
 
         public JwtSettings(IConfiguration configuration) : this(configuration["Jwt:Issuer"], configuration["Jwt:Key"])
         {
@@ -19,7 +22,7 @@ namespace AcademyCloud.Shared
         public JwtSettings(string issuer = "https//academycloud.com", string key = "this key should be as long as possible hahahahahahaaha")
         {
             Issuer = issuer;
-            Key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+            KeyString = key;
         }
 
         public string GenerateToken(TokenClaims claims)
@@ -27,12 +30,15 @@ namespace AcademyCloud.Shared
             var handler = new JwtSecurityTokenHandler();
 
             var creds = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(
-                issuer: Issuer,
-                audience: Issuer,
-                claims: claims.ToClaims(),
-                signingCredentials: creds
-                );
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Issuer = Issuer,
+                Audience = Issuer,
+                Subject = new ClaimsIdentity(claims.ToClaims()),
+                SigningCredentials = creds,
+            };
+
+            var token = handler.CreateToken(tokenDescriptor);
 
             return handler.WriteToken(token);
         }

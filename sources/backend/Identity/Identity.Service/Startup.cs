@@ -6,6 +6,7 @@ using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
 using AcademyCloud.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,10 +33,19 @@ namespace AcademyCloud.Identity
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                 .RequireAuthenticatedUser()
+                 .Build();
+            });
 
             services
-                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddAuthentication(config =>
+                {
+                    config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(config =>
                 {
                     config.RequireHttpsMetadata = false;
@@ -45,6 +55,8 @@ namespace AcademyCloud.Identity
                         ValidIssuer = jwtSettings.Issuer,
                         ValidAudience = jwtSettings.Issuer,
                         IssuerSigningKey = jwtSettings.Key,
+                        RequireExpirationTime = false,
+                        ClockSkew = TimeSpan.Zero,
                     };
                 });
         }
@@ -60,7 +72,9 @@ namespace AcademyCloud.Identity
             // temp: to generate data into the test db
             dbContext.Database.EnsureCreated();
 
+
             app.UseRouting();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

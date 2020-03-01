@@ -8,6 +8,7 @@ using AcademyCloud.Identity.Services;
 using Microsoft.AspNetCore.Http;
 using Grpc.Core.Interceptors;
 using Grpc.Core;
+using Microsoft.Extensions.Primitives;
 
 namespace AcademyCloud.API.Utils
 {
@@ -32,14 +33,27 @@ namespace AcademyCloud.API.Utils
         /// </summary>
         /// <param name="serviceName"></param>
         /// <returns></returns>
-        private async Task<CallInvoker> GetInvoker(string serviceName) {
+        private async Task<CallInvoker> GetInvoker(string serviceName)
+        {
             var response = await client.Catalog.Service($"{serviceName}-80");
             var service = response.Response.First();
             var channel = GrpcChannel.ForAddress($"http://{service.ServiceAddress}:{service.ServicePort}");
-            var invoker = channel.Intercept(new AuthenticatedCallInterceptor(httpContextAccessor));
+
+            // Append the authorization header if present
+            var invoker = channel.Intercept((source) =>
+            {
+                var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+                if (token != StringValues.Empty)
+                {
+                    source.Add("Authorization", token);
+                }
+                return source;
+            });
+
             return invoker;
 
         }
+
         public async Task<Authentication.AuthenticationClient> GetAuthenticationClientAsync()
         {
             return new Authentication.AuthenticationClient(await GetInvoker("identityservice"));

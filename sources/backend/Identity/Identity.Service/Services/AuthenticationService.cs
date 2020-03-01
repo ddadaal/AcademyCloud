@@ -34,28 +34,32 @@ namespace AcademyCloud.Identity.Services
 
             if (user == null)
             {
-                return new AuthenticationReply() { Success = false, Token = null };
+                return new AuthenticationReply() { Success = false };
             }
 
-            if (scope.System && !user.System)
+            if (scope.System)
             {
-                return new AuthenticationReply { Success = false, Token = null };
+                if (!user.System)
+                {
+                    return new AuthenticationReply { Success = false };
+                }
             }
-            if (scope.ProjectId == null)
+            // In gRPC there is no null value, the empty string means nothing
+            else if (string.IsNullOrEmpty(scope.ProjectId))
             {
                 // it's a domain scope, find whether the user has it
-                var domain = user.Domains.First(domain => (int)domain.Role == (int)scope.Role);
+                var domain = user.Domains.FirstOrDefault(domain => (int)domain.Role == (int)scope.Role);
                 if (domain == null)
                 {
-                    return new AuthenticationReply { Success = false, Token = null };
+                    return new AuthenticationReply { Success = false };
                 }
             }
             else
             {
-                var project = user.Projects.First(project => (int)project.Role == (int)scope.Role);
+                var project = user.Projects.FirstOrDefault(project => (int)project.Role == (int)scope.Role);
                 if (project == null)
                 {
-                    return new AuthenticationReply { Success = false, Token = null };
+                    return new AuthenticationReply { Success = false };
                 }
             }
 

@@ -91,7 +91,7 @@ namespace AcademyCloud.Identity.Services
 
             var user = context.GetTokenClaims();
 
-            var currentUser = await dbContext.Users.FindAsync(user.UserId);
+            var currentUser = await dbContext.Users.FindAsync(Guid.Parse(user.UserId));
 
             ExceptionExtensions.ThrowRpcExceptionIfNull(currentUser, user.UserId);
 
@@ -106,10 +106,10 @@ namespace AcademyCloud.Identity.Services
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(tokenClaims.UserId);
+            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
             ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
 
-            var domain = await dbContext.Domains.FindAsync(request.DomainId);
+            var domain = await dbContext.Domains.FindAsync(Guid.Parse(request.DomainId));
             ExceptionExtensions.ThrowRpcExceptionIfNull(domain, request.DomainId);
 
 
@@ -171,7 +171,7 @@ namespace AcademyCloud.Identity.Services
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(tokenClaims.UserId);
+            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
             ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
 
             if (user.Password != request.Original)
@@ -190,7 +190,7 @@ namespace AcademyCloud.Identity.Services
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(tokenClaims.UserId);
+            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
             ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
 
             user.Email = request.Email;

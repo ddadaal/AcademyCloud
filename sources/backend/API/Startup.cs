@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AcademyCloud.API.Utils;
 using AcademyCloud.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -50,7 +51,12 @@ namespace AcademyCloud.API
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
+                 .RequireAuthenticatedUser()
+                 .Build();
+            });
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -63,7 +69,23 @@ namespace AcademyCloud.API
                         ValidIssuer = jwtSettings.Issuer,
                         ValidAudience = jwtSettings.Issuer,
                         IssuerSigningKey = jwtSettings.Key,
+                        ValidateLifetime = false,
                         RequireExpirationTime = false,
+                        ClockSkew = TimeSpan.Zero,
+                    };
+
+                    config.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = c =>
+                        {
+                            Console.WriteLine(c);
+                            return Task.CompletedTask;
+                        },
+                        OnChallenge = c =>
+                        {
+                            Console.WriteLine(c);
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
