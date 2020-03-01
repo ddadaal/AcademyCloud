@@ -22,7 +22,7 @@ namespace AcademyCloud.Identity.Extensions
                         System = true,
                         DomainId = Guid.Empty.ToString(),
                         DomainName = "System",
-                        Role = UserRole.Admin
+                        Role = Services.Common.UserRole.Admin
                     }
                 };
             }
@@ -36,7 +36,7 @@ namespace AcademyCloud.Identity.Extensions
                 DomainName = x.Project.Domain.Name,
                 ProjectId = x.Project.Id.ToString(),
                 ProjectName = x.Project.Name,
-                Role = (UserRole)x.Role,
+                Role = (Services.Common.UserRole)x.Role,
             }).ToList();
 
             // load 
@@ -53,7 +53,7 @@ namespace AcademyCloud.Identity.Extensions
                     Social = x.Domain.Id == IdentityDbContext.SocialDomainId,
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
-                    Role = (UserRole)x.Role,
+                    Role = (Services.Common.UserRole)x.Role,
                 }));
 
             return scopes;

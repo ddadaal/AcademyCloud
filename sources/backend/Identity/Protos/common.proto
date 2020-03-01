@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "AcademyCloud.Identity.Services.Common";
+
+package common;
+
+message User {
+  string id = 1;
+  string username = 2;
+  string name = 3;
+}
+
+message Domain {
+  string id = 1;
+  string name = 2;
+  repeated User admins = 3;
+  User payUser = 4;
+}
+
+enum UserRole {
+  Admin = 0;
+  Member = 1;
+}
+
+message Project {
+  string id = 1;
+  string name = 2;
+  repeated User admins = 3;
+  repeated User members = 5;
+  User payUser = 4;
+}

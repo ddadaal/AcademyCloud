@@ -32,7 +32,7 @@ export const RemoveUserLink: React.FC<Props> = ({ isSystem, domainId, user, relo
     if (isSystem) {
       await usersService.removeUserFromSystem(userId);
     } else {
-      await domainsService.removeUser(domainId, userId);
+      await domainsService.removeUserFromDomain(domainId, userId);
     }
   }, [isSystem, domainId])
 

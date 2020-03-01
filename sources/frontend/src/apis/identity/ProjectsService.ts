@@ -60,7 +60,7 @@ export class ProjectsService extends HttpService {
   }
 
   // error: status code 400, { code: "payUser" | "onlyAdmin" }
-  async removeUser(projectId: string, userId: string): Promise<void> {
+  async removeUserFromProject(projectId: string, userId: string): Promise<void> {
     await this.fetch({
       method: HttpMethod.DELETE,
       path: `/identity/projects/${projectId}/users/${userId}`,

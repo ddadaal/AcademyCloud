@@ -42,7 +42,7 @@ export const DomainUsersTable: React.FC<Props> = ({ domainId, isAdmin, refreshTo
   }, [domainId]);
 
   const onRemove = useCallback(async (userId: string) => {
-    await domainsService.removeUser(domainId, userId);
+    await domainsService.removeUserFromDomain(domainId, userId);
   }, [domainId]);
 
   const onPayUserSet = useCallback(async (userId: string) => {

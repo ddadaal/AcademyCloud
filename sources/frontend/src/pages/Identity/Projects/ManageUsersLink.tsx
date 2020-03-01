@@ -37,7 +37,7 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
   }, [project]);
 
   const onRemove = useCallback(async (userId: string) => {
-    await projectsService.removeUser(project.id, userId);
+    await projectsService.removeUserFromProject(project.id, userId);
     setChanged(true);
   }, [project]);
 

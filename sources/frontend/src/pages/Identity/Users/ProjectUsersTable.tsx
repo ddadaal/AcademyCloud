@@ -43,7 +43,7 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
   }, [projectId]);
 
   const onRemove = useCallback(async (userId: string) => {
-    await projectsService.removeUser(projectId, userId);
+    await projectsService.removeUserFromProject(projectId, userId);
   }, [projectId]);
 
   const onPayUserSet = useCallback(async (userId: string) => {

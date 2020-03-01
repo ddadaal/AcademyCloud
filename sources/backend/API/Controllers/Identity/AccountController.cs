@@ -14,11 +14,11 @@ namespace AcademyCloud.API.Controllers.Identity
 {
     [Route("/identity/account")]
     [ApiController]
-    public class PersonalAccountController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly ServiceClientFactory factory;
 
-        public PersonalAccountController(ServiceClientFactory factory)
+        public AccountController(ServiceClientFactory factory)
         {
             this.factory = factory;
         }

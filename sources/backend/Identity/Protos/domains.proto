@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option csharp_namespace = "AcademyCloud.Identity.Services.Domains";
+
+package domains;
+
+service Domains {
+  rpc GetDomains(GetDomainsRequest) returns (GetDomainsResponse);
+  rpc GetUsersOfDomain(GetUsersOfDomainRequest)
+      returns (GetUsersOfDomainResponse);
+  rpc AddUserToDomain(AddUserToDomainRequest) returns (AddUserToDomainResponse);
+  rpc ChangeUserRole(ChangeUserRoleRequest) returns (ChangeUserRoleResponse);
+  rpc SetAdmins(SetAdminsRequest) returns (SetAdminsResponse);
+  rpc CreateDomain(CreateDomainRequest) returns (CreateDomainResponse);
+  rpc DeleteDomain(DeleteDomainRequest) returns (DeleteDomainResponse);
+  rpc RemoveUserFromDomain(RemoveUserFromDomainRequest)
+      returns (RemoveUserFromDomainResponse);
+}
+
+message GetDomainsRequest {}
+
+message GetDomainsResponse { repeated common.Domain domains = 1; }
+
+message GetUsersOfDomainRequest { string domainId = 1; }
+
+message GetUsersOfDomainResponse {
+  repeated common.User admins = 1;
+  repeated common.User members = 2;
+}
+
+message AddUserToDomainRequest {
+  string domainId = 1;
+  string userId = 2;
+  common.UserRole role = 3;
+}
+
+message AddUserToDomainResponse {}
+
+message ChangeUserRoleRequest {
+  string domainId = 1;
+  string userId = 2;
+  common.UserRole role = 3;
+}
+
+message ChangeUserRoleResponse {}
+
+message SetAdminsRequest {
+  string domainId = 1;
+  repeated string adminIds = 2;
+}
+
+message SetAdminsResponse {}
+
+message CreateDomainRequest {
+  string name = 1;
+  string payUserId = 2;
+}
+
+message CreateDomainResponse {}
+
+message DeleteDomainRequest { string domainId = 1; }
+
+message DeleteDomainResponse {}
+
+message RemoveUserFromDomainRequest {
+  string domainId = 1;
+  string userId = 2;
+}
+
+message RemoveUserFromDomainResponse {}

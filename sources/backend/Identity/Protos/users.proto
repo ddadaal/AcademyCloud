@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option csharp_namespace = "AcademyCloud.Identity.Services.Users";
+
+package users;
+
+service Users {
+  rpc GetAccessibleUsers(GetAccessibleUsersRequest)
+      returns (GetAccessibleUsersResponse);
+  rpc RemoveUserFromSystem(RemoveUserFromSystemRequest)
+      returns (RemoveUserFromSystemResponse);
+}
+
+message GetAccessibleUsersRequest {}
+
+message GetAccessibleUsersResponse { repeated common.User users = 1; }
+
+message RemoveUserFromSystemRequest { string userId = 1; }
+
+message RemoveUserFromSystemResponse {}

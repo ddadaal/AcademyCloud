@@ -89,7 +89,7 @@ namespace AcademyCloud.Identity.Services.Account
                 {
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
-                    Role = (Authentication.UserRole)x.Role,
+                    Role = (Common.UserRole)x.Role,
                 });
 
             return Task.FromResult(new GetJoinedDomainsResponse()
@@ -126,7 +126,7 @@ namespace AcademyCloud.Identity.Services.Account
             ExceptionExtensions.ThrowRpcExceptionIfNull(domain, request.DomainId);
 
 
-            var assignment = new Domains.Entities.UserDomainAssignment(Guid.NewGuid(), user, domain, Domains.ValueObjects.UserRole.Member);
+            var assignment = new Identity.Domains.Entities.UserDomainAssignment(Guid.NewGuid(), user, domain, Identity.Domains.ValueObjects.UserRole.Member);
             dbContext.UserDomainAssignments.Add(assignment);
 
             await dbContext.SaveChangesAsync();
@@ -147,11 +147,11 @@ namespace AcademyCloud.Identity.Services.Account
             dbContext.Projects.Add(newProject);
 
             // Assign the user into the project and grant admin role
-            var projectAssignment = new UserProjectAssignment(Guid.NewGuid(), newUser, newProject, Domains.ValueObjects.UserRole.Admin);
+            var projectAssignment = new UserProjectAssignment(Guid.NewGuid(), newUser, newProject, Identity.Domains.ValueObjects.UserRole.Admin);
             dbContext.UserProjectAssignments.Add(projectAssignment);
 
             // Assign the user into the social domain and grant member role
-            var domainAssignment = new Domains.Entities.UserDomainAssignment(Guid.NewGuid(), newUser, socialDomain, Domains.ValueObjects.UserRole.Member);
+            var domainAssignment = new Identity.Domains.Entities.UserDomainAssignment(Guid.NewGuid(), newUser, socialDomain, Identity.Domains.ValueObjects.UserRole.Member);
             dbContext.UserDomainAssignments.Add(domainAssignment);
 
             // Save changes
@@ -163,7 +163,7 @@ namespace AcademyCloud.Identity.Services.Account
             var scope = new Scope()
             {
                 System = false,
-                Role = Authentication.UserRole.Admin,
+                Role = Common.UserRole.Admin,
                 DomainId = socialDomainId.ToString(),
                 DomainName = socialDomain.Name,
                 ProjectId = newProject.Id.ToString(),

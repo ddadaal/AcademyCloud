@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option csharp_namespace = "AcademyCloud.Identity.Services.Projects";
+
+package projects;
+
+service Projects {
+  rpc GetAccessibleProjects(GetAccessibleProjectsRequest)
+      returns (GetAccessibleProjectsResponse);
+  rpc GetUsersOfProject(GetUsersOfProjectRequest)
+      returns (GetUsersOfProjectResponse);
+  rpc AddUserToProject(AddUserToProjectRequest)
+      returns (AddUserToProjectResponse);
+  rpc ChangeUserRole(ChangeUserRoleRequest)
+      returns (ChangeUserRoleResponse);
+  rpc RemoveUserFromProject(RemoveUserFromProjectRequest)
+      returns (RemoveUserFromProjectResponse);
+  rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse);
+  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse);
+}
+
+message GetAccessibleProjectsRequest {}
+
+message GetAccessibleProjectsResponse { repeated common.Project projects = 1; }
+
+message GetUsersOfProjectRequest {}
+
+message GetUsersOfProjectResponse {
+  repeated common.User admins = 1;
+  repeated common.User members = 2;
+  common.User payUser = 3;
+}
+
+message AddUserToProjectRequest {
+  string projectId = 1;
+  string userId = 2;
+  common.UserRole role = 3;
+}
+
+message AddUserToProjectResponse {}
+
+message ChangeUserRoleRequest {
+  string projectId = 1;
+  string userId = 2;
+  common.UserRole role = 3;
+}
+
+message ChangeUserRoleResponse {}
+
+message RemoveUserFromProjectRequest {
+  string projectId = 1;
+  string userId = 2;
+}
+
+message RemoveUserFromProjectResponse {}
+
+message CreateProjectRequest {
+  string name = 1;
+  string payUserId = 2;
+}
+
+message CreateProjectResponse {}
+
+message DeleteProjectRequest { string projectId = 1; }
+
+message DeleteProjectResponse {}

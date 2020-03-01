@@ -70,7 +70,7 @@ export class DomainsServiceMock extends DomainsService {
   }
 
   // 400, { code: "payUser" | "onlyAdmin" }
-  async removeUser(domainId: string, userId: string): Promise<void> {
+  async removeUserFromDomain(domainId: string, userId: string): Promise<void> {
     await this.delay();
   }
 }

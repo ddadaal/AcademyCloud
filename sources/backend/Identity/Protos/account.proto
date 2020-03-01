@@ -1,118 +1,92 @@
 syntax = "proto3";
 
+import "common.proto";
 import "authentication.proto";
+
 option csharp_namespace = "AcademyCloud.Identity.Services.Account";
 
 package account;
 
 service Account {
-    rpc GetScopes (GetScopesRequest) returns (GetScopesResponse);
-    rpc Register (RegisterRequest) returns (RegisterResponse);
-    rpc GetProfile (GetProfileRequest) returns (GetProfileResponse);
-    rpc UpdateProfile (UpdateProfileRequest) returns (UpdateProfileResponse);
-    rpc UpdatePassword (UpdatePasswordRequest) returns (UpdatePasswordResponse);
-    rpc GetJoinedDomains (GetJoinedDomainsRequest) returns (GetJoinedDomainsResponse);
-    rpc ExitDomain (ExitDomainRequest) returns (ExitDomainResponse);
-    rpc GetJoinableDomains (GetJoinableDomainsRequest) returns (GetJoinableDomainsResponse);
-    rpc JoinDomain (JoinDomainRequest) returns (JoinDomainResponse);
+  rpc GetScopes(GetScopesRequest) returns (GetScopesResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
+  rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordResponse);
+  rpc GetJoinedDomains(GetJoinedDomainsRequest)
+      returns (GetJoinedDomainsResponse);
+  rpc ExitDomain(ExitDomainRequest) returns (ExitDomainResponse);
+  rpc GetJoinableDomains(GetJoinableDomainsRequest)
+      returns (GetJoinableDomainsResponse);
+  rpc JoinDomain(JoinDomainRequest) returns (JoinDomainResponse);
 }
 
-message GetScopesRequest {
+message GetScopesRequest {}
 
-}
-
-message GetScopesResponse {
-    repeated authentication.Scope scopes = 1;
-}
+message GetScopesResponse { repeated authentication.Scope scopes = 1; }
 
 message RegisterRequest {
-    string username = 1;
-    string password = 2;
-    string email = 3;
+  string username = 1;
+  string password = 2;
+  string email = 3;
 }
 
 message RegisterResponse {
-    string token = 1;
-    authentication.Scope scope = 2;
+  string token = 1;
+  authentication.Scope scope = 2;
 }
 
-message GetProfileRequest {
-    
-}
+message GetProfileRequest {}
 
-message GetProfileResponse {
-    Profile profile = 1;
-}
+message GetProfileResponse { Profile profile = 1; }
 
 message Profile {
-    string id = 1;
-    string username = 3;
-    string email = 2;
+  string id = 1;
+  string username = 3;
+  string email = 2;
 }
 
-message UpdateProfileRequest {
-    string email = 1;
-}
+message UpdateProfileRequest { string email = 1; }
 
-message UpdateProfileResponse {
-    
-}
+message UpdateProfileResponse {}
 
 message UpdatePasswordRequest {
-   string original = 1;
-   string updated = 2;
+  string original = 1;
+  string updated = 2;
 }
 
 message UpdatePasswordResponse {
-    enum Result {
-        Success = 0;
-        OriginalNotMatch = 1;
-	}
-    Result result = 1;
+  enum Result {
+    Success = 0;
+    OriginalNotMatch = 1;
+  }
+  Result result = 1;
 }
 
-message GetJoinedDomainsRequest {
-   
-}
+message GetJoinedDomainsRequest {}
 
 message UserDomainAssignment {
-    string domainId = 1;
-    string domainName = 2;
-    authentication.UserRole role = 3;
+  string domainId = 1;
+  string domainName = 2;
+  common.UserRole role = 3;
 }
 
-message GetJoinedDomainsResponse {
-    repeated UserDomainAssignment domains = 1;
-}
+message GetJoinedDomainsResponse { repeated UserDomainAssignment domains = 1; }
 
-message ExitDomainRequest {
-   string domainId = 1;
-}
+message ExitDomainRequest { string domainId = 1; }
 
-message ExitDomainResponse {
-}
+message ExitDomainResponse {}
 
-message GetJoinableDomainsRequest {
-   
-}
+message GetJoinableDomainsRequest {}
 
 message GetJoinableDomainsResponse {
-   message JoinableDomain { 
-       string id = 1;
-       string name = 2;
-   }
-   repeated JoinableDomain domains = 1;
+  message JoinableDomain {
+    string id = 1;
+    string name = 2;
+  }
+  repeated JoinableDomain domains = 1;
 }
 
-message JoinDomainRequest {
-   string domainId = 1;
-}
+message JoinDomainRequest { string domainId = 1; }
 
-message JoinDomainResponse {
-   
-}
-
-
-
-
-
+message JoinDomainResponse {}

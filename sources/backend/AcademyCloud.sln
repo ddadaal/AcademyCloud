@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AF1A03
 	ProjectSection(SolutionItems) = preProject
 		Identity\Protos\account.proto = Identity\Protos\account.proto
 		Identity\Protos\authentication.proto = Identity\Protos\authentication.proto
+		Identity\Protos\common.proto = Identity\Protos\common.proto
+		Identity\Protos\domains.proto = Identity\Protos\domains.proto
+		Identity\Protos\projects.proto = Identity\Protos\projects.proto
+		Identity\Protos\users.proto = Identity\Protos\users.proto
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared\Shared.csproj", "{4D48A7F5-EB13-460E-8323-B14D4806D121}"

@@ -37,7 +37,7 @@ export class ProjectsServiceMock extends ProjectsService {
     throw { code: "payUser" };
   }
 
-  async removeUser(projectId: string, userId: string): Promise<void> {
+  async removeUserFromProject(projectId: string, userId: string): Promise<void> {
     await this.delay();
     throw { code: "onlyAdmin" };
   }

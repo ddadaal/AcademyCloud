@@ -101,7 +101,7 @@ namespace AcademyCloud.Identity.Services.Authentication
                     System = tokenClaims.System,
                     DomainId = tokenClaims.DomainId,
                     ProjectId = tokenClaims.ProjectId,
-                    Role = (UserRole)tokenClaims.Role,
+                    Role = (Common.UserRole)tokenClaims.Role,
                 }
             });
         }
