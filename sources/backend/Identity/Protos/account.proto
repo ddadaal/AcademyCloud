@@ -1,11 +1,12 @@
 syntax = "proto3";
 
 import "authentication.proto";
-option csharp_namespace = "AcademyCloud.Identity.Services";
+option csharp_namespace = "AcademyCloud.Identity.Services.Account";
 
 package account;
 
 service Account {
+    rpc GetScopes (GetScopesRequest) returns (GetScopesResponse);
     rpc Register (RegisterRequest) returns (RegisterResponse);
     rpc GetProfile (GetProfileRequest) returns (GetProfileResponse);
     rpc UpdateProfile (UpdateProfileRequest) returns (UpdateProfileResponse);
@@ -14,6 +15,14 @@ service Account {
     rpc ExitDomain (ExitDomainRequest) returns (ExitDomainResponse);
     rpc GetJoinableDomains (GetJoinableDomainsRequest) returns (GetJoinableDomainsResponse);
     rpc JoinDomain (JoinDomainRequest) returns (JoinDomainResponse);
+}
+
+message GetScopesRequest {
+
+}
+
+message GetScopesResponse {
+    repeated authentication.Scope scopes = 1;
 }
 
 message RegisterRequest {

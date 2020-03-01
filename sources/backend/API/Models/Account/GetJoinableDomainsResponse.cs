@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static AcademyCloud.Identity.Services.GetJoinableDomainsResponse.Types;
+using static AcademyCloud.Identity.Services.Account.GetJoinableDomainsResponse.Types;
 
 namespace AcademyCloud.API.Models.Account
 {

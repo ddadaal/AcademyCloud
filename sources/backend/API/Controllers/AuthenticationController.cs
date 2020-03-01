@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AcademyCloud.API.Models;
 using AcademyCloud.API.Utils;
 using AcademyCloud.Identity.Services;
+using AcademyCloud.Identity.Services.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace AcademyCloud.API.Controllers
 
         [HttpGet]
         [Route("scopes")]
-        public async Task<ActionResult<ScopesResponse>> GetScopes([FromQuery]string username, [FromQuery] string password)
+        public async Task<ActionResult<ScopesResponse>> GetScopes([FromQuery]string username = "", [FromQuery] string password = "")
         {
             var authClient = await factory.GetAuthenticationClientAsync();
 

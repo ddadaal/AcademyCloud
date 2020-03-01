@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Domains\Services\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>
 

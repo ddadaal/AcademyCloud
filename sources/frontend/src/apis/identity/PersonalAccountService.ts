@@ -1,6 +1,7 @@
 import { HttpService, HttpMethod } from '../HttpService';
 import { Profile } from "src/models/Profile";
 import { UserDomainAssignment } from "src/models/UserDomainAssignment";
+import { Scope } from "src/models/Scope";
 
 export interface ProfileResponse {
   profile: Profile;
@@ -22,7 +23,22 @@ export interface GetJoinableDomainsResponse {
   domains: { id: string; name: string }[];
 }
 
+export interface GetScopesResponse {
+  scopes: Scope[];
+}
+
 export class PersonalAccountService extends HttpService {
+
+
+  async getScopes(): Promise<GetScopesResponse> {
+    const data = await this.fetch<GetScopesResponse>({
+      method: HttpMethod.GET,
+      path: "/identity/account/scopes",
+    });
+
+    return data;
+  }
+
   async getProfile(): Promise<ProfileResponse> {
     const response = await this.fetch<ProfileResponse>({
       method: HttpMethod.GET,

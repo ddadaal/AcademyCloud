@@ -1,6 +1,7 @@
 ﻿using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Domains.Entities;
 using AcademyCloud.Identity.Extensions;
+using AcademyCloud.Identity.Services.Authentication;
 using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Services
+namespace AcademyCloud.Identity.Services.Account
 {
     public class AccountService : Account.AccountBase
     {
@@ -22,6 +23,18 @@ namespace AcademyCloud.Identity.Services
         {
             this.dbContext = dbContext;
             this.jwtSettings = jwtSettings;
+        }
+
+        [Authorize]
+        public override async Task<GetScopesResponse> GetScopes(GetScopesRequest request, ServerCallContext context)
+        {
+            var tokenClaims = context.GetTokenClaims();
+
+            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
+
+            ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
+
+            return new GetScopesResponse { Scopes = { user.GetAvailableScopes() } };
         }
 
         [Authorize]
@@ -76,7 +89,7 @@ namespace AcademyCloud.Identity.Services
                 {
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
-                    Role = (UserRole)x.Role,
+                    Role = (Authentication.UserRole)x.Role,
                 });
 
             return Task.FromResult(new GetJoinedDomainsResponse()
@@ -150,7 +163,7 @@ namespace AcademyCloud.Identity.Services
             var scope = new Scope()
             {
                 System = false,
-                Role = UserRole.Admin,
+                Role = Authentication.UserRole.Admin,
                 DomainId = socialDomainId.ToString(),
                 DomainName = socialDomain.Name,
                 ProjectId = newProject.Id.ToString(),

@@ -1,7 +1,23 @@
-import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetJoinedDomainsResponse, GetJoinableDomainsResponse } from './PersonalAccountService';
+import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetJoinedDomainsResponse, GetJoinableDomainsResponse, GetScopesResponse } from './PersonalAccountService';
 import { makeHttpError } from '../HttpService';
 
 export class PersonalAccountServiceMock extends PersonalAccountService {
+
+  async getScopes(): Promise<GetScopesResponse> {
+    await this.delay();
+
+    return {
+      scopes: [
+        { domainId: "NJUID", domainName: "NJU", role: "member" },
+        { domainId: "NJUID", domainName: "NJU", projectName: "67", projectId: "67", role: "admin" },
+        { domainId: "NJUID", domainName: "NJU", projectName: "fgh", projectId: "fgh", role: "member" },
+        { domainId: "PKUID", domainName: "PKU", role: "admin" },
+        { social: true, domainId: "socialID", domainName: "social", projectName: "test", projectId: "test", role: "admin" },
+      ],
+    }
+  }
+
+
   async getProfile(): Promise<ProfileResponse> {
     await this.delay();
     return {

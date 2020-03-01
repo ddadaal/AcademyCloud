@@ -12,7 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Services
+namespace AcademyCloud.Identity.Services.Authentication
 {
     public class AuthenticationService : Authentication.AuthenticationBase
     {
@@ -83,54 +83,7 @@ namespace AcademyCloud.Identity.Services
                 return new GetScopesReply() { Success = false };
             }
 
-            // if the user is system user,
-            if (user.System)
-            {
-                return new GetScopesReply()
-                {
-                    Scopes = {
-                        new Scope()
-                        {
-                            System = true,
-                            DomainId = Guid.Empty.ToString(),
-                            DomainName = "System",
-                            Role = UserRole.Admin
-                        }
-                    },
-                    Success = true,
-                };
-            }
-
-            // add projects
-            var scopes = user.Projects.Select(x => new Scope()
-            {
-                System = false,
-                Social = x.Project.Domain.Id == IdentityDbContext.SocialDomainId,
-                DomainId = x.Project.Domain.Id.ToString(),
-                DomainName = x.Project.Domain.Name,
-                ProjectId = x.Project.Id.ToString(),
-                ProjectName = x.Project.Name,
-                Role = (UserRole)x.Role,
-            }).ToList();
-
-            // load 
-
-            // add domains that are either admin, or not the domain of a project scopes.
-            scopes.AddRange(user.Domains.AsEnumerable()
-                .Where(x =>
-                    x.Role == Domains.ValueObjects.UserRole.Admin ||
-                    !scopes.Exists(project => project.DomainId == x.Domain.Id.ToString())
-                )
-                .Select(x => new Scope()
-                {
-                    System = false,
-                    Social = x.Domain.Id == IdentityDbContext.SocialDomainId,
-                    DomainId = x.Domain.Id.ToString(),
-                    DomainName = x.Domain.Name,
-                    Role = (UserRole)x.Role,
-                }));
-
-            return new GetScopesReply() { Success = true, Scopes = { scopes } };
+            return new GetScopesReply() { Success = true, Scopes = { user.GetAvailableScopes() } };
 
         }
 

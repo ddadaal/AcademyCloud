@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.API.Models;
 using AcademyCloud.API.Models.Account;
 using AcademyCloud.API.Utils;
 using Microsoft.AspNetCore.Authentication;
@@ -21,13 +22,24 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             this.factory = factory;
         }
+    
+        [HttpGet("scopes")]
+        [Authorize]
+        public async Task<ActionResult<GetScopesResponse>> GetScopes()
+        {
+            var service = await factory.GetAccountClientAsync();
+
+            var resp = await service.GetScopesAsync(new AcademyCloud.Identity.Services.Account.GetScopesRequest());
+
+            return new GetScopesResponse { Scopes = resp.Scopes };
+        }
 
         [HttpPost]
         public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest request)
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.RegisterAsync(new AcademyCloud.Identity.Services.RegisterRequest()
+            var resp = await service.RegisterAsync(new AcademyCloud.Identity.Services.Account.RegisterRequest()
             {
                 Username = request.Username,
                 Password = request.Password,
@@ -44,7 +56,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.GetProfileAsync(new AcademyCloud.Identity.Services.GetProfileRequest()
+            var resp = await service.GetProfileAsync(new AcademyCloud.Identity.Services.Account.GetProfileRequest()
             {
 
             });
@@ -59,7 +71,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.UpdateProfileAsync(new AcademyCloud.Identity.Services.UpdateProfileRequest()
+            var resp = await service.UpdateProfileAsync(new AcademyCloud.Identity.Services.Account.UpdateProfileRequest()
             {
                 Email = request.Email,
             });
@@ -73,13 +85,13 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.UpdatePasswordAsync(new AcademyCloud.Identity.Services.UpdatePasswordRequest()
+            var resp = await service.UpdatePasswordAsync(new AcademyCloud.Identity.Services.Account.UpdatePasswordRequest()
             {
                 Original = request.Original,
                 Updated = request.Updated,
             });
 
-            if (resp.Result == AcademyCloud.Identity.Services.UpdatePasswordResponse.Types.Result.Success)
+            if (resp.Result == AcademyCloud.Identity.Services.Account.UpdatePasswordResponse.Types.Result.Success)
             {
                 return NoContent();
             }
@@ -95,7 +107,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.GetJoinedDomainsAsync(new AcademyCloud.Identity.Services.GetJoinedDomainsRequest()
+            var resp = await service.GetJoinedDomainsAsync(new AcademyCloud.Identity.Services.Account.GetJoinedDomainsRequest()
             {
 
             });
@@ -111,7 +123,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.ExitDomainAsync(new AcademyCloud.Identity.Services.ExitDomainRequest()
+            var resp = await service.ExitDomainAsync(new AcademyCloud.Identity.Services.Account.ExitDomainRequest()
             {
                 DomainId = domainId
             });
@@ -125,7 +137,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.GetJoinableDomainsAsync(new AcademyCloud.Identity.Services.GetJoinableDomainsRequest()
+            var resp = await service.GetJoinableDomainsAsync(new AcademyCloud.Identity.Services.Account.GetJoinableDomainsRequest()
             {
 
             });
@@ -137,7 +149,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             var service = await factory.GetAccountClientAsync();
 
-            var resp = await service.JoinDomainAsync(new AcademyCloud.Identity.Services.JoinDomainRequest()
+            var resp = await service.JoinDomainAsync(new AcademyCloud.Identity.Services.Account.JoinDomainRequest()
             {
                 DomainId = domainId
             });

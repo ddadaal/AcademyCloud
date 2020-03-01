@@ -34,11 +34,6 @@ export class AccountServiceMock extends AccountService {
     }
   }
 
-  async refreshScopes(): Promise<ScopesResponse> {
-    await this.delay();
-    return await this.getScopes("test");
-  }
-
   async changeScope(scope: Scope): Promise<LoginResponse> {
     await this.delay();
     return { token: `testtoken${JSON.stringify(scope)}` };

@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.API.Models;
 using AcademyCloud.Identity.Services;
+using AcademyCloud.Identity.Services.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
