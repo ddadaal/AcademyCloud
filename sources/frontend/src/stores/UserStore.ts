@@ -5,10 +5,10 @@ import { AccountService } from "src/apis/account/AccountService";
 
 const STORAGE_KEY = "User";
 
+
 interface User {
   username: string;
   scope: Scope;
-  availableScopes: Scope[];
   token: string;
   remember: boolean;
 }

@@ -27,6 +27,15 @@ export class AccountService extends HttpService {
     return data;
   }
 
+  async refreshScopes(): Promise<ScopesResponse> {
+    const data = await this.fetch<ScopesResponse>({
+      method: HttpMethod.GET,
+      path: "/auth/scopes",
+    });
+
+    return data;
+  }
+
   async login(username: string, password: string, scope: Scope): Promise<LoginResponse> {
     const data = await this.fetch<LoginResponse>({
       method: HttpMethod.POST,

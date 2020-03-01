@@ -6,6 +6,7 @@ import { I18nStore } from "./i18n";
 import PageLoading from "./components/PageLoading";
 import { NavStore } from "./layouts/nav/NavStore";
 import { ConfigProvider } from "antd";
+import { AvailableScopesStore } from "./stores/AvailableScopesStore";
 
 const AsyncHomePages = React.lazy(() => import("./pages/Home"));
 const AsyncNormalPages = React.lazy(() => import("./pages/NormalPages"));
@@ -40,11 +41,12 @@ function AntdConfigProvider({ children }) {
 
 function App() {
   const userStore = createStore(UserStore);
+  const availableScopesStore = createStore(AvailableScopesStore);
   const i18nStore = createStore(I18nStore);
   const navStore = createStore(NavStore);
 
   return (
-    <StoreProvider stores={[userStore, i18nStore, navStore]}>
+    <StoreProvider stores={[userStore, i18nStore, navStore, availableScopesStore]}>
       <AntdConfigProvider>
         <Suspense fallback={<PageLoading />}>
           <Router primary={false} >

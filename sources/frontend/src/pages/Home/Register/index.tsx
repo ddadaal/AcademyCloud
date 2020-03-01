@@ -8,6 +8,7 @@ import { AccountService } from "src/apis/account/AccountService";
 import { getApiService } from "src/apis";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
+import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 import { HttpError } from "src/apis/HttpService";
 import { PageMetadata } from "src/utils/PageMetadata";
 import { required, email as emailMessage } from "src/utils/validateMessages";
@@ -17,6 +18,7 @@ const root = lang.homepage.registerForm;
 export const RegisterForm: React.FC<RouteComponentProps> = () => {
 
   const userStore = useStore(UserStore);
+  const availableScopesStore = useStore(AvailableScopesStore);
   const [notifyApi, contextHolder] = notification.useNotification();
   const [registering, setRegistering] = useState(false);
 
@@ -29,14 +31,14 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
     const api = getApiService(AccountService);
 
     try {
-      const registeringResponse = await api.register(username, password, email);
+      const { scope, token} = await api.register(username, password, email);
       userStore.login({
         username,
-        scope: registeringResponse.scope,
-        availableScopes: [registeringResponse.scope],
-        token: registeringResponse.token,
+        scope,
+        token,
         remember: true
       });
+      availableScopesStore.setScopes([scope], true);
       await navigate("/resources");
     } catch (e) {
       const ex = e as HttpError;

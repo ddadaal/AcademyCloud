@@ -269,6 +269,7 @@ export default {
         opName: "Switch",
         failDescription: "Please re-login.",
         changing: "Switching to {}...",
+        reloading: "Reloading...",
       },
       user: {
         selfCenter: "Manage Account",

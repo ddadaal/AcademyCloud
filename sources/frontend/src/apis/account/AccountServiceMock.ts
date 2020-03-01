@@ -1,10 +1,10 @@
 import { AccountService, LoginResponse, ScopesResponse, RegisterResponse } from "./AccountService";
 import { delay } from "src/utils/delay";
-import { makeHttpError } from '../HttpService';
+import { makeHttpError, HttpMethod } from '../HttpService';
 import { Scope } from "src/models/Scope";
 
 export class AccountServiceMock extends AccountService {
-  async getScopes(username: string, password: string): Promise<ScopesResponse> {
+  async getScopes(username: string): Promise<ScopesResponse> {
     await this.delay();
     if (username === "system") {
       return {
@@ -32,6 +32,11 @@ export class AccountServiceMock extends AccountService {
         domainId: "NJU", domainName: "NJU", role: "member",
       }
     }
+  }
+
+  async refreshScopes(): Promise<ScopesResponse> {
+    await this.delay();
+    return await this.getScopes("test");
   }
 
   async changeScope(scope: Scope): Promise<LoginResponse> {

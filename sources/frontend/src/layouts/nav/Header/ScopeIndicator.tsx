@@ -9,6 +9,7 @@ import { ClickableA } from "src/components/ClickableA";
 import { getApiService } from "src/apis";
 import { AccountService } from "src/apis/account/AccountService";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
+import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 
 const root = lang.nav.scopeIndicator;
 
@@ -19,13 +20,24 @@ export const ScopeIndicator: React.FC = () => {
   const [changingTo, setChangingTo] = useState<Scope | null>(null);
 
   const userStore = useStore(UserStore);
+  const availableScopesStore = useStore(AvailableScopesStore);
+
   const { user } = userStore;
 
   const [api, contextHolder] = useLocalizedNotification();
 
   if (!user) { return null; }
 
-  const { scope: currentScope, availableScopes } = user;
+  const { scope: currentScope } = user;
+  const { scopes, reloading } = availableScopesStore;
+
+  if (reloading) {
+    return (
+      <ClickableA>
+        <BookOutlined/> <Localized id={root.reloading} />
+      </ClickableA>
+    );
+  }
 
   if (isSystemScope(currentScope)) {
     return (
@@ -35,9 +47,9 @@ export const ScopeIndicator: React.FC = () => {
     );
   }
 
-  const socialScope = availableScopes.find(isSocialScope);
-  const projectScopes = availableScopes.filter((x) => x.projectId && !x.social)
-  const domainScopes = availableScopes.filter((x) => !x.projectId)
+  const socialScope = scopes.find(isSocialScope);
+  const projectScopes = scopes.filter((x) => x.projectId && !x.social)
+  const domainScopes = scopes.filter((x) => !x.projectId)
 
   const menuItems = [] as React.ReactNode[];
 
@@ -105,8 +117,10 @@ export const ScopeIndicator: React.FC = () => {
 
   // add social scope
   if (socialScope) {
+    if (menuItems.length > 0) {
+      menuItems.push(<Menu.Divider key="socialDivider" />);
+    }
     menuItems.push(
-      <Menu.Divider key="social" />,
       <Menu.Item disabled={!!changingTo} onClick={onChange(socialScope)} key={scopeId(socialScope)}>
         {scopeNameWithRole(socialScope)}
       </Menu.Item>

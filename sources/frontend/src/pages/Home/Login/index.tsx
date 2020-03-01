@@ -11,12 +11,14 @@ import { navigate, RouteComponentProps } from "@reach/router";
 import { FormButton } from "src/pages/Home/HomePageLayout";
 import { PageMetadata } from "src/utils/PageMetadata";
 import { required } from "src/utils/validateMessages";
+import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 
 const root = lang.homepage.loginForm;
 
 export const LoginForm: React.FC<RouteComponentProps> = () => {
 
   const userStore = useStore(UserStore);
+  const availableScopesStore = useStore(AvailableScopesStore);
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -37,11 +39,10 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       userStore.login({
         username,
         scope,
-        availableScopes: scopesResp.scopes,
         token: loginResponse.token,
         remember: values.remember,
       });
-
+      availableScopesStore.setScopes(scopesResp.scopes, values.remember);
       await navigate("/resources");
 
     } catch (e) {

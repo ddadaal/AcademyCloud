@@ -269,6 +269,7 @@ export default {
         opName: "切换",
         failDescription: "请退出登录重试",
         changing: "正在切换到{}...",
+        reloading: "重新加载中...",
       },
       user: {
         selfCenter: "账号管理",
