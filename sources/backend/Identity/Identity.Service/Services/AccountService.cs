@@ -55,8 +55,6 @@ namespace AcademyCloud.Identity.Services
 
         public override async Task<RegisterResponse> Register(RegisterRequest request, ServerCallContext context)
         {
-            // Check whether username exists
-
             // Create the user
             var newUser = new User(Guid.NewGuid(), request.Username, request.Password, request.Email, false);
             dbContext.Users.Add(newUser);
