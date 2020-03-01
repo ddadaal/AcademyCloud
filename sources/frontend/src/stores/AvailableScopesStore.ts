@@ -43,6 +43,11 @@ export function AvailableScopesStore() {
     }
   }, []);
 
-  return { scopes, setScopes: set, updateScopes, reloading };
+  const logout = useCallback(() => {
+    localStorage.removeItem(AVAILABLE_SCOPES_KEY);
+    setScopes([]);
+  }, []);
+
+  return { scopes, setScopes: set, updateScopes, reloading, logout };
 
 }

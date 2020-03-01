@@ -148,6 +148,7 @@ export default {
             error: {
               isPayAccount: "您是这个域的付款账号。请先将付款账号修改为其他账号，再删除。",
               notJoined: "您未加入这个域！",
+              cannotExitCurrentDomain: "不能退出现在正处于的域中！请切换到其他域再退出这个域。",
             }
           },
         },

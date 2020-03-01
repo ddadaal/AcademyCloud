@@ -6,10 +6,14 @@ import { Localized, lang } from "src/i18n";
 import { Modal } from "antd";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { ExclamationOutlined } from "@ant-design/icons";
+import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
+import { useStore } from "simstate";
+import { DisabledA } from "src/components/DisabledA";
 
 interface Props {
   domain: UserDomainAssignment;
   reload: () => void;
+  disabled: boolean;
 }
 
 const root = lang.identity.account.joinedDomains.table;
@@ -17,15 +21,17 @@ const opResult = lang.components.operationResult;
 
 const service = getApiService(PersonalAccountService);
 
-const exitDomain = async ([domainId]) => {
+const exitDomain = async ([domainId]: [string]) => {
   await service.exitDomain(domainId);
 };
 
-export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
+export const ExitDomainLink: React.FC<Props> = ({ reload, domain, disabled }) => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
   const [modalApi, modalContextHolder] = Modal.useModal();
+
+  const availableScopesStore = useStore(AvailableScopesStore);
 
   const onClick = useCallback(() => {
     modalApi.confirm({
@@ -36,7 +42,8 @@ export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
           reload();
           api.success({
             messageId: [opResult.success, [root.opName]],
-          })
+          });
+          availableScopesStore.updateScopes();
         })
         .catch(({ data }) => api.error({
           messageId: [opResult.fail, [root.opName]],
@@ -51,9 +58,9 @@ export const DomainTableExitLink: React.FC<Props> = ({ reload, domain }) => {
     <span>
       {contextHolder}
       {modalContextHolder}
-      <a onClick={onClick}>
+      <DisabledA disabled={disabled} message={<Localized id={root.error.cannotExitCurrentDomain} />} onClick={onClick}>
         <Localized id={root.exit} />
-      </a>
+      </DisabledA>
     </span>
   );
 }

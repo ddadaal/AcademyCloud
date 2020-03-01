@@ -8,7 +8,8 @@ import { useAsync } from "react-async";
 import { required } from "src/utils/validateMessages";
 import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
 import { JoinableDomainSelectionTable } from "src/pages/Identity/Account/JoinedDomains/JoinableDomainSelectionTable";
-import { arrayContainsElement } from "src/utils/Arrays";
+import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
+import { useStore } from "simstate";
 
 interface Props {
   reload: () => void;
@@ -37,12 +38,15 @@ export const JoinDomainLink: React.FC<Props> = (props) => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
+  const availableScopesStore = useStore(AvailableScopesStore);
+
   const { isPending: joining, run } = useAsync({
     deferFn: joinDomain,
     onResolve: () => {
       setModalShown(false);
       api.success({ messageId: [opResult.success, [root.opName]] });
       props.reload();
+      availableScopesStore.updateScopes();
     },
     onReject: () => {
       api.error({
