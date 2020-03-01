@@ -1,7 +1,7 @@
 import { Scope } from "src/models/Scope";
 import { useState, useCallback } from "react";
 import { getApiService } from "src/apis";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { AccountService } from "src/apis/identity/AccountService";
 
 const AVAILABLE_SCOPES_KEY = "available_scopes";
 
@@ -19,7 +19,7 @@ function save(scopes: Scope[]) {
   localStorage.setItem(AVAILABLE_SCOPES_KEY, JSON.stringify(scopes));
 }
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 export function AvailableScopesStore() {
   const [scopes, setScopes] = useState<Scope[]>(read);

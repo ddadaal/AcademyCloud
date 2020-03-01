@@ -1,14 +1,14 @@
 import React from "react";
 import { Form, Input, Button, Spin } from "antd";
 import { getApiService } from "src/apis";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { AccountService } from "src/apis/identity/AccountService";
 import { useAsync } from "react-async";
 import { lang, Localized } from "src/i18n";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { email, required } from "src/utils/validateMessages";
 
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 const getProfile = async () => {
   const { profile } = await service.getProfile();

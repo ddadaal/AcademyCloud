@@ -1,14 +1,14 @@
 import React from "react";
 import { Form, Input, Button, Spin } from "antd";
 import { getApiService } from "src/apis";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { AccountService } from "src/apis/identity/AccountService";
 import { useAsync } from "react-async";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { lang, Localized } from "src/i18n";
 import { required } from "src/utils/validateMessages";
 
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 const updatePassword = async ([original, updated]) => {
   return await service.updatePassword(original, updated);

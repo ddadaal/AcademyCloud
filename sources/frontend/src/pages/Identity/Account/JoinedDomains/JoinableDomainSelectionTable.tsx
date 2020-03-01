@@ -1,5 +1,5 @@
 import React from "react";
-import { GetJoinableDomainsResponse, PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { GetJoinableDomainsResponse, AccountService } from "src/apis/identity/AccountService";
 import { getApiService } from "src/apis";
 import { useAsync } from "react-async";
 import { Table } from "antd";
@@ -7,7 +7,7 @@ import { Localized, lang } from "src/i18n";
 
 const root = lang.identity.account.joinDomain;
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 const getJoinableDomains = async () => {
   const resp = await service.getJoinableDomains();

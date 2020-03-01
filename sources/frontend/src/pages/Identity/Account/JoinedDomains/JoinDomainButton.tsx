@@ -6,7 +6,7 @@ import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { getApiService } from "src/apis";
 import { useAsync } from "react-async";
 import { required } from "src/utils/validateMessages";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { AccountService } from "src/apis/identity/AccountService";
 import { JoinableDomainSelectionTable } from "src/pages/Identity/Account/JoinedDomains/JoinableDomainSelectionTable";
 import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 import { useStore } from "simstate";
@@ -18,7 +18,7 @@ interface Props {
 const root = lang.identity.account.joinDomain;
 const opResult = lang.components.operationResult;
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 const joinDomain = ([domainId]: [string]) => {
   return service.joinDomain(domainId);

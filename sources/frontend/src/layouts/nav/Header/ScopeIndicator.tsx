@@ -7,7 +7,7 @@ import { lang, Localized } from "src/i18n";
 import { scopeId, scopeName, Scope, isSystemScope, isSocialScope } from "src/models/Scope";
 import { ClickableA } from "src/components/ClickableA";
 import { getApiService } from "src/apis";
-import { AccountService } from "src/apis/account/AccountService";
+import { AuthenticationService } from "src/apis/account/AuthenticationService";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 
@@ -70,7 +70,7 @@ export const ScopeIndicator: React.FC = () => {
 
   const onChange = (scope: Scope) => async () => {
     // re-login
-    const apiService = getApiService(AccountService);
+    const apiService = getApiService(AuthenticationService);
     setChangingTo(scope);
     try {
       const resp = await apiService.changeScope(scope);

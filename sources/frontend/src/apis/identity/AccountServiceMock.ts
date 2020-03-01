@@ -1,7 +1,7 @@
-import { PersonalAccountService, ProfileResponse, UpdateProfileRequest, GetJoinedDomainsResponse, GetJoinableDomainsResponse, GetScopesResponse } from './PersonalAccountService';
+import { AccountService, ProfileResponse, UpdateProfileRequest, GetJoinedDomainsResponse, GetJoinableDomainsResponse, GetScopesResponse } from './AccountService';
 import { makeHttpError } from '../HttpService';
 
-export class PersonalAccountServiceMock extends PersonalAccountService {
+export class AccountServiceMock extends AccountService {
 
   async getScopes(): Promise<GetScopesResponse> {
     await this.delay();

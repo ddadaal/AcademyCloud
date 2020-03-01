@@ -1,9 +1,9 @@
-import { AccountService, LoginResponse, ScopesResponse, RegisterResponse } from "./AccountService";
+import { AuthenticationService, LoginResponse, ScopesResponse, RegisterResponse } from "./AuthenticationService";
 import { delay } from "src/utils/delay";
 import { makeHttpError, HttpMethod } from '../HttpService';
 import { Scope } from "src/models/Scope";
 
-export class AccountServiceMock extends AccountService {
+export class AuthenticationServiceMock extends AuthenticationService {
   async getScopes(username: string): Promise<ScopesResponse> {
     await this.delay();
     if (username === "system") {

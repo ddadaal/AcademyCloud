@@ -4,14 +4,14 @@ import { lang, Localized } from "src/i18n";
 import { UserDomainAssignment } from "src/models/UserDomainAssignment";
 import { useAsync } from "react-async";
 import { getApiService } from "src/apis";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { AccountService } from "src/apis/identity/AccountService";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { ExitDomainLink } from "src/pages/Identity/Account/JoinedDomains/ExitDomainLink";
 
 const root = lang.identity.account.joinedDomains.table;
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 interface Props {
   refreshToken: any;

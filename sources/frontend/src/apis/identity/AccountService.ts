@@ -27,7 +27,7 @@ export interface GetScopesResponse {
   scopes: Scope[];
 }
 
-export class PersonalAccountService extends HttpService {
+export class AccountService extends HttpService {
 
 
   async getScopes(): Promise<GetScopesResponse> {

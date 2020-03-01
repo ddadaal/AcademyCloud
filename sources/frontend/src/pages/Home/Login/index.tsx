@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { getApiService } from "src/apis";
-import { AccountService } from "src/apis/account/AccountService";
+import { AuthenticationService } from "src/apis/account/AuthenticationService";
 import { navigate, RouteComponentProps } from "@reach/router";
 import { FormButton } from "src/pages/Home/HomePageLayout";
 import { PageMetadata } from "src/utils/PageMetadata";
@@ -30,7 +30,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
     const { username, password } = values;
     try {
       setLoggingIn(true);
-      const accountService = getApiService(AccountService);
+      const accountService = getApiService(AuthenticationService);
       const scopesResp = await accountService.getScopes(username, password);
 
       // select default; if not, select lastLogin; if not, the first

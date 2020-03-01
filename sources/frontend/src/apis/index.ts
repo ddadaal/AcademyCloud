@@ -1,9 +1,9 @@
 import { HttpService } from "./HttpService";
-import { AccountService } from "./account/AccountService";
-import { AccountServiceMock } from "./account/AccountServiceMock";
+import { AuthenticationService } from "./account/AuthenticationService";
+import { AuthenticationServiceMock } from "./account/AuthenticationServiceMock";
 import { InstanceService } from "./instance/InstanceService";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
-import { PersonalAccountServiceMock } from "src/apis/identity/PersonalAccountServiceMock";
+import { AccountService } from "src/apis/identity/AccountService";
+import { AccountServiceMock } from "src/apis/identity/AccountServiceMock";
 import { DomainsService } from "src/apis/identity/DomainsService";
 import { DomainsServiceMock } from "src/apis/identity/DomainsServiceMock";
 import { UsersService } from "./identity/UsersService";
@@ -14,9 +14,9 @@ import { ProjectsServiceMock } from "src/apis/identity/ProjectsServiceMock";
 export const USE_MOCK = true;
 
 const services = [
-  [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
+  [AuthenticationService, USE_MOCK ? AuthenticationServiceMock : AuthenticationService],
   [InstanceService, InstanceService],
-  [PersonalAccountService, USE_MOCK ? PersonalAccountServiceMock : PersonalAccountService],
+  [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
   [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
   [UsersService, USE_MOCK ? UsersServiceMock : UsersService],
   [ProjectsService, USE_MOCK ? ProjectsServiceMock : ProjectsService],

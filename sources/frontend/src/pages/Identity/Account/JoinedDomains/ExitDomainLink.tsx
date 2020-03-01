@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { UserDomainAssignment } from "src/models/UserDomainAssignment";
 import { getApiService } from "src/apis";
-import { PersonalAccountService } from "src/apis/identity/PersonalAccountService";
+import { AccountService } from "src/apis/identity/AccountService";
 import { Localized, lang } from "src/i18n";
 import { Modal } from "antd";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
@@ -19,7 +19,7 @@ interface Props {
 const root = lang.identity.account.joinedDomains.table;
 const opResult = lang.components.operationResult;
 
-const service = getApiService(PersonalAccountService);
+const service = getApiService(AccountService);
 
 const exitDomain = async ([domainId]: [string]) => {
   await service.exitDomain(domainId);

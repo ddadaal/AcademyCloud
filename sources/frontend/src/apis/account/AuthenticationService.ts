@@ -16,7 +16,7 @@ export interface ScopesResponse {
   lastLoginScope?: Scope;
 }
 
-export class AccountService extends HttpService {
+export class AuthenticationService extends HttpService {
   async getScopes(username: string, password: string): Promise<ScopesResponse> {
     const data = await this.fetch<ScopesResponse>({
       method: HttpMethod.GET,

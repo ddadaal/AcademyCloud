@@ -4,7 +4,7 @@ import { Form, Input, notification } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { FormButton } from "src/pages/Home/HomePageLayout";
 import { lang, Localized, useMultiLocalized } from "src/i18n";
-import { AccountService } from "src/apis/account/AccountService";
+import { AuthenticationService } from "src/apis/account/AuthenticationService";
 import { getApiService } from "src/apis";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
@@ -28,7 +28,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
     const { username, password, email } = values;
     setRegistering(true);
 
-    const api = getApiService(AccountService);
+    const api = getApiService(AuthenticationService);
 
     try {
       const { scope, token} = await api.register(username, password, email);
