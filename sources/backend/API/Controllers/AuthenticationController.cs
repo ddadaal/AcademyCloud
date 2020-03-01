@@ -26,13 +26,12 @@ namespace AcademyCloud.API.Controllers
         [Route("scopes")]
         public async Task<ActionResult<ScopesResponse>> GetScopes([FromQuery]string username = "", [FromQuery] string password = "")
         {
-            var authClient = await factory.GetAuthenticationClientAsync();
-
-            var reply = await authClient.GetScopesAsync(new GetScopesRequest()
-            {
-                Username = username,
-                Password = password,
-            });
+            var reply = await (await factory.GetAuthenticationClientAsync())
+                .GetScopesAsync(new GetScopesRequest()
+                {
+                    Username = username,
+                    Password = password,
+                });
 
             if (reply.Success)
             {
@@ -48,14 +47,13 @@ namespace AcademyCloud.API.Controllers
         [Route("token")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
         {
-            var authClient = await factory.GetAuthenticationClientAsync();
-
-            var reply = await authClient.AuthenticateAsync(new AuthenticationRequest()
-            {
-                Username = request.Username,
-                Password = request.Password,
-                Scope = request.Scope,
-            });
+            var reply = await (await factory.GetAuthenticationClientAsync())
+                .AuthenticateAsync(new AuthenticationRequest()
+                {
+                    Username = request.Username,
+                    Password = request.Password,
+                    Scope = request.Scope,
+                });
 
             if (reply.Success)
             {

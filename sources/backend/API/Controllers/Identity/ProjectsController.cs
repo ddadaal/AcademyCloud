@@ -26,12 +26,12 @@ namespace AcademyCloud.API.Controllers.Identity
         [HttpGet]
         public async Task<GetAccessibleProjectsResponse> GetAccessibleProjects()
         {
-            var client = await factory.GetProjectsClientAsync();
 
-            var resp = await client.GetAccessibleProjectsAsync(new AcademyCloud.Identity.Services.Projects.GetAccessibleProjectsRequest
-            {
+            var resp = await (await factory.GetProjectsClientAsync())
+                .GetAccessibleProjectsAsync(new AcademyCloud.Identity.Services.Projects.GetAccessibleProjectsRequest
+                {
 
-            });
+                });
 
             return new GetAccessibleProjectsResponse()
             {
@@ -51,12 +51,11 @@ namespace AcademyCloud.API.Controllers.Identity
         [HttpGet("{projectId}/users")]
         public async Task<GetUsersOfProjectResponse> GetUsersOfProject([FromRoute] string projectId)
         {
-            var client = await factory.GetProjectsClientAsync();
-
-            var resp = await client.GetUsersOfProjectAsync(new AcademyCloud.Identity.Services.Projects.GetUsersOfProjectRequest
-            {
-                ProjectId = projectId
-            });
+            var resp = await (await factory.GetProjectsClientAsync())
+                .GetUsersOfProjectAsync(new AcademyCloud.Identity.Services.Projects.GetUsersOfProjectRequest
+                {
+                    ProjectId = projectId
+                });
 
             return new GetUsersOfProjectResponse
             {
@@ -77,15 +76,15 @@ namespace AcademyCloud.API.Controllers.Identity
         [HttpPost("{projectId}/users/{userId}")]
         public async Task<ActionResult> AddUserToProject([FromRoute] string projectId, [FromBody] AddUserToProjectRequest request)
         {
-            var client = await factory.GetProjectsClientAsync();
 
             // TODO request to expenses
-            var resp = await client.AddUserToProjectAsync(new AcademyCloud.Identity.Services.Projects.AddUserToProjectRequest
-            {
-                ProjectId = projectId,
-                UserId = request.UserId,
-                Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
-            });
+            var resp = await (await factory.GetProjectsClientAsync())
+                .AddUserToProjectAsync(new AcademyCloud.Identity.Services.Projects.AddUserToProjectRequest
+                {
+                    ProjectId = projectId,
+                    UserId = request.UserId,
+                    Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
+                });
 
             return NoContent();
         }
@@ -93,29 +92,28 @@ namespace AcademyCloud.API.Controllers.Identity
         [HttpPatch("{projectId}/users/{userId}/role")]
         public async Task<ActionResult> ChangeUserRole([FromRoute] string projectId, [FromRoute] string userId, [FromBody] ChangeUserRoleRequest request)
         {
+            var resp1 = await (await factory.GetProjectsClientAsync())
+                .ChangeUserRoleAsync(new AcademyCloud.Identity.Services.Projects.ChangeUserRoleRequest
+                {
+                    ProjectId = projectId,
+                    UserId = userId,
+                    Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
+                });
 
-            var client = await factory.GetProjectsClientAsync();
-
-            var resp = await client.ChangeUserRoleAsync(new AcademyCloud.Identity.Services.Projects.ChangeUserRoleRequest
-            {
-                ProjectId = projectId,
-                UserId = userId,
-                Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
-            });
             return NoContent();
         }
 
         [HttpDelete("{projectId}/users/{userId}")]
         public async Task<ActionResult> RemoveUserFromProject([FromRoute] string projectId, [FromRoute] string userId)
         {
-            var client = await factory.GetProjectsClientAsync();
-            
             // TODO request to expenses
-            await client.RemoveUserFromProjectAsync(new AcademyCloud.Identity.Services.Projects.RemoveUserFromProjectRequest
-            {
-                ProjectId = projectId,
-                UserId = userId,
-            });
+            var resp1 = await (await factory.GetProjectsClientAsync())
+                .RemoveUserFromProjectAsync(new AcademyCloud.Identity.Services.Projects.RemoveUserFromProjectRequest
+                {
+                    ProjectId = projectId,
+                    UserId = userId,
+                });
+
 
             return NoContent();
         }
