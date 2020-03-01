@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.API.Models;
-using AcademyCloud.API.Models.Account;
+using AcademyCloud.API.Models.Identity.Account;
 using AcademyCloud.API.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;

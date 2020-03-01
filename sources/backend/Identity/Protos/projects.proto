@@ -25,7 +25,9 @@ message GetAccessibleProjectsRequest {}
 
 message GetAccessibleProjectsResponse { repeated common.Project projects = 1; }
 
-message GetUsersOfProjectRequest {}
+message GetUsersOfProjectRequest { 
+  string projectId = 1;
+}
 
 message GetUsersOfProjectResponse {
   repeated common.User admins = 1;

@@ -55,7 +55,6 @@ message SetAdminsResponse {}
 
 message CreateDomainRequest {
   string name = 1;
-  string payUserId = 2;
 }
 
 message CreateDomainResponse {}

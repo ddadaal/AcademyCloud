@@ -1,4 +1,4 @@
-import { DomainsService, GetDomainsResponse, UsersResponse } from './DomainsService';
+import { DomainsService, GetDomainsResponse, GetUsersOfDomainResponse } from './DomainsService';
 import { Resources } from "src/models/Resources";
 import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
@@ -31,7 +31,7 @@ export class DomainsServiceMock extends DomainsService {
     };
   }
 
-  async getUsersOfDomain(domainId: string): Promise<UsersResponse> {
+  async getUsersOfDomain(domainId: string): Promise<GetUsersOfDomainResponse> {
     await this.delay();
     return {
       admins: [cjd],

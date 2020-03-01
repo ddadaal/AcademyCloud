@@ -8,7 +8,7 @@ export interface GetDomainsResponse {
   domains: Domain[];
 }
 
-export interface UsersResponse {
+export interface GetUsersOfDomainResponse {
   admins: User[];
   members: User[];
   payUser: User;
@@ -24,8 +24,8 @@ export class DomainsService extends HttpService {
     return resp;
   }
 
-  async getUsersOfDomain(domainId: string): Promise<UsersResponse> {
-    const resp = await this.fetch<UsersResponse>({
+  async getUsersOfDomain(domainId: string): Promise<GetUsersOfDomainResponse> {
+    const resp = await this.fetch<GetUsersOfDomainResponse>({
       method: HttpMethod.GET,
       path: `/identity/domains/${domainId}/users`,
     });
@@ -36,8 +36,8 @@ export class DomainsService extends HttpService {
   async addUserToDomain(domainId: string, userId: string, role: UserRole): Promise<void> {
     await this.fetch({
       method: HttpMethod.POST,
-      path: `/identity/domains/${domainId}/users/${userId}`,
-      body: { role },
+      path: `/identity/domains/${domainId}/users`,
+      body: { userId, role },
     });
   }
 
@@ -45,7 +45,7 @@ export class DomainsService extends HttpService {
   async changeUserRole(domainId: string, userId: string, role: UserRole): Promise<void> {
     await this.fetch({
       method: HttpMethod.PATCH,
-      path: `/identity/domains/${domainId}/users/${userId}/role`,
+      path: `/identity/domains/${domainId}/users/${userId}`,
       body: { role },
     });
   }

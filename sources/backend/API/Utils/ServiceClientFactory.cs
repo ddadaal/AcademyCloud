@@ -11,6 +11,9 @@ using Grpc.Core;
 using Microsoft.Extensions.Primitives;
 using AcademyCloud.Identity.Services.Authentication;
 using AcademyCloud.Identity.Services.Account;
+using AcademyCloud.Identity.Services.Domains;
+using AcademyCloud.Identity.Services.Projects;
+using AcademyCloud.Identity.Services.Users;
 
 namespace AcademyCloud.API.Utils
 {
@@ -64,6 +67,19 @@ namespace AcademyCloud.API.Utils
         public async Task<Account.AccountClient> GetAccountClientAsync()
         {
             return new Account.AccountClient(await GetInvoker("identityservice"));
+        }
+
+        public async Task<Domains.DomainsClient> GetDomainsClientAsync()
+        {
+            return new Domains.DomainsClient(await GetInvoker("identityservice"));
+        }
+        public async Task<Projects.ProjectsClient> GetProjectsClientAsync()
+        {
+            return new Projects.ProjectsClient(await GetInvoker("identityservice"));
+        }
+        public async Task<Users.UsersClient> GetUsersClientAsync()
+        {
+            return new Users.UsersClient(await GetInvoker("identityservice"));
         }
     }
 }

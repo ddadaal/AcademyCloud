@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.API.Models.Account
+namespace AcademyCloud.API.Models.Identity.Account
 {
-    public class ProfileResponse
+    public class GetJoinedDomainsResponse
     {
-        public Profile Profile { get; set; }
-    }
+        public IEnumerable<UserDomainAssignment> Domains { get; set; }
+    };
 }

@@ -127,6 +127,7 @@ namespace AcademyCloud.Identity.Services.Account
 
 
             var assignment = new Identity.Domains.Entities.UserDomainAssignment(Guid.NewGuid(), user, domain, Identity.Domains.ValueObjects.UserRole.Member);
+
             dbContext.UserDomainAssignments.Add(assignment);
 
             await dbContext.SaveChangesAsync();

@@ -8,7 +8,7 @@ export interface GetAccessibleProjectsResponse {
   projects: Project[];
 }
 
-export interface UsersResponse {
+export interface GetUsersOfProjectResponse {
   admins: User[];
   members: User[];
   payUser: User;
@@ -25,13 +25,13 @@ export class ProjectsService extends HttpService {
     return resp as GetAccessibleProjectsResponse;
   }
 
-  async getUsersOfProject(projectId: string): Promise<UsersResponse> {
+  async getUsersOfProject(projectId: string): Promise<GetUsersOfProjectResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
       path: `/identity/projects/${projectId}/users`,
     });
 
-    return resp as UsersResponse;
+    return resp as GetUsersOfProjectResponse;
   }
 
   async setResourcesOfUser(projectId: string, userId: string, resources: Resources): Promise<void> {
@@ -45,8 +45,8 @@ export class ProjectsService extends HttpService {
   async addUserToProject(projectId: string, userId: string, role: UserRole): Promise<void> {
     await this.fetch({
       method: HttpMethod.POST,
-      path: `/identity/projects/${projectId}/users/${userId}`,
-      body: { role },
+      path: `/identity/projects/${projectId}/users`,
+      body: { userId, role },
     });
   }
 
