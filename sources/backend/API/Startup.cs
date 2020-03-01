@@ -31,7 +31,17 @@ namespace AcademyCloud.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
             services.AddControllers();
+
+            services.AddHttpContextAccessor();
 
             services.AddConsul("http://consul:8500");
 
@@ -53,6 +63,7 @@ namespace AcademyCloud.API
                         ValidIssuer = jwtSettings.Issuer,
                         ValidAudience = jwtSettings.Issuer,
                         IssuerSigningKey = jwtSettings.Key,
+                        RequireExpirationTime = false,
                     };
                 });
 
@@ -70,7 +81,6 @@ namespace AcademyCloud.API
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseHttpsRedirection();
 
             app.UseSwagger();
@@ -80,6 +90,7 @@ namespace AcademyCloud.API
             });
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
 

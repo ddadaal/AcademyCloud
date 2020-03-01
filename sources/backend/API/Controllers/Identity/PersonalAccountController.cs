@@ -42,17 +42,12 @@ namespace AcademyCloud.API.Controllers.Identity
         [Authorize]
         public async Task<ActionResult<ProfileResponse>> GetProfile()
         {
-            var metadata = new Grpc.Core.Metadata
-            {
-                { "Authorization", "Bearer " + await HttpContext.GetTokenAsync("access_token") }
-            };
-
             var service = await factory.GetAccountClientAsync();
 
             var resp = await service.GetProfileAsync(new AcademyCloud.Identity.Services.GetProfileRequest()
             {
 
-            }, metadata);
+            });
 
             return new ProfileResponse() { Profile = resp.Profile };
 
@@ -74,25 +69,80 @@ namespace AcademyCloud.API.Controllers.Identity
 
         [HttpPatch("password")]
         [Authorize]
-        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordRequest request)
+        public async Task<ActionResult> UpdatePassword([FromBody] UpdatePasswordRequest request)
         {
-            throw new NotImplementedException();
+            var service = await factory.GetAccountClientAsync();
 
+            var resp = await service.UpdatePasswordAsync(new AcademyCloud.Identity.Services.UpdatePasswordRequest()
+            {
+                Original = request.Original,
+                Updated = request.Updated,
+            });
+
+            if (resp.Result == AcademyCloud.Identity.Services.UpdatePasswordResponse.Types.Result.Success)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return StatusCode(409);
+            }
         }
 
         [HttpGet("joinedDomains")]
         [Authorize]
-        public async Task<IActionResult> GetJoinedDomains()
+        public async Task<ActionResult<GetJoinedDomainsResponse>> GetJoinedDomains()
         {
+            var service = await factory.GetAccountClientAsync();
 
-            throw new NotImplementedException();
+            var resp = await service.GetJoinedDomainsAsync(new AcademyCloud.Identity.Services.GetJoinedDomainsRequest()
+            {
+
+            });
+
+            return new GetJoinedDomainsResponse() { Domains = resp.Domains };
+
+
         }
 
         [HttpDelete("joinedDomains/{domainId}")]
         [Authorize]
-        public async Task<IActionResult> ExitDomain([FromRoute] string domainId)
+        public async Task<ActionResult> ExitDomain([FromRoute] string domainId)
         {
-            throw new NotImplementedException();
+            var service = await factory.GetAccountClientAsync();
+
+            var resp = await service.ExitDomainAsync(new AcademyCloud.Identity.Services.ExitDomainRequest()
+            {
+                DomainId = domainId
+            });
+
+            return NoContent();
+        }
+
+        [HttpGet("joinableDomains")]
+        [Authorize]
+        public async Task<ActionResult<GetJoinableDomainsResponse>> GetJoinableDomains()
+        {
+            var service = await factory.GetAccountClientAsync();
+
+            var resp = await service.GetJoinableDomainsAsync(new AcademyCloud.Identity.Services.GetJoinableDomainsRequest()
+            {
+
+            });
+
+            return new GetJoinableDomainsResponse { Domains = resp.Domains };
+        }
+        [HttpPost("joinableDomains/{domainId}")]
+        public async Task<ActionResult> JoinDomain([FromRoute] string domainId)
+        {
+            var service = await factory.GetAccountClientAsync();
+
+            var resp = await service.JoinDomainAsync(new AcademyCloud.Identity.Services.JoinDomainRequest()
+            {
+                DomainId = domainId
+            });
+
+            return NoContent();
 
         }
 
