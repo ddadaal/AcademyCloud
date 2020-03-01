@@ -28,13 +28,20 @@ namespace AcademyCloud.Identity.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // initial social domain
             modelBuilder.Entity<Domain>()
                 .HasData(new Domain(SocialDomainId, "Social"));
 
+            // initial system user
+            modelBuilder.Entity<User>()
+                .HasData(new User(Guid.NewGuid(), "system", "system", "system@ac.com", true));
+
+            // domain name uniqueness
             modelBuilder.Entity<Domain>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
 
+            // username uniqueness
             modelBuilder.Entity<User>()
                 .HasIndex(x => x.Username)
                 .IsUnique();

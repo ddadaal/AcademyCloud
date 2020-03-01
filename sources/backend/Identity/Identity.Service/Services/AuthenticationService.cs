@@ -1,4 +1,5 @@
 ﻿using AcademyCloud.Identity.Data;
+using AcademyCloud.Identity.Extensions;
 using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
@@ -132,9 +133,8 @@ namespace AcademyCloud.Identity.Services
         [Authorize]
         public override Task<GetTokenInfoReply> GetTokenInfo(GetTokenInfoRequest request, ServerCallContext context)
         {
-            var claims = context.GetHttpContext().User;
 
-            var tokenClaims = TokenClaims.FromClaimPrincinpal(claims);
+            var tokenClaims = context.GetTokenClaims();
 
             return Task.FromResult(new GetTokenInfoReply()
             {
