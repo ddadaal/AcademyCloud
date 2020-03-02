@@ -27,25 +27,6 @@ namespace Identity.Test.Helpers
             return (scopesResp.Scopes.First(x => scopeChooser(x)), scopesResp.UserId);
         }
 
-        // DEPRECATED. The services cannot access authenticated user from ServerCallContext. Use MockedTokenClaimsAccessor
-        public static async Task<TestServerCallContext> Create(IdentityDbContext context, string username, string password, Predicate<Scope>? scopeChooser = null)
-        {
-
-            var service = new AuthenticationService(context, new JwtSettings());
-
-            var (chosenScope, _) = await GetAuthenticationInfo(context, username, password, scopeChooser);
-
-            var tokenResp = await service.Authenticate(new AuthenticationRequest { Username = username, Password = password, Scope = chosenScope }, TestServerCallContext.Create());
-
-            var metadata = new Metadata
-            {
-                { "Authorization", $"Bearer {tokenResp.Token}" }
-            };
-
-            return TestServerCallContext.Create(metadata);
-
-        }
-
         public static async Task<TokenClaimsAccessor> MockTokenClaimsAccessor(IdentityDbContext context, User user, Predicate<Scope>? scopeChooser = null)
         {
             return await MockTokenClaimsAccessor(context, user.Username, user.Password, scopeChooser);

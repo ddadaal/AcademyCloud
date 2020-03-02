@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static Identity.Test.Helpers.MockDbContext;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Domains.ValueObjects;
 using Xunit;

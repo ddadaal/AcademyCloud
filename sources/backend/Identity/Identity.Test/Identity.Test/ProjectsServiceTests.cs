@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using static Identity.Test.Helpers.AuthenticatedCallContext;
-using static Identity.Test.Helpers.MockDbContext;
 
 namespace Identity.Test
 {
