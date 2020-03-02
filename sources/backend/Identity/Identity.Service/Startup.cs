@@ -36,7 +36,7 @@ namespace AcademyCloud.Identity
             services.AddDbContext<IdentityDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
-                options.UseInMemoryDatabase("Test");
+                options.UseSqlite("DataSource=:memory:");
             });
 
             var jwtSettings = new JwtSettings();
@@ -83,6 +83,7 @@ namespace AcademyCloud.Identity
             }
 
             // temp: to generate data into the test db
+            dbContext.Database.OpenConnection();
             dbContext.Database.EnsureCreated();
 
 
