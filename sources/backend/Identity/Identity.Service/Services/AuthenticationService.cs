@@ -70,6 +70,7 @@ namespace AcademyCloud.Identity.Services.Authentication
             {
                 Success = true,
                 Token = jwtSettings.GenerateToken(claims),
+                UserId = user.Id.ToString(),
             };
 
         }
@@ -83,7 +84,7 @@ namespace AcademyCloud.Identity.Services.Authentication
                 return new GetScopesReply() { Success = false };
             }
 
-            return new GetScopesReply() { Success = true, Scopes = { user.GetAvailableScopes() } };
+            return new GetScopesReply() { Success = true, Scopes = { user.GetAvailableScopes() }, UserId = user.Id.ToString() };
 
         }
 

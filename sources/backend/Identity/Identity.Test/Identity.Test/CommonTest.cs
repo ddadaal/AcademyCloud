@@ -13,26 +13,21 @@ namespace Identity.Test
     public class CommonTest: IDisposable
     {
         protected IdentityDbContext db;
-        protected DomainsService service;
 
         public CommonTest()
         {
             db = GetDbContext();
-            service = new DomainsService(db);
         }
 
         public void Dispose()
         {
             db.Database.EnsureDeleted();
             db.Dispose();
-            service = null!;
         }
         
         public async Task<ServerCallContext> GetContext(string username = "system", string password = "system")
         {
             return await AuthenticatedCallContext.Create(db, username, password);
-
-
         }
     }
 }

@@ -21,6 +21,7 @@ message AuthenticationRequest {
 message AuthenticationReply {
   bool success = 1;
   string token = 2;
+  string userId = 3;
 }
 
 message GetScopesRequest {
@@ -31,6 +32,7 @@ message GetScopesRequest {
 message GetScopesReply {
   bool success = 1;
   repeated Scope scopes = 2;
+  string userId = 3;
 }
 
 message GetTokenInfoRequest { string token = 1; }

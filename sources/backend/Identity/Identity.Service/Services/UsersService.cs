@@ -15,15 +15,17 @@ namespace AcademyCloud.Identity.Services.Users
     public class UsersService : Users.UsersBase
     {
         private readonly IdentityDbContext dbContext;
+        private readonly TokenClaimsAccessor tokenClaimsAccessor;
 
-        public UsersService(IdentityDbContext dbContext)
+        public UsersService(IdentityDbContext dbContext, TokenClaimsAccessor tokenClaimsAccessor)
         {
             this.dbContext = dbContext;
+            this.tokenClaimsAccessor = tokenClaimsAccessor;
         }
 
         public override async Task<GetAccessibleUsersResponse> GetAccessibleUsers(GetAccessibleUsersRequest request, ServerCallContext context)
         {
-            var claims = context.GetTokenClaims();
+            var claims = tokenClaimsAccessor.GetTokenClaims();
             IEnumerable<User> users;
 
             if (claims.IsSystem)

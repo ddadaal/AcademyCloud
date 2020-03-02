@@ -14,6 +14,13 @@ namespace Identity.Test
 {
     public class DomainsServiceTests : CommonTest
     {
+        protected DomainsService service;
+
+        public DomainsServiceTests()
+        {
+            service = new DomainsService(db);
+        }
+
         [Fact]
         public async Task GetDomains()
         {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Exceptions;
+using AcademyCloud.Identity.Extensions;
 using AcademyCloud.Identity.Services;
 using AcademyCloud.Identity.Services.Account;
 using AcademyCloud.Identity.Services.Authentication;
@@ -72,6 +73,8 @@ namespace AcademyCloud.Identity
                         ClockSkew = TimeSpan.Zero,
                     };
                 });
+
+            services.AddSingleton<TokenClaimsAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

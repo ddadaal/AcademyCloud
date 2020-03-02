@@ -58,6 +58,11 @@ namespace AcademyCloud.Shared
             };
         }
 
+        public ClaimsPrincipal ToClaimsPrincipal()
+        {
+            return new ClaimsPrincipal(new ClaimsIdentity(ToClaims()));
+        }
+
         public static TokenClaims FromClaimPrincinpal(ClaimsPrincipal claims)
         {
             return new TokenClaims(
