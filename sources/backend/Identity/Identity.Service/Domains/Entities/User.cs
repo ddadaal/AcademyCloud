@@ -34,8 +34,6 @@ namespace AcademyCloud.Identity.Domains.Entities
             Projects = new List<UserProjectAssignment>();
         }
 
-        public User()
-        {
-        }
+        protected User() { }
     }
 }

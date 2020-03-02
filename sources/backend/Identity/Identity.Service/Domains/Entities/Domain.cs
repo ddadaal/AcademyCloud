@@ -23,6 +23,6 @@ namespace AcademyCloud.Identity.Domains.Entities
             Projects = new List<Project>();
         }
 
-        public Domain() { }
+        protected Domain() { }
     }
 }

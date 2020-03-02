@@ -15,8 +15,8 @@ namespace Identity.Test
     [TestClass]
     public class DomainsServiceTests
     {
-        private IdentityDbContext db;
-        private DomainsService service;
+        private IdentityDbContext db = default!;
+        private DomainsService service = default!;
 
         [TestInitialize]
         public void Setup()
@@ -58,6 +58,8 @@ namespace Identity.Test
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
+            Assert.AreEqual(1, db.Domains.Find(pku.Id).Users.Count);
+
             var resp = await service.AddUserToDomain(new AddUserToDomainRequest
             {
                 DomainId = pku.Id.ToString(),
@@ -67,6 +69,60 @@ namespace Identity.Test
 
             Assert.AreEqual(2, db.Domains.Find(pku.Id).Users.Count);
             Assert.AreEqual(UserRole.Member, db.UserDomainAssignments.First(x => x.Domain.Id == pku.Id && x.User.Id == cjd.Id).Role);
+        }
+        
+        [TestMethod]
+        public async Task TestChangeUserRole()
+        {
+            var context = await AuthenticatedCallContext.Create(db, "system", "system");
+
+            Assert.AreEqual(UserRole.Member, nju.Users.First(x => x.User == cjd).Role);
+
+            await service.ChangeUserRole(new ChangeUserRoleRequest
+            {
+                DomainId = nju.Id.ToString(),
+                UserId = cjd.Id.ToString(),
+                Role = AcademyCloud.Identity.Services.Common.UserRole.Admin
+            }, context);
+
+            Assert.AreEqual(UserRole.Admin, nju.Users.First(x => x.User == cjd).Role);
+        }
+
+        [TestMethod]
+        public async Task TestCreateDomain()
+        {
+            var context = await AuthenticatedCallContext.Create(db, "system", "system");
+
+            Assert.AreEqual(3, db.Domains.Count());
+
+            await service.CreateDomain(new CreateDomainRequest
+            {
+                Name = "testnewdomain",
+                AdminId = cjd.Id.ToString(),
+            }, context);
+
+            Assert.AreEqual(4, db.Domains.Count());
+
+            var domain = db.Domains.First(x => x.Name == "testnewdomain");
+            Assert.AreEqual(1, domain.Users.Count());
+            Assert.AreEqual(cjd.Id, domain.Users.First().User.Id);
+        }
+
+        [TestMethod]
+        public async Task TestDeleteDomain()
+        {
+            var context = await AuthenticatedCallContext.Create(db, "system", "system");
+
+            Assert.AreEqual(3, db.Domains.Count());
+
+            await service.DeleteDomain(new DeleteDomainRequest
+            {
+                DomainId = pku.Id.ToString(),
+            }, context);
+
+            Assert.AreEqual(2, db.Domains.Count());
+            // should be cascade delete
+            Assert.AreEqual(1, db.Projects.Count());
 
         }
     }

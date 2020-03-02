@@ -23,6 +23,6 @@ namespace AcademyCloud.Identity.Domains.Entities
             Role = role;
         }
 
-        public UserDomainAssignment() { }
+        protected UserDomainAssignment() { }
     }
 }

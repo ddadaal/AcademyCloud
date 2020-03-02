@@ -12,7 +12,7 @@ namespace Identity.Test.Helpers
 {
     class AuthenticatedCallContext
     {
-        public static async Task<TestServerCallContext> Create(IdentityDbContext context, string username, string password, Predicate<Scope> scopeChooser = null)
+        public static async Task<TestServerCallContext> Create(IdentityDbContext context, string username, string password, Predicate<Scope>? scopeChooser = null)
         {
             if (scopeChooser == null) { scopeChooser = (scope) => true; }
 
