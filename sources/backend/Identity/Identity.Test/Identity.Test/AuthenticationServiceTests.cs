@@ -12,14 +12,13 @@ using Xunit;
 
 namespace Identity.Test
 {
-    public class AuthenticationServiceTests
+    public class AuthenticationServiceTests: CommonTest
     {
         [Fact]
         public async Task TestGetScopesSystem1()
         {
             // Arrange
-            using var context = MockDbContext.GetDbContext();
-            var service = new AuthenticationService(context, new JwtSettings());
+            var service = new AuthenticationService(db, new JwtSettings());
 
             // Act
             var resp = await service.GetScopes(new GetScopesRequest() { Username = "system", Password = "system" }, TestServerCallContext.Create());
