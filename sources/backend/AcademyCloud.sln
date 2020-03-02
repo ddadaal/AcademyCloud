@@ -26,6 +26,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AF1A03
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared\Shared.csproj", "{4D48A7F5-EB13-460E-8323-B14D4806D121}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Test", "Identity\Identity.Test\Identity.Test\Identity.Test.csproj", "{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D48A7F5-EB13-460E-8323-B14D4806D121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{953D4B89-E51A-43BB-8481-1134AB2B8C3E} = {78B085ED-AD13-4610-8B83-1968C99339C9}
 		{AF1A030E-BC6C-4C70-88D3-6E65F00B6395} = {78B085ED-AD13-4610-8B83-1968C99339C9}
+		{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93} = {78B085ED-AD13-4610-8B83-1968C99339C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C116664B-0F4A-44B7-B6E1-FF14035BE60C}
