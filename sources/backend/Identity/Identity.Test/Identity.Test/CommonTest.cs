@@ -2,15 +2,15 @@
 using AcademyCloud.Identity.Domains.Entities;
 using AcademyCloud.Identity.Domains.ValueObjects;
 using AcademyCloud.Identity.Services.Domains;
+using AcademyCloud.Identity.Test.Helpers;
 using Grpc.Core;
-using Identity.Test.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Identity.Test
+namespace AcademyCloud.Identity.Test
 {
     public class CommonTest : IDisposable
     {

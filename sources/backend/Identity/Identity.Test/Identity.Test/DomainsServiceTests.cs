@@ -1,6 +1,5 @@
 ﻿using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services.Domains;
-using Identity.Test.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 using AcademyCloud.Identity.Domains.ValueObjects;
 using Xunit;
 
-namespace Identity.Test
+namespace AcademyCloud.Identity.Test
 {
     public class DomainsServiceTests : CommonTest
     {
@@ -47,7 +46,7 @@ namespace Identity.Test
             {
                 DomainId = pku.Id.ToString(),
                 UserId = cjy.Id.ToString(),
-                Role = AcademyCloud.Identity.Services.Common.UserRole.Member
+                Role = Services.Common.UserRole.Member
             }, TestContext);
 
             Assert.Equal(3, db.Domains.Find(pku.Id).Users.Count);
@@ -63,7 +62,7 @@ namespace Identity.Test
             {
                 DomainId = nju.Id.ToString(),
                 UserId = cjd.Id.ToString(),
-                Role = AcademyCloud.Identity.Services.Common.UserRole.Admin
+                Role = Services.Common.UserRole.Admin
             }, TestContext);
 
             Assert.Equal(UserRole.Admin, nju.Users.First(x => x.User == cjd).Role);
@@ -112,7 +111,7 @@ namespace Identity.Test
             {
                 DomainId = pku.Id.ToString(),
                 UserId = cjd.Id.ToString()
-            },TestContext);
+            }, TestContext);
 
             Assert.Equal(prev - 1, cjd.Domains.Count());
             Assert.Equal(nju.Name, cjd.Domains.First().Domain.Name);

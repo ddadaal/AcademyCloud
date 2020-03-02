@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using static Identity.Test.Helpers.AuthenticatedCallContext;
+using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 
 
-namespace Identity.Test
+namespace AcademyCloud.Identity.Test
 {
     public class UsersServiceTests : CommonTest
     {

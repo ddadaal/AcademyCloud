@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using static Identity.Test.Helpers.AuthenticatedCallContext;
+using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 
-namespace Identity.Test
+namespace AcademyCloud.Identity.Test
 {
     public class ProjectsServiceTests : CommonTest
     {
@@ -29,7 +29,7 @@ namespace Identity.Test
             {
                 UserId = fgh.Id.ToString(),
                 ProjectId = lqproject.Id.ToString(),
-                Role = AcademyCloud.Identity.Services.Common.UserRole.Admin,
+                Role = Services.Common.UserRole.Admin,
             }, TestContext);
 
             Assert.Equal(2, lqproject.Users.Count(x => x.Role == UserRole.Admin));
@@ -46,7 +46,7 @@ namespace Identity.Test
             {
                 UserId = cjd.Id.ToString(),
                 ProjectId = lqproject.Id.ToString(),
-                Role = AcademyCloud.Identity.Services.Common.UserRole.Admin,
+                Role = Services.Common.UserRole.Admin,
             }, TestContext);
 
             Assert.Equal(2, lqproject.Users.Count(x => x.Role == UserRole.Admin));
@@ -93,7 +93,7 @@ namespace Identity.Test
 
             Assert.Single(resp.Projects);
 
-            var project = resp.Projects.First(); 
+            var project = resp.Projects.First();
             Assert.Equal(lqproject.Id.ToString(), project.Id);
 
             Assert.Single(project.Admins);
@@ -121,7 +121,7 @@ namespace Identity.Test
         [Fact]
         public async Task RemoveUserFromProject()
         {
-             await service.RemoveUserFromProject(new RemoveUserFromProjectRequest
+            await service.RemoveUserFromProject(new RemoveUserFromProjectRequest
             {
                 ProjectId = lqproject.Id.ToString(),
                 UserId = cjd.Id.ToString()
@@ -130,7 +130,7 @@ namespace Identity.Test
             Assert.Empty(cjd.Projects);
             Assert.Single(lqproject.Users);
 
-            
+
         }
 
     }

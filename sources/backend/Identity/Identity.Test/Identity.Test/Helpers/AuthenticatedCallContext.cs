@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Identity.Test.Helpers
+namespace AcademyCloud.Identity.Test.Helpers
 {
     public static class AuthenticatedCallContext
     {
@@ -35,9 +35,9 @@ namespace Identity.Test.Helpers
 
         public static async Task<TokenClaimsAccessor> MockTokenClaimsAccessor(IdentityDbContext context, string username = "system", string password = "system", Predicate<Scope>? scopeChooser = null)
         {
-            var (scope, userId)= await GetAuthenticationInfo(context, username, password, scopeChooser);
+            var (scope, userId) = await GetAuthenticationInfo(context, username, password, scopeChooser);
 
-            var tokenClaims = new TokenClaims(scope.System, scope.Social, userId, scope.DomainId, scope.ProjectId, (UserRole) scope.Role);
+            var tokenClaims = new TokenClaims(scope.System, scope.Social, userId, scope.DomainId, scope.ProjectId, (UserRole)scope.Role);
 
             var mockHttpAccessor = new Mock<IHttpContextAccessor>();
 

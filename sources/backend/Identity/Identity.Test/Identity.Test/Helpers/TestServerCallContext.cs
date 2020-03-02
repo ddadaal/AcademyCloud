@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Identity.Test.Helpers
+namespace AcademyCloud.Identity.Test.Helpers
 {
     public class TestServerCallContext : ServerCallContext
     {

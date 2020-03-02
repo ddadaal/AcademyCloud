@@ -1,18 +1,18 @@
 using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
 using AcademyCloud.Identity.Services.Authentication;
+using AcademyCloud.Identity.Test.Helpers;
 using AcademyCloud.Shared;
 using Grpc.Core;
-using Identity.Test.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Identity.Test
+namespace AcademyCloud.Identity.Test
 {
-    public class AuthenticationServiceTests: CommonTest
+    public class AuthenticationServiceTests : CommonTest
     {
         [Fact]
         public async Task TestGetScopesSystem1()
