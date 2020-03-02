@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Data;
+using AcademyCloud.Identity.Exceptions;
 using AcademyCloud.Identity.Services;
 using AcademyCloud.Identity.Services.Account;
 using AcademyCloud.Identity.Services.Authentication;
@@ -28,7 +29,10 @@ namespace AcademyCloud.Identity
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc();
+            services.AddGrpc(options =>
+            {
+                options.Interceptors.Add<ExceptionInterceptor>();
+            });
             services.AddDbContext<IdentityDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
@@ -40,9 +44,13 @@ namespace AcademyCloud.Identity
 
             services.AddAuthorization(options =>
             {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-                 .RequireAuthenticatedUser()
-                 .Build();
+                var defaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+
+                options.DefaultPolicy = defaultPolicy;
+
+                options.AddPolicy(AuthPolicy.System,
+                    policy => policy.Combine(defaultPolicy).RequireAssertion(c => c.User.ToTokenClaims().IsSystem));
+
             });
 
             services
@@ -83,7 +91,7 @@ namespace AcademyCloud.Identity
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<AccountService>(); 
+                endpoints.MapGrpcService<AccountService>();
                 endpoints.MapGrpcService<AuthenticationService>();
                 endpoints.MapGrpcService<DomainsService>();
                 endpoints.MapGrpcService<ProjectsService>();

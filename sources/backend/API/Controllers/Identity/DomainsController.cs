@@ -43,7 +43,7 @@ namespace AcademyCloud.API.Controllers.Identity
                     Name = x.Name,
                     Active = true,
                     Admins = x.Admins.Select(TransformUser),
-                    PayUser = TransformUser(x.PayUser),
+                    PayUser = TransformUser(x.Admins[0]),
                     Resources = DummyResources,
                 })
             };
@@ -119,7 +119,7 @@ namespace AcademyCloud.API.Controllers.Identity
         }
 
         [HttpPost("{domainId}/payUser")]
-        public async Task<ActionResult> SetPayUser([FromRoute] string domainId, [FromBody] SetPayUserRequest request)
+        public async Task<ActionResult> SetPayUser([FromRoute] string domainId, [FromBody] Models.Identity.Domains.SetPayUserRequest request)
         {
             // TODO set the pay user in the expenses
             return NoContent();
@@ -133,6 +133,7 @@ namespace AcademyCloud.API.Controllers.Identity
                 .CreateDomainAsync(new AcademyCloud.Identity.Services.Domains.CreateDomainRequest
                 {
                     Name = request.Name,
+                    AdminId = request.PayUserId,
                 });
 
             return NoContent();

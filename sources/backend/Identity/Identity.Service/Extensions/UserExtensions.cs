@@ -60,5 +60,16 @@ namespace AcademyCloud.Identity.Extensions
 
 
         }
+
+        public static Services.Common.User ToGrpcUser(this User user)
+        {
+            return new Services.Common.User
+            {
+                Id = user.Id.ToString(),
+                Name = user.Name,
+                Username = user.Username
+            };
+
+        }
     }
 }

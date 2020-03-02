@@ -14,7 +14,6 @@ message Domain {
   string id = 1;
   string name = 2;
   repeated User admins = 3;
-  User payUser = 4;
 }
 
 enum UserRole {
@@ -27,5 +26,4 @@ message Project {
   string name = 2;
   repeated User admins = 3;
   repeated User members = 5;
-  User payUser = 4;
 }

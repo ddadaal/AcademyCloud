@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Identity.Data;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Identity.Services.Projects
 {
+    [Authorize]
     public class ProjectsService : Projects.ProjectsBase
     {
         private readonly IdentityDbContext dbContext;
@@ -18,7 +20,7 @@ namespace AcademyCloud.Identity.Services.Projects
 
         public override Task<AddUserToProjectResponse> AddUserToProject(AddUserToProjectRequest request, ServerCallContext context)
         {
-            return base.AddUserToProject(request, context);
+            return base.AddUserToProject(request, context); 
         }
 
         public override Task<ChangeUserRoleResponse> ChangeUserRole(ChangeUserRoleRequest request, ServerCallContext context)

@@ -10,6 +10,8 @@ namespace AcademyCloud.Shared
     {
         public bool System { get; set; }
 
+        public bool Social { get; set; }
+
         public string UserId { get; set; }
 
         public string DomainId { get; set; }
@@ -18,20 +20,37 @@ namespace AcademyCloud.Shared
 
         public UserRole Role { get; set; }
 
-        public TokenClaims(bool system, string userId, string domainId, string? projectId, UserRole role)
+        public TokenClaims(bool system, bool social, string userId, string domainId, string? projectId, UserRole role)
         {
             System = system;
+            Social = social;
             UserId = userId;
             DomainId = domainId;
             ProjectId = projectId;
             Role = role;
         }
 
+        public bool IsSystem => System;
+
+        public bool IsSocial => Social;
+
+        public bool IsDomainScoped => string.IsNullOrEmpty(ProjectId);
+        public bool IsDomainAdmin => IsDomainScoped && Role == UserRole.Admin;
+
+
+        /// <summary>
+        /// Is the user authenticated project scoped?
+        /// Note that the social is project scoped. Need to check for social first.
+        /// </summary>
+        public bool IsProjectScoped => !string.IsNullOrEmpty(ProjectId) && string.IsNullOrEmpty(ProjectId);
+        public bool IsProjectAdmin => IsProjectScoped && Role == UserRole.Admin;
+
         public List<Claim> ToClaims()
         {
             return new List<Claim>()
             {
                 new Claim(nameof(System), System.ToString()),
+                new Claim(nameof(Social), Social.ToString()),
                 new Claim(nameof(UserId), UserId),
                 new Claim(nameof(DomainId), DomainId),
                 new Claim(nameof(ProjectId), ProjectId),
@@ -43,8 +62,9 @@ namespace AcademyCloud.Shared
         {
             return new TokenClaims(
                 system: Convert.ToBoolean(claims.GetClaimValue(nameof(System))),
+                social: Convert.ToBoolean(claims.GetClaimValue(nameof(Social))),
                 userId: claims.GetClaimValue(nameof(UserId)),
-                domainId:claims.GetClaimValue(nameof(DomainId)),
+                domainId: claims.GetClaimValue(nameof(DomainId)),
                 projectId: claims.GetClaimValue(nameof(ProjectId)),
                 role: (UserRole)Enum.Parse(typeof(UserRole), claims.GetClaimValue(nameof(Role)))
             );
@@ -57,6 +77,11 @@ namespace AcademyCloud.Shared
         public static string GetClaimValue(this ClaimsPrincipal claims, string name)
         {
             return claims.FindFirst(name).Value;
+        }
+
+        public static TokenClaims ToTokenClaims(this ClaimsPrincipal claimsPrincipal)
+        {
+            return TokenClaims.FromClaimPrincinpal(claimsPrincipal);
         }
     }
 }

@@ -132,7 +132,7 @@ namespace AcademyCloud.API.Controllers.Identity
                 .CreateProjectAsync(new AcademyCloud.Identity.Services.Projects.CreateProjectRequest
                 {
                     Name = request.Name,
-                    PayUserId = request.PayUserId,
+                    AdminId = request.PayUserId,
                 });
 
             return NoContent();

@@ -13,7 +13,7 @@ namespace AcademyCloud.Identity.Extensions
         {
             var claims = context.GetHttpContext().User;
 
-            var tokenClaims = TokenClaims.FromClaimPrincinpal(claims);
+            var tokenClaims = claims.ToTokenClaims();
 
             return tokenClaims;
         }

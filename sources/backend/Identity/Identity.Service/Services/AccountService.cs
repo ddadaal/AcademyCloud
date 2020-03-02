@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Domains.Entities;
+using AcademyCloud.Identity.Exceptions;
 using AcademyCloud.Identity.Extensions;
 using AcademyCloud.Identity.Services.Authentication;
 using AcademyCloud.Shared;
@@ -30,9 +31,7 @@ namespace AcademyCloud.Identity.Services.Account
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
-
-            ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             return new GetScopesResponse { Scopes = { user.GetAvailableScopes() } };
         }
@@ -104,9 +103,7 @@ namespace AcademyCloud.Identity.Services.Account
 
             var user = context.GetTokenClaims();
 
-            var currentUser = await dbContext.Users.FindAsync(Guid.Parse(user.UserId));
-
-            ExceptionExtensions.ThrowRpcExceptionIfNull(currentUser, user.UserId);
+            var currentUser = await dbContext.Users.FindIfNullThrowAsync(user.UserId);
 
             return new GetProfileResponse()
             {
@@ -119,12 +116,9 @@ namespace AcademyCloud.Identity.Services.Account
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
-            ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
-            var domain = await dbContext.Domains.FindAsync(Guid.Parse(request.DomainId));
-            ExceptionExtensions.ThrowRpcExceptionIfNull(domain, request.DomainId);
-
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
 
             var assignment = new Identity.Domains.Entities.UserDomainAssignment(Guid.NewGuid(), user, domain, Identity.Domains.ValueObjects.UserRole.Member);
 
@@ -138,10 +132,10 @@ namespace AcademyCloud.Identity.Services.Account
         public override async Task<RegisterResponse> Register(RegisterRequest request, ServerCallContext context)
         {
             // Create the user
-            var newUser = new User(Guid.NewGuid(), request.Username, request.Password, request.Email, false);
+            var newUser = new User(Guid.NewGuid(), request.Username, request.Username, request.Password, request.Email, false);
             dbContext.Users.Add(newUser);
 
-            // Create a social project whose project is the new user
+            // Create a social project whose project name is the new user
             Guid socialDomainId = IdentityDbContext.SocialDomainId;
             var socialDomain = await dbContext.Domains.FirstAsync((domain) => domain.Id == socialDomainId);
             var newProject = new Project(Guid.NewGuid(), request.Username, socialDomain);
@@ -159,7 +153,7 @@ namespace AcademyCloud.Identity.Services.Account
             await dbContext.SaveChangesAsync();
 
             // Return the scope (project scope) and token
-            var token = jwtSettings.GenerateToken(new TokenClaims(false, newUser.Id.ToString(), socialDomainId.ToString(), newProject.Id.ToString(), Shared.UserRole.Admin));
+            var token = jwtSettings.GenerateToken(new TokenClaims(false, true, newUser.Id.ToString(), socialDomainId.ToString(), newProject.Id.ToString(), Shared.UserRole.Admin));
 
             var scope = new Scope()
             {
@@ -185,8 +179,7 @@ namespace AcademyCloud.Identity.Services.Account
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
-            ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             if (user.Password != request.Original)
             {
@@ -204,8 +197,7 @@ namespace AcademyCloud.Identity.Services.Account
         {
             var tokenClaims = context.GetTokenClaims();
 
-            var user = await dbContext.Users.FindAsync(Guid.Parse(tokenClaims.UserId));
-            ExceptionExtensions.ThrowRpcExceptionIfNull(user, tokenClaims.UserId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             user.Email = request.Email;
 

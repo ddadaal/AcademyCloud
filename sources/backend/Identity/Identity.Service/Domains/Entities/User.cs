@@ -9,6 +9,8 @@ namespace AcademyCloud.Identity.Domains.Entities
     {
         public Guid Id { get; set; }
 
+        public string Name { get; set; }
+
         public string Username { get; set; }
 
         public string Password { get; set; }
@@ -20,12 +22,13 @@ namespace AcademyCloud.Identity.Domains.Entities
 
         public virtual ICollection<UserProjectAssignment> Projects { get; set; }
 
-        public User(Guid id, string username, string password, string email, bool system,
+        public User(Guid id, string username, string name, string password, string email, bool system,
             ICollection<UserDomainAssignment> domains = null,
             ICollection<UserProjectAssignment> projects = null)
         {
             Id = id;
             Username = username;
+            Name = name;
             Password = password;
             Email = email;
             System = system;

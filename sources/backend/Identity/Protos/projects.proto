@@ -60,7 +60,7 @@ message RemoveUserFromProjectResponse {}
 
 message CreateProjectRequest {
   string name = 1;
-  string payUserId = 2;
+  string adminId = 2;
 }
 
 message CreateProjectResponse {}

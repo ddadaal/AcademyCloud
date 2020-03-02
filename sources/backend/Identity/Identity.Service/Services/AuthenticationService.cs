@@ -64,7 +64,7 @@ namespace AcademyCloud.Identity.Services.Authentication
             }
 
             // auth successful. generate token accorind to token claims
-            var claims = new TokenClaims(scope.System, user.Id.ToString(), scope.DomainId, scope.ProjectId, (Shared.UserRole)scope.Role);
+            var claims = new TokenClaims(scope.System, scope.Social, user.Id.ToString(), scope.DomainId, scope.ProjectId, (UserRole)scope.Role);
 
             return new AuthenticationReply
             {
