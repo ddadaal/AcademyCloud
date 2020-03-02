@@ -21,7 +21,7 @@ namespace Identity.Test
         [TestInitialize]
         public void Setup()
         {
-            db = MockDbContext.GetDbContext();
+            db = GetDbContext();
             service = new DomainsService(db);
         }
 
@@ -30,10 +30,11 @@ namespace Identity.Test
         {
             db.Database.EnsureDeleted();
             db.Dispose();
+            service = null!;
         }
 
         [TestMethod]
-        public async Task TestGetDomains()
+        public async Task GetDomains()
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
@@ -43,7 +44,7 @@ namespace Identity.Test
         }
 
         [TestMethod]
-        public async Task TestGetUsersOfDomain()
+        public async Task GetUsersOfDomain()
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
@@ -54,7 +55,7 @@ namespace Identity.Test
         }
 
         [TestMethod]
-        public async Task TestAddUserToDomain()
+        public async Task AddUserToDomain()
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
@@ -72,7 +73,7 @@ namespace Identity.Test
         }
 
         [TestMethod]
-        public async Task TestChangeUserRole()
+        public async Task ChangeUserRole()
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
@@ -89,7 +90,7 @@ namespace Identity.Test
         }
 
         [TestMethod]
-        public async Task TestCreateDomain()
+        public async Task CreateDomain()
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
@@ -109,18 +110,18 @@ namespace Identity.Test
         }
 
         [TestMethod]
-        public async Task TestDeleteDomain()
+        public async Task DeleteDomain()
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
-            Assert.AreEqual(3, db.Domains.Count());
+            var prev =  db.Domains.Count();
 
             await service.DeleteDomain(new DeleteDomainRequest
             {
                 DomainId = pku.Id.ToString(),
             }, context);
 
-            Assert.AreEqual(2, db.Domains.Count());
+            Assert.AreEqual(prev - 1, db.Domains.Count());
             // should be cascade delete
             Assert.AreEqual(1, db.Projects.Count());
         }
@@ -130,7 +131,7 @@ namespace Identity.Test
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
-            Assert.AreEqual(2, cjd.Domains.Count());
+            var prev = cjd.Domains.Count();
 
             await service.RemoveUserFromDomain(new RemoveUserFromDomainRequest
             {
@@ -138,8 +139,27 @@ namespace Identity.Test
                 UserId = cjd.Id.ToString()
             }, context);
 
-            Assert.AreEqual(1, cjd.Domains.Count());
+            Assert.AreEqual(prev - 1, cjd.Domains.Count());
             Assert.AreEqual(nju.Name, cjd.Domains.First().Domain.Name);
+        }
+
+        [TestMethod]
+        public async Task SetAdmins()
+        {
+            var context = await AuthenticatedCallContext.Create(db, "system", "system");
+
+            await service.SetAdmins(new SetAdminsRequest
+            {
+                DomainId = nju.Id.ToString(),
+                AdminIds = { lq.Id.ToString(), fc.Id.ToString() },
+            }, context);
+
+            Assert.AreEqual(2, db.Domains.Find(nju.Id).Users.Count(x => x.Role == UserRole.Admin));
+
+            CollectionAssert.AreEqual(new List<Guid> { lq.Id, fc.Id }, db.Domains.Find(nju.Id).Users.Where(x => x.Role == UserRole.Admin).Select(x => x.User.Id).ToList());
+
+
+            
         }
     }
 }
