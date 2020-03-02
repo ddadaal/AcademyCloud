@@ -10,6 +10,7 @@ import { AccountService } from "src/apis/identity/AccountService";
 import { JoinableDomainSelectionTable } from "src/pages/Identity/Account/JoinedDomains/JoinableDomainSelectionTable";
 import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 import { useStore } from "simstate";
+import { Domain } from "src/models/Domain";
 
 interface Props {
   reload: () => void;
@@ -20,8 +21,8 @@ const opResult = lang.components.operationResult;
 
 const service = getApiService(AccountService);
 
-const joinDomain = ([domainId]: [string]) => {
-  return service.joinDomain(domainId);
+const joinDomain = ([domain]: [Domain]) => {
+  return service.joinDomain(domain.id);
 }
 
 const validator = async (_: any, value: object) => {
@@ -58,7 +59,7 @@ export const JoinDomainLink: React.FC<Props> = (props) => {
 
   const onOk = () => {
     form.validateFields()
-      .then((fields) => { run(fields.name, fields.payUser) })
+      .then((fields) => { run(fields.domain) })
       .catch((ex) => console.log(ex));
   }
 

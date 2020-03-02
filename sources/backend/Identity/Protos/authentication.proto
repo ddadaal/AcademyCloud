@@ -1,4 +1,4 @@
-syntax = "proto3";
+syntax = "proto3"; 
 
 import "common.proto";
 option csharp_namespace = "AcademyCloud.Identity.Services.Authentication";
@@ -9,6 +9,7 @@ package authentication;
 service Authentication {
   rpc Authenticate(AuthenticationRequest) returns (AuthenticationReply);
   rpc GetScopes(GetScopesRequest) returns (GetScopesReply);
+  rpc ChangeScope(ChangeScopeRequest) returns (ChangeScopeReply);
   rpc GetTokenInfo(GetTokenInfoRequest) returns (GetTokenInfoReply);
 }
 
@@ -32,6 +33,16 @@ message GetScopesRequest {
 message GetScopesReply {
   bool success = 1;
   repeated Scope scopes = 2;
+  string userId = 3;
+}
+
+message ChangeScopeRequest {
+  Scope scope = 1;
+}
+
+message ChangeScopeReply {
+  bool success = 1;
+  string token = 2;
   string userId = 3;
 }
 

@@ -37,7 +37,7 @@ namespace AcademyCloud.Identity
             services.AddDbContext<IdentityDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
-                options.UseSqlite("DataSource=:memory:");
+                options.UseInMemoryDatabase("Test");
             });
 
             var jwtSettings = new JwtSettings();
@@ -87,7 +87,7 @@ namespace AcademyCloud.Identity
             }
 
             // temp: to generate data into the test db
-            dbContext.Database.OpenConnection();
+            // dbContext.Database.OpenConnection();
             dbContext.Database.EnsureCreated();
 
             // forcefully reload the social user and social domain's relationships

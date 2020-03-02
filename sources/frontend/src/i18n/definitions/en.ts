@@ -149,6 +149,7 @@ export default {
               isPayAccount: "You are the pay account for this domain. Please set the pay account of the domain to another account, and then exit.",
               notJoined: "You have not joined this domain!",
               cannotExitCurrentDomain: "Cannot exit current domain! Please switch to another domain before exiting current domain.",
+              cannotExitSocialDomain: "Cannot exit social domain! All users must be in the social domain.",
             }
           },
         },

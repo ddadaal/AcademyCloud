@@ -31,7 +31,6 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
 
   return (
     <Table dataSource={data?.domains} loading={isPending} rowKey="id">
-      <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
       <Table.Column title={<Localized id={root.name} />} dataIndex="name" />
       <Table.Column title={<Localized id={root.active.title} />} dataIndex="active"
         render={(active: boolean) => <Localized id={root.active[String(active)]} />}

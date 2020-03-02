@@ -102,8 +102,10 @@ export const ScopeIndicator: React.FC = () => {
   }
 
   if (domainScopes.length > 0) {
+    if (menuItems.length > 0) {
+      menuItems.push(<Menu.Divider key="domainDivider" />);
+    }
     menuItems.push(
-      <Menu.Divider key="domainDivider" />,
       <Menu.Item key="domainPrompt" disabled={true}>
         <Localized id={root.domains} />
       </Menu.Item>

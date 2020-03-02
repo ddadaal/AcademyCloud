@@ -17,8 +17,8 @@ const root = lang.identity.domains.delete;
 const opResult = lang.components.operationResult;
 
 const service = getApiService(DomainsService);
-const deleteDomain = ([domainId]: [string]) => {
-  return service.deleteDomain(domainId);
+const deleteDomain = (domain: Domain) => {
+  return service.deleteDomain(domain.id);
 }
 
 export const DeleteDomainLink: React.FC<Props> = ({ domain, reload }) => {
@@ -30,7 +30,7 @@ export const DeleteDomainLink: React.FC<Props> = ({ domain, reload }) => {
     modalApi.confirm({
       title: <Localized id={root.confirmPrompt} replacements={[domain.name]} />,
       icon: <ExclamationOutlined />,
-      onOk: () => deleteDomain([domain.name])
+      onOk: () => deleteDomain(domain)
         .then(() => {
           reload();
           api.success({

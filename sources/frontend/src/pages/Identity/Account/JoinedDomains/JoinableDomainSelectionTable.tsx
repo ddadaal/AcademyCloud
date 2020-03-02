@@ -16,10 +16,12 @@ const getJoinableDomains = async () => {
 
 type Domain = GetJoinableDomainsResponse["domains"][0];
 
-export const JoinableDomainSelectionTable: React.FC<{
+interface Props {
   value?: Domain;
   onChange?: (domain: Domain) => void;
-}> = ({ value, onChange = () => { } }) => {
+}
+
+export const JoinableDomainSelectionTable: React.FC<Props> = ({ value, onChange = () => { } }) => {
 
   const { isPending, data } = useAsync({
     promiseFn: getJoinableDomains,

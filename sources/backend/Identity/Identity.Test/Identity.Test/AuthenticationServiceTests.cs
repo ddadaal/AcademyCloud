@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
+using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 
 namespace AcademyCloud.Identity.Test
 {
@@ -18,7 +19,7 @@ namespace AcademyCloud.Identity.Test
         public async Task TestGetScopesSystem1()
         {
             // Arrange
-            var service = new AuthenticationService(db, new JwtSettings());
+            var service = new AuthenticationService(db, new JwtSettings(), await MockTokenClaimsAccessor(db, "system", "system"));
 
             // Act
             var resp = await service.GetScopes(new GetScopesRequest() { Username = "system", Password = "system" }, TestServerCallContext.Create());

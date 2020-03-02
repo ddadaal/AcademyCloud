@@ -20,7 +20,8 @@ namespace AcademyCloud.Identity.Test.Helpers
         {
             if (scopeChooser == null) { scopeChooser = (scope) => true; }
 
-            var service = new AuthenticationService(context, new JwtSettings());
+            // won't use the change scope
+            var service = new AuthenticationService(context, new JwtSettings(), null!);
 
             var scopesResp = await service.GetScopes(new GetScopesRequest { Username = username, Password = password }, TestServerCallContext.Create());
 

@@ -13,7 +13,7 @@ import { DisabledA } from "src/components/DisabledA";
 interface Props {
   domain: UserDomainAssignment;
   reload: () => void;
-  disabled: boolean;
+  disabledMessage?: React.ReactNode;
 }
 
 const root = lang.identity.account.joinedDomains.table;
@@ -25,7 +25,7 @@ const exitDomain = async ([domainId]: [string]) => {
   await service.exitDomain(domainId);
 };
 
-export const ExitDomainLink: React.FC<Props> = ({ reload, domain, disabled }) => {
+export const ExitDomainLink: React.FC<Props> = ({ reload, domain, disabledMessage }) => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
@@ -58,7 +58,7 @@ export const ExitDomainLink: React.FC<Props> = ({ reload, domain, disabled }) =>
     <span>
       {contextHolder}
       {modalContextHolder}
-      <DisabledA disabled={disabled} message={<Localized id={root.error.cannotExitCurrentDomain} />} onClick={onClick}>
+      <DisabledA disabled={!!disabledMessage} message={disabledMessage} onClick={onClick}>
         <Localized id={root.exit} />
       </DisabledA>
     </span>

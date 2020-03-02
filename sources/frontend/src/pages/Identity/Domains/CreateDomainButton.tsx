@@ -26,8 +26,8 @@ const getAccessibleUsers = () => usersService.getAccessibleUsers().then((x) => x
 
 
 const service = getApiService(DomainsService);
-const createDomain = ([name, payUser]: [string, User]) => {
-  return service.createDomain(name, payUser.id);
+const createDomain = ([name, payUsers]: [string, User[]]) => {
+  return service.createDomain(name, payUsers[0].id);
 }
 
 const userValidator = async (_, value: User[] | undefined) => {
@@ -52,7 +52,6 @@ export const CreateDomainButton: React.FC<Props> = (props) => {
       props.reload();
     },
     onReject: (e: any) => {
-      console.log(e);
       const { status } = e.data as HttpError;
       api.error({
         messageId: [opResult.fail, [root.opName]],
@@ -63,7 +62,7 @@ export const CreateDomainButton: React.FC<Props> = (props) => {
 
   const onOk = () => {
     form.validateFields()
-      .then((fields) => { console.log(fields); run(fields.name, fields.payUser)})
+      .then((fields) => run(fields.name, fields.payUsers))
       .catch((ex) => console.log(ex));
   }
 
@@ -90,7 +89,7 @@ export const CreateDomainButton: React.FC<Props> = (props) => {
               required: true,
               validator: userValidator,
               message: required,
-            }]} name="payUser">
+            }]} name="payUsers">
             <UsersSelectionMenu
               getUsers={getAccessibleUsers}
               selectionMode="single" />

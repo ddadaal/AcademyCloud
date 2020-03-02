@@ -44,7 +44,7 @@ export class AuthenticationService extends HttpService {
     const data = await this.fetch<LoginResponse>({
       method: HttpMethod.POST,
       body: { scope },
-      path: "/auth/token",
+      path: "/auth/token/change",
     });
 
     if (data.token) {

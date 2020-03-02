@@ -22,8 +22,9 @@ namespace AcademyCloud.API.Controllers
             this.factory = factory;
         }
 
-        [HttpGet]
-        [Route("scopes")]
+
+
+        [HttpGet("scopes")]
         public async Task<ActionResult<ScopesResponse>> GetScopes([FromQuery]string username = "", [FromQuery] string password = "")
         {
             var reply = await (await factory.GetAuthenticationClientAsync())
@@ -43,8 +44,7 @@ namespace AcademyCloud.API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("token")]
+        [HttpPost("token")]
         public async Task<ActionResult<LoginResponse>> Login(LoginRequest request)
         {
             var reply = await (await factory.GetAuthenticationClientAsync())
@@ -63,6 +63,26 @@ namespace AcademyCloud.API.Controllers
             {
                 return StatusCode(403);
             }
+        }
+
+        [HttpPost("token/change")]
+        public async Task<ActionResult<LoginResponse>> ChangeScope([FromBody] Models.ChangeScopeRequest request)
+        {
+            var reply = await (await factory.GetAuthenticationClientAsync())
+                .ChangeScopeAsync(new AcademyCloud.Identity.Services.Authentication.ChangeScopeRequest
+                {
+                    Scope = request.Scope,
+                });
+
+            if (reply.Success)
+            {
+                return new LoginResponse(reply.Token);
+            }
+            else
+            {
+                return StatusCode(403);
+            }
+            
         }
     }
 }

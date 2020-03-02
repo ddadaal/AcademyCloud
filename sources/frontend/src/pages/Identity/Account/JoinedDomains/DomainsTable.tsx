@@ -35,7 +35,13 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
       <Table.Column title={<Localized id={root.name} />  } dataIndex="domainName" />
       <Table.Column title={<Localized id={root.role} />  } dataIndex="role" />
       <Table.Column title={<Localized id={root.actions} />} render={(_, domain: UserDomainAssignment) => (
-        <ExitDomainLink domain={domain} reload={reload} disabled={userStore.user?.scope.domainId === domain.domainId} />
+        <ExitDomainLink domain={domain} reload={reload} disabledMessage={(
+          domain.domainName === "Social"
+            ? <Localized id={root.error.cannotExitSocialDomain} />
+            : userStore.user?.scope.domainId === domain.domainId
+              ? <Localized id={root.error.cannotExitCurrentDomain} />
+              : undefined
+        )} />
       )}/>
     </Table>
   )

@@ -26,8 +26,8 @@ const getAccessibleUsers = () => usersService.getAccessibleUsers().then((x) => x
 
 const service = getApiService(ProjectsService);
 
-const createProject = ([name, payUser]: [string, User]) => {
-  return service.createProject(name, payUser.id);
+const createProject = ([name, payUsers]: [string, User[]]) => {
+  return service.createProject(name, payUsers[0].id);
 }
 
 const validator = async (_, value: User[] | undefined) => {
@@ -63,7 +63,7 @@ export const CreateProjectButton: React.FC<Props> = (props) => {
 
   const onOk = () => {
     form.validateFields()
-      .then((fields) => { console.log(fields); run(fields.name, fields.payUser) })
+      .then((fields) =>  run(fields.name, fields.payUsers) )
       .catch((ex) => console.log(ex));
   }
 
@@ -90,7 +90,7 @@ export const CreateProjectButton: React.FC<Props> = (props) => {
               required: true,
               validator: validator,
               message: required,
-            }]} name="payUser">
+            }]} name="payUsers">
             <UsersSelectionMenu
               getUsers={getAccessibleUsers}
               selectionMode="single" />
