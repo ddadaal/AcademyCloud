@@ -25,7 +25,7 @@ namespace Identity.Test
         public async Task GetDomains()
         {
 
-            var resp = await service.GetDomains(new GetDomainsRequest { }, await GetContext());
+            var resp = await service.GetDomains(new GetDomainsRequest { }, TestContext);
 
             Assert.Equal(3, resp.Domains.Count());
         }
@@ -33,7 +33,7 @@ namespace Identity.Test
         [Fact]
         public async Task GetUsersOfDomain()
         {
-            var resp = await service.GetUsersOfDomain(new GetUsersOfDomainRequest { DomainId = IdentityDbContext.SocialDomainId.ToString() }, await GetContext());
+            var resp = await service.GetUsersOfDomain(new GetUsersOfDomainRequest { DomainId = IdentityDbContext.SocialDomainId.ToString() }, TestContext);
 
             Assert.Single(resp.Admins);
             Assert.Equal("Social Admin", resp.Admins[0].Name);
@@ -49,7 +49,7 @@ namespace Identity.Test
                 DomainId = pku.Id.ToString(),
                 UserId = cjy.Id.ToString(),
                 Role = AcademyCloud.Identity.Services.Common.UserRole.Member
-            }, await GetContext());
+            }, TestContext);
 
             Assert.Equal(3, db.Domains.Find(pku.Id).Users.Count);
             Assert.Equal(UserRole.Member, db.UserDomainAssignments.First(x => x.Domain.Id == pku.Id && x.User.Id == cjy.Id).Role);
@@ -65,7 +65,7 @@ namespace Identity.Test
                 DomainId = nju.Id.ToString(),
                 UserId = cjd.Id.ToString(),
                 Role = AcademyCloud.Identity.Services.Common.UserRole.Admin
-            }, await GetContext());
+            }, TestContext);
 
             Assert.Equal(UserRole.Admin, nju.Users.First(x => x.User == cjd).Role);
         }
@@ -80,7 +80,7 @@ namespace Identity.Test
             {
                 Name = "testnewdomain",
                 AdminId = cjd.Id.ToString(),
-            }, await GetContext());
+            }, TestContext);
 
             Assert.Equal(4, db.Domains.Count());
 
@@ -97,7 +97,7 @@ namespace Identity.Test
             await service.DeleteDomain(new DeleteDomainRequest
             {
                 DomainId = pku.Id.ToString(),
-            }, await GetContext());
+            }, TestContext);
 
             Assert.Equal(prev - 1, db.Domains.Count());
             // should be cascade delete
@@ -113,7 +113,7 @@ namespace Identity.Test
             {
                 DomainId = pku.Id.ToString(),
                 UserId = cjd.Id.ToString()
-            }, await GetContext());
+            },TestContext);
 
             Assert.Equal(prev - 1, cjd.Domains.Count());
             Assert.Equal(nju.Name, cjd.Domains.First().Domain.Name);
@@ -126,7 +126,7 @@ namespace Identity.Test
             {
                 DomainId = nju.Id.ToString(),
                 AdminIds = { lq.Id.ToString(), fc.Id.ToString() },
-            }, await GetContext());
+            }, TestContext);
 
             Assert.Equal(2, db.Domains.Find(nju.Id).Users.Count(x => x.Role == UserRole.Admin));
 

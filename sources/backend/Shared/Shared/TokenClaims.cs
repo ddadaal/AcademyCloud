@@ -42,7 +42,7 @@ namespace AcademyCloud.Shared
         /// Is the user authenticated project scoped?
         /// Note that the social is project scoped. Need to check for social first.
         /// </summary>
-        public bool IsProjectScoped => !string.IsNullOrEmpty(ProjectId) && string.IsNullOrEmpty(ProjectId);
+        public bool IsProjectScoped => !string.IsNullOrEmpty(ProjectId);
         public bool IsProjectAdmin => IsProjectScoped && Role == UserRole.Admin;
 
         public List<Claim> ToClaims()

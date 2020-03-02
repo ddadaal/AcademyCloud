@@ -38,11 +38,13 @@ namespace AcademyCloud.Identity.Services.Users
             }
             else if (claims.IsDomainScoped)
             {
-                users = dbContext.UserDomainAssignments.Where(x => x.Domain.Id.ToString() == claims.DomainId).Select(x => x.User);
+                var domain = await dbContext.Domains.FindIfNullThrowAsync(claims.DomainId);
+                users = dbContext.UserDomainAssignments.Where(x => x.Domain == domain).Select(x => x.User);
             }
             else if (claims.IsProjectScoped)
             {
-                users = dbContext.UserProjectAssignments.Where(x => x.Project.Id.ToString() == claims.ProjectId).Select(x => x.User);
+                var project = await dbContext.Projects.FindIfNullThrowAsync(claims.ProjectId!);
+                users = dbContext.UserProjectAssignments.Where(x => x.Project == project).Select(x => x.User);
             }
             else
             {

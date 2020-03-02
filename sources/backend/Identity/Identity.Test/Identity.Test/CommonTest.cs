@@ -10,7 +10,7 @@ using static Identity.Test.Helpers.MockDbContext;
 
 namespace Identity.Test
 {
-    public class CommonTest: IDisposable
+    public class CommonTest : IDisposable
     {
         protected IdentityDbContext db;
 
@@ -24,10 +24,7 @@ namespace Identity.Test
             db.Database.EnsureDeleted();
             db.Dispose();
         }
-        
-        public async Task<ServerCallContext> GetContext(string username = "system", string password = "system")
-        {
-            return await AuthenticatedCallContext.Create(db, username, password);
-        }
+
+        public ServerCallContext TestContext => TestServerCallContext.Create();
     }
 }
