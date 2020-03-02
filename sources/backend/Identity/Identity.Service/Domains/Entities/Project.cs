@@ -14,12 +14,12 @@ namespace AcademyCloud.Identity.Domains.Entities
 
         public virtual ICollection<UserProjectAssignment> Users { get; set; }
 
-        public Project(Guid id, string name, Domain domain, ICollection<UserProjectAssignment> users = null)
+        public Project(Guid id, string name, Domain domain)
         {
             Id = id;
             Name = name;
             Domain = domain;
-            Users = users ?? new List<UserProjectAssignment>();
+            Users = new List<UserProjectAssignment>();
         }
 
         public Project() { }

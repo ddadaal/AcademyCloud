@@ -78,32 +78,49 @@ namespace AcademyCloud.Identity.Services.Domains
 
         public override async Task<GetDomainsResponse> GetDomains(GetDomainsRequest request, ServerCallContext context)
         {
-            var domains = dbContext.Domains.Select(x => new Common.Domain
+            // load the user domain assignments values first
+            var domains = dbContext.Domains.Include(x => x.Users).AsEnumerable();
+
+            var grpcDomains = domains.Select(x => new Common.Domain
             {
                 Id = x.Id.ToString(),
                 Name = x.Name,
                 Admins = {
-                    x.Users.Where(u => u.Role == Identity.Domains.ValueObjects.UserRole.Admin)
-                           .Select(u => u.User)
-                           .AsEnumerable()
-                           .Select(u => u.ToGrpcUser())
+                    x.Users
+                        .Where(u => u.Role == Identity.Domains.ValueObjects.UserRole.Admin)
+                        // explicitly load the user value
+                        .Select(x => LoadUser(x).ToGrpcUser())
                 }
-            }).AsEnumerable();
+            });
 
             return new GetDomainsResponse
             {
-                Domains = { domains }
+                Domains = { grpcDomains }
             };
+        }
+
+        private User LoadUser(UserDomainAssignment assignment)
+        {
+            dbContext.Entry(assignment).Reference(x => x.User).Load();
+            return assignment.User;
         }
 
         public override async Task<GetUsersOfDomainResponse> GetUsersOfDomain(GetUsersOfDomainRequest request, ServerCallContext context)
         {
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
 
+            // Load users
+            dbContext.Entry(domain).Collection(x => x.Users).Load();
+
+            // filter admins and members
+            var admins = domain.Users.Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Admin);
+            var members = domain.Users.Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Member);
+
+            // explicitly load there users
             return new GetUsersOfDomainResponse
             {
-                Admins = { domain.Users.Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Admin).Select(x => x.User.ToGrpcUser()) },
-                Members = { domain.Users.Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Member).Select(x => x.User.ToGrpcUser()) },
+                Admins = { admins.Select(x => LoadUser(x).ToGrpcUser()) },
+                Members = { members.Select(x => LoadUser(x).ToGrpcUser()) },
             };
         }
 
