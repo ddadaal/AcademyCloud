@@ -74,6 +74,7 @@ namespace AcademyCloud.Identity
                     };
                 });
 
+            services.AddHttpContextAccessor();
             services.AddSingleton<TokenClaimsAccessor>();
         }
 
@@ -88,6 +89,10 @@ namespace AcademyCloud.Identity
             // temp: to generate data into the test db
             dbContext.Database.OpenConnection();
             dbContext.Database.EnsureCreated();
+
+            // forcefully reload the social user and social domain's relationships
+            dbContext.Entry(dbContext.Users.Find(IdentityDbContext.SocialDomainAdminId)).Collection(x => x.Domains).Load();
+            dbContext.Entry(dbContext.Domains.Find(IdentityDbContext.SocialDomainId)).Collection(x => x.Users).Load();
 
 
             app.UseRouting();

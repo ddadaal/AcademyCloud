@@ -35,6 +35,7 @@ namespace AcademyCloud.Identity.Test
         public Project fcproject;
         public UserProjectAssignment lq67project;
         public UserProjectAssignment cjd67project;
+        public UserProjectAssignment fcfcproject;
 
         public void InitializeVariables()
         {
@@ -49,6 +50,7 @@ namespace AcademyCloud.Identity.Test
             fcproject = new Project(Guid.NewGuid(), "fc Project", pku);
             lq67project = new UserProjectAssignment(Guid.NewGuid(), lq, lqproject, UserRole.Admin);
             cjd67project = new UserProjectAssignment(Guid.NewGuid(), cjd, lqproject, UserRole.Member);
+            fcfcproject = new UserProjectAssignment(Guid.NewGuid(), fc, fcproject, UserRole.Admin);
 
         }
 
@@ -66,7 +68,7 @@ namespace AcademyCloud.Identity.Test
 
             context.Projects.AddRange(lqproject, fcproject);
 
-            context.UserProjectAssignments.AddRange(lq67project, cjd67project);
+            context.UserProjectAssignments.AddRange(lq67project, cjd67project, fcfcproject);
 
             context.SaveChanges();
         }
@@ -81,6 +83,9 @@ namespace AcademyCloud.Identity.Test
             db = new IdentityDbContext(options);
 
             FillData(db);
+
+            db.Entry(db.Users.Find(IdentityDbContext.SocialDomainAdminId)).Collection(x => x.Domains).Load();
+            db.Entry(db.Domains.Find(IdentityDbContext.SocialDomainId)).Collection(x => x.Users).Load();
 
         }
 

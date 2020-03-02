@@ -43,13 +43,16 @@ namespace AcademyCloud.Identity.Services.Account
         {
             var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
 
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
+
             var domainAssignment = await dbContext.UserDomainAssignments
-                .FirstAsync(x => x.User.Id.ToString() == tokenClaims.UserId && x.Domain.Id.ToString() == request.DomainId);
+                .FirstAsync(x => x.User == user && x.Domain == domain);
 
             dbContext.UserDomainAssignments.Remove(domainAssignment);
 
             var projectAssignments = dbContext.UserProjectAssignments
-                .Where(x => x.User.Id.ToString() == tokenClaims.UserId && x.Project.Domain.Id.ToString() == request.DomainId);
+                .Where(x => x.User == user && x.Project.Domain == domain);
 
             dbContext.UserProjectAssignments.RemoveRange(projectAssignments);
 
@@ -60,32 +63,35 @@ namespace AcademyCloud.Identity.Services.Account
         }
 
         [Authorize]
-        public override Task<GetJoinableDomainsResponse> GetJoinableDomains(GetJoinableDomainsRequest request, ServerCallContext context)
+        public override async Task<GetJoinableDomainsResponse> GetJoinableDomains(GetJoinableDomainsRequest request, ServerCallContext context)
         {
             var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
 
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
+
             var alreadyInDomains = dbContext.UserDomainAssignments
-                .Where(x => x.User.Id.ToString() == tokenClaims.UserId)
+                .Where(x => x.User == user)
                 .Select(x => x.Domain.Id);
 
             var notInDomains = dbContext.Domains
                 .Where(x => !alreadyInDomains.Contains(x.Id));
 
-            return Task.FromResult(new GetJoinableDomainsResponse()
+            return new GetJoinableDomainsResponse()
             {
                 Domains = { notInDomains.Select(x => new GetJoinableDomainsResponse.Types.JoinableDomain() { Id = x.Id.ToString(), Name = x.Name }) }
-            });
+            };
 
 
         }
 
         [Authorize]
-        public override Task<GetJoinedDomainsResponse> GetJoinedDomains(GetJoinedDomainsRequest request, ServerCallContext context)
+        public override async Task<GetJoinedDomainsResponse> GetJoinedDomains(GetJoinedDomainsRequest request, ServerCallContext context)
         {
             var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var currentUser = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             var domains = dbContext.UserDomainAssignments
-                .Where(x => x.User.Id.ToString() == tokenClaims.UserId)
+                .Where(x => x.User == currentUser)
                 .Select(x => new UserDomainAssignment()
                 {
                     DomainId = x.Domain.Id.ToString(),
@@ -93,10 +99,10 @@ namespace AcademyCloud.Identity.Services.Account
                     Role = (Common.UserRole)x.Role,
                 });
 
-            return Task.FromResult(new GetJoinedDomainsResponse()
+            return new GetJoinedDomainsResponse()
             {
                 Domains = { domains }
-            });
+            };
         }
 
         [Authorize]
@@ -109,7 +115,7 @@ namespace AcademyCloud.Identity.Services.Account
 
             return new GetProfileResponse()
             {
-                Profile = new Profile() { Email = currentUser.Email, Id = currentUser.Id.ToString(), Username = currentUser.Username }
+                Profile = new Profile() { Email = currentUser.Email, Id = currentUser.Id.ToString(), Username = currentUser.Username, Name = currentUser.Name }
             };
         }
 
@@ -186,7 +192,7 @@ namespace AcademyCloud.Identity.Services.Account
             if (user.Password != request.Original)
             {
                 return new UpdatePasswordResponse() { Result = UpdatePasswordResponse.Types.Result.OriginalNotMatch };
-        
+
             }
 
             user.Password = request.Updated;

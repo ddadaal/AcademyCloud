@@ -42,8 +42,9 @@ message GetProfileResponse { Profile profile = 1; }
 
 message Profile {
   string id = 1;
-  string username = 3;
-  string email = 2;
+  string username = 2;
+  string name = 3;
+  string email = 4;
 }
 
 message UpdateProfileRequest { string email = 1; }
