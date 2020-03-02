@@ -118,6 +118,47 @@ namespace AcademyCloud.API.Controllers.Identity
             return NoContent();
         }
 
+        [HttpPatch("{projectId}/resources")]
+        public async Task<ActionResult> SetResources([FromRoute] string projectId)
+        {
+            // TODO request to expenses
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateProject([FromBody] CreateProjectRequest request)
+        {
+            var res = await (await factory.GetProjectsClientAsync())
+                .CreateProjectAsync(new AcademyCloud.Identity.Services.Projects.CreateProjectRequest
+                {
+                    Name = request.Name,
+                    PayUserId = request.PayUserId,
+                });
+
+            return NoContent();
+        }
+
+        [HttpDelete("{projectId}")]
+        public async Task<ActionResult> DeleteProject([FromRoute] string projectId)
+        {
+            var resp = await (await factory.GetProjectsClientAsync())
+                .DeleteProjectAsync(new AcademyCloud.Identity.Services.Projects.DeleteProjectRequest
+                {
+                    ProjectId = projectId
+                });
+
+            return NoContent();
+        }
+
+        [HttpPatch("{projectId}/payUser")]
+        public async Task<ActionResult> SetPayUser([FromRoute] string projectId, [FromBody] SetPayUserRequest request)
+        {
+            // request to expenses
+            return NoContent();
+        }
+
+
+
 
     }
 }

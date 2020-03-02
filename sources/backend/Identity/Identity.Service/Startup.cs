@@ -6,6 +6,9 @@ using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
 using AcademyCloud.Identity.Services.Account;
 using AcademyCloud.Identity.Services.Authentication;
+using AcademyCloud.Identity.Services.Domains;
+using AcademyCloud.Identity.Services.Projects;
+using AcademyCloud.Identity.Services.Users;
 using AcademyCloud.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -82,6 +85,9 @@ namespace AcademyCloud.Identity
             {
                 endpoints.MapGrpcService<AccountService>(); 
                 endpoints.MapGrpcService<AuthenticationService>();
+                endpoints.MapGrpcService<DomainsService>();
+                endpoints.MapGrpcService<ProjectsService>();
+                endpoints.MapGrpcService<UsersService>();
 
                 endpoints.MapGet("/", async context =>
                 {
