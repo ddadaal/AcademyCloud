@@ -6,16 +6,15 @@ using Grpc.Core;
 using Identity.Test.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Identity.Test
 {
-    [TestClass]
     public class AuthenticationServiceTests
     {
-        [TestMethod]
+        [Fact]
         public async Task TestGetScopesSystem1()
         {
             // Arrange
@@ -26,8 +25,8 @@ namespace Identity.Test
             var resp = await service.GetScopes(new GetScopesRequest() { Username = "system", Password = "system" }, TestServerCallContext.Create());
 
             // Assert
-            Assert.IsTrue(resp.Success);
-            Assert.IsTrue(resp.Scopes[0].System);
+            Assert.True(resp.Success);
+            Assert.True(resp.Scopes[0].System);
         }
     }
 }
