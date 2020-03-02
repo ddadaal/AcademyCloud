@@ -1,6 +1,10 @@
 ﻿using AcademyCloud.Identity.Data;
+using AcademyCloud.Identity.Domains.Entities;
+using AcademyCloud.Identity.Exceptions;
+using AcademyCloud.Identity.Extensions;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,45 +16,144 @@ namespace AcademyCloud.Identity.Services.Projects
     public class ProjectsService : Projects.ProjectsBase
     {
         private readonly IdentityDbContext dbContext;
+        private readonly TokenClaimsAccessor tokenClaimsAccessor;
 
-        public ProjectsService(IdentityDbContext dbContext)
+        public ProjectsService(IdentityDbContext dbContext, TokenClaimsAccessor tokenClaimsAccessor)
         {
             this.dbContext = dbContext;
+            this.tokenClaimsAccessor = tokenClaimsAccessor;
         }
 
-        public override Task<AddUserToProjectResponse> AddUserToProject(AddUserToProjectRequest request, ServerCallContext context)
+        public override async Task<AddUserToProjectResponse> AddUserToProject(AddUserToProjectRequest request, ServerCallContext context)
         {
-            return base.AddUserToProject(request, context); 
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+
+            var assignment = new UserProjectAssignment(Guid.NewGuid(), user, project, (Identity.Domains.ValueObjects.UserRole)request.Role);
+
+            dbContext.UserProjectAssignments.Add(assignment);
+
+            await dbContext.SaveChangesAsync();
+
+            return new AddUserToProjectResponse { };
         }
 
-        public override Task<ChangeUserRoleResponse> ChangeUserRole(ChangeUserRoleRequest request, ServerCallContext context)
+        public override async Task<ChangeUserRoleResponse> ChangeUserRole(ChangeUserRoleRequest request, ServerCallContext context)
         {
-            return base.ChangeUserRole(request, context);
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+
+            var assignment = await dbContext.UserProjectAssignments
+                .FirstOrDefaultAsync(x => x.User == user && x.Project == project)
+                ?? throw EntityNotFoundException.Create<UserProjectAssignment>($"UserId {request.UserId} and ProjectId {request.ProjectId}");
+
+            assignment.Role = (Identity.Domains.ValueObjects.UserRole)request.Role;
+
+            await dbContext.SaveChangesAsync();
+
+            return new ChangeUserRoleResponse { };
         }
 
-        public override Task<CreateProjectResponse> CreateProject(CreateProjectRequest request, ServerCallContext context)
+        public override async Task<CreateProjectResponse> CreateProject(CreateProjectRequest request, ServerCallContext context)
         {
-            return base.CreateProject(request, context);
+            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaims.DomainId);
+
+            var payUser = await dbContext.Users.FindIfNullThrowAsync(request.AdminId);
+            var project = new Project(Guid.NewGuid(), request.Name, domain);
+            dbContext.Projects.Add(project);
+
+            var adminAssignment = new UserProjectAssignment(Guid.NewGuid(), payUser, project, Identity.Domains.ValueObjects.UserRole.Admin);
+            dbContext.UserProjectAssignments.Add(adminAssignment);
+
+            await dbContext.SaveChangesAsync();
+
+            return new CreateProjectResponse { };
         }
 
-        public override Task<DeleteProjectResponse> DeleteProject(DeleteProjectRequest request, ServerCallContext context)
+        public override async Task<DeleteProjectResponse> DeleteProject(DeleteProjectRequest request, ServerCallContext context)
         {
-            return base.DeleteProject(request, context);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+
+            dbContext.Projects.Remove(project);
+
+            await dbContext.SaveChangesAsync();
+
+            return new DeleteProjectResponse { };
         }
 
-        public override Task<GetAccessibleProjectsResponse> GetAccessibleProjects(GetAccessibleProjectsRequest request, ServerCallContext context)
+        private (IEnumerable<Common.User>, IEnumerable<Common.User>) GetProjectUsers(Project project)
         {
-            return base.GetAccessibleProjects(request, context);
+            var allUsers = project.Users.AsEnumerable();
+
+            var admins = allUsers
+                .Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Admin)
+                .Select(x => x.User)
+                .Select(x => new Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
+
+            var members = allUsers
+                .Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Member)
+                .Select(x => x.User)
+                .Select(x => new Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
+
+            return (admins, members);
+
         }
 
-        public override Task<GetUsersOfProjectResponse> GetUsersOfProject(GetUsersOfProjectRequest request, ServerCallContext context)
+        public override async Task<GetAccessibleProjectsResponse> GetAccessibleProjects(GetAccessibleProjectsRequest request, ServerCallContext context)
         {
-            return base.GetUsersOfProject(request, context);
+            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaims.DomainId);
+
+            var projects = domain.Projects.Select(x =>
+            {
+                var (admins, members) = GetProjectUsers(x);
+
+                return new Common.Project
+                {
+                    Id = x.Id.ToString(),
+                    Admins = { admins },
+                    Members = { members },
+                    Name = x.Name,
+                };
+            });
+
+            return new GetAccessibleProjectsResponse
+            {
+                Projects = { projects }
+            };
+
         }
 
-        public override Task<RemoveUserFromProjectResponse> RemoveUserFromProject(RemoveUserFromProjectRequest request, ServerCallContext context)
+        public override async Task<GetUsersOfProjectResponse> GetUsersOfProject(GetUsersOfProjectRequest request, ServerCallContext context)
         {
-            return base.RemoveUserFromProject(request, context);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+
+            var (admins, members) = GetProjectUsers(project);
+
+            return new GetUsersOfProjectResponse
+            {
+                Admins = { admins },
+                Members = { members },
+            };
+        }
+
+        public override async Task<RemoveUserFromProjectResponse> RemoveUserFromProject(RemoveUserFromProjectRequest request, ServerCallContext context)
+        {
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+
+            var assignment = await dbContext.UserProjectAssignments
+                .FirstOrDefaultAsync(x => x.User == user && x.Project == project)
+                ?? throw EntityNotFoundException.Create<UserProjectAssignment>($"projectId {request.ProjectId} userId {request.UserId}");
+
+            dbContext.UserProjectAssignments.Remove(assignment);
+
+            await dbContext.SaveChangesAsync();
+
+            return new RemoveUserFromProjectResponse { };
         }
     }
 }

@@ -56,8 +56,7 @@ namespace Identity.Test
             }, TestContext);
 
             Assert.Equal(7, db.Users.Count());
-
-
         }
+
     }
 }

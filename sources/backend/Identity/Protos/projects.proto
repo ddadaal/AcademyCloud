@@ -32,7 +32,6 @@ message GetUsersOfProjectRequest {
 message GetUsersOfProjectResponse {
   repeated common.User admins = 1;
   repeated common.User members = 2;
-  common.User payUser = 3;
 }
 
 message AddUserToProjectRequest {
