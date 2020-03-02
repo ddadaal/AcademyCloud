@@ -61,7 +61,7 @@ namespace AcademyCloud.API.Controllers.Identity
             {
                 Admins = resp.Admins.Select(TransformUser),
                 Members = resp.Members.Select(TransformUser),
-                PayUser = TransformUser(resp.PayUser),
+                PayUser = TransformUser(resp.Admins[0]),
                 UserResources = resp.Admins.Concat(resp.Members).ToDictionary(user => user.Id, user => DummyResources)
             };
         }
