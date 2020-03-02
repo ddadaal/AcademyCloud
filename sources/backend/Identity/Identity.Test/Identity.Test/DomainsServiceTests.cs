@@ -58,19 +58,19 @@ namespace Identity.Test
         {
             var context = await AuthenticatedCallContext.Create(db, "system", "system");
 
-            Assert.AreEqual(1, db.Domains.Find(pku.Id).Users.Count);
+            Assert.AreEqual(2, db.Domains.Find(pku.Id).Users.Count);
 
             var resp = await service.AddUserToDomain(new AddUserToDomainRequest
             {
                 DomainId = pku.Id.ToString(),
-                UserId = cjd.Id.ToString(),
+                UserId = cjy.Id.ToString(),
                 Role = AcademyCloud.Identity.Services.Common.UserRole.Member
             }, context);
 
-            Assert.AreEqual(2, db.Domains.Find(pku.Id).Users.Count);
-            Assert.AreEqual(UserRole.Member, db.UserDomainAssignments.First(x => x.Domain.Id == pku.Id && x.User.Id == cjd.Id).Role);
+            Assert.AreEqual(3, db.Domains.Find(pku.Id).Users.Count);
+            Assert.AreEqual(UserRole.Member, db.UserDomainAssignments.First(x => x.Domain.Id == pku.Id && x.User.Id == cjy.Id).Role);
         }
-        
+
         [TestMethod]
         public async Task TestChangeUserRole()
         {
@@ -123,7 +123,23 @@ namespace Identity.Test
             Assert.AreEqual(2, db.Domains.Count());
             // should be cascade delete
             Assert.AreEqual(1, db.Projects.Count());
+        }
 
+        [TestMethod]
+        public async Task RemoveUserFromDomain()
+        {
+            var context = await AuthenticatedCallContext.Create(db, "system", "system");
+
+            Assert.AreEqual(2, cjd.Domains.Count());
+
+            await service.RemoveUserFromDomain(new RemoveUserFromDomainRequest
+            {
+                DomainId = pku.Id.ToString(),
+                UserId = cjd.Id.ToString()
+            }, context);
+
+            Assert.AreEqual(1, cjd.Domains.Count());
+            Assert.AreEqual(nju.Name, cjd.Domains.First().Domain.Name);
         }
     }
 }

@@ -25,7 +25,6 @@ namespace AcademyCloud.Identity.Services.Domains
         public override async Task<AddUserToDomainResponse> AddUserToDomain(AddUserToDomainRequest request, ServerCallContext context)
         {
             var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
-
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
 
             var assignment = new UserDomainAssignment(Guid.NewGuid(), user, domain, (Identity.Domains.ValueObjects.UserRole)request.Role);
@@ -39,8 +38,11 @@ namespace AcademyCloud.Identity.Services.Domains
 
         public override async Task<ChangeUserRoleResponse> ChangeUserRole(ChangeUserRoleRequest request, ServerCallContext context)
         {
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
+
             var assignment = await dbContext.UserDomainAssignments
-                .FirstOrDefaultAsync(x => x.User.Id.ToString() == request.UserId && x.Domain.Id.ToString() == request.DomainId)
+                .FirstOrDefaultAsync(x => x.User == user && x.Domain == domain)
                 ?? throw EntityNotFoundException.Create<UserDomainAssignment>($"UserId {request.UserId} and DomainId {request.DomainId}");
 
             assignment.Role = (Identity.Domains.ValueObjects.UserRole)request.Role;
@@ -127,16 +129,19 @@ namespace AcademyCloud.Identity.Services.Domains
         public override async Task<RemoveUserFromDomainResponse> RemoveUserFromDomain(RemoveUserFromDomainRequest request, ServerCallContext context)
         {
 
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+
             // remove the domain assignment
             var domainAssignment = await dbContext.UserDomainAssignments
-                .FirstOrDefaultAsync(x => x.Domain.Id.ToString() == request.DomainId && x.User.Id.ToString() == request.UserId)
+                .FirstOrDefaultAsync(x => x.Domain == domain && x.User == user)
                    ?? throw EntityNotFoundException.Create<UserDomainAssignment>($"DomainId {request.DomainId} and UserId {request.UserId}");
 
             dbContext.UserDomainAssignments.Remove(domainAssignment);
 
             // remove the project assignment
             var projectAssignments = dbContext.UserProjectAssignments
-                .Where(x => x.Project.Domain.Id.ToString() == request.DomainId && x.User.Id.ToString() == request.UserId);
+                .Where(x => x.Project.Domain == domain && x.User == user);
 
             dbContext.UserProjectAssignments.RemoveRange(projectAssignments);
 
@@ -149,7 +154,7 @@ namespace AcademyCloud.Identity.Services.Domains
         {
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
 
-            var assignments = dbContext.UserDomainAssignments.Where(x => x.Domain.Id.ToString() == request.DomainId);
+            var assignments = dbContext.UserDomainAssignments.Where(x => x.Domain == domain);
 
             // 1. Set all roles to members
             await assignments.ForEachAsync(x =>
@@ -161,7 +166,7 @@ namespace AcademyCloud.Identity.Services.Domains
             foreach (var userId in request.AdminIds)
             {
                 var user = await dbContext.Users.FindIfNullThrowAsync(userId);
-                var userAssignment = await assignments.FirstOrDefaultAsync(x => x.User.Id.ToString() == userId);
+                var userAssignment = await assignments.FirstOrDefaultAsync(x => x.User == user);
 
                 if (userAssignment != null)
                 {

@@ -1,6 +1,7 @@
 ﻿using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Domains.Entities;
 using AcademyCloud.Identity.Domains.ValueObjects;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Identity.Test.Helpers
         public static User fc = new User(Guid.NewGuid(), "fc", "fc", "fc", "fc@ac.com", false);
         public static User njuadmin = new User(Guid.NewGuid(), "njuadmin", "njuadmin", "njuadmin", "njuadmin@ac.com", false);
         public static UserDomainAssignment cjdnju = new UserDomainAssignment(Guid.NewGuid(), cjd, nju, UserRole.Member);
+        public static UserDomainAssignment cjdpku = new UserDomainAssignment(Guid.NewGuid(), cjd, pku, UserRole.Member);
         public static UserDomainAssignment cjynju = new UserDomainAssignment(Guid.NewGuid(), cjy, nju, UserRole.Member);
         public static UserDomainAssignment lqnju = new UserDomainAssignment(Guid.NewGuid(), lq, nju, UserRole.Member);
         public static UserDomainAssignment fghnju = new UserDomainAssignment(Guid.NewGuid(), fgh, nju, UserRole.Member);
@@ -34,13 +36,14 @@ namespace Identity.Test.Helpers
         {
             // system user: system, system
 
+            context.Database.OpenConnection();
             context.Database.EnsureCreated();
 
             context.Domains.AddRange(nju, pku);
 
             context.Users.AddRange(cjd, cjy, lq, fgh, fc, njuadmin);
 
-            context.UserDomainAssignments.AddRange(cjdnju, cjynju, lqnju, fghnju, njuadminnju, fcpku);
+            context.UserDomainAssignments.AddRange(cjdnju, cjdpku, cjynju, lqnju, fghnju, njuadminnju, fcpku);
 
             context.Projects.AddRange(lqproject, fcproject);
 
@@ -53,7 +56,7 @@ namespace Identity.Test.Helpers
         public static IdentityDbContext GetDbContext()
         {
             var options = new DbContextOptionsBuilder<IdentityDbContext>()
-                        .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                        .UseSqlite("DataSource=:memory:")
                         .Options;
 
             var context = new IdentityDbContext(options);

@@ -7,6 +7,7 @@ using Identity.Test.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Threading.Tasks;
 
 namespace Identity.Test
