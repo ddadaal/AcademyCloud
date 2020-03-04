@@ -7,19 +7,20 @@ export interface TransactionsResponse<T> {
 }
 
 
+// limit <= 0 means all data
 // all returns ordered (descend) transactions by date
 export class TransactionsService extends HttpService {
-  async getAccountTransactions(): Promise<TransactionsResponse<AccountTransaction>> {
+  async getAccountTransactions(limit = 0): Promise<TransactionsResponse<AccountTransaction>> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
       path: "/expenses/transactions/account",
+      params: { limit },
     });
 
     return resp as TransactionsResponse<AccountTransaction>;
 
   }
 
-  // limit <= 0 means all data
   async getSystemTransactions(limit = 0): Promise<TransactionsResponse<OrgTransaction>> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
