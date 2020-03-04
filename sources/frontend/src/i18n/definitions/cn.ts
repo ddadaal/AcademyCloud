@@ -346,7 +346,7 @@ export default {
         }
       },
       accountTransactions: {
-        title: "账号交易记录",
+        title: "账户交易记录",
         refresh: "刷新",
       },
       systemTransactions: {
