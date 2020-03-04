@@ -6,3 +6,8 @@ export enum TransactionType {
   DomainResources = "DomainResources",
   ProjectResources = "ProjectResources",
 }
+
+export interface TransactionReason {
+  type: TransactionType;
+  info?: string;
+}

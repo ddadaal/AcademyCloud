@@ -34,16 +34,14 @@ export default {
         account: {
           time: "时间",
           amount: "交易额",
-          type: "交易类型",
-          info: "额外信息",
+          reason: "交易原因",
         },
         org: {
           time: "时间",
           payer: "支付人",
           receiver: "接受者",
           amount: "交易额",
-          type: "交易类型",
-          info: "额外信息",
+          reason: "交易原因",
         },
         type: {
           Charge: "充值",

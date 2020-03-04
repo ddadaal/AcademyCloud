@@ -5,7 +5,7 @@ import { TransactionsService } from "src/apis/expenses/TransactionsService";
 import { useAsync } from "react-async";
 import { lang, Localized } from "src/i18n";
 import { TransactionTypeText } from "src/i18n/TransactionTypeText";
-import { TransactionType } from "src/models/TransactionType";
+import { TransactionType, TransactionReason } from "src/models/TransactionReason";
 import dayjs from "dayjs";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 import { OrgTransaction } from "src/models/OrgTransaction";
@@ -32,11 +32,10 @@ export const OrgTransactionTable: React.FC<Props> = ({ data }) => {
       <Table.Column title={<Localized id={root.amount} />} dataIndex="amount"
         render={(amount: number) => amount.toFixed(2)}
       />
-      <Table.Column title={<Localized id={root.type} />} dataIndex="type"
-        render={(type: TransactionType) => (
-          <TransactionTypeText type={type} />
+      <Table.Column title={<Localized id={root.reason} />} dataIndex="reason"
+        render={(reason: TransactionReason) => (
+          <TransactionTypeText type={reason.type} />
         )} />
-      <Table.Column title={<Localized id={root.info} />} dataIndex="info" />
     </Table>
   )
 }

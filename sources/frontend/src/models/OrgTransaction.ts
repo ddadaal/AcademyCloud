@@ -1,4 +1,4 @@
-import { TransactionType } from "src/models/TransactionType";
+import {  TransactionReason } from "src/models/TransactionReason";
 
 export interface OrgTransaction {
   id: string;
@@ -8,6 +8,5 @@ export interface OrgTransaction {
   payerName: string;
   receiverId: string;
   receiverName: string;
-  type: TransactionType;
-  info?: string;
+  reason: TransactionReason;
 }

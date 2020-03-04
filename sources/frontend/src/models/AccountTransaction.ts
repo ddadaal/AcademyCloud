@@ -1,9 +1,8 @@
-import { TransactionType } from "src/models/TransactionType";
+import {  TransactionReason } from "src/models/TransactionReason";
 
 export interface AccountTransaction {
   id: string;
   time: string;
   amount: number;
-  type: TransactionType;
-  info?: string;
+  reason: TransactionReason;
 }

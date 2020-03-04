@@ -34,16 +34,14 @@ export default {
         account: {
           time: "Time",
           amount: "Amount",
-          type: "Type",
-          info: "Info",
+          reason: "Reason",
         },
         org: {
           time: "Time",
           payer: "Payer",
           amount: "Amount",
           receiver: "Receiver",
-          type: "Type",
-          info: "Info",
+          reason: "Reason",
         },
         type: {
           Charge: "Charge",
