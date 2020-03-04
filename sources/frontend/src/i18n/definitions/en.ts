@@ -317,7 +317,7 @@ export default {
           overview: "Overview",
           accountTransactions: "Account Transactions",
           systemTransactions: "System Transactions",
-          domainTransactions: "Account Transactions",
+          domainTransactions: "Domain Transactions",
           projectTransactions: "Project Transactions",
         },
         identity: {
@@ -353,6 +353,14 @@ export default {
       },
       systemTransactions: {
         title: "System Transactions",
+        refresh: "Refresh",
+      },
+      domainTransactions: {
+        title: "Domain Transactions",
+        refresh: "Refresh",
+      },
+      projectTransactions: {
+        title: "Project Transactions",
         refresh: "Refresh",
       },
     },

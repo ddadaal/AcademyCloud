@@ -355,6 +355,14 @@ export default {
         title: "系统交易记录",
         refresh: "刷新",
       },
+      domainTransactions: {
+        title: "域交易记录",
+        refresh: "刷新",
+      },
+      projectTransactions: {
+        title: "项目交易记录",
+        refresh: "刷新",
+      },
     },
     header: {
       resources: "资源管理",

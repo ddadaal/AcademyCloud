@@ -30,3 +30,19 @@ export function isSystemScope(scope: Scope): boolean {
 export function isSocialScope(scope: Scope): boolean {
   return !!scope.social;
 }
+
+export function isDomainScope(scope: Scope): boolean {
+  return !scope.projectId;
+}
+
+export function isDomainAdmin(scope: Scope): boolean {
+  return isDomainScope(scope) && scope.role == "admin";
+}
+
+export function isProjectScope(scope: Scope): boolean {
+  return !!scope.projectId;
+}
+
+export function isProjectAdmin(scope: Scope): boolean {
+  return isProjectScope(scope) && scope.role == "admin";
+}
