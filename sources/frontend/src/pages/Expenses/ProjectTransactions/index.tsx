@@ -7,7 +7,7 @@ import { useRefreshToken } from "src/utils/refreshToken";
 import { ClickableA } from "src/components/ClickableA";
 import { Table } from "./Table";
 
-const root = lang.expenses.domainTransactions;
+const root = lang.expenses.projectTransactions;
 
 export const ProjectTransactions: React.FC<RouteComponentProps> = () => {
 

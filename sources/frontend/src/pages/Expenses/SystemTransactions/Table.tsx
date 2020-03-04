@@ -1,6 +1,5 @@
 import React from "react";
 import { getApiService } from "src/apis";
-import { Spin } from "antd";
 import { useAsync } from "react-async";
 import { TransactionsService } from "src/apis/expenses/TransactionsService";
 import { OrgTransactionTable } from 'src/components/transactions/OrgTransactionTable';
