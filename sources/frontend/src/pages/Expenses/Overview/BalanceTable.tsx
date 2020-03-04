@@ -7,13 +7,13 @@ import { TransactionsService } from "src/apis/expenses/TransactionsService";
 
 const service = getApiService(TransactionsService);
 
-const getAccountTransactions = () => service.getAccountTransactions().then((x) => x.transactions);
+const getAccountTransactions = () => service.getAccountTransactions(5).then((x) => x.transactions);
 
 interface Props {
   refreshToken: any;
 }
 
-export const Table: React.FC<Props> = ({ refreshToken }) => {
+export const BalanceTable: React.FC<Props> = ({ refreshToken }) => {
   const { data, isPending } = useAsync({ promiseFn: getAccountTransactions, watch: refreshToken });
 
   return <AccountTransactionTable data={data} loading={isPending} />;

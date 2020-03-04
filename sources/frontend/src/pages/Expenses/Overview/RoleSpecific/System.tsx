@@ -16,16 +16,11 @@ const getTransactions = async () => {
 }
 
 export const System: React.FC = () => {
-  const instance = useAsync({ promiseFn: getTransactions });
+  const { data, isPending } = useAsync({ promiseFn: getTransactions });
 
   return (
     <MarginedCard title={"Last 5 system transactions"} extra={<Link to="../systemTransactions">To systemTransactions</Link>}>
-      <IfPending state={instance}>
-        <Spin />
-      </IfPending>
-      <IfFulfilled state={instance}>
-        { (data) => <OrgTransactionTable data={data} />}
-      </IfFulfilled>
+      <OrgTransactionTable data={data} loading={isPending} />
     </MarginedCard>
   )
 

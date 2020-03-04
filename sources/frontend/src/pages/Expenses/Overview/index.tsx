@@ -15,15 +15,9 @@ export const Overview: React.FC<RouteComponentProps> = (props) => {
           Overview
         </TitleText>
       </TitleBar>
-      <Row gutter={16}>
-        <Col xs={24} xl={8}>
-          <Balance />
-        </Col>
-        <Col xs={24} xl={16}>
-          <RoleSpecific />
-        </Col>
-      </Row>
-    </div>
+      <Balance />
+      <RoleSpecific />
+    </div >
   );
 }
 

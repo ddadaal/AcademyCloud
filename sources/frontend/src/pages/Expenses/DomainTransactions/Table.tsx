@@ -21,11 +21,7 @@ export const Table: React.FC<Props> = ({ refreshToken }) => {
 
   const { data, isPending } = useAsync({ promiseFn: getTransactions, watch: refreshToken });
 
-  if (isPending) {
-    return <Spin />;
-  }
-
-  return <OrgTransactionTable data={data!!} />;
+  return <OrgTransactionTable data={data} loading={isPending} />;
 }
 
 

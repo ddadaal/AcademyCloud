@@ -2,23 +2,24 @@ import React from "react";
 import { Table } from "antd";
 import { lang, Localized } from "src/i18n";
 import { TransactionTypeText } from "src/i18n/TransactionTypeText";
-import { TransactionType, TransactionReason } from "src/models/TransactionReason";
+import { TransactionReason } from "src/models/TransactionReason";
 import dayjs from "dayjs";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 import { AccountTransaction } from "src/models/AccountTransaction";
 
 interface Props {
-  data: AccountTransaction[];
+  data: AccountTransaction[] | undefined;
+  loading?: boolean;
 }
 
 const root = lang.components.transactions.account;
 
 const timeSorter = (a: string, b: string) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1;
 
-export const AccountTransactionTable: React.FC<Props> = ({ data }) => {
+export const AccountTransactionTable: React.FC<Props> = ({ data, loading = false }) => {
 
   return (
-    <Table dataSource={data} rowKey="id">
+    <Table pagination={{ hideOnSinglePage: true }} loading={loading} dataSource={data} rowKey="id">
       <Table.Column title={<Localized id={root.time} />} dataIndex="time"
         sorter={timeSorter}
         defaultSortOrder="descend"
