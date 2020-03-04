@@ -315,6 +315,7 @@ export default {
       overview: {
         root: "Overview",
         balance: "Balance",
+        toAccountTransaction: "To Account Transactions",
         charge: {
           button: "Charge",
           opName: "Charge",

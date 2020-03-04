@@ -315,6 +315,7 @@ export default {
       overview: {
         root: "总览",
         balance: "余额",
+        toAccountTransaction: "查看账户交易记录",
         charge: {
           button: "充值",
           opName: "充值",

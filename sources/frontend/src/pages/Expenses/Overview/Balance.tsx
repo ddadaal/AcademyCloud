@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { getApiService } from "src/apis";
 import { OverviewService } from "src/apis/expenses/OverviewService";
 import { useAsync } from "react-async";
-import { Statistic, Spin, Button, Modal, Form, Input } from "antd";
+import { Statistic, Spin, Button, Modal, Form, Input, Divider } from "antd";
 import { integer } from "src/utils/validateMessages";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { lang, Localized } from "src/i18n";
+import { Link } from "@reach/router";
 
 const root = lang.expenses.overview;
 const opResult = lang.components.operationResult;
@@ -41,10 +42,14 @@ export const Balance: React.FC = (props) => {
 
   return (
     <Spin spinning={isPending}>
-      <Statistic title={<Localized id={root.charge.button} />} value={data ?? 0} precision={2} />
+      <Statistic title={(
+        <Localized id={root.balance} />
+      )} value={data ?? 0} precision={2} />
       <Button type="primary" onClick={() => setVisible(true)}>
         <Localized id={root.charge.button} />
       </Button>
+      <Divider type="vertical" />
+      <Link to="../accountTransactions"><Localized id={root.toAccountTransaction} /></Link>
       {contextHolder}
       <Modal
         title={<Localized id={root.charge.button} />}
