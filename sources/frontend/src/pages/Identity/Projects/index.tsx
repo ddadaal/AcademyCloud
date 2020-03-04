@@ -8,6 +8,7 @@ import { useRefreshToken } from "src/utils/refreshToken";
 import { CreateProjectButton } from "src/pages/Identity/Projects/CreateProjectButton";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
+import { isDomainAdmin } from "src/models/Scope";
 
 const root = lang.identity.projects;
 
@@ -20,13 +21,11 @@ export default function ProjectsPage(_: RouteComponentProps) {
 
   const scope = userStore.user.scope;
 
-  const isDomainAdmin = (!scope.projectId) && (scope.role === "admin");
-
   return (
     <div>
       <TitleBar spaceBetween={true}>
         <TitleText><Localized id={root.title} /></TitleText>
-        {isDomainAdmin
+        {isDomainAdmin(scope)
           ? <CreateProjectButton reload={refresh} />
           : null
         }

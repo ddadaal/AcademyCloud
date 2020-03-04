@@ -4,7 +4,7 @@ import { UserStore } from 'src/stores/UserStore';
 import { Menu, Dropdown } from "antd";
 import { DownOutlined, BookOutlined } from "@ant-design/icons";
 import { lang, Localized } from "src/i18n";
-import { scopeId, scopeName, Scope, isSystemScope, isSocialScope } from "src/models/Scope";
+import { scopeId, scopeName, Scope, isSystemScope, isSocialScope, isAdmin } from "src/models/Scope";
 import { ClickableA } from "src/components/ClickableA";
 import { getApiService } from "src/apis";
 import { AuthenticationService } from "src/apis/account/AuthenticationService";
@@ -61,7 +61,7 @@ export const ScopeIndicator: React.FC = () => {
           : (
             <>
               {scopeName(scope)}
-              {scope.role === "admin" ? <> (<Localized id={root.admin} />)</> : null}
+              {isAdmin(scope) ? <> (<Localized id={root.admin} />)</> : null}
             </>
           )
       }

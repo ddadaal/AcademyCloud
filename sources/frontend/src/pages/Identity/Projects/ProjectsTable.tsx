@@ -14,7 +14,7 @@ import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable"
 import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 import { Project } from "src/models/Project";
 import { EditLink } from "src/pages/Identity/Projects/EditLink";
-import { Scope } from "src/models/Scope";
+import { Scope, isDomainAdmin } from "src/models/Scope";
 import { DeleteProjectLink } from "src/pages/Identity/Projects/DeleteProjectLink";
 
 interface Props {
@@ -33,8 +33,6 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
     return x.projects;
   }, [scope]);
 
-  const isDomainAdmin = (!scope.projectId) && (scope.role === "admin");
-
   const { data, isPending, reload } = useAsync({
     promiseFn: getAccessibleProjects,
     watch: refreshToken,
@@ -46,7 +44,7 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
       <Table.Column title={<Localized id={root.active.title} />} dataIndex="active"
         render={(active: boolean) => <Localized id={root.active[String(active)]} />}
       />
-      {isDomainAdmin
+      {isDomainAdmin(scope)
         ? (
           <Table.Column title={<Localized id={root.payUser} />} dataIndex="payUser"
             render={(payUser: User) => (

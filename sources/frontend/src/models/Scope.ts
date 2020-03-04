@@ -35,8 +35,12 @@ export function isDomainScope(scope: Scope): boolean {
   return !scope.projectId;
 }
 
+export function isAdmin(scope: Scope): boolean {
+  return scope.role === "admin";
+
+}
 export function isDomainAdmin(scope: Scope): boolean {
-  return isDomainScope(scope) && scope.role == "admin";
+  return isDomainScope(scope) && isAdmin(scope);
 }
 
 export function isProjectScope(scope: Scope): boolean {
@@ -44,5 +48,6 @@ export function isProjectScope(scope: Scope): boolean {
 }
 
 export function isProjectAdmin(scope: Scope): boolean {
-  return isProjectScope(scope) && scope.role == "admin";
+  return isProjectScope(scope) && isAdmin(scope);
 }
+

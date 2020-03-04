@@ -5,7 +5,7 @@ import { UserStore } from "src/stores/UserStore";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
 import { TitleText } from "src/components/pagecomponents/TitleText";
 import { Localized, lang } from "src/i18n";
-import { isSocialScope, isSystemScope } from "src/models/Scope";
+import { isSocialScope, isSystemScope, isProjectAdmin, isProjectScope, isDomainAdmin, isAdmin } from "src/models/Scope";
 import { ProjectUsersTable } from "src/pages/Identity/Users/ProjectUsersTable";
 import { useRefreshToken } from "src/utils/refreshToken";
 import { SystemUsersTable } from "src/pages/Identity/Users/SystemUsersTable";
@@ -23,8 +23,6 @@ export default function UsersPage(_: RouteComponentProps) {
 
   const scope = userStore.user.scope;
 
-  const isProject = (!isSocialScope(scope) && (scope.projectId));
-
   return (
     <div>
       <TitleBar spaceBetween={true}>
@@ -32,16 +30,16 @@ export default function UsersPage(_: RouteComponentProps) {
         <a onClick={update}><Localized id={root.refresh} /></a>
       </TitleBar>
       {
-        isProject
+        (!isSocialScope(scope) && isProjectScope(scope))
           ? <ProjectUsersTable
             refreshToken={refreshToken}
-            isAdmin={scope.role === "admin"}
+            isAdmin={isAdmin(scope)}
             projectId={scope.projectId!!}
           />
           : (
             isSystemScope(scope)
               ? <SystemUsersTable refreshToken={refreshToken} />
-              : <DomainUsersTable refreshToken={refreshToken} domainId={scope.domainId} isAdmin={scope.role === "admin"} />
+              : <DomainUsersTable refreshToken={refreshToken} domainId={scope.domainId} isAdmin={isAdmin(scope)} />
           )
       }
     </div>
