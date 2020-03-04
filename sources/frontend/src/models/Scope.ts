@@ -32,7 +32,7 @@ export function isSocialScope(scope: Scope): boolean {
 }
 
 export function isDomainScope(scope: Scope): boolean {
-  return !scope.projectId;
+  return !isSystemScope(scope) && !scope.projectId;
 }
 
 export function isAdmin(scope: Scope): boolean {
