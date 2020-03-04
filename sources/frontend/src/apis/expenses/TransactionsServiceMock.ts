@@ -30,4 +30,8 @@ export class TransactionsServiceMock extends TransactionsService {
   async getDomainTransactions(): Promise<TransactionsResponse<OrgTransaction>> {
     return await this.getSystemTransactions();
   }
+
+  async getProjectTransactions(): Promise<TransactionsResponse<OrgTransaction>> {
+    return await this.getSystemTransactions();
+  }
 }

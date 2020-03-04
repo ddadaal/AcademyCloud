@@ -39,4 +39,14 @@ export class TransactionsService extends HttpService {
 
     return resp as TransactionsResponse<OrgTransaction>;
   }
+
+  async getProjectTransactions(projectId: string, limit = 0): Promise<TransactionsResponse<OrgTransaction>> {
+    const resp = await this.fetch({
+      method: HttpMethod.GET,
+      path: "/expenses/transactions/project",
+      params: { projectId, limit }
+    });
+
+    return resp as TransactionsResponse<OrgTransaction>;
+  }
 }
