@@ -1,0 +1,42 @@
+import React from "react";
+import { Table } from "antd";
+import { getApiService } from "src/apis";
+import { TransactionsService } from "src/apis/expenses/TransactionsService";
+import { useAsync } from "react-async";
+import { lang, Localized } from "src/i18n";
+import { TransactionTypeText } from "src/i18n/TransactionTypeText";
+import { TransactionType } from "src/models/TransactionType";
+import dayjs from "dayjs";
+import { LocalizedDate } from "src/i18n/LocalizedDate";
+import { OrgTransaction } from "src/models/OrgTransaction";
+
+interface Props {
+  data: OrgTransaction[];
+}
+
+const root = lang.components.transactions.org;
+
+const timeSorter = (a: string, b: string) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1;
+
+export const OrgTransactionTable: React.FC<Props> = ({ data }) => {
+
+  return (
+    <Table dataSource={data} rowKey="id">
+      <Table.Column title={<Localized id={root.time} />} dataIndex="time"
+        sorter={timeSorter}
+        defaultSortOrder="descend"
+        render={(time: string) => <LocalizedDate dateTimeString={time} />}
+      />
+      <Table.Column title={<Localized id={root.payer} />} dataIndex="payerName" />
+      <Table.Column title={<Localized id={root.receiver} />} dataIndex="receiverName" />
+      <Table.Column title={<Localized id={root.amount} />} dataIndex="amount"
+        render={(amount: number) => amount.toFixed(2)}
+      />
+      <Table.Column title={<Localized id={root.type} />} dataIndex="type"
+        render={(type: TransactionType) => (
+          <TransactionTypeText type={type} />
+        )} />
+      <Table.Column title={<Localized id={root.info} />} dataIndex="info" />
+    </Table>
+  )
+}

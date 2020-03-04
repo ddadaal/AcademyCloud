@@ -7,9 +7,9 @@ import { useRefreshToken } from "src/utils/refreshToken";
 import { ClickableA } from "src/components/ClickableA";
 import { Table } from "./Table";
 
-const root = lang.expenses.accountTransactions;
+const root = lang.expenses.systemTransactions;
 
-export const Transactions: React.FC<RouteComponentProps> = (props) => {
+export const SystemTransactions: React.FC<RouteComponentProps> = () => {
 
   const [token, refresh] = useRefreshToken();
 
@@ -25,4 +25,4 @@ export const Transactions: React.FC<RouteComponentProps> = (props) => {
   );
 }
 
-export default Transactions;
+export default SystemTransactions;

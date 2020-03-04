@@ -19,7 +19,13 @@ const routes = [
     Icon: TransactionOutlined,
     checkScope: () => true,
     Component: React.lazy(() => import("./AccountTransactions"))
-  },
+  }, {
+    path: "systemTransactions",
+    textId: root.systemTransactions,
+    Icon: TransactionOutlined,
+    checkScope: (scope: Scope) => isSystemScope(scope),
+    Component: React.lazy(() => import("./SystemTransactions"))
+  }
 ] as IndexRoute[];
 
 const IdentityIndexPage = indexRoutes(routes, "/expenses/");

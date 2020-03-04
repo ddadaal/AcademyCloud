@@ -5,6 +5,7 @@ export default {
     id: "en",
     langStrings: ["en", "en-US"],
     detailedId: "en-US",
+    dayjsLocale: "en",
     name: "English",
     antdConfigProvider: {
       locale: en_US,
@@ -27,6 +28,30 @@ export default {
         setResources: {
           link: "Set Resources",
           title: "Set Resources",
+        },
+      },
+      transactions: {
+        account: {
+          time: "Time",
+          amount: "Amount",
+          type: "Type",
+          info: "Info",
+        },
+        org: {
+          time: "Time",
+          payer: "Payer",
+          amount: "Amount",
+          receiver: "Receiver",
+          type: "Type",
+          info: "Info",
+        },
+        type: {
+          Charge: "Charge",
+          UserManagementFee: "User Management Fee",
+          DomainManagementFee: "Domain Management Fee",
+          ProjectManagementFee: "Project Management Fee",
+          DomainResources: "Domain Resources Fee",
+          ProjectResources: "Project Resources Fee",
         },
       },
       users: {
@@ -325,9 +350,10 @@ export default {
       accountTransactions: {
         title: "Account Transactions",
         refresh: "Refresh",
-        time: "Time",
-        amount: "Amount",
-        reason: "Reason",
+      },
+      systemTransactions: {
+        title: "System Transactions",
+        refresh: "Refresh",
       },
     },
     header: {

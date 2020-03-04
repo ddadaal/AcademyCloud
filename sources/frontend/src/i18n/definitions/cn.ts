@@ -5,6 +5,7 @@ export default {
     id: "cn",
     langStrings: ["cn", "zh-CN", "zh"],
     detailedId: "zh-CN",
+    dayjsLocale: "zh-cn",
     name: "简体中文",
     antdConfigProvider: {
       locale: zh_CN,
@@ -27,6 +28,30 @@ export default {
         setResources: {
           link: "分配资源",
           title: "分配资源",
+        },
+      },
+      transactions: {
+        account: {
+          time: "时间",
+          amount: "交易额",
+          type: "交易类型",
+          info: "额外信息",
+        },
+        org: {
+          time: "时间",
+          payer: "支付人",
+          receiver: "接受者",
+          amount: "交易额",
+          type: "交易类型",
+          info: "额外信息",
+        },
+        type: {
+          Charge: "充值",
+          UserManagementFee: "用户管理费",
+          DomainManagementFee: "域管理费",
+          ProjectManagementFee: "项目管理费",
+          DomainResources: "域资源费用",
+          ProjectResources: "项目资源费用",
         },
       },
       users: {
@@ -325,9 +350,10 @@ export default {
       accountTransactions: {
         title: "账号交易记录",
         refresh: "刷新",
-        time: "时间",
-        amount: "交易额",
-        reason: "原因",
+      },
+      systemTransactions: {
+        title: "系统交易记录",
+        refresh: "刷新",
       },
     },
     header: {

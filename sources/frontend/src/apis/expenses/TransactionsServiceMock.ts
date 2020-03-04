@@ -1,6 +1,7 @@
 import { TransactionsResponse, TransactionsService } from "src/apis/expenses/TransactionsService";
 import { AccountTransaction } from "src/models/AccountTransaction";
-import { SystemTransaction } from "src/models/SystemTransaction";
+import { TransactionType } from "src/models/TransactionType";
+import { OrgTransaction } from "src/models/OrgTransaction";
 
 export class TransactionsServiceMock extends TransactionsService {
   async getAccountTransactions(): Promise<TransactionsResponse<AccountTransaction>> {
@@ -8,16 +9,21 @@ export class TransactionsServiceMock extends TransactionsService {
 
     return {
       transactions: [
-      ]
+        { id: "2", time: "2020-03-04T06:41:12.836Z", amount: -10, type: TransactionType.ProjectManagementFee, info: "123 (123)" },
+        { id: "1", time: "2020-03-04T06:40:12.836Z", amount: 10, type: TransactionType.Charge },
+      ] as AccountTransaction[]
     };
 
   }
 
   // limit <= 0 means all data
-  async getSystemTransactions(limit = 0): Promise<TransactionsResponse<SystemTransaction>> {
+  async getSystemTransactions(limit = 0): Promise<TransactionsResponse<OrgTransaction>> {
     await this.delay();
     return {
-      transactions: []
+      transactions: [
+        { id: "2", time: "2020-03-04T06:41:12.836Z", amount: -10, type: TransactionType.ProjectManagementFee, info: "123 (123)", payerId: "cjdid", payerName: "cjd", receiverId: "cjyid", receiverName: "cjy" },
+        { id: "1", time: "2020-03-04T06:40:12.836Z", amount: 10, type: TransactionType.Charge, payerId: "cjdid", payerName: "cjd", receiverId: "cjyid", receiverName: "cjy" },
+      ]
     };
   }
 }

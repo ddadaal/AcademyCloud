@@ -1,6 +1,7 @@
 import { getLanguage } from "src/i18n/definition";
 import { useState, useCallback } from "react";
 
+
 function getInitialLanguage(): string {
   return navigator.language;
 }
