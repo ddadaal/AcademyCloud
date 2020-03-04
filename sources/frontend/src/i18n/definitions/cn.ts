@@ -287,6 +287,8 @@ export default {
         },
         expenses: {
           root: "费用管理",
+          overview: "总览",
+          transactions: "账户交易记录",
         },
         identity: {
           root: "用户管理",

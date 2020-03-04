@@ -287,6 +287,8 @@ export default {
         },
         expenses: {
           root: "Expenses",
+          overview: "Overview",
+          transactions: "Account Transactions",
         },
         identity: {
           root: "Identity",
