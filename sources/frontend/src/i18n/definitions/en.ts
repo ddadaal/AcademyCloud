@@ -14,6 +14,8 @@ export default {
     validateMessages: {
       required: "Please input this field.",
       email: "Please input a valid email.",
+      number: "Please input a valid number.",
+      integer: "Please input a valid integer.",
     },
     components: {
       resources: {
@@ -304,6 +306,19 @@ export default {
           users: "Users",
         },
       },
+    },
+    expenses: {
+      root: "Expenses",
+      overview: {
+        root: "Overview",
+        balance: "Balance",
+        charge: {
+          button: "Charge",
+          opName: "Charge",
+          amount: "Amount",
+        }
+      },
+      transactions: "Account Transactions",
     },
     header: {
       resources: "Resources",

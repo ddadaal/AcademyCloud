@@ -14,6 +14,8 @@ export default {
     validateMessages: {
       email: "请输入有效的电子邮箱地址。",
       required: "这是必需字段。",
+      number: "请输入数字。",
+      integer: "请输入整数。",
     },
     components: {
       resources: {
@@ -303,6 +305,18 @@ export default {
           projects: "项目管理",
           users: "用户管理",
         },
+      },
+    },
+    expenses: {
+      root: "费用管理",
+      overview: {
+        root: "总览",
+        balance: "余额",
+        charge: {
+          button: "充值",
+          opName: "充值",
+          amount: "数量",
+        }
       },
     },
     header: {
