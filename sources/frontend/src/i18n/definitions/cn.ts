@@ -290,7 +290,10 @@ export default {
         expenses: {
           root: "费用管理",
           overview: "总览",
-          transactions: "账户交易记录",
+          accountTransactions: "账户交易记录",
+          systemTransactions: "系统交易记录",
+          domainTransactions: "域交易记录",
+          projectTransactions: "项目交易记录",
         },
         identity: {
           root: "用户管理",
@@ -317,6 +320,13 @@ export default {
           opName: "充值",
           amount: "数量",
         }
+      },
+      accountTransactions: {
+        title: "账号交易记录",
+        refresh: "刷新",
+        time: "时间",
+        amount: "交易额",
+        reason: "原因",
       },
     },
     header: {

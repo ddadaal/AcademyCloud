@@ -14,11 +14,11 @@ const routes = [
     checkScope: () => true,
     Component: React.lazy(() => import("./Overview")),
   }, {
-    path: "transactions",
-    textId: root.transactions,
+    path: "accountTransactions",
+    textId: root.accountTransactions,
     Icon: TransactionOutlined,
     checkScope: () => true,
-    Component: React.lazy(() => import("./Transactions"))
+    Component: React.lazy(() => import("./AccountTransactions"))
   },
 ] as IndexRoute[];
 

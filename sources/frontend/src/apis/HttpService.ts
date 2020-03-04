@@ -4,7 +4,7 @@ import { delay } from 'src/utils/delay';
 export interface FetchInfo {
   path?: string;
   method?: HttpMethod;
-  params?: { [key: string]: string | undefined };
+  params?: { [key: string]: string | number | undefined };
   body?: unknown;
   headers?: { [s: string]: string };
 }

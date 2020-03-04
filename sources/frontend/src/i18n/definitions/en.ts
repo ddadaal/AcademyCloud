@@ -290,7 +290,10 @@ export default {
         expenses: {
           root: "Expenses",
           overview: "Overview",
-          transactions: "Account Transactions",
+          accountTransactions: "Account Transactions",
+          systemTransactions: "System Transactions",
+          domainTransactions: "Account Transactions",
+          projectTransactions: "Project Transactions",
         },
         identity: {
           root: "Identity",
@@ -318,7 +321,13 @@ export default {
           amount: "Amount",
         }
       },
-      transactions: "Account Transactions",
+      accountTransactions: {
+        title: "Account Transactions",
+        refresh: "Refresh",
+        time: "Time",
+        amount: "Amount",
+        reason: "Reason",
+      },
     },
     header: {
       resources: "Resources",
