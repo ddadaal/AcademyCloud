@@ -7,6 +7,7 @@ const STORAGE_KEY = "User";
 
 
 interface User {
+  userId: string;
   username: string;
   scope: Scope;
   token: string;

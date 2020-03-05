@@ -19,25 +19,52 @@ const routes = [
     Icon: TransactionOutlined,
     checkScope: () => true,
     Component: React.lazy(() => import("./Transactions/Account"))
-  }, {
+  },
+  {
+    path: "billings/user",
+    textId: root.billings.user,
+    Icon: TransactionOutlined,
+    checkScope: (scope: Scope) => true,
+    children: [
+      {
+        path: "allocated",
+        textId: root.billings.allocated,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => true,
+        Component: React.lazy(() => import("./Billing/User/Allocated")),
+      },
+      {
+        path: "used",
+        textId: root.billings.used,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => true,
+        Component: React.lazy(() => import("./Billing/User/Used")),
+      }
+    ],
+  },
+  {
     path: "transactions/system",
     textId: root.systemTransactions,
     Icon: TransactionOutlined,
     checkScope: (scope: Scope) => isSystemScope(scope),
     Component: React.lazy(() => import("./Transactions/System"))
-  }, {
+  },
+  {
     path: "transactions/domain",
     textId: root.domainTransactions,
     Icon: TransactionOutlined,
     checkScope: (scope: Scope) => isDomainAdmin(scope),
     Component: React.lazy(() => import("./Transactions/Domain"))
-  }, {
+  },
+  {
     path: "transactions/project",
     textId: root.projectTransactions,
     Icon: TransactionOutlined,
-    checkScope: (scope: Scope) => isProjectAdmin(scope),
+    checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
     Component: React.lazy(() => import("./Transactions/Project"))
-  }, {
+  },
+  {
+
     path: "billings/domains",
     textId: root.billings.domains,
     Icon: TransactionOutlined,
@@ -76,11 +103,10 @@ const routes = [
         path: "used",
         textId: root.billings.used,
         Icon: TransactionOutlined,
-        checkScope: (scope: Scope) => isSystemScope(scope),
-        Component: React.lazy(() => import("./Billing/Domains/Used")),
+        checkScope: (scope: Scope) => isDomainAdmin(scope),
+        Component: React.lazy(() => import("./Billing/Domain/Used")),
       }
     ],
-
   }, {
     path: "billings/projects",
     textId: root.billings.projects,
@@ -100,6 +126,27 @@ const routes = [
         Icon: TransactionOutlined,
         checkScope: (scope: Scope) => isDomainAdmin(scope),
         Component: React.lazy(() => import("./Billing/Projects/Used")),
+      }
+    ],
+  }, {
+    path: "billings/project",
+    textId: root.billings.project,
+    Icon: TransactionOutlined,
+    checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
+    children: [
+      {
+        path: "allocated",
+        textId: root.billings.allocated,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => isProjectAdmin(scope),
+        Component: React.lazy(() => import("./Billing/Project/Allocated")),
+      },
+      {
+        path: "used",
+        textId: root.billings.used,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => isProjectAdmin(scope),
+        Component: React.lazy(() => import("./Billing/Project/Used")),
       }
     ],
   }, {
@@ -123,7 +170,7 @@ const routes = [
         Component: React.lazy(() => import("./Billing/Users/Used")),
       }
     ],
-  }
+  },
 ] as IndexRoute[];
 
 const IdentityIndexPage = indexRoutes(routes, "/expenses/");

@@ -28,7 +28,7 @@ export const HistoryTable: React.FC<Props> = ({ billType, billSubjectType, id, r
   return (
     <HistoryBillingsTable
       loading={isPending}
-      type={BillType.Allocated}
+      type={billSubjectType === BillSubjectType.user ? BillType.Used : billType}
       data={data}
     />
   )

@@ -37,6 +37,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
       const scope = scopesResp.defaultScope ?? scopesResp.lastLoginScope ?? scopesResp.scopes[0];
       const loginResponse = await accountService.login(username, password, scope);
       userStore.login({
+        userId: loginResponse.userId,
         username,
         scope,
         token: loginResponse.token,

@@ -36,7 +36,9 @@ export class AuthenticationServiceMock extends AuthenticationService {
 
   async changeScope(scope: Scope): Promise<LoginResponse> {
     await this.delay();
-    return { token: `testtoken${JSON.stringify(scope)}` };
+    return {
+      userId: "123", token: `testtoken${JSON.stringify(scope)}`
+    };
   }
 
   async login(username: string, password: string, scope: Scope): Promise<LoginResponse> {
@@ -45,6 +47,7 @@ export class AuthenticationServiceMock extends AuthenticationService {
     }
 
     return {
+      userId: "123",
       token: "testtoken",
     }
   }
@@ -55,6 +58,7 @@ export class AuthenticationServiceMock extends AuthenticationService {
     }
 
     return {
+      userId: "123",
       token: "testtoken",
       scope: { domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" }
     }

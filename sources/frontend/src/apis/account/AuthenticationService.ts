@@ -2,10 +2,12 @@ import { HttpService, HttpMethod } from "../HttpService";
 import { Scope } from 'src/models/Scope';
 
 export interface LoginResponse {
+  userId: string;
   token: string;
 }
 
 export interface RegisterResponse {
+  userId: string;
   token: string;
   scope: Scope;
 }

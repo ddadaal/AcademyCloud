@@ -1,5 +1,5 @@
 import { BillingService, CurrentAllocatedBillingResponse, HistoryAllocatedBillingsResponse, CurrentUsedBillingResponse, HistoryUsedBillingsResponse, BillingResponse } from './BillingService';
-import { BillSubjectType, CurrentAllocatedBilling } from "src/models/Billings";
+import { BillSubjectType, CurrentAllocatedBilling, CurrentUsedBilling } from "src/models/Billings";
 
 const dummyResources = { cpu: 4, memory: 128, storage: 256 };
 const dummyDate = "2020-03-05T03:15:17.484Z";
@@ -14,7 +14,6 @@ export class BillingServiceMock extends BillingService {
       ]
     };
   }
-
 
   async getCurrentAllocatedBilling(subjectType: BillSubjectType, id: string): Promise<BillingResponse<CurrentAllocatedBilling>> {
     await this.delay();
@@ -35,6 +34,14 @@ export class BillingServiceMock extends BillingService {
     };
   }
 
+  async getCurrentUsedBilling(subjectType: BillSubjectType, id: string): Promise<BillingResponse<CurrentUsedBilling>> {
+    await this.delay();
+
+    return {
+      billing:
+        { subjectId: "NJUID", subjectName: "NJU", resources: dummyResources, amount: 120, nextDue: dummyDate },
+    }
+  }
   async getHistoryAllocatedBillings(domainId: string): Promise<HistoryAllocatedBillingsResponse> {
     await this.delay();
     return {

@@ -23,36 +23,36 @@ const root = lang.components.billings.stats;
 
 export const Stats: React.FC<Props> = ({ billType, billSubjectType, id, refreshToken }) => {
 
-  const isAllocated = billType === BillType.Allocated;
+  const showPayer = billType === BillType.Allocated && billSubjectType !== BillSubjectType.user;
 
   const promiseFn = useCallback(async () => {
-    const resp = isAllocated
+    const resp = billType === BillType.Allocated
       ? service.getCurrentAllocatedBilling(billSubjectType, id)
       : service.getCurrentUsedBilling(billSubjectType, id);
     return (await resp).billing;
-  }, [isAllocated, billSubjectType, id]);
+  }, [billType, billSubjectType, id]);
 
   const { data, isPending } = useAsync({ promiseFn, watch: refreshToken });
 
   return (
     <Spin spinning={isPending}>
       <Row gutter={16}>
-        <Col xs={24} sm={12} md={isAllocated ? 6 : 8}>
+        <Col xs={24} sm={12} md={showPayer ? 6 : 8}>
           <BillingStat titleId={root.resources} data={data?.resources} >
             {data => <ResourcesModalLink resources={data} />}
           </BillingStat>
         </Col>
-        <Col xs={24} sm={12} md={isAllocated ? 6 : 8}>
+        <Col xs={24} sm={12} md={showPayer ? 6 : 8}>
           <BillingStat titleId={root.amount} data={data?.amount} >
             {data => <span>{data.toFixed(2)}</span>}
           </BillingStat>
         </Col>
-        <Col xs={24} sm={isAllocated ? 12 : 24} md={isAllocated ? 6 : 8}>
+        <Col xs={24} sm={showPayer ? 12 : 24} md={showPayer ? 6 : 8}>
           <BillingStat titleId={root.nextDue} data={data?.nextDue} >
             {data => <LocalizedDate dateTimeString={data} />}
           </BillingStat>
         </Col>
-        {isAllocated ? (
+        {showPayer ? (
           // trust me
           <Col xs={24} sm={12} md={6}>
             <BillingStat titleId={root.payer} data={data} >

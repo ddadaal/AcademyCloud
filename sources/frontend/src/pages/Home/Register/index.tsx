@@ -31,8 +31,9 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
     const api = getApiService(AuthenticationService);
 
     try {
-      const { scope, token} = await api.register(username, password, email);
+      const { scope, token, userId } = await api.register(username, password, email);
       userStore.login({
+        userId,
         username,
         scope,
         token,
