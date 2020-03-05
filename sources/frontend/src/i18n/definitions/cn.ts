@@ -317,6 +317,16 @@ export default {
           systemTransactions: "系统交易记录",
           domainTransactions: "域交易记录",
           projectTransactions: "项目交易记录",
+          billings: {
+            allocated: "分配",
+            used: "使用",
+            domains: "域计费",
+            domain: "域计费",
+            projects: "项目计费",
+            project: "项目计费",
+            users: "用户计费",
+            user: "用户计费",
+          },
         },
         identity: {
           root: "用户管理",

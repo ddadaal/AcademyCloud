@@ -317,6 +317,16 @@ export default {
           systemTransactions: "System Transactions",
           domainTransactions: "Domain Transactions",
           projectTransactions: "Project Transactions",
+          billings: {
+            allocated: "Allocated",
+            used: "Used",
+            domains: "Domains Billings",
+            domain: "Domain Billing",
+            projects: "Projects Billings",
+            project: "Project Billing",
+            users: "Users Billings",
+            user: "User Billing",
+          },
         },
         identity: {
           root: "Identity",

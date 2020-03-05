@@ -6,7 +6,7 @@ export interface NavPoint {
   textId: string; //
 }
 
-const root= lang.nav.sidenav;
+const root = lang.nav.sidenav;
 
 function getInvreqId(pathname: string) {
   const splitted = pathname.split("/").filter((x) => !!x);
@@ -25,6 +25,24 @@ export const availableNavPoints = [
   { path: "/expenses/transactions/system", textId: root.expenses.systemTransactions },
   { path: "/expenses/transactions/domain", textId: root.expenses.domainTransactions },
   { path: "/expenses/transactions/project", textId: root.expenses.projectTransactions },
+  { path: "/expenses/billings/domains", textId: root.expenses.billings.domains },
+  { path: "/expenses/billings/domains/allocated", textId: root.expenses.billings.allocated },
+  { path: "/expenses/billings/domains/used", textId: root.expenses.billings.used },
+  { path: "/expenses/billings/domain", textId: root.expenses.billings.domain },
+  { path: "/expenses/billings/domain/allocated", textId: root.expenses.billings.allocated },
+  { path: "/expenses/billings/domain/used", textId: root.expenses.billings.used },
+  { path: "/expenses/billings/projects", textId: root.expenses.billings.projects },
+  { path: "/expenses/billings/projects/allocated", textId: root.expenses.billings.allocated },
+  { path: "/expenses/billings/projects/used", textId: root.expenses.billings.used },
+  { path: "/expenses/billings/project", textId: root.expenses.billings.project },
+  { path: "/expenses/billings/project/allocated", textId: root.expenses.billings.allocated },
+  { path: "/expenses/billings/project/used", textId: root.expenses.billings.used },
+  { path: "/expenses/billings/users", textId: root.expenses.billings.users },
+  { path: "/expenses/billings/users/allocated", textId: root.expenses.billings.allocated },
+  { path: "/expenses/billings/users/used", textId: root.expenses.billings.used },
+  { path: "/expenses/billings/user", textId: root.expenses.billings.user },
+  { path: "/expenses/billings/user/allocated", textId: root.expenses.billings.allocated },
+  { path: "/expenses/billings/user/used", textId: root.expenses.billings.used },
   { path: "/identity", textId: root.identity.root },
   { path: "/identity/account", textId: root.identity.account.root },
   { path: "/identity/account/basic", textId: root.identity.account.basic },

@@ -30,10 +30,28 @@ export function NavStore() {
         }
       }
     }).filter((x) => !!x) as NavPoint[];
-    return points;
-  } ,[location]);
 
-  return { currentNavPath, sidebarCollapsed, setSidebarCollapsed, sidenavs, setSidenavs, location, hasSider};
+    // remove the shorter one if two have the same depth
+    const filteredOut = [] as NavPoint[];
+    const depth = (path: string) => path.split("/").length;
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        const path1 = points[i].path as string;
+        const path2 = points[j].path as string;
+        if (depth(path1) === depth(path2)) {
+          if (path1.length < path2.length) {
+            filteredOut.push(points[i]);
+          } else {
+            filteredOut.push(points[j]);
+          }
+        }
+      }
+    }
+
+    return points.filter(x => !filteredOut.includes(x));
+  }, [location]);
+
+  return { currentNavPath, sidebarCollapsed, setSidebarCollapsed, sidenavs, setSidenavs, location, hasSider };
 
 }
 
