@@ -14,10 +14,10 @@ const root = lang.components.resources;
 export const ResourcesViewTable: React.FC<Props> = (props) => {
 
   return (
-    <Table pagination={{ hideOnSinglePage: true }} dataSource={Object.entries(props.resources)}>
-      <Column title={<Localized id={root.resourceType} />} dataIndex={0} key={0}
+    <Table pagination={{ hideOnSinglePage: true }} dataSource={Object.entries(props.resources)} rowKey="0">
+      <Column title={<Localized id={root.resourceType} />} dataIndex={0}
         render={(ty) => <Localized id={root[ty]} />} />
-      <Column title={<Localized id={root.values} />} dataIndex={1} key={1} />
+      <Column title={<Localized id={root.values} />} dataIndex={1} />
     </Table>
   );
 }

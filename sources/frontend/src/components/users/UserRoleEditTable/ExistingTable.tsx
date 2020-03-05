@@ -8,11 +8,10 @@ import { RoleChangeSelect } from "src/components/users/UserRoleEditTable/RoleCha
 import { RemoveLink } from "src/components/users/UserRoleEditTable/RemoveLink";
 import { DisabledA } from "src/components/DisabledA";
 import { SetAsPayUserLink } from "src/components/users/UserRoleEditTable/SetAsPayUserLink";
-import { Resources, resourcesString } from "src/models/Resources";
+import { Resources } from "src/models/Resources";
 import { FullUser, mergeInformation } from "../FullUser";
-import { ModalLink } from "src/components/ModalLink";
-import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 import { SetUserResourcesLink } from "src/components/users/UserRoleEditTable/SetUserResources";
+import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink";
 
 const root = lang.components.users;
 
@@ -84,11 +83,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
             ? (
               <Table.Column title={<Localized id={root.resources} />}
                 dataIndex="resources"
-                render={(resources: Resources) => (
-                  <ModalLink modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
-                    {resourcesString(resources)}
-                  </ModalLink>
-                )} />
+                render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
             ) : null}
         <Table.Column title={<Localized id={root.role.title} />}
           dataIndex="role"
@@ -121,7 +116,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
                   <RemoveLink user={user} onRemove={handleRemove} disabled={!!settingPayUserId || removingId === user.id} />
                   <Divider type="vertical" />
                   <SetAsPayUserLink user={user} onSet={handleSetPayUser} disabled={!!settingPayUserId || removingId === user.id} />
-                  <SetUserResourcesLink user={user} onConfirm={onResourcesChange}/>
+                  <SetUserResourcesLink user={user} onConfirm={onResourcesChange} />
                 </span>
               )
 

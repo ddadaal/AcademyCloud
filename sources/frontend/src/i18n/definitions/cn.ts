@@ -20,6 +20,7 @@ export default {
     },
     components: {
       resources: {
+        modalTitle: "资源",
         resourceType: "资源类型",
         values: "资源量",
         cpu: "CPU核心数",

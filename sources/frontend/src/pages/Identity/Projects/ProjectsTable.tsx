@@ -16,6 +16,7 @@ import { Project } from "src/models/Project";
 import { EditLink } from "src/pages/Identity/Projects/EditLink";
 import { Scope, isDomainAdmin } from "src/models/Scope";
 import { DeleteProjectLink } from "src/pages/Identity/Projects/DeleteProjectLink";
+import { ResourcesModalLink } from 'src/components/resources/ResourcesModalLink';
 
 interface Props {
   refreshToken: any;
@@ -60,11 +61,7 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
           </ModalLink>
         )} />
       <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
-        render={(resources: Resources) => (
-          <ModalLink modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
-            {resourcesString(resources)}
-          </ModalLink>
-        )} />
+        render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       {isDomainAdmin
         ? (
           <Table.Column title={<Localized id={root.actions} />}

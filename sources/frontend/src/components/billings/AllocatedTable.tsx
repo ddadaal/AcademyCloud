@@ -6,6 +6,7 @@ import { ModalLink } from "src/components/ModalLink";
 import { Localized } from "src/i18n";
 import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
+import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink";
 
 interface AllocatedDataItem {
   subjectName: string;
@@ -28,11 +29,7 @@ export const AllocatedTable: React.FC<Props> = ({ subjectType, data, loading }) 
       <Table.Column title={subjectType} dataIndex="subject"
         render={(_, item: AllocatedDataItem) => <Link to={item.subjectLink}>{item.subjectName}</Link>} />
       <Table.Column title="Resources" dataIndex="resources"
-        render={(resources: Resources) => (
-          <ModalLink modalTitle="Resources" modalContent={<ResourcesViewTable resources={resources} />}>
-            {resourcesString(resources)}
-          </ModalLink>
-        )} />
+        render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title="Should pay" dataIndex="amount" />
       <Table.Column title="Payer" dataIndex="payerName" />
       <Table.Column title="Next Due" dataIndex="nextDue" render={(date: string) => <LocalizedDate dateTimeString={date} />} />

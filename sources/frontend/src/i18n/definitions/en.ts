@@ -20,6 +20,7 @@ export default {
     },
     components: {
       resources: {
+        modalTitle: "Resources",
         resourceType: "Resource Type",
         values: "Resource Quantity",
         cpu: "CPU Cores",

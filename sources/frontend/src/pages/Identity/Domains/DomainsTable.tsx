@@ -12,6 +12,7 @@ import { User } from "src/models/User";
 import { EditLink } from "src/pages/Identity/Domains/EditLink";
 import { ModalLink } from "src/components/ModalLink";
 import { DeleteDomainLink } from './DeleteDomainLink';
+import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink";
 
 const root = lang.identity.domains;
 
@@ -48,11 +49,7 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
           </ModalLink>
         )} />
       <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
-        render={(resources: Resources) => (
-          <ModalLink modalTitle={<Localized id={root.resources} />} modalContent={<ResourcesViewTable resources={resources} />}>
-            {resourcesString(resources)}
-          </ModalLink>
-        )} />
+        render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.actions} />}
         dataIndex="id"
         render={(_, domain: Domain) => (
