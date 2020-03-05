@@ -20,12 +20,17 @@ export default {
     },
     components: {
       billings: {
+        refresh: "刷新",
+        current: "各个{}当前{}周期",
+        history: "{} {} 历史{}周期",
+        allocated: "计费",
+        used: "使用",
+        subjectType: {
+          domain: "域",
+          project: "项目",
+          user: "用户",
+        },
         table: {
-          subjectType: {
-            domain: "域",
-            project: "项目",
-            user: "用户",
-          },
           resources: "资源",
           amount: "应付",
           payer: "支付人",
@@ -297,8 +302,7 @@ export default {
         }
       },
     },
-    resources: {
-    },
+    resources: {},
     nav: {
       errorPage: {
         title: "无权限或不存在",
@@ -390,13 +394,7 @@ export default {
         title: "项目交易记录",
         refresh: "刷新",
       },
-      billings: {
-        refresh: "刷新",
-        domainsAllocated: "各个域当前计费周期",
-        domainHistoryAllocated: "域 {} 历史计费周期",
-        domainsUsed: "各个域当前使用周期",
-        domainHistoryUsed: "域 {} 历史使用周期",
-      },
+      billings: {},
     },
     header: {
       resources: "资源管理",

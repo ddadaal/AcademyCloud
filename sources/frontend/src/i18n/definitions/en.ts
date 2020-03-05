@@ -20,12 +20,17 @@ export default {
     },
     components: {
       billings: {
+        refresh: "Refresh",
+        current: "Each {} Current {} Cycle",
+        history: "{} {} History {} Cycles",
+        allocated: "Billing",
+        used: "Usage",
+        subjectType: {
+          domain: "Domain",
+          project: "Project",
+          user: "User",
+        },
         table: {
-          subjectType: {
-            domain: "Domain",
-            project: "Project",
-            user: "User",
-          },
           resources: "Resources",
           amount: "Payable",
           payer: "Payer",
@@ -297,8 +302,7 @@ export default {
         },
       },
     },
-    resources: {
-    },
+    resources: {},
     nav: {
       errorPage: {
         title: "Not Exists Or Not Authorized",
@@ -390,13 +394,7 @@ export default {
         title: "Project Transactions",
         refresh: "Refresh",
       },
-      billings: {
-        refresh: "Refresh",
-        domainsAllocated: "Domains' Current Billing Cycle",
-        domainHistoryAllocated: "History Billing Cycles for Domain {}",
-        domainsUsed: "Domains' Current Usage Cycle",
-        domainHistoryUsed: "History Usage Cycles For Domain {}",
-      },
+      billings: {},
     },
     header: {
       resources: "Resources",

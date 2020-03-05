@@ -25,3 +25,14 @@ export interface HistoryAllocatedBilling extends HistoryUsageBilling {
   payerId: string;
   payerName: string;
 }
+
+export enum BillType {
+  Allocated= "allocated",
+  Used = "used",
+}
+
+export enum BillSubjectType {
+  domain = "domain",
+  project = "project",
+  user = "user",
+}

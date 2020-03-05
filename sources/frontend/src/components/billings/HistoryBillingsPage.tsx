@@ -1,31 +1,40 @@
 import React, { useCallback } from "react";
 import { TitleText } from "src/components/pagecomponents/TitleText";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
-import { Localized, lang } from "src/i18n";
+import { Localized, lang, RecursiveLocalized } from "src/i18n";
 import { ClickableA } from "src/components/ClickableA";
 import { RouteComponentProps, Link } from "@reach/router";
 import { StepBackwardOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import { HistoryBillingsTable } from "src/components/billings/HistoryBillingsTable";
-import { getApiService } from "src/apis";
-import { BillingService } from "src/apis/expenses/BillingService";
 import { useAsync } from "react-async";
 import { FlexBox } from "src/components/Flexbox";
+import {
+  BillSubjectType,
+  BillType,
+  HistoryAllocatedBilling, HistoryUsageBilling
+} from "../../models/Billings";
 
-type Props = RouteComponentProps<{ domainId: string }>;
+type Billing = HistoryUsageBilling | HistoryAllocatedBilling;
 
-const root = lang.expenses.billings;
+interface Props {
+  billType: BillType;
+  id: string;
+  subjectType: BillSubjectType;
+  getData: (id: string) => Promise<Billing[]>;
+  location: Location;
+}
 
-const service = getApiService(BillingService);
+const root = lang.components.billings;
 
-export const HistoryDomainAllocated: React.FC<Props> = ({ domainId, location }) => {
+export const HistoryBillingsPage: React.FC<Props> = ({ getData, id, billType, subjectType, location }) => {
 
   // just parse the first arg and use it as the name
-  const name = location?.search?.replace?.(/^.*?=/, '');
-  const promiseFn = useCallback(async () => {
-    const resp = await service.getDomainHistoryAllocatedBillings(domainId!!);
-    return resp.billings;
-  }, [domainId]);
+  const name = location?.search?.replace?.(/^.*?=/, '') as string;
+
+  const promiseFn = useCallback(() => (
+    getData(id)
+  ), [getData, id]);
 
   const { data, isPending, reload } = useAsync({ promiseFn });
 
@@ -38,12 +47,16 @@ export const HistoryDomainAllocated: React.FC<Props> = ({ domainId, location }) 
               <Link to=".."><StepBackwardOutlined /></Link>
             </Button>
             <Divider type="vertical" />
-            <Localized id={root.domainHistoryAllocated} replacements={[name || domainId]} />
+            <Localized id={root.history} replacements={[
+              <Localized key={"subjectType"} id={root.subjectType[subjectType]} />,
+              name || id,
+              <Localized key="billType" id={root[billType]} />
+            ]} />
           </TitleText>
         </FlexBox>
         <ClickableA onClick={reload}><Localized id={root.refresh} /></ClickableA>
       </TitleBar>
-      <HistoryBillingsTable data={data} loading={isPending} />
+      <HistoryBillingsTable type={billType} data={data} loading={isPending} />
     </div>
   );
 }
