@@ -48,14 +48,14 @@ export function indexRoutes(routes: IndexRoute[], basePath: string) {
               <EmptyRoot key={path} path={path}>
                 <Redirect noThrow={true} from="/" to={children[0].path} />
                 {children.map((x) => (
-                  <x.Component key={x.path} path={x.path} />
+                  <x.Component key={x.path} path={`${x.path}/*`} />
                 ))}
                 <ErrorPage path="*" />
               </EmptyRoot>
             )
           } else {
             return (
-              <Component key={path} path={path} />
+              <Component key={path} path={`${path}/*`} />
             );
           }
         })}

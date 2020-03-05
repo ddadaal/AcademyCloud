@@ -8,9 +8,9 @@ export interface NavPoint {
 
 const root = lang.nav.sidenav;
 
-function getInvreqId(pathname: string) {
+function getBillingSubject(pathname: string) {
   const splitted = pathname.split("/").filter((x) => !!x);
-  return splitted[1];
+  return splitted[4];
 }
 
 export const availableNavPoints = [
@@ -27,7 +27,12 @@ export const availableNavPoints = [
   { path: "/expenses/transactions/project", textId: root.expenses.projectTransactions },
   { path: "/expenses/billings/domains", textId: root.expenses.billings.domains },
   { path: "/expenses/billings/domains/allocated", textId: root.expenses.billings.allocated },
-  { path: "/expenses/billings/domains/used", textId: root.expenses.billings.used },
+  {
+    path: /\/expenses\/billings\/domains\/allocated\/[0-9a-zA-Z]*/,
+    textId: root.expenses.billings.detail,
+    jumpTo: (pathname: string) => `/expenses/billings/domains/allocated/${getBillingSubject(pathname)}`,
+  },
+  { path: "/expenses/billings/domains/used", textId: root.expenses.billings.allocated },
   { path: "/expenses/billings/domain", textId: root.expenses.billings.domain },
   { path: "/expenses/billings/domain/allocated", textId: root.expenses.billings.allocated },
   { path: "/expenses/billings/domain/used", textId: root.expenses.billings.used },

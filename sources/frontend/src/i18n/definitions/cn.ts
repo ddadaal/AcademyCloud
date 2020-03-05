@@ -319,6 +319,7 @@ export default {
           domainTransactions: "域交易记录",
           projectTransactions: "项目交易记录",
           billings: {
+            detail: "详情",
             allocated: "分配",
             used: "使用",
             domains: "域计费",

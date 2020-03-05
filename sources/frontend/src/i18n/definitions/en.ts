@@ -319,6 +319,7 @@ export default {
           domainTransactions: "Domain Transactions",
           projectTransactions: "Project Transactions",
           billings: {
+            detail: "Detail",
             allocated: "Allocated",
             used: "Used",
             domains: "Domains Billings",
