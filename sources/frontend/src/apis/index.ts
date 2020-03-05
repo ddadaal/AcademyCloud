@@ -14,6 +14,8 @@ import { OverviewService } from "src/apis/expenses/OverviewService";
 import { OverviewServiceMock } from "src/apis/expenses/OverviewServiceMock";
 import { TransactionsService } from "src/apis/expenses/TransactionsService";
 import { TransactionsServiceMock } from "src/apis/expenses/TransactionsServiceMock";
+import { BillingService } from './expenses/BillingService';
+import { BillingServiceMock } from './expenses/BillingServiceMock';
 
 export const USE_MOCK = true;
 
@@ -26,6 +28,7 @@ const services = [
   [ProjectsService, USE_MOCK ? ProjectsServiceMock : ProjectsService],
   [OverviewService, USE_MOCK ? OverviewServiceMock : OverviewService],
   [TransactionsService, USE_MOCK ? TransactionsServiceMock : TransactionsService],
+  [BillingService, USE_MOCK ? BillingServiceMock : BillingService],
 ] as const;
 
 
