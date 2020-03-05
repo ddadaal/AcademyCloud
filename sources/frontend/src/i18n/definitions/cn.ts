@@ -39,6 +39,14 @@ export default {
           endTime: "结束时间",
           actions: "操作",
           history: "历史",
+        },
+        stats: {
+          title: "{} {} 当前{}周期",
+          history: "历史周期",
+          resources: "资源",
+          amount: "应支付额",
+          nextDue: "下一次结算时间",
+          payer: "支付人",
         }
       },
       resources: {

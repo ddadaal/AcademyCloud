@@ -39,6 +39,14 @@ export default {
           endTime: "EndTime",
           actions: "Actions",
           history: "History",
+        },
+        stats: {
+          title: "{} {} Current {} Cycle",
+          history: "History Cycles",
+          resources: "Resources",
+          amount: "Payable",
+          nextDue: "Next Due",
+          payer: "Payer",
         }
       },
       resources: {

@@ -58,6 +58,29 @@ const routes = [
         Component: React.lazy(() => import("./Billing/Domains/Used")),
       }
     ],
+
+  }, {
+    path: "billings/domain",
+    textId: root.billings.domain,
+    Icon: TransactionOutlined,
+    checkScope: (scope: Scope) => isDomainAdmin(scope),
+    children: [
+      {
+        path: "allocated",
+        textId: root.billings.allocated,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => isDomainAdmin(scope),
+        Component: React.lazy(() => import("./Billing/Domain/Allocated")),
+      },
+      {
+        path: "used",
+        textId: root.billings.used,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => isSystemScope(scope),
+        Component: React.lazy(() => import("./Billing/Domains/Used")),
+      }
+    ],
+
   }, {
     path: "billings/projects",
     textId: root.billings.projects,
