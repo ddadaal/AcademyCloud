@@ -12,10 +12,10 @@ import { FlexBox } from "src/components/Flexbox";
 import {
   BillSubjectType,
   BillType,
-  HistoryAllocatedBilling, HistoryUsageBilling
+  HistoryAllocatedBilling, HistoryUsedBilling
 } from "../../models/Billings";
 
-type Billing = HistoryUsageBilling | HistoryAllocatedBilling;
+type Billing = HistoryUsedBilling | HistoryAllocatedBilling;
 
 interface Props {
   billType: BillType;

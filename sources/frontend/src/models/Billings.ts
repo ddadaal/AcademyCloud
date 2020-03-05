@@ -1,6 +1,6 @@
 import { Resources } from './Resources';
 
-export interface CurrentUsageBilling {
+export interface CurrentUsedBilling {
   subjectId: string;
   subjectName: string;
   resources: Resources;
@@ -8,12 +8,12 @@ export interface CurrentUsageBilling {
   nextDue: string;
 }
 
-export interface CurrentAllocatedBilling extends CurrentUsageBilling {
+export interface CurrentAllocatedBilling extends CurrentUsedBilling {
   payerId: string;
   payerName: string;
 }
 
-export interface HistoryUsageBilling {
+export interface HistoryUsedBilling {
   id: string;
   resources: Resources;
   amount: number;
@@ -21,7 +21,7 @@ export interface HistoryUsageBilling {
   endTime: string;
 }
 
-export interface HistoryAllocatedBilling extends HistoryUsageBilling {
+export interface HistoryAllocatedBilling extends HistoryUsedBilling {
   payerId: string;
   payerName: string;
 }

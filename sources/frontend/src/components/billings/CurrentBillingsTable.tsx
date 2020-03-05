@@ -5,11 +5,11 @@ import { Link } from "@reach/router";
 import { lang, Localized } from "src/i18n";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink";
-import { BillType, CurrentUsageBilling } from "src/models/Billings";
+import { BillType, CurrentUsedBilling } from "src/models/Billings";
 
 const root = lang.components.billings;
 
-interface AllocatedDataItem extends CurrentUsageBilling {
+interface AllocatedDataItem extends CurrentUsedBilling {
   historyLink: string;
   payerId?: string;
   payerName?: string;

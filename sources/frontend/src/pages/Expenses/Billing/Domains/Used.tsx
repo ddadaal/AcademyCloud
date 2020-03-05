@@ -8,7 +8,7 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getDomains = () => service.getDomainsCurrentAllocatedBilling().then(x => x.billings);
+const getDomains = () => service.getCurrentUsedBillings(BillSubjectType.domain).then(x => x.billings);
 
 const DomainsUsed: React.FC<RouteComponentProps> = () => {
   return (
@@ -19,7 +19,7 @@ const DomainsUsed: React.FC<RouteComponentProps> = () => {
   );
 }
 const getDomainHistoryData = async (id: string) => {
-  const resp = await service.getDomainHistoryAllocatedBillings(id);
+  const resp = await service.getHistoryUsedBillings(BillSubjectType.domain, id);
   return resp.billings;
 };
 

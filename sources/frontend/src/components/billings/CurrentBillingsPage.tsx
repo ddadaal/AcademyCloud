@@ -6,11 +6,11 @@ import { ClickableA } from "src/components/ClickableA";
 import { RouteComponentProps } from "@reach/router";
 import { useAsync } from "react-async";
 import { CurrentBillingsTable } from "src/components/billings/CurrentBillingsTable";
-import { BillSubjectType, BillType, CurrentAllocatedBilling, CurrentUsageBilling } from "../../models/Billings";
+import { BillSubjectType, BillType, CurrentAllocatedBilling, CurrentUsedBilling } from "../../models/Billings";
 
 const root = lang.components.billings;
 
-type Billing = CurrentUsageBilling | CurrentAllocatedBilling;
+type Billing = CurrentUsedBilling | CurrentAllocatedBilling;
 
 interface Props extends RouteComponentProps {
   subjectType: BillSubjectType;

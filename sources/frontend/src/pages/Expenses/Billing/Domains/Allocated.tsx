@@ -8,7 +8,7 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getDomains = () => service.getDomainsCurrentAllocatedBilling().then(x => x.billings);
+const getDomains = () => service.getCurrentAllocatedBillings(BillSubjectType.domain).then(x => x.billings);
 
 const DomainsAllocated: React.FC<RouteComponentProps> = () => {
   return (
@@ -16,7 +16,7 @@ const DomainsAllocated: React.FC<RouteComponentProps> = () => {
   );
 }
 
-const getData = (id: string) => service.getDomainHistoryAllocatedBillings(id).then(x => x.billings);
+const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.domain, id).then(x => x.billings);
 
 const HistoryDomainAllocated: React.FC<RouteComponentProps<{ domainId: string }>> = ({ domainId, location }) => {
 

@@ -4,12 +4,12 @@ import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink"
 import { Resources } from "src/models/Resources";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 import { lang, Localized } from "src/i18n";
-import { BillType, HistoryAllocatedBilling, HistoryUsageBilling } from "src/models/Billings";
+import { BillType, HistoryAllocatedBilling, HistoryUsedBilling } from "src/models/Billings";
 
 const root = lang.components.billings.table;
 
 interface Props {
-  data: (HistoryAllocatedBilling | HistoryUsageBilling)[] | undefined;
+  data: (HistoryAllocatedBilling | HistoryUsedBilling)[] | undefined;
   loading?: boolean;
   type: BillType;
 }
