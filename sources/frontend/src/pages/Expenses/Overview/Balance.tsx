@@ -41,7 +41,7 @@ export const Balance: React.FC = () => {
 
   return (
     <MarginedCard title={<Localized id={root.balance} />} extra={(
-      <Link to="../accountTransactions">
+      <Link to="../transactions/account">
         <Localized id={root.toAccountTransaction} />
       </Link>
     )}>

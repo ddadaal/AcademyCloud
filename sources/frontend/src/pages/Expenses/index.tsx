@@ -14,29 +14,29 @@ const routes = [
     checkScope: () => true,
     Component: React.lazy(() => import("./Overview")),
   }, {
-    path: "accountTransactions",
+    path: "transactions/account",
     textId: root.accountTransactions,
     Icon: TransactionOutlined,
     checkScope: () => true,
-    Component: React.lazy(() => import("./AccountTransactions"))
+    Component: React.lazy(() => import("./Transactions/Account"))
   }, {
-    path: "systemTransactions",
+    path: "transactions/system",
     textId: root.systemTransactions,
     Icon: TransactionOutlined,
     checkScope: (scope: Scope) => isSystemScope(scope),
-    Component: React.lazy(() => import("./SystemTransactions"))
+    Component: React.lazy(() => import("./Transactions/System"))
   }, {
-    path: "domainTransactions",
+    path: "transactions/domain",
     textId: root.domainTransactions,
     Icon: TransactionOutlined,
     checkScope: (scope: Scope) => isDomainAdmin(scope),
-    Component: React.lazy(() => import("./DomainTransactions"))
+    Component: React.lazy(() => import("./Transactions/Domain"))
   }, {
-    path: "projectTransactions",
+    path: "transactions/project",
     textId: root.projectTransactions,
     Icon: TransactionOutlined,
     checkScope: (scope: Scope) => isProjectAdmin(scope),
-    Component: React.lazy(() => import("./ProjectTransactions"))
+    Component: React.lazy(() => import("./Transactions/Project"))
   }
 ] as IndexRoute[];
 
