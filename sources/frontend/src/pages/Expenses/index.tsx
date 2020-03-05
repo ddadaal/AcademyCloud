@@ -1,10 +1,13 @@
 import React from "react";
 import { lang } from "src/i18n";
-import { DashboardOutlined, TransactionOutlined } from "@ant-design/icons";
+import { DashboardOutlined, TransactionOutlined, UserOutlined, ProjectOutlined, TeamOutlined, BankOutlined, PlayCircleOutlined, DatabaseOutlined } from "@ant-design/icons";
 import { Scope, isSystemScope, isSocialScope, isDomainAdmin, isProjectAdmin } from "src/models/Scope";
 import { indexRoutes, IndexRoute } from "src/pages/common/indexRoutes";
 
 const root = lang.nav.sidenav.expenses;
+
+const AllocatedIcon = DatabaseOutlined;
+const UsedIcon = PlayCircleOutlined;
 
 const routes = [
   {
@@ -23,20 +26,20 @@ const routes = [
   {
     path: "billings/user",
     textId: root.billings.user,
-    Icon: TransactionOutlined,
+    Icon: UserOutlined,
     checkScope: (scope: Scope) => true,
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
-        Icon: TransactionOutlined,
+        Icon: AllocatedIcon,
         checkScope: (scope: Scope) => true,
         Component: React.lazy(() => import("./Billing/User/Allocated")),
       },
       {
         path: "used",
         textId: root.billings.used,
-        Icon: TransactionOutlined,
+        Icon: UsedIcon,
         checkScope: (scope: Scope) => true,
         Component: React.lazy(() => import("./Billing/User/Used")),
       }
@@ -67,20 +70,20 @@ const routes = [
 
     path: "billings/domains",
     textId: root.billings.domains,
-    Icon: TransactionOutlined,
+    Icon: BankOutlined,
     checkScope: (scope: Scope) => isSystemScope(scope),
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
-        Icon: TransactionOutlined,
+        Icon: AllocatedIcon,
         checkScope: (scope: Scope) => isSystemScope(scope),
         Component: React.lazy(() => import("./Billing/Domains/Allocated")),
       },
       {
         path: "used",
         textId: root.billings.used,
-        Icon: TransactionOutlined,
+        Icon: UsedIcon,
         checkScope: (scope: Scope) => isSystemScope(scope),
         Component: React.lazy(() => import("./Billing/Domains/Used")),
       }
@@ -89,20 +92,20 @@ const routes = [
   }, {
     path: "billings/domain",
     textId: root.billings.domain,
-    Icon: TransactionOutlined,
+    Icon: BankOutlined,
     checkScope: (scope: Scope) => isDomainAdmin(scope),
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
-        Icon: TransactionOutlined,
+        Icon: AllocatedIcon,
         checkScope: (scope: Scope) => isDomainAdmin(scope),
         Component: React.lazy(() => import("./Billing/Domain/Allocated")),
       },
       {
         path: "used",
         textId: root.billings.used,
-        Icon: TransactionOutlined,
+        Icon: UsedIcon,
         checkScope: (scope: Scope) => isDomainAdmin(scope),
         Component: React.lazy(() => import("./Billing/Domain/Used")),
       }
@@ -110,20 +113,20 @@ const routes = [
   }, {
     path: "billings/projects",
     textId: root.billings.projects,
-    Icon: TransactionOutlined,
+    Icon: ProjectOutlined,
     checkScope: (scope: Scope) => isDomainAdmin(scope),
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
-        Icon: TransactionOutlined,
+        Icon: AllocatedIcon,
         checkScope: (scope: Scope) => isDomainAdmin(scope),
         Component: React.lazy(() => import("./Billing/Projects/Allocated")),
       },
       {
         path: "used",
         textId: root.billings.used,
-        Icon: TransactionOutlined,
+        Icon: UsedIcon,
         checkScope: (scope: Scope) => isDomainAdmin(scope),
         Component: React.lazy(() => import("./Billing/Projects/Used")),
       }
@@ -131,20 +134,20 @@ const routes = [
   }, {
     path: "billings/project",
     textId: root.billings.project,
-    Icon: TransactionOutlined,
+    Icon: ProjectOutlined,
     checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
-        Icon: TransactionOutlined,
+        Icon: AllocatedIcon,
         checkScope: (scope: Scope) => isProjectAdmin(scope),
         Component: React.lazy(() => import("./Billing/Project/Allocated")),
       },
       {
         path: "used",
         textId: root.billings.used,
-        Icon: TransactionOutlined,
+        Icon: UsedIcon,
         checkScope: (scope: Scope) => isProjectAdmin(scope),
         Component: React.lazy(() => import("./Billing/Project/Used")),
       }
@@ -152,20 +155,20 @@ const routes = [
   }, {
     path: "billings/users",
     textId: root.billings.users,
-    Icon: TransactionOutlined,
+    Icon: TeamOutlined,
     checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
-        Icon: TransactionOutlined,
+        Icon: AllocatedIcon,
         checkScope: () => true,
         Component: React.lazy(() => import("./Billing/Users/Allocated")),
       },
       {
         path: "used",
         textId: root.billings.used,
-        Icon: TransactionOutlined,
+        Icon: UsedIcon,
         checkScope: () => true,
         Component: React.lazy(() => import("./Billing/Users/Used")),
       }

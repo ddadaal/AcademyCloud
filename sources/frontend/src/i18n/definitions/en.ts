@@ -353,7 +353,7 @@ export default {
             used: "Used",
             domains: "Domains Billings",
             domain: "Domain Billing",
-            projects: "Domain Projects Billings",
+            projects: "Projects Billings",
             project: "Project Billing",
             users: "Users Billings",
             user: "Account Billing",
