@@ -1,6 +1,6 @@
 import { Resources } from './Resources';
 
-export interface AllocatedBilling {
+export interface CurrentAllocatedBilling {
   subjectId: string;
   subjectName: string;
   resources: Resources;

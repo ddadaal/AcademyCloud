@@ -1,20 +1,31 @@
 import { HttpService, HttpMethod } from '../HttpService';
-import { AllocatedBilling } from 'src/models/AllocatedBilling';
+import { CurrentAllocatedBilling } from "src/models/CurrentAllocatedBilling";
+import { HistoryAllocatedBilling } from "src/models/HistoryAllocatedBilling";
 
 export interface BillingResponse<T> {
   billings: T[];
 }
 
-export type AllocatedBillingResponse = BillingResponse<AllocatedBilling>;
+export type CurrentAllocatedBillingResponse = BillingResponse<CurrentAllocatedBilling>;
+
+export type HistoryAllocatedBillingsResponse = BillingResponse<HistoryAllocatedBilling>;
 
 export class BillingService extends HttpService {
-  async getDomainsAllocatedBilling(): Promise<AllocatedBillingResponse> {
+  async getDomainsCurrentAllocatedBilling(): Promise<CurrentAllocatedBillingResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
       path: "/billings/domains/allocated",
     });
 
-    return resp as AllocatedBillingResponse;
+    return resp as CurrentAllocatedBillingResponse;
   }
 
+  async getDomainHistoryAllocatedBillings(domainId: string): Promise<HistoryAllocatedBillingsResponse> {
+    const resp = await this.fetch({
+      method: HttpMethod.GET,
+      path: `/billings/domains/allocated/${domainId}`,
+    });
+
+    return resp as HistoryAllocatedBillingsResponse;
+  }
 }

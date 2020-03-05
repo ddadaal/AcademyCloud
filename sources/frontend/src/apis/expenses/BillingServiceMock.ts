@@ -1,12 +1,25 @@
-import { BillingService, AllocatedBillingResponse } from './BillingService';
+import { BillingService, CurrentAllocatedBillingResponse, HistoryAllocatedBillingsResponse } from './BillingService';
+
+const dummyResources = { cpu: 4, memory: 128, storage: 256 };
+const dummyDate = "2020-03-05T03:15:17.484Z";
 
 export class BillingServiceMock extends BillingService {
-  async getDomainsAllocatedBilling(): Promise<AllocatedBillingResponse> {
+  async getDomainsCurrentAllocatedBilling(): Promise<CurrentAllocatedBillingResponse> {
     await this.delay();
     return {
       billings: [
-        { subjectId: "NJUID", subjectName: "NJU", resources: { cpu: 4, memory: 128, storage: 256 }, payerId: "67id", payerName: "67Name", amount: 120, nextDue: "2020-03-05T03:15:17.484Z" },
-        { subjectId: "PKUID", subjectName: "PKU", resources: { cpu: 4, memory: 128, storage: 256 }, payerId: "fcid", payerName: "fcName", amount: 160, nextDue: "2020-03-05T03:15:17.484Z" },
+        { subjectId: "NJUID", subjectName: "NJU", resources: dummyResources, payerId: "67id", payerName: "67Name", amount: 120, nextDue: dummyDate },
+        { subjectId: "PKUID", subjectName: "PKU", resources: dummyResources, payerId: "fcid", payerName: "fcName", amount: 160, nextDue: dummyDate },
+      ]
+    };
+  }
+
+  async getDomainHistoryAllocatedBillings(domainId: string): Promise<HistoryAllocatedBillingsResponse> {
+    await this.delay();
+    return {
+      billings: [
+        { id: "1", resources: dummyResources, payerId: "67id", payerName: "67Name", amount: 120, startTime: dummyDate, endTime: dummyDate },
+        { id: "2", resources: dummyResources, payerId: "fcid", payerName: "fcName", amount: 160, startTime: dummyDate, endTime: dummyDate },
       ]
     };
   }
