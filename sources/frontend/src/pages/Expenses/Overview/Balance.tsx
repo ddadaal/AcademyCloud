@@ -10,6 +10,7 @@ import { MarginedCard } from "src/components/MarginedCard";
 import { ChargeButton } from "src/pages/Expenses/Overview/ChargeButton";
 import { BalanceTable } from "src/pages/Expenses/Overview/BalanceTable";
 import { useRefreshToken } from "src/utils/refreshToken";
+import { Section } from "src/pages/Expenses/Overview/Section";
 
 const EmptyDivider = styled.div`
   margin: 12px 0;
@@ -40,7 +41,7 @@ export const Balance: React.FC = () => {
 
 
   return (
-    <MarginedCard title={<Localized id={root.balance} />} extra={(
+    <Section title={<Localized id={root.balance} />} extra={(
       <Link to="../transactions/account">
         <Localized id={root.toAccountTransaction} />
       </Link>
@@ -54,6 +55,6 @@ export const Balance: React.FC = () => {
       </Spin>
       <EmptyDivider />
       <BalanceTable refreshToken={token} />
-    </MarginedCard>
+    </Section>
   )
 }

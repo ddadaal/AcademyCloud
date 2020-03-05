@@ -384,6 +384,16 @@ export default {
           button: "充值",
           opName: "充值",
           amount: "数量",
+        },
+        system: {
+          title: "最近5个系统交易记录",
+          link: "查看更多系统交易记录",
+        },
+        projectAdmin: {
+          link: "查看当前项目计费周期信息",
+        },
+        domainAdmin: {
+          link: "查看当前域计费周期信息"
         }
       },
       accountTransactions: {
@@ -402,7 +412,6 @@ export default {
         title: "项目交易记录",
         refresh: "刷新",
       },
-      billings: {},
     },
     header: {
       resources: "资源管理",

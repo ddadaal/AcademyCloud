@@ -11,7 +11,7 @@ import { lang } from "src/i18n";
 import { BillingStat } from "src/components/billings/BillingStat";
 
 interface Props {
-  refreshToken: any;
+  refreshToken?: any;
   billType: BillType;
   billSubjectType: BillSubjectType;
   id: string;

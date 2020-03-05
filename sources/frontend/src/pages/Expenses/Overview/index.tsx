@@ -5,6 +5,7 @@ import { TitleText } from "src/components/pagecomponents/TitleText";
 import { Balance } from "src/pages/Expenses/Overview/Balance";
 import { RoleSpecific } from "./RoleSpecific";
 import { lang, Localized } from "src/i18n";
+import { Divider } from "antd";
 
 const root = lang.expenses.overview;
 
@@ -17,6 +18,7 @@ export const Overview: React.FC<RouteComponentProps> = (props) => {
         </TitleText>
       </TitleBar>
       <Balance />
+      <Divider />
       <RoleSpecific />
     </div >
   );

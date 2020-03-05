@@ -384,6 +384,16 @@ export default {
           button: "Charge",
           opName: "Charge",
           amount: "Amount",
+        },
+        system: {
+          title: "Latest 5 System Transactions",
+          link: "To System Transactions",
+        },
+        projectAdmin: {
+          link: "To Project Allocated Billing",
+        },
+        domainAdmin: {
+          link: "To Domain Allocated Billing"
         }
       },
       accountTransactions: {
