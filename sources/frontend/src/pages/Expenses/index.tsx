@@ -58,6 +58,48 @@ const routes = [
         Component: React.lazy(() => import("./Billing/Domains/Used")),
       }
     ],
+  }, {
+    path: "billings/projects",
+    textId: root.billings.projects,
+    Icon: TransactionOutlined,
+    checkScope: (scope: Scope) => isDomainAdmin(scope),
+    children: [
+      {
+        path: "allocated",
+        textId: root.billings.allocated,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => isDomainAdmin(scope),
+        Component: React.lazy(() => import("./Billing/Projects/Allocated")),
+      },
+      {
+        path: "used",
+        textId: root.billings.used,
+        Icon: TransactionOutlined,
+        checkScope: (scope: Scope) => isDomainAdmin(scope),
+        Component: React.lazy(() => import("./Billing/Projects/Used")),
+      }
+    ],
+  }, {
+    path: "billings/users",
+    textId: root.billings.users,
+    Icon: TransactionOutlined,
+    checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
+    children: [
+      {
+        path: "allocated",
+        textId: root.billings.allocated,
+        Icon: TransactionOutlined,
+        checkScope: () => true,
+        Component: React.lazy(() => import("./Billing/Users/Allocated")),
+      },
+      {
+        path: "used",
+        textId: root.billings.used,
+        Icon: TransactionOutlined,
+        checkScope: () => true,
+        Component: React.lazy(() => import("./Billing/Users/Used")),
+      }
+    ],
   }
 ] as IndexRoute[];
 

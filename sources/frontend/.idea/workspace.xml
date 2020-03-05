@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2cc31ad0-0448-458a-9be2-453017433962" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../docs/architecture/Architecture and Domain Models.asta" beforeDir="false" afterPath="$PROJECT_DIR$/../../docs/architecture/Architecture and Domain Models.asta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../docs/requirements/0211-requirements.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../docs/requirements/0211-requirements.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/billings/CurrentBillingsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/billings/CurrentBillingsTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/billings/HistoryBillingsTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/billings/HistoryBillingsTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n/definitions/cn.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n/definitions/cn.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/i18n/definitions/en.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/i18n/definitions/en.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Billings.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Billings.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Allocated/DomainsAllocated.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Allocated/DomainsAllocated.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Allocated/HistoryDomainAllocated.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Allocated/HistoryDomainAllocated.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Used/DomainsUsed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Used/DomainsUsed.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Used/HistoryDomainUsed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Expenses/Billing/Domains/Used/HistoryDomainUsed.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\ddadaal\Projects\graduation-project\sources\frontend\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YhYvlt1dDjsqQnNcv1fDWG2LvN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="ts.external.directory.path" value="C:\Users\ddadaal\Projects\graduation-project\sources\frontend\node_modules\typescript\lib" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2cc31ad0-0448-458a-9be2-453017433962" name="Default Changelist" comment="" />
+      <created>1583396526168</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583396526168</updated>
+      <workItem from="1583396536658" duration="99000" />
+      <workItem from="1583396662095" duration="178000" />
+      <workItem from="1583396860169" duration="63000" />
+      <workItem from="1583396940446" duration="822000" />
+      <workItem from="1583397784655" duration="2724000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="178" key="#HTTP_Proxy" timestamp="1583396764990">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#HTTP_Proxy/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583396764990" />
+    <state x="552" y="178" key="#Notifications" timestamp="1583397593387">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Notifications/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583397593387" />
+    <state x="552" y="178" key="#Plugins" timestamp="1583396633697">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Plugins/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583396633697" />
+    <state x="338" y="222" width="1331" height="716" key="SettingsEditor" timestamp="1583398876460">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="338" y="222" width="1331" height="716" key="SettingsEditor/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583398876460" />
+    <state x="652" y="347" key="com.intellij.ide.util.TipDialog" timestamp="1583396945429">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="652" y="347" key="com.intellij.ide.util.TipDialog/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583396945429" />
+    <state x="601" y="246" width="700" height="530" key="recent.locations.popup" timestamp="1583397008249">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="601" y="246" width="700" height="530" key="recent.locations.popup/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583397008249" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1583400167937">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583400167937" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1583400338186">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1463.800/0.0.1920.1040@0.0.1920.1040" timestamp="1583400338186" />
+  </component>
+</project>
