@@ -6,17 +6,13 @@ import { ClickableA } from "src/components/ClickableA";
 import { RouteComponentProps, Link } from "@reach/router";
 import { StepBackwardOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
-import styled from "styled-components";
 import { HistoryBillingsTable } from "src/components/billings/HistoryBillingsTable";
 import { getApiService } from "src/apis";
 import { BillingService } from "src/apis/expenses/BillingService";
 import { useAsync } from "react-async";
+import { FlexBox } from "src/components/Flexbox";
 
 type Props = RouteComponentProps<{ domainId: string }>;
-
-const FlexBox = styled.div`
-  display: flex;
-`;
 
 const root = lang.expenses.billings;
 
