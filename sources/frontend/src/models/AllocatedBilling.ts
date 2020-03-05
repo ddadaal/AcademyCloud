@@ -7,4 +7,5 @@ export interface AllocatedBilling {
   amount: number;
   payerId: string;
   payerName: string;
+  nextDue: string;
 }
