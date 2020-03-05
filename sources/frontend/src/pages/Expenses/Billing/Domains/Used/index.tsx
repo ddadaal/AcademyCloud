@@ -1,9 +1,13 @@
 import React from "react";
+import { DomainsUsed } from "src/pages/Expenses/Billing/Domains/Used/DomainsUsed";
+import { Router } from "@reach/router";
+import { HistoryDomainUsed } from "src/pages/Expenses/Billing/Domains/Used/HistoryDomainUsed";
 
-export const DomainUsed: React.FC = (props) => {
+export default function () {
   return (
-    <div>domain used</div>
-  );
+    <Router>
+      <DomainsUsed path="/" />
+      <HistoryDomainUsed path=":domainId" />
+    </Router>
+  )
 }
-
-export default DomainUsed;

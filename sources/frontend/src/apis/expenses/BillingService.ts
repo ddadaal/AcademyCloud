@@ -1,6 +1,5 @@
 import { HttpService, HttpMethod } from '../HttpService';
-import { CurrentAllocatedBilling } from "src/models/CurrentAllocatedBilling";
-import { HistoryAllocatedBilling } from "src/models/HistoryAllocatedBilling";
+import { CurrentAllocatedBilling, HistoryAllocatedBilling } from "src/models/Billings";
 
 export interface BillingResponse<T> {
   billings: T[];

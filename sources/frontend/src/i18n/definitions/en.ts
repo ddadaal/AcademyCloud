@@ -392,7 +392,9 @@ export default {
       },
       billings: {
         domainsAllocated: "Domains' Current Billing Cycle",
-        domainHistoryAllocated: "History billing cycles for domain {}"
+        domainHistoryAllocated: "History Billing Cycles for Domain {}",
+        domainsUsed: "Domains' Current Usage Cycle",
+        domainHistoryUsed: "History Usage Cycles For Domain {}",
       },
     },
     header: {

@@ -15,7 +15,7 @@ const service = getApiService(BillingService);
 
 const getDomains = () => service.getDomainsCurrentAllocatedBilling().then(x => x.billings);
 
-export const DomainsAllocated: React.FC<RouteComponentProps> = (props) => {
+export const DomainsUsed: React.FC<RouteComponentProps> = (props) => {
 
   const { data, isPending, reload } = useAsync({ promiseFn: getDomains });
 
@@ -26,10 +26,10 @@ export const DomainsAllocated: React.FC<RouteComponentProps> = (props) => {
   return (
     <div>
       <TitleBar spaceBetween={true}>
-        <TitleText><Localized id={root.domainsAllocated} /></TitleText>
+        <TitleText><Localized id={root.domainsUsed} /></TitleText>
         <ClickableA onClick={reload}>Refresh</ClickableA>
       </TitleBar>
-      <CurrentBillingsTable subjectType="domain" data={processedData} loading={isPending} />
+      <CurrentBillingsTable subjectType="domain" hasPayer={false} data={processedData} loading={isPending} />
     </div>
   );
 }

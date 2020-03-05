@@ -1,20 +1,20 @@
 import React from "react";
-import { HistoryAllocatedBilling } from "src/models/HistoryAllocatedBilling";
 import { Table, Tooltip } from "antd";
 import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink";
 import { Resources } from "src/models/Resources";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 import { Localized, lang } from "src/i18n";
+import { HistoryUsageBilling, HistoryAllocatedBilling } from "src/models/Billings";
 
 const root = lang.components.billings.table;
 
 interface Props {
-  data: HistoryAllocatedBilling[] | undefined;
+  data: (HistoryAllocatedBilling | HistoryUsageBilling)[] | undefined;
   loading?: boolean;
-
+  hasPayer?: boolean;
 }
 
-export const HistoryAllocatedTable: React.FC<Props> = ({ data, loading }) => {
+export const HistoryBillingsTable: React.FC<Props> = ({ data, hasPayer = true, loading }) => {
   return (
     <Table dataSource={data} loading={loading} rowKey="id">
       <Table.Column title={<Localized id={root.startTime} />} dataIndex="startTime"
@@ -25,8 +25,10 @@ export const HistoryAllocatedTable: React.FC<Props> = ({ data, loading }) => {
         render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.amount} />} dataIndex="amount"
         render={(amount: number) => amount.toFixed(2)} />
-      <Table.Column title={<Localized id={root.payer} />} dataIndex="payerName"
-        render={(_, item: HistoryAllocatedBilling) => <Tooltip overlay={item.payerId}>{item.payerName}</Tooltip>} />
+      {hasPayer ? (
+        <Table.Column title={<Localized id={root.payer} />} dataIndex="payerName"
+          render={(_, item: HistoryAllocatedBilling) => <Tooltip overlay={item.payerId}>{item.payerName}</Tooltip>} />
+      ) : null}
     </Table>
   )
 }

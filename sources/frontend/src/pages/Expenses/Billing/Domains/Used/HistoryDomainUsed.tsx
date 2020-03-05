@@ -7,10 +7,10 @@ import { RouteComponentProps, Link } from "@reach/router";
 import { StepBackwardOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import styled from "styled-components";
-import { HistoryBillingsTable } from "src/components/billings/HistoryBillingsTable";
-import { getApiService } from "src/apis";
 import { BillingService } from "src/apis/expenses/BillingService";
+import { getApiService } from "src/apis";
 import { useAsync } from "react-async";
+import { HistoryBillingsTable } from "src/components/billings/HistoryBillingsTable";
 
 type Props = RouteComponentProps<{ domainId: string }>;
 
@@ -22,10 +22,11 @@ const root = lang.expenses.billings;
 
 const service = getApiService(BillingService);
 
-export const HistoryDomainAllocated: React.FC<Props> = ({ domainId, location }) => {
+export const HistoryDomainUsed: React.FC<Props> = ({ domainId, location }) => {
 
   // just parse the first arg and use it as the name
   const name = location?.search?.replace?.(/^.*?=/, '');
+
   const promiseFn = useCallback(async () => {
     const resp = await service.getDomainHistoryAllocatedBillings(domainId!!);
     return resp.billings;
@@ -42,12 +43,12 @@ export const HistoryDomainAllocated: React.FC<Props> = ({ domainId, location }) 
               <Link to=".."><StepBackwardOutlined /></Link>
             </Button>
             <Divider type="vertical" />
-            <Localized id={root.domainHistoryAllocated} replacements={[name || domainId]} />
+            <Localized id={root.domainHistoryUsed} replacements={[name || domainId]} />
           </TitleText>
         </FlexBox>
         <ClickableA onClick={reload}>Refresh</ClickableA>
       </TitleBar>
-      <HistoryBillingsTable data={data} loading={isPending} />
+      <HistoryBillingsTable hasPayer={false} data={data} loading={isPending} />
     </div>
   );
 }

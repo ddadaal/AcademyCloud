@@ -392,7 +392,9 @@ export default {
       },
       billings: {
         domainsAllocated: "各个域当前计费周期",
-        domainHistoryAllocated: "域 {} 历史计费周期"
+        domainHistoryAllocated: "域 {} 历史计费周期",
+        domainsUsed: "各个域当前使用周期",
+        domainHistoryUsed: "域 {} 历史使用周期",
       },
     },
     header: {
