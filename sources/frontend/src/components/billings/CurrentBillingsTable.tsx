@@ -5,7 +5,7 @@ import { Link } from "@reach/router";
 import { lang, Localized } from "src/i18n";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 import { ResourcesModalLink } from "src/components/resources/ResourcesModalLink";
-import { BillType, CurrentUsedBilling } from "src/models/Billings";
+import { BillType, CurrentUsedBilling, BillSubjectType } from "src/models/Billings";
 
 const root = lang.components.billings;
 
@@ -16,7 +16,7 @@ interface AllocatedDataItem extends CurrentUsedBilling {
 }
 
 interface Props {
-  subjectType: "domain" | "project" | "user";
+  subjectType: BillSubjectType;
   type: BillType;
   data: AllocatedDataItem[] | undefined;
   loading?: boolean;
@@ -35,7 +35,7 @@ export const CurrentBillingsTable: React.FC<Props> = ({ subjectType, type, data,
         render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.table.amount} />} dataIndex="amount"
         render={(amount: number) => amount.toFixed(2)} />
-      {type === BillType.Allocated ? (
+      {(type === BillType.Allocated && subjectType !== BillSubjectType.user) ? (
         <Table.Column title={<Localized id={root.table.payer} />} dataIndex="payerName"
           render={(_, item: AllocatedDataItem) => <Tooltip overlay={item.payerId}>{item.payerName}</Tooltip>} />
       ) : null}
