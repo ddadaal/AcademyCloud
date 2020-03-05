@@ -3,9 +3,11 @@ import { TitleText } from "src/components/pagecomponents/TitleText";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
 import { DomainsAllocatedTable } from "src/pages/Expenses/Billing/Domains/Allocated/DomainsAllocatedTable";
 import { useRefreshToken } from "src/utils/refreshToken";
-import { Localized } from "src/i18n";
+import { Localized, lang } from "src/i18n";
 import { ClickableA } from "src/components/ClickableA";
 import { RouteComponentProps } from "@reach/router";
+
+const root = lang.expenses.billings;
 
 export const DomainsAllocated: React.FC<RouteComponentProps> = (props) => {
 
@@ -14,7 +16,7 @@ export const DomainsAllocated: React.FC<RouteComponentProps> = (props) => {
   return (
     <div>
       <TitleBar spaceBetween={true}>
-        <TitleText>Domain Allocated</TitleText>
+        <TitleText><Localized id={root.domainsAllocated} /></TitleText>
         <ClickableA onClick={refresh}>Refresh</ClickableA>
       </TitleBar>
       <DomainsAllocatedTable refreshToken={token} />

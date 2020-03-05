@@ -19,6 +19,23 @@ export default {
       integer: "请输入整数。",
     },
     components: {
+      billings: {
+        table: {
+          subjectType: {
+            domain: "域",
+            project: "项目",
+            user: "用户",
+          },
+          resources: "资源",
+          amount: "应付",
+          payer: "支付人",
+          nextDue: "下一次结算时间",
+          startTime: "开始时间",
+          endTime: "结束时间",
+          actions: "操作",
+          history: "历史",
+        }
+      },
       resources: {
         modalTitle: "资源",
         resourceType: "资源类型",
@@ -372,6 +389,10 @@ export default {
       projectTransactions: {
         title: "项目交易记录",
         refresh: "刷新",
+      },
+      billings: {
+        domainsAllocated: "各个域当前计费周期",
+        domainHistoryAllocated: "域 {} 历史计费周期"
       },
     },
     header: {

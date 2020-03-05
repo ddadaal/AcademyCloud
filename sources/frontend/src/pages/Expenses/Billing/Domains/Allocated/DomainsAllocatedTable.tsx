@@ -16,7 +16,7 @@ export const DomainsAllocatedTable: React.FC<Props> = ({ refreshToken }) => {
   const { data, isPending } = useAsync({ promiseFn: getDomains, watch: refreshToken });
 
   const processedData = useMemo(() => {
-    return data?.map(x => ({ ...x, subjectLink: `./${x.subjectId}` }))
+    return data?.map(x => ({ ...x, historyLink: `./${x.subjectId}?name=${x.subjectName}` }))
   }, [data])
 
   return (

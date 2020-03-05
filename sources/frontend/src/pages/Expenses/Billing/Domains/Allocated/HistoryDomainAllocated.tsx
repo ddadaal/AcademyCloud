@@ -3,31 +3,42 @@ import { TitleText } from "src/components/pagecomponents/TitleText";
 import { TitleBar } from "src/components/pagecomponents/TitleBar";
 import { DomainsAllocatedTable } from "src/pages/Expenses/Billing/Domains/Allocated/DomainsAllocatedTable";
 import { useRefreshToken } from "src/utils/refreshToken";
-import { Localized } from "src/i18n";
+import { Localized, lang } from "src/i18n";
 import { ClickableA } from "src/components/ClickableA";
 import { RouteComponentProps, navigate, Link } from "@reach/router";
 import { StepBackwardOutlined } from "@ant-design/icons";
 import { HistoryDomainAllocatedTable } from "src/pages/Expenses/Billing/Domains/Allocated/HistoryDomainAllocatedTable";
 import { Button, Divider } from "antd";
+import styled from "styled-components";
 
 type Props = RouteComponentProps<{ domainId: string }>;
 
-export const HistoryDomainAllocated: React.FC<Props> = ({ domainId }) => {
+const FlexBox = styled.div`
+  display: flex;
+`;
+
+const root = lang.expenses.billings;
+
+
+export const HistoryDomainAllocated: React.FC<Props> = ({ domainId, location }) => {
 
   const [token, refresh] = useRefreshToken();
+
+  // just parse the first arg and use it as the name
+  const name = location?.search?.replace?.(/^.*?=/, '');
 
   return (
     <div>
       <TitleBar spaceBetween={true}>
-        <div style={{ display: "flex" }}>
+        <FlexBox>
           <TitleText>
             <Button>
               <Link to=".."><StepBackwardOutlined /></Link>
             </Button>
             <Divider type="vertical" />
-            Domain {domainId} HistoryAllocated
+            <Localized id={root.domainHistoryAllocated} replacements={[name || domainId]}/>
           </TitleText>
-        </div>
+        </FlexBox>
         <ClickableA onClick={refresh}>Refresh</ClickableA>
       </TitleBar>
       <HistoryDomainAllocatedTable domainId={domainId!!} refreshToken={token} />

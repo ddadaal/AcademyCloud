@@ -19,6 +19,23 @@ export default {
       integer: "Please input a valid integer.",
     },
     components: {
+      billings: {
+        table: {
+          subjectType: {
+            domain: "Domain",
+            project: "Project",
+            user: "User",
+          },
+          resources: "Resources",
+          amount: "Payable",
+          payer: "Payer",
+          nextDue: "Next Due",
+          startTime: "StartTime",
+          endTime: "EndTime",
+          actions: "Actions",
+          history: "History",
+        }
+      },
       resources: {
         modalTitle: "Resources",
         resourceType: "Resource Type",
@@ -372,6 +389,10 @@ export default {
       projectTransactions: {
         title: "Project Transactions",
         refresh: "Refresh",
+      },
+      billings: {
+        domainsAllocated: "Domains' Current Billing Cycle",
+        domainHistoryAllocated: "History billing cycles for domain {}"
       },
     },
     header: {
