@@ -27,7 +27,7 @@ export const DomainsAllocated: React.FC<RouteComponentProps> = (props) => {
     <div>
       <TitleBar spaceBetween={true}>
         <TitleText><Localized id={root.domainsAllocated} /></TitleText>
-        <ClickableA onClick={reload}>Refresh</ClickableA>
+        <ClickableA onClick={reload}><Localized id={root.refresh} /></ClickableA>
       </TitleBar>
       <CurrentBillingsTable subjectType="domain" data={processedData} loading={isPending} />
     </div>

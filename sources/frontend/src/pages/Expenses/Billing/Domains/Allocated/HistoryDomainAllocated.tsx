@@ -45,7 +45,7 @@ export const HistoryDomainAllocated: React.FC<Props> = ({ domainId, location }) 
             <Localized id={root.domainHistoryAllocated} replacements={[name || domainId]} />
           </TitleText>
         </FlexBox>
-        <ClickableA onClick={reload}>Refresh</ClickableA>
+        <ClickableA onClick={reload}><Localized id={root.refresh} /></ClickableA>
       </TitleBar>
       <HistoryBillingsTable data={data} loading={isPending} />
     </div>

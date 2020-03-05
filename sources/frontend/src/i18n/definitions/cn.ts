@@ -391,6 +391,7 @@ export default {
         refresh: "刷新",
       },
       billings: {
+        refresh: "刷新",
         domainsAllocated: "各个域当前计费周期",
         domainHistoryAllocated: "域 {} 历史计费周期",
         domainsUsed: "各个域当前使用周期",

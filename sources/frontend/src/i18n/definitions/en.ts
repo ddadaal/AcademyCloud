@@ -391,6 +391,7 @@ export default {
         refresh: "Refresh",
       },
       billings: {
+        refresh: "Refresh",
         domainsAllocated: "Domains' Current Billing Cycle",
         domainHistoryAllocated: "History Billing Cycles for Domain {}",
         domainsUsed: "Domains' Current Usage Cycle",
