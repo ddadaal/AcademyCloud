@@ -14,7 +14,7 @@ interface Props {
 
 const root = lang.components.transactions.account;
 
-const timeSorter = (a: string, b: string) => dayjs(a).isBefore(dayjs(b)) ? -1 : 1;
+const timeSorter = (a: string, b: string) => dayjs(a).isBefore(dayjs(b)) ? 1 : -1;
 
 export const AccountTransactionTable: React.FC<Props> = ({ data, loading = false }) => {
 
