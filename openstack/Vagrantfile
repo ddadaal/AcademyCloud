@@ -41,10 +41,14 @@ Vagrant.configure("2") do |config|
   config.vm.define "controller", primary: true do |controller|
     controller.vm.hostname =  "controller"
     controller.vm.network "private_network", ip: "192.168.56.2"
+
+    # open another public_network with ip 10.0.077 
+    # to allow access from other machines in the same local network
+    controller.vm.network "public_network", ip: "10.0.0.77"
     controller.vm.provider "virtualbox" do |vb|
       vb.name = "openstack_controller"
       vb.cpus = 2
-      vb.memory = 4096
+      vb.memory = 2048
       vb_common_config(vb)
     end
   end
@@ -54,11 +58,10 @@ Vagrant.configure("2") do |config|
     compute1.vm.network "private_network", ip: "192.168.56.3"
     compute1.vm.provider "virtualbox" do |vb|
       vb.name = "openstack_compute1"
-      vb.cpus = 2
-      vb.memory = 4096
+      vb.cpus = 1
+      vb.memory = 1024
       vb_common_config(vb)
     end
-
   end
 
   config.vm.define "block-storage" do |bs|
@@ -67,7 +70,7 @@ Vagrant.configure("2") do |config|
     bs.vm.provider "virtualbox" do |vb|
       vb.name = "openstack_block-storage"
       vb.cpus = 1
-      vb.memory = 2048
+      vb.memory = 1024
       vb_common_config(vb)
 
       # Create and mount storage disk
@@ -80,6 +83,5 @@ Vagrant.configure("2") do |config|
       vb.customize ['storagectl', :id, '--name', 'SATA Controller', '--portcount', '2']
       vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', storage_disk_path]
     end
-  end
-  
+ end
 end
