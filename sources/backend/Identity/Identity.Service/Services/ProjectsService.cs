@@ -56,7 +56,7 @@ namespace AcademyCloud.Identity.Services.Projects
 
         public override async Task<CreateProjectResponse> CreateProject(CreateProjectRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaims.DomainId);
 
@@ -103,7 +103,7 @@ namespace AcademyCloud.Identity.Services.Projects
 
         public override async Task<GetAccessibleProjectsResponse> GetAccessibleProjects(GetAccessibleProjectsRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaims.DomainId);
 

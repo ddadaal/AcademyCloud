@@ -17,10 +17,7 @@ namespace AcademyCloud.Identity.Extensions
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public TokenClaims GetTokenClaims()
-        {
-            return httpContextAccessor.HttpContext.User.ToTokenClaims();
-        }
+        public TokenClaims TokenClaims => httpContextAccessor.HttpContext.User.ToTokenClaims();
     }
 
 }

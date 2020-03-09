@@ -106,8 +106,7 @@ namespace AcademyCloud.Identity.Services.Authentication
         [Authorize]
         public override Task<GetTokenInfoReply> GetTokenInfo(GetTokenInfoRequest request, ServerCallContext context)
         {
-
-            var tokenClaims = context.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             return Task.FromResult(new GetTokenInfoReply()
             {
@@ -125,7 +124,7 @@ namespace AcademyCloud.Identity.Services.Authentication
         [Authorize]
         public override async Task<ChangeScopeReply> ChangeScope(ChangeScopeRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
             var scope = request.Scope;
 
             // find the user

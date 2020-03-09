@@ -31,7 +31,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<GetScopesResponse> GetScopes(GetScopesRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
@@ -41,7 +41,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<ExitDomainResponse> ExitDomain(ExitDomainRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
@@ -65,7 +65,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<GetJoinableDomainsResponse> GetJoinableDomains(GetJoinableDomainsRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
@@ -87,7 +87,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<GetJoinedDomainsResponse> GetJoinedDomains(GetJoinedDomainsRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
             var currentUser = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             var domains = dbContext.UserDomainAssignments
@@ -109,7 +109,7 @@ namespace AcademyCloud.Identity.Services.Account
         public override async Task<GetProfileResponse> GetProfile(GetProfileRequest request, ServerCallContext context)
         {
 
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var currentUser = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
@@ -122,7 +122,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<JoinDomainResponse> JoinDomain(JoinDomainRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
@@ -185,7 +185,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<UpdatePasswordResponse> UpdatePassword(UpdatePasswordRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
@@ -204,7 +204,7 @@ namespace AcademyCloud.Identity.Services.Account
         [Authorize]
         public override async Task<UpdateProfileResponse> UpdateProfile(UpdateProfileRequest request, ServerCallContext context)
         {
-            var tokenClaims = tokenClaimsAccessor.GetTokenClaims();
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 

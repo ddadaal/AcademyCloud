@@ -25,7 +25,7 @@ namespace AcademyCloud.Identity.Services.Users
 
         public override async Task<GetAccessibleUsersResponse> GetAccessibleUsers(GetAccessibleUsersRequest request, ServerCallContext context)
         {
-            var claims = tokenClaimsAccessor.GetTokenClaims();
+            var claims = tokenClaimsAccessor.TokenClaims;
             IEnumerable<User> users;
 
             if (claims.IsSystem)
