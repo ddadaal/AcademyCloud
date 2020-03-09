@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { getApiService } from "src/apis";
-import { OverviewService } from "src/apis/expenses/OverviewService";
+import { BalanceService } from "src/apis/expenses/BalanceService";
 import { useAsync } from "react-async";
 import { Statistic, Spin, Divider } from "antd";
 import { lang, Localized } from "src/i18n";
@@ -17,7 +17,7 @@ const EmptyDivider = styled.div`
 `;
 
 const root = lang.expenses.overview;
-const service = getApiService(OverviewService);
+const service = getApiService(BalanceService);
 
 const getBalance = () => service.getBalance().then((x) => x.balance);
 

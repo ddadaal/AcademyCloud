@@ -8,7 +8,7 @@ export interface ChargeResponse {
   balance: number;
 }
 
-export class OverviewService extends HttpService {
+export class BalanceService extends HttpService {
   async getBalance(): Promise<GetBalanceResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,

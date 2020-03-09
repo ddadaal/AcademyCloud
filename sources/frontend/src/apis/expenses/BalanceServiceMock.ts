@@ -1,6 +1,6 @@
-import { OverviewService, GetBalanceResponse, ChargeResponse } from './OverviewService';
+import { BalanceService, GetBalanceResponse, ChargeResponse } from './BalanceService';
 
-export class OverviewServiceMock extends OverviewService {
+export class BalanceServiceMock extends BalanceService {
   async getBalance(): Promise<GetBalanceResponse> {
     await this.delay();
     return { balance: 500.00 };

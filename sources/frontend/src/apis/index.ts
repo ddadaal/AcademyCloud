@@ -10,8 +10,8 @@ import { UsersService } from "./identity/UsersService";
 import { UsersServiceMock } from "./identity/UsersServiceMock";
 import { ProjectsService } from "src/apis/identity/ProjectsService";
 import { ProjectsServiceMock } from "src/apis/identity/ProjectsServiceMock";
-import { OverviewService } from "src/apis/expenses/OverviewService";
-import { OverviewServiceMock } from "src/apis/expenses/OverviewServiceMock";
+import { BalanceService } from "src/apis/expenses/BalanceService";
+import { BalanceServiceMock } from "src/apis/expenses/BalanceServiceMock";
 import { TransactionsService } from "src/apis/expenses/TransactionsService";
 import { TransactionsServiceMock } from "src/apis/expenses/TransactionsServiceMock";
 import { BillingService } from './expenses/BillingService';
@@ -26,7 +26,7 @@ const services = [
   [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
   [UsersService, USE_MOCK ? UsersServiceMock : UsersService],
   [ProjectsService, USE_MOCK ? ProjectsServiceMock : ProjectsService],
-  [OverviewService, USE_MOCK ? OverviewServiceMock : OverviewService],
+  [BalanceService, USE_MOCK ? BalanceServiceMock : BalanceService],
   [TransactionsService, USE_MOCK ? TransactionsServiceMock : TransactionsService],
   [BillingService, USE_MOCK ? BillingServiceMock : BillingService],
 ] as const;

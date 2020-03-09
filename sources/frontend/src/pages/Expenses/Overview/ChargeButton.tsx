@@ -4,13 +4,13 @@ import { Localized, lang } from "src/i18n";
 import { integer } from "src/utils/validateMessages";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { getApiService } from "src/apis";
-import { OverviewService } from "src/apis/expenses/OverviewService";
+import { BalanceService } from "src/apis/expenses/BalanceService";
 
 const root = lang.expenses.overview;
 
 const opResult = lang.components.operationResult;
 
-const service = getApiService(OverviewService);
+const service = getApiService(BalanceService);
 
 const charge = (amount: number) => service.charge(amount).then((x) => x.balance);
 
