@@ -82,6 +82,8 @@ namespace AcademyCloud.Expenses
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<BalanceService>();
+                endpoints.MapGrpcService<TransactionsService>();
+                endpoints.MapGrpcService<BillingService>();
 
                 endpoints.MapGet("/", async context =>
                 {

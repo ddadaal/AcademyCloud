@@ -34,8 +34,8 @@ export class TransactionsService extends HttpService {
   async getDomainTransactions(domainId: string, limit = 0): Promise<TransactionsResponse<OrgTransaction>> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: "/expenses/transactions/domain",
-      params: { domainId, limit }
+      path: `/expenses/transactions/domain/${domainId}`,
+      params: { limit }
     });
 
     return resp as TransactionsResponse<OrgTransaction>;
@@ -44,8 +44,8 @@ export class TransactionsService extends HttpService {
   async getProjectTransactions(projectId: string, limit = 0): Promise<TransactionsResponse<OrgTransaction>> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: "/expenses/transactions/project",
-      params: { projectId, limit }
+      path: `/expenses/transactions/project/${projectId}`,
+      params: { limit }
     });
 
     return resp as TransactionsResponse<OrgTransaction>;

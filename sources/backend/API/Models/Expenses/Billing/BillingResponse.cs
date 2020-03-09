@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.API.Models.Expenses
+namespace AcademyCloud.API.Models.Expenses.Billing
 {
-    public class ChargeRequest
+    public class BillingResponse<T>
     {
-        public decimal Amount { get; set; }
+        T Billing { get; set; }
     }
 }

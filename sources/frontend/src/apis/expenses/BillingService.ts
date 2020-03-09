@@ -19,7 +19,7 @@ export class BillingService extends HttpService {
   async getCurrentAllocatedBillings(subjectType: BillSubjectType): Promise<CurrentAllocatedBillingResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: `/billings/allocated/current/${subjectType}`,
+      path: `/expenses/billing/allocated/current/${subjectType}`,
     });
 
     return resp as CurrentAllocatedBillingResponse;
@@ -28,7 +28,7 @@ export class BillingService extends HttpService {
   async getCurrentAllocatedBilling(subjectType: BillSubjectType, id: string): Promise<BillingResponse<CurrentAllocatedBilling>> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: `/billings/allocated/current/${subjectType}/${id}`
+      path: `/expenses/billing/allocated/current/${subjectType}/${id}`
     });
 
     return resp as BillingResponse<CurrentAllocatedBilling>;
@@ -37,7 +37,7 @@ export class BillingService extends HttpService {
   async getCurrentUsedBillings(subjectType: BillSubjectType): Promise<CurrentUsedBillingResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: `/billings/used/current/${subjectType}`,
+      path: `/expenses/billing/used/current/${subjectType}`,
     });
 
     return resp as CurrentUsedBillingResponse;
@@ -46,7 +46,7 @@ export class BillingService extends HttpService {
   async getCurrentUsedBilling(subjectType: BillSubjectType, id: string): Promise<BillingResponse<CurrentUsedBilling>> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: `/billings/used/current/${subjectType}/${id}`
+      path: `/expenses/billing/used/current/${subjectType}/${id}`
     });
 
     return resp as BillingResponse<CurrentUsedBilling>;
@@ -55,7 +55,7 @@ export class BillingService extends HttpService {
   async getHistoryAllocatedBillings(subjectType: BillSubjectType, id: string): Promise<HistoryAllocatedBillingsResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: `/billings/allocated/history/${subjectType}/${id}`,
+      path: `/expenses/billing/allocated/history/${subjectType}/${id}`,
     });
 
     return resp as HistoryAllocatedBillingsResponse;
@@ -64,7 +64,7 @@ export class BillingService extends HttpService {
   async getHistoryUsedBillings(subjectType: BillSubjectType, id: string): Promise<HistoryUsedBillingsResponse> {
     const resp = await this.fetch({
       method: HttpMethod.GET,
-      path: `/billings/used/history/${subjectType}/${id}`,
+      path: `/expenses/billing/used/history/${subjectType}/${id}`,
     });
 
     return resp as HistoryUsedBillingsResponse;

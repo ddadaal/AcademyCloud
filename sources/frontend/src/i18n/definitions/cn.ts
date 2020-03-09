@@ -23,12 +23,12 @@ export default {
         refresh: "刷新",
         current: "各个{}当前{}周期",
         history: "{} {} 历史{}周期",
-        allocated: "计费",
-        used: "使用",
+        Allocated: "计费",
+        Used: "使用",
         subjectType: {
-          domain: "域",
-          project: "项目",
-          user: "用户",
+          Domain: "域",
+          Project: "项目",
+          User: "用户",
         },
         table: {
           resources: "资源",

@@ -11,7 +11,7 @@
   <!-- https://chromium.googlesource.com/external/github.com/grpc/grpc/+/HEAD/src/csharp/BUILD-INTEGRATION.md#protobuf-item-metadata-reference-->
   <ItemGroup>
     <Protobuf Include="..\Identity\Protos\*" GrpcServices="Client" ProtoRoot="..\Identity\Protos" OutputDir="$(Protobuf_OutputPath)\Identity" />
-    <Protobuf Include="..\Expenses\Protos\*" GrpcServices="Client" ProtoRoot="..\Expenses\Protos" OutputDir="$(Protobuf_OutputPath)\Expenses"  />
+    <Protobuf Include="..\Expenses\Protos\*" GrpcServices="Client" ProtoRoot="..\Expenses\Protos" OutputDir="$(Protobuf_OutputPath)\Expenses" />
   </ItemGroup>
 
   <ItemGroup>

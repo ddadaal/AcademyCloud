@@ -23,12 +23,12 @@ export default {
         refresh: "Refresh",
         current: "Each {} Current {} Cycle",
         history: "{} {} History {} Cycles",
-        allocated: "Billing",
-        used: "Usage",
+        Allocated: "Billing",
+        Used: "Usage",
         subjectType: {
-          domain: "Domain",
-          project: "Project",
-          user: "User",
+          Domain: "Domain",
+          Project: "Project",
+          User: "User",
         },
         table: {
           resources: "Resources",

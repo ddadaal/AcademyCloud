@@ -14,6 +14,8 @@ using Grpc.Core.Interceptors;
 using Grpc.Core;
 using Microsoft.Extensions.Primitives;
 using AcademyCloud.Expenses.Protos.Balance;
+using AcademyCloud.Expenses.Protos.Transactions;
+using AcademyCloud.Expenses.Protos.Billing;
 
 namespace AcademyCloud.API.Utils
 {
@@ -89,5 +91,15 @@ namespace AcademyCloud.API.Utils
         {
             return new Balance.BalanceClient(await GetInvoker(ExpensesService));
         }
+
+        public async Task<Transactions.TransactionsClient> GetTransactionsClient()
+        {
+            return new Transactions.TransactionsClient(await GetInvoker(ExpensesService));
+        }
+        public async Task<Billing.BillingClient> GetBillingClient()
+        {
+            return new Billing.BillingClient(await GetInvoker(ExpensesService));
+        }
+
     }
 }

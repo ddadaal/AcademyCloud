@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "AcademyCloud.Expenses.Protos.Billing";
+
+package billing;
+
+service Billing {
+   rpc GetCurrentAllocatedBillings (GetCurrentAllocatedBillingsRequest) returns (GetCurrentAllocatedBillingsResponse); 
+   rpc GetCurrentAllocatedBilling (GetCurrentAllocatedBillingRequest) returns (GetCurrentAllocatedBillingResponse);
+   rpc GetCurrentUsedBillings (GetCurrentUsedBillingsRequest) returns (GetCurrentUsedBillingsResponse);
+   rpc GetCurrentUsedBilling (GetCurrentUsedBillingRequest) returns (GetCurrentUsedBillingResponse);
+   rpc GetHistoryAllocatedBillings (GetHistoryAllocatedBillingsRequest) returns (GetHistoryAllocatedBillingsResponse);
+   rpc GetHistoryUsedBillings (GetHistoryUsedBillingsRequest) returns (GetHistoryUsedBillingsResponse);
+}
+
+message Resources {
+  int32 cpu = 1;
+  int32 memory = 2;
+  int32 storage = 3;
+}
+
+enum BillSubjectType {
+  Domain = 0;
+  Project = 1;
+  User = 2;
+}
+
+message CurrentUsedBilling {
+  string subjectId = 1;
+  Resources resources = 2;
+  common.DecimalValue amount = 3;
+  google.protobuf.Timestamp nextDue = 4;
+}
+
+message CurrentAllocatedBilling {
+  string subjectId = 1;
+  Resources resources = 2;
+  common.DecimalValue amount = 3;
+  google.protobuf.Timestamp nextDue = 4;
+  string payerId = 5;
+}
+
+message HistoryUsedBilling {
+  string id = 1;
+  Resources resources = 2;
+  common.DecimalValue amount = 3;
+  google.protobuf.Timestamp startTime = 4;
+  google.protobuf.Timestamp endTime = 5;
+}
+
+message HistoryAllocatedBilling {
+  string id = 1;
+  Resources resources = 2;
+  common.DecimalValue amount = 3;
+  google.protobuf.Timestamp startTime = 4;
+  google.protobuf.Timestamp endTime = 5;
+  string payerId = 6;
+}
+
+message GetCurrentAllocatedBillingsRequest {
+  BillSubjectType subjectType = 1;
+}
+
+message GetCurrentAllocatedBillingsResponse {
+  repeated CurrentAllocatedBilling billings = 1;
+}
+
+message GetCurrentAllocatedBillingRequest {
+  BillSubjectType subjectType = 1;
+  string id = 2;
+}
+
+message GetCurrentAllocatedBillingResponse {
+  CurrentAllocatedBilling billing = 1;
+}
+
+message GetCurrentUsedBillingsRequest {
+  BillSubjectType subjectType = 1; 
+}
+
+message GetCurrentUsedBillingsResponse {
+  repeated CurrentUsedBilling billings = 1; 
+}
+
+message GetCurrentUsedBillingRequest {
+  BillSubjectType subjectType = 1;
+  string id = 2;
+}
+
+message GetCurrentUsedBillingResponse {
+  CurrentUsedBilling billing = 1;  
+}
+
+message GetHistoryAllocatedBillingsRequest {
+  BillSubjectType subjectType = 1;
+  string id = 2;
+}
+
+message GetHistoryAllocatedBillingsResponse {
+  repeated HistoryAllocatedBilling billings = 1;
+}
+
+message GetHistoryUsedBillingsRequest {
+  BillSubjectType subjectType = 1;
+  string id = 2;
+}
+
+message GetHistoryUsedBillingsResponse {
+  repeated HistoryUsedBilling billings = 1;
+}
+

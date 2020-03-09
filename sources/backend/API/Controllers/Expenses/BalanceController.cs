@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AcademyCloud.API.Models.Expenses;
+using AcademyCloud.API.Models.Expenses.Balance;
 using AcademyCloud.API.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

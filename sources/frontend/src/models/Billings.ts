@@ -27,12 +27,12 @@ export interface HistoryAllocatedBilling extends HistoryUsedBilling {
 }
 
 export enum BillType {
-  Allocated= "allocated",
-  Used = "used",
+  Allocated= "Allocated",
+  Used = "Used",
 }
 
 export enum BillSubjectType {
-  domain = "domain",
-  project = "project",
-  user = "user",
+  Domain = "Domain",
+  Project = "Project",
+  User = "User",
 }

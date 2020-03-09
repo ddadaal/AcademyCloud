@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "AcademyCloud.Expenses.Protos.Transactions";
+
+package transactions;
+
+service Transactions {
+    rpc GetAccountTransactions (GetAccountTransactionsRequest) returns (GetAccountTransactionsResponse);
+    rpc GetSystemTransactions (GetSystemTransactionsRequest) returns (GetSystemTransactionsResponse);
+    rpc GetDomainTransactions (GetDomainTransactionsRequest) returns (GetDomainTransactionsResponse);
+    rpc GetProjectTransactions (GetProjectTransactionsRequest) returns (GetProjectTransactionsResponse);
+}
+
+
+message GetAccountTransactionsRequest {
+  int32 limit = 1;
+}
+
+enum TransactionType {
+  Charge = 0;
+  UserManagementFee = 1;
+  DomainManagementFee = 2;
+  ProjectManagementFee = 3;
+  DomainResources = 4;
+  ProjectResources = 5;
+}
+
+
+message TransactionReason {
+  TransactionType type = 1;
+  string info = 2;
+}
+
+message AccountTransaction {
+  string id = 1;
+  google.protobuf.Timestamp time = 2;
+  common.DecimalValue amount = 3;
+  TransactionReason reason = 4; 
+}
+
+message GetAccountTransactionsResponse {
+  repeated AccountTransaction transactions = 1;
+}
+
+message GetSystemTransactionsRequest {
+  int32 limit = 1;
+}
+
+message OrgTransaction {
+  string id = 1;
+  google.protobuf.Timestamp time = 2;
+  common.DecimalValue amount = 3;
+  string payerId = 4;
+  string receiverId = 5;
+  TransactionReason reason = 6;
+}
+
+message GetSystemTransactionsResponse {
+  repeated OrgTransaction transactions = 1;
+}
+
+message GetDomainTransactionsRequest {
+  string domainId = 1;
+  int32 limit = 2;
+}
+
+message GetDomainTransactionsResponse {
+  repeated OrgTransaction transactions = 1;
+}
+
+message GetProjectTransactionsRequest {
+  string domainId = 1;
+  int32 limit = 2;
+}
+
+message GetProjectTransactionsResponse {
+  repeated OrgTransaction transactions = 1;
+}
+
+
+
