@@ -23,7 +23,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; }
         public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; }
 
-        public bool ApplyTransaction(UserTransaction transaction)
+        public void ApplyTransaction(UserTransaction transaction)
         {
             if (transaction.Receiver == this)
             {
@@ -44,8 +44,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
                     Active = false;
                 }
             }
-            return Active;
-
         }
 
         public void ChangeResourecs(Project project, Resources resources)
