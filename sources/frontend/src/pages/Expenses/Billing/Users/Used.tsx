@@ -8,18 +8,18 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getusers = () => service.getCurrentUsedBillings(BillSubjectType.user).then(x => x.billings);
+const getusers = () => service.getCurrentUsedBillings(BillSubjectType.User).then(x => x.billings);
 
 const UsersUsed: React.FC<RouteComponentProps> = () => {
   return (
     <CurrentBillingsPage
-      subjectType={BillSubjectType.user}
+      subjectType={BillSubjectType.User}
       billType={BillType.Used}
       promiseFn={getusers} />
   );
 }
 const getUserHistoryData = async (id: string) => {
-  const resp = await service.getHistoryUsedBillings(BillSubjectType.user, id);
+  const resp = await service.getHistoryUsedBillings(BillSubjectType.User, id);
   return resp.billings;
 };
 
@@ -28,7 +28,7 @@ const HistoryuserUsed: React.FC<RouteComponentProps<{ userId: string }>> = ({ us
     <HistoryBillingsPage
       id={userId!!}
       billType={BillType.Used}
-      subjectType={BillSubjectType.user}
+      subjectType={BillSubjectType.User}
       getData={getUserHistoryData}
       location={location!!}
     />

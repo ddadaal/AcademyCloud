@@ -23,7 +23,7 @@ const root = lang.components.billings.stats;
 
 export const Stats: React.FC<Props> = ({ billType, billSubjectType, id, refreshToken }) => {
 
-  const showPayer = billType === BillType.Allocated && billSubjectType !== BillSubjectType.user;
+  const showPayer = billType === BillType.Allocated && billSubjectType !== BillSubjectType.User;
 
   const promiseFn = useCallback(async () => {
     const resp = billType === BillType.Allocated

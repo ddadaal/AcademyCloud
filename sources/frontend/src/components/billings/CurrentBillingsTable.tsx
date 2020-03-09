@@ -35,7 +35,7 @@ export const CurrentBillingsTable: React.FC<Props> = ({ subjectType, type, data,
         render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.table.amount} />} dataIndex="amount"
         render={(amount: number) => amount.toFixed(2)} />
-      {(type === BillType.Allocated && subjectType !== BillSubjectType.user) ? (
+      {(type === BillType.Allocated && subjectType !== BillSubjectType.User) ? (
         <Table.Column title={<Localized id={root.table.payer} />} dataIndex="payerName"
           render={(_, item: AllocatedDataItem) => <Tooltip overlay={item.payerId}>{item.payerName}</Tooltip>} />
       ) : null}

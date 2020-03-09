@@ -18,14 +18,14 @@ export const DomainAdmin: React.FC<Props> = ({ domainId, domainName }) => {
   return (
     <Section title={(
       <Localized id={root.stats.title} replacements={[
-        <Localized key="subjectType" id={root.subjectType.domain} />,
+        <Localized key="subjectType" id={root.subjectType.Domain} />,
         domainName,
-        <Localized key="billType" id={root.allocated} />,
+        <Localized key="billType" id={root.Allocated} />,
       ]} />
     )} extra={<Link to="../billings/domain/allocated"><Localized id={root2.link} /></Link>}>
       <Stats
         billType={BillType.Allocated}
-        billSubjectType={BillSubjectType.domain}
+        billSubjectType={BillSubjectType.Domain}
         id={domainId}
       />
     </Section>

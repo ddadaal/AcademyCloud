@@ -19,14 +19,14 @@ export const ProjectAdmin: React.FC<Props> = ({ projectId, projectName }) => {
   return (
     <Section title={(
       <Localized id={root.stats.title} replacements={[
-        <Localized key="subjectType" id={root.subjectType.project} />,
+        <Localized key="subjectType" id={root.subjectType.Project} />,
         projectName,
-        <Localized key="billType" id={root.allocated} />,
+        <Localized key="billType" id={root.Allocated} />,
       ]} />
     )} extra={<Link to="../billings/project/allocated"><Localized id={root2.link} /></Link>}>
       <Stats
         billType={BillType.Allocated}
-        billSubjectType={BillSubjectType.project}
+        billSubjectType={BillSubjectType.Project}
         id={projectId}
       />
     </Section>

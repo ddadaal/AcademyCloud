@@ -8,15 +8,15 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getProjects = () => service.getCurrentAllocatedBillings(BillSubjectType.project).then(x => x.billings);
+const getProjects = () => service.getCurrentAllocatedBillings(BillSubjectType.Project).then(x => x.billings);
 
 const ProjectsAllocated: React.FC<RouteComponentProps> = () => {
   return (
-    <CurrentBillingsPage billType={BillType.Allocated} subjectType={BillSubjectType.project} promiseFn={getProjects} />
+    <CurrentBillingsPage billType={BillType.Allocated} subjectType={BillSubjectType.Project} promiseFn={getProjects} />
   );
 }
 
-const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.project, id).then(x => x.billings);
+const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.Project, id).then(x => x.billings);
 
 const HistoryProjectAllocated: React.FC<RouteComponentProps<{ projectId: string }>> = ({ projectId, location }) => {
 
@@ -24,7 +24,7 @@ const HistoryProjectAllocated: React.FC<RouteComponentProps<{ projectId: string 
     <HistoryBillingsPage
       id={projectId!!}
       billType={BillType.Allocated}
-      subjectType={BillSubjectType.project}
+      subjectType={BillSubjectType.Project}
       getData={getData}
       location={location!!}
     />

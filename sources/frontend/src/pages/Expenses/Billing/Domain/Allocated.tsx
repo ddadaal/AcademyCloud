@@ -14,7 +14,7 @@ export const DomainAllocated: React.FC = (props) => {
   return (
     <StatsPage
       billType={BillType.Allocated}
-      billSubjectType={BillSubjectType.domain}
+      billSubjectType={BillSubjectType.Domain}
       id={domainId}
       name={domainName}
     />

@@ -8,26 +8,26 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getUsers = () => service.getCurrentAllocatedBillings(BillSubjectType.user).then(x => x.billings);
+const getUsers = () => service.getCurrentAllocatedBillings(BillSubjectType.User).then(x => x.billings);
 
 const UsersAllocated: React.FC<RouteComponentProps> = () => {
   return (
     <CurrentBillingsPage
       billType={BillType.Allocated}
-      subjectType={BillSubjectType.user}
+      subjectType={BillSubjectType.User}
       promiseFn={getUsers}
     />
   );
 }
 
-const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.user, id).then(x => x.billings);
+const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.User, id).then(x => x.billings);
 
 const HistoryUserAllocated: React.FC<RouteComponentProps<{ userId: string }>> = ({ userId, location }) => {
   return (
     <HistoryBillingsPage
       id={userId!!}
       billType={BillType.Allocated}
-      subjectType={BillSubjectType.user}
+      subjectType={BillSubjectType.User}
       getData={getData}
       location={location!!}
     />

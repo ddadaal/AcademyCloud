@@ -8,24 +8,24 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getProjects = () => service.getCurrentUsedBillings(BillSubjectType.project).then(x => x.billings);
+const getProjects = () => service.getCurrentUsedBillings(BillSubjectType.Project).then(x => x.billings);
 
 const ProjectsUsed: React.FC<RouteComponentProps> = () => {
   return (
     <CurrentBillingsPage
-      subjectType={BillSubjectType.project}
+      subjectType={BillSubjectType.Project}
       billType={BillType.Used}
       promiseFn={getProjects} />
   );
 }
 const getProjectHistoryData = async (id: string) => {
-  const resp = await service.getHistoryUsedBillings(BillSubjectType.project, id);
+  const resp = await service.getHistoryUsedBillings(BillSubjectType.Project, id);
   return resp.billings;
 };
 
 const HistoryProjectUsed: React.FC<RouteComponentProps<{ projectId: string }>> = ({ projectId, location }) => {
   return (
-    <HistoryBillingsPage id={projectId!!} billType={BillType.Used} subjectType={BillSubjectType.project} getData={getProjectHistoryData} location={location!!} />
+    <HistoryBillingsPage id={projectId!!} billType={BillType.Used} subjectType={BillSubjectType.Project} getData={getProjectHistoryData} location={location!!} />
   );
 }
 
