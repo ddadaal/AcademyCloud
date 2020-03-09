@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Grpc.Core.Interceptors;
 using Grpc.Core;
 using Microsoft.Extensions.Primitives;
+using AcademyCloud.Expenses.Protos.Balance;
 
 namespace AcademyCloud.API.Utils
 {
@@ -58,27 +59,35 @@ namespace AcademyCloud.API.Utils
 
         }
 
+        const string IdentityService = "identityservice";
+        const string ExpensesService = "expensesservice";
+
         public async Task<Authentication.AuthenticationClient> GetAuthenticationClientAsync()
         {
-            return new Authentication.AuthenticationClient(await GetInvoker("identityservice"));
+            return new Authentication.AuthenticationClient(await GetInvoker(IdentityService));
         }
 
         public async Task<Account.AccountClient> GetAccountClientAsync()
         {
-            return new Account.AccountClient(await GetInvoker("identityservice"));
+            return new Account.AccountClient(await GetInvoker(IdentityService));
         }
 
         public async Task<Domains.DomainsClient> GetDomainsClientAsync()
         {
-            return new Domains.DomainsClient(await GetInvoker("identityservice"));
+            return new Domains.DomainsClient(await GetInvoker(IdentityService));
         }
         public async Task<Projects.ProjectsClient> GetProjectsClientAsync()
         {
-            return new Projects.ProjectsClient(await GetInvoker("identityservice"));
+            return new Projects.ProjectsClient(await GetInvoker(IdentityService));
         }
         public async Task<Users.UsersClient> GetUsersClientAsync()
         {
-            return new Users.UsersClient(await GetInvoker("identityservice"));
+            return new Users.UsersClient(await GetInvoker(IdentityService));
+        }
+
+        public async Task<Balance.BalanceClient> GetBalanceClient()
+        {
+            return new Balance.BalanceClient(await GetInvoker(ExpensesService));
         }
     }
 }
