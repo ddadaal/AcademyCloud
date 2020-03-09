@@ -28,7 +28,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
 
             var resp = await (await factory.GetProjectsClientAsync())
-                .GetAccessibleProjectsAsync(new AcademyCloud.Identity.Services.Projects.GetAccessibleProjectsRequest
+                .GetAccessibleProjectsAsync(new AcademyCloud.Identity.Protos.Projects.GetAccessibleProjectsRequest
                 {
 
                 });
@@ -52,7 +52,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<GetUsersOfProjectResponse> GetUsersOfProject([FromRoute] string projectId)
         {
             var resp = await (await factory.GetProjectsClientAsync())
-                .GetUsersOfProjectAsync(new AcademyCloud.Identity.Services.Projects.GetUsersOfProjectRequest
+                .GetUsersOfProjectAsync(new AcademyCloud.Identity.Protos.Projects.GetUsersOfProjectRequest
                 {
                     ProjectId = projectId
                 });
@@ -79,11 +79,11 @@ namespace AcademyCloud.API.Controllers.Identity
 
             // TODO request to expenses
             var resp = await (await factory.GetProjectsClientAsync())
-                .AddUserToProjectAsync(new AcademyCloud.Identity.Services.Projects.AddUserToProjectRequest
+                .AddUserToProjectAsync(new AcademyCloud.Identity.Protos.Projects.AddUserToProjectRequest
                 {
                     ProjectId = projectId,
                     UserId = request.UserId,
-                    Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
+                    Role = (AcademyCloud.Identity.Protos.Common.UserRole)request.Role,
                 });
 
             return NoContent();
@@ -93,11 +93,11 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> ChangeUserRole([FromRoute] string projectId, [FromRoute] string userId, [FromBody] ChangeUserRoleRequest request)
         {
             var resp1 = await (await factory.GetProjectsClientAsync())
-                .ChangeUserRoleAsync(new AcademyCloud.Identity.Services.Projects.ChangeUserRoleRequest
+                .ChangeUserRoleAsync(new AcademyCloud.Identity.Protos.Projects.ChangeUserRoleRequest
                 {
                     ProjectId = projectId,
                     UserId = userId,
-                    Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
+                    Role = (AcademyCloud.Identity.Protos.Common.UserRole)request.Role,
                 });
 
             return NoContent();
@@ -108,7 +108,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // TODO request to expenses
             var resp1 = await (await factory.GetProjectsClientAsync())
-                .RemoveUserFromProjectAsync(new AcademyCloud.Identity.Services.Projects.RemoveUserFromProjectRequest
+                .RemoveUserFromProjectAsync(new AcademyCloud.Identity.Protos.Projects.RemoveUserFromProjectRequest
                 {
                     ProjectId = projectId,
                     UserId = userId,
@@ -129,7 +129,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> CreateProject([FromBody] CreateProjectRequest request)
         {
             var res = await (await factory.GetProjectsClientAsync())
-                .CreateProjectAsync(new AcademyCloud.Identity.Services.Projects.CreateProjectRequest
+                .CreateProjectAsync(new AcademyCloud.Identity.Protos.Projects.CreateProjectRequest
                 {
                     Name = request.Name,
                     AdminId = request.PayUserId,
@@ -142,7 +142,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> DeleteProject([FromRoute] string projectId)
         {
             var resp = await (await factory.GetProjectsClientAsync())
-                .DeleteProjectAsync(new AcademyCloud.Identity.Services.Projects.DeleteProjectRequest
+                .DeleteProjectAsync(new AcademyCloud.Identity.Protos.Projects.DeleteProjectRequest
                 {
                     ProjectId = projectId
                 });

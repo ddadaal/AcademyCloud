@@ -1,10 +1,12 @@
-﻿using AcademyCloud.Identity.Domains.ValueObjects;
-using AcademyCloud.Identity.Services.Projects;
+﻿using AcademyCloud.Identity.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Projects;
+using AcademyCloud.Identity.Protos;
+using AcademyCloud.Identity.Services;
 using Xunit;
 using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 
@@ -29,7 +31,7 @@ namespace AcademyCloud.Identity.Test
             {
                 UserId = fgh.Id.ToString(),
                 ProjectId = lqproject.Id.ToString(),
-                Role = Services.Common.UserRole.Admin,
+                Role = Protos.Common.UserRole.Admin,
             }, TestContext);
 
             Assert.Equal(2, lqproject.Users.Count(x => x.Role == UserRole.Admin));
@@ -46,7 +48,7 @@ namespace AcademyCloud.Identity.Test
             {
                 UserId = cjd.Id.ToString(),
                 ProjectId = lqproject.Id.ToString(),
-                Role = Services.Common.UserRole.Admin,
+                Role = Protos.Common.UserRole.Admin,
             }, TestContext);
 
             Assert.Equal(2, lqproject.Users.Count(x => x.Role == UserRole.Admin));

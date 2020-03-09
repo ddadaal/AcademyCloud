@@ -1,7 +1,6 @@
 ﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
-using AcademyCloud.Identity.Domains.ValueObjects;
-using AcademyCloud.Identity.Services.Domains;
+using AcademyCloud.Identity.Domain.Entities;
+using AcademyCloud.Identity.Domain.ValueObjects;
 using AcademyCloud.Identity.Test.Helpers;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +15,8 @@ namespace AcademyCloud.Identity.Test
     {
         protected IdentityDbContext db;
 
-        public Domain nju = new Domain(Guid.NewGuid(), "NJU");
-        public Domain pku = new Domain(Guid.NewGuid(), "PKU");
+        public Domain.Entities.Domain nju = new Domain.Entities.Domain(Guid.NewGuid(), "NJU");
+        public Domain.Entities.Domain pku = new Domain.Entities.Domain(Guid.NewGuid(), "PKU");
         public User cjd = new User(Guid.NewGuid(), "cjd", "cjd", "cjd", "cjd@ac.com", false);
         public User cjy = new User(Guid.NewGuid(), "cjy", "cjy", "cjy", "cjy@ac.com", false);
         public User lq = new User(Guid.NewGuid(), "67", "67", "67", "67@ac.com", false);

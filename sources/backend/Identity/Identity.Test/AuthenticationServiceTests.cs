@@ -1,6 +1,5 @@
 using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Services;
-using AcademyCloud.Identity.Services.Authentication;
 using AcademyCloud.Identity.Test.Helpers;
 using AcademyCloud.Shared;
 using Grpc.Core;
@@ -8,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Authentication;
 using Xunit;
 using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 

@@ -1,12 +1,13 @@
 ﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
-using AcademyCloud.Identity.Domains.ValueObjects;
-using AcademyCloud.Identity.Services.Account;
+using AcademyCloud.Identity.Domain.Entities;
+using AcademyCloud.Identity.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Account;
+using AcademyCloud.Identity.Services;
 using Xunit;
 using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 

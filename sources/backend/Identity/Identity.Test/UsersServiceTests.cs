@@ -1,9 +1,10 @@
-﻿using AcademyCloud.Identity.Services.Users;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Users;
+using AcademyCloud.Identity.Services;
 using Xunit;
 using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
 

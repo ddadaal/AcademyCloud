@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AcademyCloud.Identity.Services.Authentication;
+using AcademyCloud.Identity.Protos.Authentication;
 
 namespace AcademyCloud.API.Models
 {

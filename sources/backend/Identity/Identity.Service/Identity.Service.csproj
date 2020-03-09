@@ -7,7 +7,7 @@
     <DockerfileContext>..\..</DockerfileContext>
     <RootNamespace>AcademyCloud.Identity</RootNamespace>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-    <nullable>Enable</nullable>
+    <nullable>enable</nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domains\Services\" />
+    <Folder Include="Domain\Services\" />
   </ItemGroup>
 
 </Project>

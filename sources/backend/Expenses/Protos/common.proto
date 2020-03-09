@@ -1,9 +1,10 @@
 // Adapted from https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 syntax = "proto3";
 
-package common;
 
 option csharp_namespace = "AcademyCloud.Expenses.Protos.Common";
+
+package common;
 
 // Name "DecimalValue" prevents conflict with C# Decimal type
 message DecimalValue {

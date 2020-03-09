@@ -1,19 +1,19 @@
-﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using AcademyCloud.Identity.Data;
+using AcademyCloud.Identity.Domain.Entities;
 using AcademyCloud.Identity.Exceptions;
 using AcademyCloud.Identity.Extensions;
-using AcademyCloud.Identity.Services.Domains;
+using AcademyCloud.Identity.Protos.Domains;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Services.Domains
+namespace AcademyCloud.Identity.Services
 {
     [Authorize]
-    public class DomainsService : Domains.DomainsBase
+    public class DomainsService : Protos.Domains.Domains.DomainsBase
     {
         private readonly IdentityDbContext dbContext;
 
@@ -27,7 +27,7 @@ namespace AcademyCloud.Identity.Services.Domains
             var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
 
-            var assignment = new UserDomainAssignment(Guid.NewGuid(), user, domain, (Identity.Domains.ValueObjects.UserRole)request.Role);
+            var assignment = new UserDomainAssignment(Guid.NewGuid(), user, domain, (Domain.ValueObjects.UserRole)request.Role);
 
             dbContext.UserDomainAssignments.Add(assignment);
 
@@ -45,7 +45,7 @@ namespace AcademyCloud.Identity.Services.Domains
                 .FirstOrDefaultAsync(x => x.User == user && x.Domain == domain)
                 ?? throw EntityNotFoundException.Create<UserDomainAssignment>($"UserId {request.UserId} and DomainId {request.DomainId}");
 
-            assignment.Role = (Identity.Domains.ValueObjects.UserRole)request.Role;
+            assignment.Role = (Domain.ValueObjects.UserRole)request.Role;
 
             await dbContext.SaveChangesAsync();
 
@@ -55,10 +55,10 @@ namespace AcademyCloud.Identity.Services.Domains
         public override async Task<CreateDomainResponse> CreateDomain(CreateDomainRequest request, ServerCallContext context)
         {
             var payUser = await dbContext.Users.FindIfNullThrowAsync(request.AdminId);
-            var domain = new Domain(Guid.NewGuid(), request.Name);
+            var domain = new Domain.Entities.Domain(Guid.NewGuid(), request.Name);
             dbContext.Domains.Add(domain);
 
-            var adminAssignment = new UserDomainAssignment(Guid.NewGuid(), payUser, domain, Identity.Domains.ValueObjects.UserRole.Admin);
+            var adminAssignment = new UserDomainAssignment(Guid.NewGuid(), payUser, domain, Identity.Domain.ValueObjects.UserRole.Admin);
             dbContext.UserDomainAssignments.Add(adminAssignment);
 
             await dbContext.SaveChangesAsync();
@@ -83,13 +83,13 @@ namespace AcademyCloud.Identity.Services.Domains
             // load the user domain assignments values first
             var domains = dbContext.Domains.Include(x => x.Users).AsEnumerable();
 
-            var grpcDomains = domains.Select(x => new Common.Domain
+            var grpcDomains = domains.Select(x => new Protos.Common.Domain
             {
                 Id = x.Id.ToString(),
                 Name = x.Name,
                 Admins = {
                     x.Users
-                        .Where(u => u.Role == Identity.Domains.ValueObjects.UserRole.Admin)
+                        .Where(u => u.Role == Identity.Domain.ValueObjects.UserRole.Admin)
                         // explicitly load the user value
                         .Select(x => LoadUser(x).ToGrpcUser())
                 }
@@ -101,7 +101,7 @@ namespace AcademyCloud.Identity.Services.Domains
             };
         }
 
-        private User LoadUser(UserDomainAssignment assignment)
+        private Domain.Entities.User LoadUser(UserDomainAssignment assignment)
         {
             dbContext.Entry(assignment).Reference(x => x.User).Load();
             return assignment.User;
@@ -115,8 +115,8 @@ namespace AcademyCloud.Identity.Services.Domains
             dbContext.Entry(domain).Collection(x => x.Users).Load();
 
             // filter admins and members
-            var admins = domain.Users.Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Admin);
-            var members = domain.Users.Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Member);
+            var admins = domain.Users.Where(x => x.Role == Domain.ValueObjects.UserRole.Admin);
+            var members = domain.Users.Where(x => x.Role == Domain.ValueObjects.UserRole.Member);
 
             // explicitly load there users
             return new GetUsersOfDomainResponse
@@ -159,7 +159,7 @@ namespace AcademyCloud.Identity.Services.Domains
             // 1. Set all roles to members
             await assignments.ForEachAsync(x =>
             {
-                x.Role = Identity.Domains.ValueObjects.UserRole.Member;
+                x.Role = Domain.ValueObjects.UserRole.Member;
             });
 
             // 2. Set the admins to admin. If not in the domain, add them into the admin
@@ -170,11 +170,11 @@ namespace AcademyCloud.Identity.Services.Domains
 
                 if (userAssignment != null)
                 {
-                    userAssignment.Role = Identity.Domains.ValueObjects.UserRole.Admin;
+                    userAssignment.Role = Domain.ValueObjects.UserRole.Admin;
                 }
                 else
                 {
-                    var assignment = new UserDomainAssignment(Guid.NewGuid(), user, domain, Identity.Domains.ValueObjects.UserRole.Admin);
+                    var assignment = new UserDomainAssignment(Guid.NewGuid(), user, domain, Domain.ValueObjects.UserRole.Admin);
                     dbContext.UserDomainAssignments.Add(assignment);
                 }
             }

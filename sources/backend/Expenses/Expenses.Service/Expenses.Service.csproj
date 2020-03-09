@@ -5,7 +5,7 @@
     <UserSecretsId>090293a9-b8dd-477b-92d8-73766d9b3ab0</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
-    <nullable>Enable</nullable>
+    <nullable>enable</nullable>
     <RootNamespace>AcademyCloud.Expenses</RootNamespace>
     <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>

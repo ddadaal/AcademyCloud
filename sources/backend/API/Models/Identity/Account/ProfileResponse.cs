@@ -1,5 +1,5 @@
-﻿using AcademyCloud.Identity.Services;
-using AcademyCloud.Identity.Services.Account;
+﻿using AcademyCloud.Identity.Protos;
+using AcademyCloud.Identity.Protos.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;

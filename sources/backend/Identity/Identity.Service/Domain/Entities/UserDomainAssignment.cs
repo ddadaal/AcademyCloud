@@ -1,10 +1,10 @@
-﻿using AcademyCloud.Identity.Domains.ValueObjects;
+﻿using AcademyCloud.Identity.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Domains.Entities
+namespace AcademyCloud.Identity.Domain.Entities
 {
     public class UserDomainAssignment
     {

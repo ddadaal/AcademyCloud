@@ -1,9 +1,7 @@
-﻿using AcademyCloud.Identity.Domains.Entities;
+﻿using AcademyCloud.Identity.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DomainEntity = AcademyCloud.Identity.Domain.Entities.Domain;
 
 namespace AcademyCloud.Identity.Data
 {
@@ -23,7 +21,7 @@ namespace AcademyCloud.Identity.Data
 
         public DbSet<Project> Projects { get; set; }
 
-        public DbSet<Domain> Domains { get; set; }
+        public DbSet<DomainEntity> Domains { get; set; }
 
         public DbSet<UserDomainAssignment> UserDomainAssignments { get; set; }
 
@@ -31,14 +29,14 @@ namespace AcademyCloud.Identity.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var socialDomain = new Domain(SocialDomainId, "Social");
+            var socialDomain = new DomainEntity(SocialDomainId, "Social");
             var socialDomainAdmin = new User(SocialDomainAdminId, "socialadmin", "Social Admin", "123", "socialadmin@ac.com", false);
 
             modelBuilder.Entity<UserDomainAssignment>()
-                .HasData(new { Id = Guid.NewGuid(), UserId = SocialDomainAdminId, DomainId = SocialDomainId, Role = Identity.Domains.ValueObjects.UserRole.Admin });
+                .HasData(new { Id = Guid.NewGuid(), UserId = SocialDomainAdminId, DomainId = SocialDomainId, Role = Identity.Domain.ValueObjects.UserRole.Admin });
 
             // initial social domain
-            modelBuilder.Entity<Domain>()
+            modelBuilder.Entity<DomainEntity>()
                 .HasData(socialDomain);
 
             // initial the social domain admin
@@ -51,7 +49,7 @@ namespace AcademyCloud.Identity.Data
                 .HasData(new User(SystemUserId, "system", "system1", "system", "system@ac.com", true));
 
             // domain name uniqueness
-            modelBuilder.Entity<Domain>()
+            modelBuilder.Entity<DomainEntity>()
                 .HasIndex(x => x.Name)
                 .IsUnique();
 

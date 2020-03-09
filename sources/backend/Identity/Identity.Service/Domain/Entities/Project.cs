@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Domains.Entities
+namespace AcademyCloud.Identity.Domain.Entities
 {
     public class Project
     {

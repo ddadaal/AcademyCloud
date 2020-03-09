@@ -1,18 +1,17 @@
-﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
-using AcademyCloud.Identity.Exceptions;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using AcademyCloud.Identity.Data;
+using AcademyCloud.Identity.Domain.Entities;
 using AcademyCloud.Identity.Extensions;
-using AcademyCloud.Identity.Services.Authentication;
+using AcademyCloud.Identity.Protos.Account;
+using AcademyCloud.Identity.Protos.Authentication;
 using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Services.Account
+namespace AcademyCloud.Identity.Services
 {
     public class AccountService : Account.AccountBase
     {
@@ -29,7 +28,7 @@ namespace AcademyCloud.Identity.Services.Account
         }
 
         [Authorize]
-        public override async Task<GetScopesResponse> GetScopes(GetScopesRequest request, ServerCallContext context)
+        public override async Task<GetScopesResponse> GetScopes(Protos.Account.GetScopesRequest request, ServerCallContext context)
         {
             var tokenClaims = tokenClaimsAccessor.TokenClaims;
 
@@ -92,11 +91,11 @@ namespace AcademyCloud.Identity.Services.Account
 
             var domains = dbContext.UserDomainAssignments
                 .Where(x => x.User == currentUser)
-                .Select(x => new UserDomainAssignment()
+                .Select(x => new Protos.Account.UserDomainAssignment()
                 {
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
-                    Role = (Common.UserRole)x.Role,
+                    Role = (Protos.Common.UserRole)x.Role,
                 });
 
             return new GetJoinedDomainsResponse()
@@ -128,7 +127,7 @@ namespace AcademyCloud.Identity.Services.Account
 
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.DomainId);
 
-            var assignment = new Identity.Domains.Entities.UserDomainAssignment(Guid.NewGuid(), user, domain, Identity.Domains.ValueObjects.UserRole.Member);
+            var assignment = new Identity.Domain.Entities.UserDomainAssignment(Guid.NewGuid(), user, domain, Domain.ValueObjects.UserRole.Member);
 
             dbContext.UserDomainAssignments.Add(assignment);
 
@@ -150,11 +149,11 @@ namespace AcademyCloud.Identity.Services.Account
             dbContext.Projects.Add(newProject);
 
             // Assign the user into the project and grant admin role
-            var projectAssignment = new UserProjectAssignment(Guid.NewGuid(), newUser, newProject, Identity.Domains.ValueObjects.UserRole.Admin);
+            var projectAssignment = new UserProjectAssignment(Guid.NewGuid(), newUser, newProject, Identity.Domain.ValueObjects.UserRole.Admin);
             dbContext.UserProjectAssignments.Add(projectAssignment);
 
             // Assign the user into the social domain and grant member role
-            var domainAssignment = new Identity.Domains.Entities.UserDomainAssignment(Guid.NewGuid(), newUser, socialDomain, Identity.Domains.ValueObjects.UserRole.Member);
+            var domainAssignment = new Identity.Domain.Entities.UserDomainAssignment(Guid.NewGuid(), newUser, socialDomain, Identity.Domain.ValueObjects.UserRole.Member);
             dbContext.UserDomainAssignments.Add(domainAssignment);
 
             // Save changes
@@ -166,7 +165,7 @@ namespace AcademyCloud.Identity.Services.Account
             var scope = new Scope()
             {
                 System = false,
-                Role = Common.UserRole.Admin,
+                Role = Protos.Common.UserRole.Admin,
                 DomainId = socialDomainId.ToString(),
                 DomainName = socialDomain.Name,
                 ProjectId = newProject.Id.ToString(),

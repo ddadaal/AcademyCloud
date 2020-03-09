@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Identity.Domains.ValueObjects
+namespace AcademyCloud.Identity.Domain.ValueObjects
 {
     public enum UserRole
     {

@@ -4,16 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AcademyCloud.Identity.Services;
+using AcademyCloud.Identity.Protos.Account;
+using AcademyCloud.Identity.Protos.Authentication;
+using AcademyCloud.Identity.Protos.Domains;
+using AcademyCloud.Identity.Protos.Projects;
+using AcademyCloud.Identity.Protos.Users;
 using Microsoft.AspNetCore.Http;
 using Grpc.Core.Interceptors;
 using Grpc.Core;
 using Microsoft.Extensions.Primitives;
-using AcademyCloud.Identity.Services.Authentication;
-using AcademyCloud.Identity.Services.Account;
-using AcademyCloud.Identity.Services.Domains;
-using AcademyCloud.Identity.Services.Projects;
-using AcademyCloud.Identity.Services.Users;
 
 namespace AcademyCloud.API.Utils
 {

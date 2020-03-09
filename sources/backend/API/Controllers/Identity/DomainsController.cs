@@ -30,7 +30,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<GetDomainsResponse>> GetDomains()
         {
             var resp = await (await factory.GetDomainsClientAsync())
-                .GetDomainsAsync(new AcademyCloud.Identity.Services.Domains.GetDomainsRequest
+                .GetDomainsAsync(new AcademyCloud.Identity.Protos.Domains.GetDomainsRequest
                 {
 
                 });
@@ -53,7 +53,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<GetUsersOfDomainResponse>> GetUsersOfDomain([FromRoute] string domainId)
         {
             var resp = await (await factory.GetDomainsClientAsync())
-                .GetUsersOfDomainAsync(new AcademyCloud.Identity.Services.Domains.GetUsersOfDomainRequest
+                .GetUsersOfDomainAsync(new AcademyCloud.Identity.Protos.Domains.GetUsersOfDomainRequest
                 {
                     DomainId = domainId
                 });
@@ -72,11 +72,11 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // Add in the expenses
             var resp = await (await factory.GetDomainsClientAsync())
-                .AddUserToDomainAsync(new AcademyCloud.Identity.Services.Domains.AddUserToDomainRequest
+                .AddUserToDomainAsync(new AcademyCloud.Identity.Protos.Domains.AddUserToDomainRequest
                 {
                     DomainId = domainId,
                     UserId = request.UserId,
-                    Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
+                    Role = (AcademyCloud.Identity.Protos.Common.UserRole)request.Role,
                 });
 
             // TODO add user to domain in expenses
@@ -87,11 +87,11 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> ChangeUserRole([FromRoute] string domainId, [FromRoute] string userId, [FromBody] ChangeUserRoleRequest request)
         {
             var resp = await (await factory.GetDomainsClientAsync())
-                .ChangeUserRoleAsync(new AcademyCloud.Identity.Services.Domains.ChangeUserRoleRequest
+                .ChangeUserRoleAsync(new AcademyCloud.Identity.Protos.Domains.ChangeUserRoleRequest
                 {
                     DomainId = domainId,
                     UserId = userId,
-                    Role = (AcademyCloud.Identity.Services.Common.UserRole)request.Role,
+                    Role = (AcademyCloud.Identity.Protos.Common.UserRole)request.Role,
                 });
 
             return NoContent();
@@ -109,7 +109,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> SetAdmins([FromRoute] string domainId, [FromBody] SetAdminsRequest request)
         {
             var resp = await (await factory.GetDomainsClientAsync())
-                .SetAdminsAsync(new AcademyCloud.Identity.Services.Domains.SetAdminsRequest
+                .SetAdminsAsync(new AcademyCloud.Identity.Protos.Domains.SetAdminsRequest
                 {
                     DomainId = domainId,
                     AdminIds = { request.Ids },
@@ -130,7 +130,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // TODO set the pay user in the expenses
             var resp = await (await factory.GetDomainsClientAsync())
-                .CreateDomainAsync(new AcademyCloud.Identity.Services.Domains.CreateDomainRequest
+                .CreateDomainAsync(new AcademyCloud.Identity.Protos.Domains.CreateDomainRequest
                 {
                     Name = request.Name,
                     AdminId = request.PayUserId,
@@ -144,7 +144,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // TODO delete in the expenses
             var resp = await (await factory.GetDomainsClientAsync())
-                .DeleteDomainAsync(new AcademyCloud.Identity.Services.Domains.DeleteDomainRequest
+                .DeleteDomainAsync(new AcademyCloud.Identity.Protos.Domains.DeleteDomainRequest
                 {
                     DomainId = domainId,
                 });
@@ -157,7 +157,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // TODO delete in the expenses
             var resp = await (await factory.GetDomainsClientAsync())
-                .RemoveUserFromDomainAsync(new AcademyCloud.Identity.Services.Domains.RemoveUserFromDomainRequest
+                .RemoveUserFromDomainAsync(new AcademyCloud.Identity.Protos.Domains.RemoveUserFromDomainRequest
                 {
                     DomainId = domainId,
                     UserId = userId,

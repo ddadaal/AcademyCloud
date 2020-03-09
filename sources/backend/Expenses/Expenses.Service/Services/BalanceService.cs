@@ -7,7 +7,7 @@ using Grpc.Core;
 
 namespace AcademyCloud.Expenses.Services
 {
-    public class BalanceService: Balance.BalanceBase
+    public class BalanceService : Balance.BalanceBase
     {
         public override async Task<GetBalanceResponse> GetBalance(GetBalanceRequest request, ServerCallContext context)
         {

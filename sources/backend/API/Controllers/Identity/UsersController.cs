@@ -28,7 +28,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // Request to expenses
             var resp = await (await factory.GetUsersClientAsync())
-                .GetAccessibleUsersAsync(new AcademyCloud.Identity.Services.Users.GetAccessibleUsersRequest
+                .GetAccessibleUsersAsync(new AcademyCloud.Identity.Protos.Users.GetAccessibleUsersRequest
                 {
 
                 });
@@ -44,7 +44,7 @@ namespace AcademyCloud.API.Controllers.Identity
         {
             // TODO request to expenses
             var resp = await (await factory.GetUsersClientAsync())
-                .RemoveUserFromSystemAsync(new AcademyCloud.Identity.Services.Users.RemoveUserFromSystemRequest
+                .RemoveUserFromSystemAsync(new AcademyCloud.Identity.Protos.Users.RemoveUserFromSystemRequest
                 {
                     UserId = userId
                 });

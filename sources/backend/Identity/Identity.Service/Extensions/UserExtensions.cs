@@ -1,10 +1,10 @@
 ﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
-using AcademyCloud.Identity.Services.Authentication;
+using AcademyCloud.Identity.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Authentication;
 
 namespace AcademyCloud.Identity.Extensions
 {
@@ -22,7 +22,7 @@ namespace AcademyCloud.Identity.Extensions
                         System = true,
                         DomainId = Guid.Empty.ToString(),
                         DomainName = "System",
-                        Role = Services.Common.UserRole.Admin
+                        Role = Protos.Common.UserRole.Admin
                     }
                 };
             }
@@ -36,7 +36,7 @@ namespace AcademyCloud.Identity.Extensions
                 DomainName = x.Project.Domain.Name,
                 ProjectId = x.Project.Id.ToString(),
                 ProjectName = x.Project.Name,
-                Role = (Services.Common.UserRole)x.Role,
+                Role = (Protos.Common.UserRole)x.Role,
             }).ToList();
 
             // load 
@@ -44,7 +44,7 @@ namespace AcademyCloud.Identity.Extensions
             // add domains that are either admin, or not the domain of a project scopes.
             scopes.AddRange(user.Domains.AsEnumerable()
                 .Where(x =>
-                    x.Role == Domains.ValueObjects.UserRole.Admin ||
+                    x.Role == Domain.ValueObjects.UserRole.Admin ||
                     !scopes.Exists(project => project.DomainId == x.Domain.Id.ToString())
                 )
                 .Select(x => new Scope()
@@ -53,7 +53,7 @@ namespace AcademyCloud.Identity.Extensions
                     Social = x.Domain.Id == IdentityDbContext.SocialDomainId,
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
-                    Role = (Services.Common.UserRole)x.Role,
+                    Role = (Protos.Common.UserRole)x.Role,
                 }));
 
             return scopes;
@@ -61,9 +61,9 @@ namespace AcademyCloud.Identity.Extensions
 
         }
 
-        public static Services.Common.User ToGrpcUser(this User user)
+        public static Protos.Common.User ToGrpcUser(this User user)
         {
-            return new Services.Common.User
+            return new Protos.Common.User
             {
                 Id = user.Id.ToString(),
                 Name = user.Name,

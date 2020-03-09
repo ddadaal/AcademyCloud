@@ -36,9 +36,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{4164EA
 		Expenses\Protos\common.proto = Expenses\Protos\common.proto
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Service", "Expenses\Expenses.Service\Expenses.Service.csproj", "{37235BC0-3B2B-4AC0-9D75-6A00088FBDF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expenses.Service", "Expenses\Expenses.Service\Expenses.Service.csproj", "{37235BC0-3B2B-4AC0-9D75-6A00088FBDF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Test", "Expenses\Expenses.Test\Expenses.Test.csproj", "{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expenses.Test", "Expenses\Expenses.Test\Expenses.Test.csproj", "{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

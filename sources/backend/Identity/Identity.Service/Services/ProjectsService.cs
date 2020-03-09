@@ -1,5 +1,5 @@
 ﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
+using AcademyCloud.Identity.Domain.Entities;
 using AcademyCloud.Identity.Exceptions;
 using AcademyCloud.Identity.Extensions;
 using Grpc.Core;
@@ -9,8 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Projects;
 
-namespace AcademyCloud.Identity.Services.Projects
+namespace AcademyCloud.Identity.Services
 {
     [Authorize]
     public class ProjectsService : Projects.ProjectsBase
@@ -29,7 +30,7 @@ namespace AcademyCloud.Identity.Services.Projects
             var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
             var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
 
-            var assignment = new UserProjectAssignment(Guid.NewGuid(), user, project, (Identity.Domains.ValueObjects.UserRole)request.Role);
+            var assignment = new UserProjectAssignment(Guid.NewGuid(), user, project, (Domain.ValueObjects.UserRole)request.Role);
 
             dbContext.UserProjectAssignments.Add(assignment);
 
@@ -47,7 +48,7 @@ namespace AcademyCloud.Identity.Services.Projects
                 .FirstOrDefaultAsync(x => x.User == user && x.Project == project)
                 ?? throw EntityNotFoundException.Create<UserProjectAssignment>($"UserId {request.UserId} and ProjectId {request.ProjectId}");
 
-            assignment.Role = (Identity.Domains.ValueObjects.UserRole)request.Role;
+            assignment.Role = (Domain.ValueObjects.UserRole)request.Role;
 
             await dbContext.SaveChangesAsync();
 
@@ -64,7 +65,7 @@ namespace AcademyCloud.Identity.Services.Projects
             var project = new Project(Guid.NewGuid(), request.Name, domain);
             dbContext.Projects.Add(project);
 
-            var adminAssignment = new UserProjectAssignment(Guid.NewGuid(), payUser, project, Identity.Domains.ValueObjects.UserRole.Admin);
+            var adminAssignment = new UserProjectAssignment(Guid.NewGuid(), payUser, project, Domain.ValueObjects.UserRole.Admin);
             dbContext.UserProjectAssignments.Add(adminAssignment);
 
             await dbContext.SaveChangesAsync();
@@ -83,19 +84,19 @@ namespace AcademyCloud.Identity.Services.Projects
             return new DeleteProjectResponse { };
         }
 
-        private (IEnumerable<Common.User>, IEnumerable<Common.User>) GetProjectUsers(Project project)
+        private (IEnumerable<Protos.Common.User>, IEnumerable<Protos.Common.User>) GetProjectUsers(Project project)
         {
             var allUsers = project.Users.AsEnumerable();
 
             var admins = allUsers
-                .Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Admin)
+                .Where(x => x.Role == Domain.ValueObjects.UserRole.Admin)
                 .Select(x => x.User)
-                .Select(x => new Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
+                .Select(x => new Protos.Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
 
             var members = allUsers
-                .Where(x => x.Role == Identity.Domains.ValueObjects.UserRole.Member)
+                .Where(x => x.Role == Domain.ValueObjects.UserRole.Member)
                 .Select(x => x.User)
-                .Select(x => new Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
+                .Select(x => new Protos.Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
 
             return (admins, members);
 
@@ -111,7 +112,7 @@ namespace AcademyCloud.Identity.Services.Projects
             {
                 var (admins, members) = GetProjectUsers(x);
 
-                return new Common.Project
+                return new Protos.Common.Project
                 {
                     Id = x.Id.ToString(),
                     Admins = { admins },

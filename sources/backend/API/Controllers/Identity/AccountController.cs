@@ -28,7 +28,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<GetScopesResponse>> GetScopes()
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .GetScopesAsync(new AcademyCloud.Identity.Services.Account.GetScopesRequest());
+                .GetScopesAsync(new AcademyCloud.Identity.Protos.Account.GetScopesRequest());
 
             return new GetScopesResponse { Scopes = resp.Scopes };
         }
@@ -37,7 +37,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<RegisterResponse>> Register([FromBody] RegisterRequest request)
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .RegisterAsync(new AcademyCloud.Identity.Services.Account.RegisterRequest()
+                .RegisterAsync(new AcademyCloud.Identity.Protos.Account.RegisterRequest()
                 {
                     Username = request.Username,
                     Password = request.Password,
@@ -53,7 +53,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<ProfileResponse>> GetProfile()
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .GetProfileAsync(new AcademyCloud.Identity.Services.Account.GetProfileRequest()
+                .GetProfileAsync(new AcademyCloud.Identity.Protos.Account.GetProfileRequest()
                 {
 
                 });
@@ -67,7 +67,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .UpdateProfileAsync(new AcademyCloud.Identity.Services.Account.UpdateProfileRequest()
+                .UpdateProfileAsync(new AcademyCloud.Identity.Protos.Account.UpdateProfileRequest()
                 {
                     Email = request.Email,
                 });
@@ -80,13 +80,13 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> UpdatePassword([FromBody] UpdatePasswordRequest request)
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .UpdatePasswordAsync(new AcademyCloud.Identity.Services.Account.UpdatePasswordRequest()
+                .UpdatePasswordAsync(new AcademyCloud.Identity.Protos.Account.UpdatePasswordRequest()
                 {
                     Original = request.Original,
                     Updated = request.Updated,
                 });
 
-            if (resp.Result == AcademyCloud.Identity.Services.Account.UpdatePasswordResponse.Types.Result.Success)
+            if (resp.Result == AcademyCloud.Identity.Protos.Account.UpdatePasswordResponse.Types.Result.Success)
             {
                 return NoContent();
             }
@@ -101,7 +101,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<GetJoinedDomainsResponse>> GetJoinedDomains()
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .GetJoinedDomainsAsync(new AcademyCloud.Identity.Services.Account.GetJoinedDomainsRequest()
+                .GetJoinedDomainsAsync(new AcademyCloud.Identity.Protos.Account.GetJoinedDomainsRequest()
                 {
 
                 });
@@ -116,7 +116,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> ExitDomain([FromRoute] string domainId)
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .ExitDomainAsync(new AcademyCloud.Identity.Services.Account.ExitDomainRequest()
+                .ExitDomainAsync(new AcademyCloud.Identity.Protos.Account.ExitDomainRequest()
                 {
                     DomainId = domainId
                 });
@@ -129,7 +129,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult<GetJoinableDomainsResponse>> GetJoinableDomains()
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .GetJoinableDomainsAsync(new AcademyCloud.Identity.Services.Account.GetJoinableDomainsRequest()
+                .GetJoinableDomainsAsync(new AcademyCloud.Identity.Protos.Account.GetJoinableDomainsRequest()
                 {
 
                 });
@@ -140,7 +140,7 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> JoinDomain([FromRoute] string domainId)
         {
             var resp = await (await factory.GetAccountClientAsync())
-                .JoinDomainAsync(new AcademyCloud.Identity.Services.Account.JoinDomainRequest()
+                .JoinDomainAsync(new AcademyCloud.Identity.Protos.Account.JoinDomainRequest()
                 {
                     DomainId = domainId
                 });

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "common.proto";
 
-option csharp_namespace = "AcademyCloud.Identity.Services.Users";
+option csharp_namespace = "AcademyCloud.Identity.Protos.Users";
 
 package users;
 

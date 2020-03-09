@@ -1,19 +1,15 @@
-﻿using AcademyCloud.Identity.Data;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using AcademyCloud.Identity.Data;
+using AcademyCloud.Identity.Domain.Entities;
 using AcademyCloud.Identity.Extensions;
+using AcademyCloud.Identity.Protos.Authentication;
 using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using AcademyCloud.Identity.Domains.Entities;
 
-namespace AcademyCloud.Identity.Services.Authentication
+namespace AcademyCloud.Identity.Services
 {
     public class AuthenticationService : Authentication.AuthenticationBase
     {
@@ -116,7 +112,7 @@ namespace AcademyCloud.Identity.Services.Authentication
                     System = tokenClaims.System,
                     DomainId = tokenClaims.DomainId,
                     ProjectId = tokenClaims.ProjectId,
-                    Role = (Common.UserRole)tokenClaims.Role,
+                    Role = (Protos.Common.UserRole)tokenClaims.Role,
                 }
             });
         }

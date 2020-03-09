@@ -9,7 +9,7 @@ namespace AcademyCloud.API.Utils
 {
     public static class Dummies
     {
-        public static User TransformUser(Identity.Services.Common.User user)
+        public static User TransformUser(Identity.Protos.Common.User user)
         {
             // Dummy transform the user
             // the active status of the user should be retrieved from expenses 

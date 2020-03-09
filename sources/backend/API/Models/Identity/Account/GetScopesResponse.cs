@@ -1,4 +1,4 @@
-﻿using AcademyCloud.Identity.Services.Authentication;
+﻿using AcademyCloud.Identity.Protos.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;

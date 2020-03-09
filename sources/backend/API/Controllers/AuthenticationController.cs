@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.API.Models;
 using AcademyCloud.API.Utils;
-using AcademyCloud.Identity.Services;
-using AcademyCloud.Identity.Services.Authentication;
+using AcademyCloud.Identity.Protos;
+using AcademyCloud.Identity.Protos.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,7 +69,7 @@ namespace AcademyCloud.API.Controllers
         public async Task<ActionResult<LoginResponse>> ChangeScope([FromBody] Models.ChangeScopeRequest request)
         {
             var reply = await (await factory.GetAuthenticationClientAsync())
-                .ChangeScopeAsync(new AcademyCloud.Identity.Services.Authentication.ChangeScopeRequest
+                .ChangeScopeAsync(new AcademyCloud.Identity.Protos.Authentication.ChangeScopeRequest
                 {
                     Scope = request.Scope,
                 });

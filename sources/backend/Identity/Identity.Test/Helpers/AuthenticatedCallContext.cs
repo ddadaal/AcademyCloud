@@ -1,7 +1,6 @@
 ﻿using AcademyCloud.Identity.Data;
-using AcademyCloud.Identity.Domains.Entities;
+using AcademyCloud.Identity.Domain.Entities;
 using AcademyCloud.Identity.Extensions;
-using AcademyCloud.Identity.Services.Authentication;
 using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AcademyCloud.Identity.Protos.Authentication;
+using AcademyCloud.Identity.Services;
 
 namespace AcademyCloud.Identity.Test.Helpers
 {
