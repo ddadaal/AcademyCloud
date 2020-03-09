@@ -53,9 +53,12 @@ namespace AcademyCloud.API
 
             services.AddAuthorization(options =>
             {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
-                 .RequireAuthenticatedUser()
-                 .Build();
+                var defaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+
+                options.DefaultPolicy = defaultPolicy;
+
+                options.AddPolicy(AuthPolicy.System,
+                    policy => policy.Combine(defaultPolicy).RequireAssertion(c => c.User.ToTokenClaims().IsSystem));
             });
 
             services
