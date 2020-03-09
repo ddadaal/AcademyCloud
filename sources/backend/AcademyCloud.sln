@@ -24,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AF1A03
 		Identity\Protos\users.proto = Identity\Protos\users.proto
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared\Shared.csproj", "{4D48A7F5-EB13-460E-8323-B14D4806D121}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{4D48A7F5-EB13-460E-8323-B14D4806D121}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Test", "Identity\Identity.Test\Identity.Test\Identity.Test.csproj", "{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Test", "Identity\Identity.Test\Identity.Test.csproj", "{CCCF5A5A-CE2A-462B-ABC6-C5118C1E2D93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
