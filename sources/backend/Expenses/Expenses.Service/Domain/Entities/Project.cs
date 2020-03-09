@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class Project: IPayer, IReceiver
+    public class Project: IPayer, IReceiver, IBillingCycleSubject, IUseCycleSubject
     {
         public Guid Id { get; set; }
 
@@ -25,7 +25,24 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public SubjectType SubjectType => SubjectType.Project;
 
+        public Resources Resources => Users.Select(x => x.Resources).Aggregate(Resources.Zero, (s, a) => s + a);
+
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IBillingCycleSubject.Settle(Resources quota, decimal price)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUseCycleSubject.Settle(Resources resources, decimal price)
         {
             throw new NotImplementedException();
         }
