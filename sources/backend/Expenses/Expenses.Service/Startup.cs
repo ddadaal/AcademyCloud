@@ -1,6 +1,8 @@
 ﻿using System;
+using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Exceptions;
 using AcademyCloud.Expenses.Extensions;
+using AcademyCloud.Expenses.Services;
 using AcademyCloud.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -79,7 +81,7 @@ namespace AcademyCloud.Expenses
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<BalanceService>();
 
                 endpoints.MapGet("/", async context =>
                 {

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option csharp_namespace = "AcademyCloud.Expenses.Protos.Balance";
+
+package balance;
+
+service Balance {
+    rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
+    rpc Charge (ChargeRequest) returns (ChargeResponse);
+}
+
+message GetBalanceRequest {
+  
+}
+
+message GetBalanceResponse {
+  common.DecimalValue balance = 1;
+}
+
+message ChargeRequest {
+  common.DecimalValue amount = 1;
+}
+
+message ChargeResponse {
+  common.DecimalValue balance = 1;
+}
+
+

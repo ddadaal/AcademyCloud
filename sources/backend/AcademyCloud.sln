@@ -31,6 +31,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expenses", "Expenses", "{20E147B3-FF61-4A75-8C25-40FE6F862DC1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{4164EAD5-5DB4-4AF8-A184-1B78D0254D96}"
+	ProjectSection(SolutionItems) = preProject
+		Expenses\Protos\balance.proto = Expenses\Protos\balance.proto
+		Expenses\Protos\common.proto = Expenses\Protos\common.proto
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Expenses.Service", "Expenses\Expenses.Service\Expenses.Service.csproj", "{37235BC0-3B2B-4AC0-9D75-6A00088FBDF0}"
 EndProject

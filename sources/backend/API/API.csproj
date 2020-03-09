@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <Protobuf Include="..\Identity\Protos\*" GrpcServices="Client" ProtoRoot="..\Identity\Protos" />
+    <Protobuf Include="..\Expenses\Protos\*" GrpcServices="Client" ProtoRoot="..\Expenses\Protos" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Expenses\" />
   </ItemGroup>
 
 
