@@ -37,6 +37,13 @@ namespace AcademyCloud.Expenses.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the models
+
+            modelBuilder.Entity<DomainEntity>(o =>
+            {
+                o.Ignore(e => e.Active);
+                o.HasOne(e => e.Payer).WithMany(e => e.Domains);
+            });
+            
             modelBuilder.Entity<UserProjectAssignment>(o =>
             {
                 o.OwnsOne(e => e.Quota);
@@ -48,6 +55,7 @@ namespace AcademyCloud.Expenses.Data
                 o.OwnsOne(e => e.Quota);
                 o.Ignore(e => e.SubjectType);
                 o.Ignore(e => e.Resources);
+                o.Ignore(e => e.Active);
             });
 
             modelBuilder.Entity<User>(o =>
@@ -65,6 +73,8 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<UserTransaction>(o =>
             {
                 o.OwnsOne(e => e.Reason);
+                o.HasOne(e => e.Payer).WithMany(e => e.PayedUserTransactions);
+                o.HasOne(e => e.Receiver).WithMany(e => e.ReceivedUserTransactions);
             });
 
             modelBuilder.Entity<OrgTransaction>(o =>

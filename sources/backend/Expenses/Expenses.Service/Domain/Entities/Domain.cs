@@ -16,7 +16,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual Resources Quota { get; set; }
 
-        public bool Active { get; set; }
+        public bool Active => Payer.Active;
 
         public virtual ICollection<UseCycle> UseCycleRecords { get; set; }
 

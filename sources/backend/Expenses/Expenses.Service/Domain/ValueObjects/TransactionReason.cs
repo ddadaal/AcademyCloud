@@ -17,5 +17,11 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
             yield return Type;
             yield return Info;
         }
+
+        public TransactionReason(TransactionType type, string info)
+        {
+            Type = type;
+            Info = info;
+        }
     }
 }
