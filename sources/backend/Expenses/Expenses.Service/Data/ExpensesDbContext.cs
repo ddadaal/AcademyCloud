@@ -70,7 +70,6 @@ namespace AcademyCloud.Expenses.Data
                 o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerDomain);
                 o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverDomain);
 
-                o.HasOne(e => e.Payer).WithMany();
 
                 // init social domain
                 o.HasData(new { Id = SocialDomainId, PayerId = socialDomainAdmin.Id, Resources = Domain.ValueObjects.Resources.Zero });

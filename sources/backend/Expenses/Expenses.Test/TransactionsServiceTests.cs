@@ -68,5 +68,36 @@ namespace AcademyCloud.Expenses.Test
 
             Assert.Single(resp.Transactions);
         }
+
+        [Fact]
+        public async Task TestGetProjectTransactions()
+        {
+            service = new TransactionsService(MockTokenClaimsAccessor(lqlqTokenClaims), db);
+
+            lqproject.PayedOrgTransactions.Add(new Domain.Entities.OrgTransaction(
+                Guid.NewGuid(),
+                DateTime.UtcNow,
+                -10,
+                Domain.ValueObjects.TransactionReason.DomainManagement,
+                lqproject,
+                nju,
+                new Domain.Entities.UserTransaction(
+                    Guid.NewGuid(),
+                    DateTime.UtcNow,
+                    -10,
+                    Domain.ValueObjects.TransactionReason.DomainManagement,
+                    lqproject.Payer,
+                    nju.Payer
+            )));
+
+            await db.SaveChangesAsync();
+
+            var resp = await service.GetProjectTransactions(new Protos.Transactions.GetProjectTransactionsRequest()
+            {
+                ProjectId = lqproject.Id.ToString(),
+            }, TestContext);
+
+            Assert.Single(resp.Transactions);
+        }
     }
 }
