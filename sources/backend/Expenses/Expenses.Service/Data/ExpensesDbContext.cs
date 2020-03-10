@@ -55,6 +55,9 @@ namespace AcademyCloud.Expenses.Data
                 o.HasData(socialDomainAdmin);
                 o.HasData(systemUser);
                 o.Ignore(e => e.SubjectType);
+
+                o.HasMany(e => e.ReceivedUserTransactions).WithOne(e => e.Receiver).IsRequired();
+                o.HasMany(e => e.PayedUserTransactions).WithOne(e => e.Payer);
             });
 
             modelBuilder.Entity<DomainEntity>(o =>
@@ -89,7 +92,7 @@ namespace AcademyCloud.Expenses.Data
             {
                 o.OwnsOne(e => e.Reason);
                 o.HasOne(e => e.Payer).WithMany(e => e.PayedUserTransactions);
-                o.HasOne(e => e.Receiver).WithMany(e => e.ReceivedUserTransactions);
+                o.HasOne(e => e.Receiver).WithMany(e => e.ReceivedUserTransactions).IsRequired();
             });
 
             modelBuilder.Entity<OrgTransaction>(o =>

@@ -81,8 +81,9 @@ namespace AcademyCloud.Expenses.Test.Helpers
         {
             InitializeVariables();
             var options = new DbContextOptionsBuilder<ExpensesDbContext>()
-                        .UseSqlite("DataSource=:memory:")
-                        .Options;
+                .UseLazyLoadingProxies()
+                .UseSqlite("DataSource=:memory:")
+                .Options;
 
             db = new ExpensesDbContext(options);
 
