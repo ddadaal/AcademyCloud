@@ -45,7 +45,7 @@ namespace AcademyCloud.API.Controllers.Expenses
                 });
 
             // Send to Identity service to check their names
-            var nameMapResp = await (await factory.GetInteropClientAsync())
+            var nameMapResp = await (await factory.GetIdentityInteropClientAsync())
                 .GetNamesAsync(new AcademyCloud.Identity.Protos.Interop.GetNamesRequest
                 {
                     Subjects = { subjects }

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+import "common.proto";
+
+option csharp_namespace = "AcademyCloud.Expenses.Protos.Interop";
+
+package interop;
+
+service Interop {
+  rpc GetActivity (GetActivityRequest) returns (GetActivityResponse);
+}
+
+message GetActivityRequest {
+  message Subject {
+    common.SubjectType type = 1;
+    string id = 2;
+  }
+  repeated Subject subjects = 1;
+}
+
+message GetActivityResponse {
+  map<string, bool> activities = 1;
+}
+

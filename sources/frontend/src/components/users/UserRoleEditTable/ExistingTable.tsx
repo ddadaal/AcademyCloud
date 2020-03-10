@@ -68,11 +68,6 @@ export const ExistingTable: React.FC<Props> = (props) => {
       <Table dataSource={allUsers} rowKey="id">
         <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
         <Table.Column title={<Localized id={root.name} />} dataIndex="name" />
-        <Table.Column title={<Localized id={root.active.title} />}
-          dataIndex="active" key="id"
-          render={(active: boolean) => (
-            <Localized id={root.active[String(active)]} />
-          )} />
         <Table.Column title={<Localized id={root.payUser.title} />}
           dataIndex="role"
           render={(_, user: FullUser) => (

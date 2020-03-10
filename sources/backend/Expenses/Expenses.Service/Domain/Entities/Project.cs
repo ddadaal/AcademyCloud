@@ -29,7 +29,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
 
-        public bool Active => PayUser.Active;
+        public bool Active => Domain.Active && PayUser.Active;
 
         public ICollection<OrgTransaction> PayedOrgTransactions => Payer.PayedOrgTransactions;
         public ICollection<OrgTransaction> ReceivedOrgTransactions => Receiver.ReceivedOrgTransactions;

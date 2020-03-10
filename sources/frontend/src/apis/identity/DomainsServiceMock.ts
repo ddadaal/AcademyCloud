@@ -3,8 +3,8 @@ import { Resources } from "src/models/Resources";
 import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
 
-const cjd: User = { id: "CJDID", username: "CJD", name: "CJD", active: true };
-const cjy: User = { id: "CJYID", username: "CJY", name: "CJY", active: true };
+const cjd: User = { id: "CJDID", username: "CJD", name: "CJD" };
+const cjy: User = { id: "CJYID", username: "CJY", name: "CJY" };
 
 export class DomainsServiceMock extends DomainsService {
   async getDomains(): Promise<GetDomainsResponse> {

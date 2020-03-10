@@ -17,15 +17,15 @@ const root = lang.identity.users;
 
 const service = getApiService(UsersService);
 
-const getAccessibleUsers = async () => {
-  const resp = await service.getAccessibleUsers();
+const getUsers = async () => {
+  const resp = await service.getAllUsers();
   return resp.users;
 }
 
 export const SystemUsersTable: React.FC<Props> = ({ refreshToken }) => {
 
   const { data, isPending, reload } = useAsync({
-    promiseFn: getAccessibleUsers,
+    promiseFn: getUsers,
     watch: refreshToken,
   });
 

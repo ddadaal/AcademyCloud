@@ -1,8 +1,8 @@
-import { UsersService, GetAccessibleUsersResponse } from "src/apis/identity/UsersService";
+import { UsersService, GetAccessibleUsersResponse, GetAllUsersResponse } from "src/apis/identity/UsersService";
 import { User } from "src/models/User";
 
-const cjd: User = { id: "CJDID", username: "CJD", name: "CJD", active: true };
-const cjy: User = { id: "CJYID", username: "CJY", name: "CJY", active: true };
+const cjd: User = { id: "CJDID", username: "CJD", name: "CJD" };
+const cjy: User = { id: "CJYID", username: "CJY", name: "CJY"};
 
 export class UsersServiceMock extends UsersService {
   async getAccessibleUsers(): Promise<GetAccessibleUsersResponse> {
@@ -10,5 +10,15 @@ export class UsersServiceMock extends UsersService {
     return {
       users: [cjd, cjy]
     };
+  }
+
+  async getAllUsers(): Promise<GetAllUsersResponse> {
+    await this.delay();
+    return {
+      users: [
+        {...cjd, active: true },
+        { ...cjy, active: false},
+      ]
+    }
   }
 }

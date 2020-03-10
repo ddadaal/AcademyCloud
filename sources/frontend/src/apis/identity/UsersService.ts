@@ -1,8 +1,12 @@
 import { HttpMethod, HttpService } from "src/apis/HttpService";
-import { User } from "src/models/User";
+import { User, UserForSystem } from "src/models/User";
 
 export interface GetAccessibleUsersResponse {
   users: User[];
+}
+
+export interface GetAllUsersResponse {
+  users: UserForSystem[];
 }
 
 export class UsersService extends HttpService {
@@ -23,5 +27,12 @@ export class UsersService extends HttpService {
     });
   }
 
+  async getAllUsers(): Promise<GetAllUsersResponse> {
+    const resp = this.fetch<GetAllUsersResponse>({
+      method: HttpMethod.GET,
+      path: "/identity/allUsers",
+    });
 
+    return resp;
+  }
 }

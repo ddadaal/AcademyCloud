@@ -11,9 +11,7 @@ namespace AcademyCloud.API.Utils
     {
         public static User TransformUser(Identity.Protos.Common.User user)
         {
-            // Dummy transform the user
-            // the active status of the user should be retrieved from expenses 
-            return new User { Id = user.Id, Name = user.Name, Username = user.Username, Active = true };
+            return new User { Id = user.Id, Name = user.Name, Username = user.Username };
         }
 
         // Dummy resources

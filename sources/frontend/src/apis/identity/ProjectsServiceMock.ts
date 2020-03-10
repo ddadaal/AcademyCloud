@@ -3,10 +3,10 @@ import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
 import { Resources } from "src/models/Resources";
 
-const cjd: User = { id: "CJDID", username: "CJD", name: "CJD", active: true };
-const cjy: User = { id: "CJYID", username: "CJY", name: "CJY", active: true };
-const lq: User = { id: "lqID", username: "lq", name: "lq", active: true };
-const fgh: User = { id: "fghID", username: "fgh", name: "fgh", active: true };
+const cjd: User = { id: "CJDID", username: "CJD", name: "CJD",  };
+const cjy: User = { id: "CJYID", username: "CJY", name: "CJY" };
+const lq: User = { id: "lqID", username: "lq", name: "lq"};
+const fgh: User = { id: "fghID", username: "fgh", name: "fgh"};
 
 export class ProjectsServiceMock extends ProjectsService {
   async getAccessibleProjects(): Promise<GetAccessibleProjectsResponse> {

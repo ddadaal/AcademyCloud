@@ -27,11 +27,6 @@ export const UsersRoleViewTable: React.FC<Props> = (props) => {
         dataIndex="id" key="id" />
       <Column title={<Localized id={root.name} />}
         dataIndex="name" key="name" />
-      <Column title={<Localized id={root.active.title} />}
-        dataIndex="active" key="id"
-        render={(active: boolean) => (
-          <Localized id={root.active[String(active)]} />
-        )} />
       <Column title={<Localized id={root.role.title} />}
         dataIndex="role"
         render={(role: UserRole) => (

@@ -13,7 +13,5 @@ namespace AcademyCloud.API.Models.Identity.Common
 
         public string Name { get; set; }
 
-        public bool Active { get; set; }
-
     }
 }

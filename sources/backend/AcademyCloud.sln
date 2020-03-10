@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{4164EA
 		Expenses\Protos\balance.proto = Expenses\Protos\balance.proto
 		Expenses\Protos\billing.proto = Expenses\Protos\billing.proto
 		Expenses\Protos\common.proto = Expenses\Protos\common.proto
+		Expenses\Protos\interop.proto = Expenses\Protos\interop.proto
 		Expenses\Protos\transactions.proto = Expenses\Protos\transactions.proto
 	EndProjectSection
 EndProject
