@@ -33,7 +33,7 @@ namespace AcademyCloud.Expenses.Services
             var transactions = user.ReceivedUserTransactions
                 .Concat(user.PayedUserTransactions);
 
-            if (request.Limit >= 0)
+            if (request.Limit > 0)
             {
                 transactions = transactions.Take(request.Limit);
             }
@@ -50,13 +50,13 @@ namespace AcademyCloud.Expenses.Services
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
-            var domain = user.Domains.FirstOrDefault(x => x.Id.ToString() == request.DomainId)
+            var domain = user.Domains.FirstOrDefault(x => x.Domain.Id.ToString() == request.DomainId)?.Domain
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
             var transactions = domain.ReceivedOrgTransactions
                 .Concat(domain.PayedOrgTransactions);
 
-            if (request.Limit >= 0)
+            if (request.Limit > 0)
 
             {
                 transactions = transactions.Take(request.Limit);
@@ -84,7 +84,7 @@ namespace AcademyCloud.Expenses.Services
             var transactions = project.ReceivedOrgTransactions
                 .Concat(project.PayedOrgTransactions);
 
-            if (request.Limit >= 0)
+            if (request.Limit > 0)
             {
                 transactions = transactions.Take(request.Limit);
             }
@@ -102,7 +102,7 @@ namespace AcademyCloud.Expenses.Services
 
             var transactions = system.ReceivedOrgTransactions.AsQueryable();
             
-            if (request.Limit >= 0)
+            if (request.Limit > 0)
             {
                 transactions = transactions.Take(request.Limit);
             }

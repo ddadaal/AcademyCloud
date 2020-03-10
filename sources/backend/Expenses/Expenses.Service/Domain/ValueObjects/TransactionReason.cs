@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.ValueObjects
 {
-    public class TransactionReason: ValueObject
+    public class TransactionReason : ValueObject
     {
         public TransactionType Type { get; set; }
 
@@ -23,5 +23,10 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
             Type = type;
             Info = info;
         }
+
+        public static TransactionReason Charge => new TransactionReason(TransactionType.Charge, "");
+        public static TransactionReason DomainManagement => new TransactionReason(TransactionType.DomainManagementFee, "");
+        public static TransactionReason ProjectManagement => new TransactionReason(TransactionType.ProjectManagementFee, "");
+        public static TransactionReason UserManagement => new TransactionReason(TransactionType.UserManagementFee, "");
     }
 }

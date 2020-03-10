@@ -31,5 +31,52 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual UserTransaction UserTransaction { get; set; }
 
+        public OrgTransaction(Guid id, DateTime time, decimal amount, TransactionReason reason, IPayer payer, IReceiver receiver, UserTransaction userTransaction)
+        {
+            Id = id;
+            Time = time;
+            Amount = amount;
+            Reason = reason;
+            UserTransaction = userTransaction;
+
+            switch (payer)
+            {
+                case Domain domain:
+                    PayerDomain = domain;
+                    break;
+                case Project project:
+                    PayerProject = project;
+                    break;
+                case User user:
+                    PayerUser = user;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(payer));
+            }
+
+            switch (receiver)
+            {
+                case System system:
+                    ReceiverSystem = system;
+                    break;
+                case Domain domain:
+                    ReceiverDomain = domain;
+                    break;
+                case Project project:
+                    ReceiverProject = project;
+                    break;
+                case User user:
+                    ReceiverUser = user;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(receiver));
+            }
+            
+            
+        }
+
+        protected OrgTransaction()
+        {
+        }
     }
 }

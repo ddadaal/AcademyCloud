@@ -12,6 +12,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
 
+        public virtual ICollection<UserDomainAssignment> Users { get; set; } = new List<UserDomainAssignment>();
+
         public virtual User Payer { get; set; }
 
         public virtual Resources Quota { get; set; }
@@ -22,12 +24,13 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
 
-        public SubjectType SubjectType => SubjectType.Domain;
-
-        public Resources Resources => Projects.Select(x => x.Resources).Aggregate(Resources.Zero, (s, a) => s + a);
 
         public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } = new List<OrgTransaction>();
         public virtual ICollection<OrgTransaction> ReceivedOrgTransactions { get; set; } = new List<OrgTransaction>();
+
+        public SubjectType SubjectType => SubjectType.Domain;
+
+        public Resources Resources => Projects.Select(x => x.Resources).Aggregate(Resources.Zero, (s, a) => s + a);
 
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
         {

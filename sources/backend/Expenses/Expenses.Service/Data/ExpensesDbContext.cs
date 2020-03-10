@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using DomainEntity = AcademyCloud.Expenses.Domain.Entities.Domain;
 using SystemEntity = AcademyCloud.Expenses.Domain.Entities.System;
 using static AcademyCloud.Shared.Constants;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 
 namespace AcademyCloud.Expenses.Data
 {
@@ -59,25 +60,33 @@ namespace AcademyCloud.Expenses.Data
 
                 o.HasMany(e => e.ReceivedUserTransactions).WithOne(e => e.Receiver).IsRequired();
                 o.HasMany(e => e.PayedUserTransactions).WithOne(e => e.Payer);
-
                 o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerUser);
             });
 
             modelBuilder.Entity<DomainEntity>(o =>
             {
                 o.OwnsOne(e => e.Quota);
-                o.HasOne(e => e.Payer).WithMany(e => e.Domains);
 
                 o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerDomain);
                 o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverDomain);
+
+                o.HasOne(e => e.Payer).WithMany();
 
                 // init social domain
                 o.HasData(new { Id = SocialDomainId, PayerId = socialDomainAdmin.Id, Resources = Domain.ValueObjects.Resources.Zero });
 
             });
 
+            modelBuilder.Entity<UserDomainAssignment>(o =>
+            {
+                o.Property(e => e.Id).ValueGeneratedNever();
+                o.HasOne(e => e.User).WithMany(e => e.Domains);
+                o.HasOne(e => e.Domain).WithMany(e => e.Users);
+            });
+
             modelBuilder.Entity<UserProjectAssignment>(o =>
             {
+                o.Property(e => e.Id).ValueGeneratedNever();
                 o.OwnsOne(e => e.Quota);
                 o.OwnsOne(e => e.Resources);
             });
@@ -106,6 +115,7 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<OrgTransaction>(o =>
             {
                 o.OwnsOne(e => e.Reason);
+                o.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<BillingCycle>(o =>

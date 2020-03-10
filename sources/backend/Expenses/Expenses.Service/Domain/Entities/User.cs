@@ -14,7 +14,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<UserProjectAssignment> Projects { get; set; } = new List<UserProjectAssignment>();
 
-        public virtual ICollection<Domain> Domains { get; set; } = new List<Domain>();
+        public virtual ICollection<UserDomainAssignment> Domains { get; set; } = new List<UserDomainAssignment>();
 
         public bool Active { get; set; } = true;
 
@@ -54,7 +54,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public void Charge(decimal amount)
         {
-            var transaction = new UserTransaction(Guid.NewGuid(), DateTime.UtcNow, amount, new TransactionReason(TransactionType.Charge, ""), null, this);
+            var transaction = new UserTransaction(Guid.NewGuid(), DateTime.UtcNow, amount, TransactionReason.Charge, null, this);
             ApplyTransaction(transaction);
         }
 
@@ -66,6 +66,12 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
         {
             throw new NotImplementedException();
+        }
+
+        public void JoinDomain(Domain domain)
+        {
+            Domains.Add(new UserDomainAssignment(Guid.NewGuid(), domain, this));
+
         }
 
         public User(Guid id, decimal balance)

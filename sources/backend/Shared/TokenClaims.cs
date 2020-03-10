@@ -58,7 +58,7 @@ namespace AcademyCloud.Shared
                 new Claim(nameof(Social), Social.ToString()),
                 new Claim(nameof(UserId), UserId),
                 new Claim(nameof(DomainId), DomainId),
-                new Claim(nameof(ProjectId), ProjectId),
+                new Claim(nameof(ProjectId), ProjectId ?? ""),
                 new Claim(nameof(Role), Role.ToString()),
             };
         }

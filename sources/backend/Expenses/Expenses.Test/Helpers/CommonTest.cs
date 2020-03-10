@@ -42,11 +42,11 @@ namespace AcademyCloud.Expenses.Test.Helpers
         {
             nju = new DomainEntity(Guid.NewGuid(), njuadmin, new Domain.ValueObjects.Resources(10, 20, 30));
             pku = new DomainEntity(Guid.NewGuid(), fc, new Domain.ValueObjects.Resources(20, 30, 40));
-            cjd.Domains.Add(nju);
-            cjd.Domains.Add(pku);
-            lq.Domains.Add(nju);
-            njuadmin.Domains.Add(nju);
-            fc.Domains.Add(pku);
+            cjd.JoinDomain(nju);
+            cjd.JoinDomain(pku);
+            lq.JoinDomain(nju);
+            njuadmin.JoinDomain(nju);
+            fc.JoinDomain(pku);
 
             lqproject = new Project(Guid.NewGuid(), lq, nju, new Domain.ValueObjects.Resources(5, 10, 20));
             fcproject = new Project(Guid.NewGuid(), fc, pku, new Domain.ValueObjects.Resources(10, 30, 40));
