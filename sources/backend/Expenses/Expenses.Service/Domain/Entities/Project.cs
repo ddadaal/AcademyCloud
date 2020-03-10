@@ -26,8 +26,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
 
-        public virtual ICollection<OrgTransaction> PayedOrgTransaction { get; set; } = new List<OrgTransaction>();
-        public virtual ICollection<OrgTransaction> ReceivedOrgTransaction { get; set; } = new List<OrgTransaction>();
+        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } = new List<OrgTransaction>();
+        public virtual ICollection<OrgTransaction> ReceivedOrgTransactions { get; set; } = new List<OrgTransaction>();
 
         public SubjectType SubjectType => SubjectType.Project;
 

@@ -72,7 +72,7 @@ message GetDomainTransactionsResponse {
 }
 
 message GetProjectTransactionsRequest {
-  string domainId = 1;
+  string projectId = 1;
   int32 limit = 2;
 }
 

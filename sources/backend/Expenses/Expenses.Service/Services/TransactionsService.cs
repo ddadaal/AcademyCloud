@@ -4,6 +4,7 @@ using AcademyCloud.Expenses.Protos.Transactions;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +49,8 @@ namespace AcademyCloud.Expenses.Services
             var domain = user.Domains.FirstOrDefault(x => x.Id.ToString() == request.DomainId)
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
-            var transactions = domain.ReceivedOrgTransaction
-                .Concat(domain.PayedOrgTransaction)
+            var transactions = domain.ReceivedOrgTransactions
+                .Concat(domain.PayedOrgTransactions)
                 .Select(x => x.ToGrpc());
 
             return new GetDomainTransactionsResponse
@@ -61,12 +62,37 @@ namespace AcademyCloud.Expenses.Services
 
         public override async Task<GetProjectTransactionsResponse> GetProjectTransactions(GetProjectTransactionsRequest request, ServerCallContext context)
         {
-            return await base.GetProjectTransactions(request, context);
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
+
+            var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
+
+            var project = user.Projects
+                .Select(x => x.Project)
+                .FirstOrDefault(x => x.Id.ToString() == request.ProjectId)
+                ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
+
+            var transactions = project.ReceivedOrgTransactions
+                .Concat(project.PayedOrgTransactions)
+                .Select(x => x.ToGrpc());
+
+            return new GetProjectTransactionsResponse
+            {
+                Transactions = { transactions }
+            };
         }
 
         public override async Task<GetSystemTransactionsResponse> GetSystemTransactions(GetSystemTransactionsRequest request, ServerCallContext context)
         {
-            return await base.GetSystemTransactions(request, context);
+            // let it throw if there is no system instance
+            var system = await dbContext.Systems.FirstAsync();
+
+            var transactions = system.ReceivedOrgTransactions
+                .Select(x => x.ToGrpc());
+
+            return new GetSystemTransactionsResponse
+            {
+                Transactions = { transactions }
+            };
         }
     }
 }

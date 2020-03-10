@@ -68,8 +68,8 @@ namespace AcademyCloud.Expenses.Data
                 o.OwnsOne(e => e.Quota);
                 o.HasOne(e => e.Payer).WithMany(e => e.Domains);
 
-                o.HasMany(e => e.PayedOrgTransaction).WithOne(e => e.PayerDomain);
-                o.HasMany(e => e.ReceivedOrgTransaction).WithOne(e => e.ReceiverDomain);
+                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerDomain);
+                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverDomain);
 
                 // init social domain
                 o.HasData(new { Id = SocialDomainId, PayerId = socialDomainAdmin.Id, Resources = Domain.ValueObjects.Resources.Zero });
@@ -86,8 +86,8 @@ namespace AcademyCloud.Expenses.Data
             {
                 o.OwnsOne(e => e.Quota);
 
-                o.HasMany(e => e.PayedOrgTransaction).WithOne(e => e.PayerProject);
-                o.HasMany(e => e.ReceivedOrgTransaction).WithOne(e => e.ReceiverProject);
+                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerProject);
+                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverProject);
             });
 
             modelBuilder.Entity<Payer>(o =>
