@@ -7,16 +7,22 @@ using System.Threading.Tasks;
 namespace AcademyCloud.Expenses.Domain.Entities
 {
     /// <summary>
-    /// Dummy implementation to persist any type of IPayer into the database
+    /// Dummy entity to persist any type of IPayer into the database
     /// </summary>
     public class Payer : IPayer
     {
-        public Guid RecordId { get; set; }
+        public Guid Id { get; set; }
         public virtual User? User { get; set; }
 
         public virtual Project? Project { get; set; }
         public virtual Domain? Domain { get; set; }
 
+        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } 
+
+
+        /// <summary>
+        /// Identify the exact type of Payer
+        /// </summary>
         public SubjectType SubjectType { get; set; }
 
         private IPayer RealPayer => SubjectType switch
@@ -27,7 +33,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
             SubjectType.System => throw new InvalidOperationException(),
         };
 
-        public Guid Id => RealPayer.Id;
 
         public bool Active => RealPayer.Active;
 
@@ -38,19 +43,19 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public Payer(IPayer payer)
         {
+            Id = payer.Id;
+            SubjectType = payer.SubjectType;
+            PayedOrgTransactions = new List<OrgTransaction>();
             switch (payer)
             {
                 case User user:
                     User = user;
-                    SubjectType = SubjectType.User;
                     break;
                 case Project project:
                     Project = project;
-                    SubjectType = SubjectType.Project;
                     break;
                 case Domain domain:
                     Domain = domain;
-                    SubjectType = SubjectType.Domain;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(payer));

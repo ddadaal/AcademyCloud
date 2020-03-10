@@ -45,15 +45,15 @@ namespace AcademyCloud.Expenses.Test
                 DateTime.UtcNow,
                 -10,
                 Domain.ValueObjects.TransactionReason.DomainManagement,
-                nju,
-                system,
+                nju.Payer,
+                system.Receiver,
                 new Domain.Entities.UserTransaction(
                     Guid.NewGuid(),
                     DateTime.UtcNow,
                     -10,
                     Domain.ValueObjects.TransactionReason.DomainManagement,
-                    nju.Payer,
-                    system.SystemReceiver
+                    nju.PayUser,
+                    system.ReceiveUser
             )));
         }
 
@@ -84,15 +84,15 @@ namespace AcademyCloud.Expenses.Test
                 DateTime.UtcNow,
                 -10,
                 Domain.ValueObjects.TransactionReason.DomainManagement,
-                lqproject,
-                nju,
+                lqproject.Payer,
+                nju.Receiver,
                 new Domain.Entities.UserTransaction(
                     Guid.NewGuid(),
                     DateTime.UtcNow,
                     -10,
                     Domain.ValueObjects.TransactionReason.DomainManagement,
-                    lqproject.Payer,
-                    nju.Payer
+                    lqproject.PayUser,
+                    nju.PayUser
             )));
 
             await db.SaveChangesAsync();
@@ -114,15 +114,15 @@ namespace AcademyCloud.Expenses.Test
                 DateTime.UtcNow,
                 -10,
                 Domain.ValueObjects.TransactionReason.UserManagement,
-                cjd,
-                system,
+                cjd.Payer,
+                system.Receiver,
                 new Domain.Entities.UserTransaction(
                     Guid.NewGuid(),
                     DateTime.UtcNow,
                     -10,
                     Domain.ValueObjects.TransactionReason.UserManagement,
                     cjd,
-                    system.SystemReceiver
+                    system.ReceiveUser
                     )));
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class User : IPayer, IReceiver
+    public class User : IPayer
     {
         public Guid Id { get; set; }
 
@@ -16,13 +16,17 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<UserDomainAssignment> Domains { get; set; } = new List<UserDomainAssignment>();
 
-        public bool Active { get; set; } = true;
+
+        public virtual Payer Payer { get; set; }
 
         public SubjectType SubjectType => SubjectType.User;
 
         public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; } = new List<UserTransaction>();
         public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; } = new List<UserTransaction>();
-        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } = new List<OrgTransaction>();
+
+        public ICollection<OrgTransaction> PayedOrgTransactions => Payer.PayedOrgTransactions;
+
+        public bool Active { get; set; } = true;
 
         public void ApplyTransaction(UserTransaction transaction)
         {
@@ -63,11 +67,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
             throw new NotImplementedException();
         }
 
-        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
-        {
-            throw new NotImplementedException();
-        }
-
         public void JoinDomain(Domain domain)
         {
             Domains.Add(new UserDomainAssignment(Guid.NewGuid(), domain, this));
@@ -78,6 +77,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
         {
             Id = id;
             Balance = balance;
+            Payer = new Payer(this);
         }
 
         public User()

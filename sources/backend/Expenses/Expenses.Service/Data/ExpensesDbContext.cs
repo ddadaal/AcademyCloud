@@ -40,47 +40,82 @@ namespace AcademyCloud.Expenses.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure the models
-            var systemUser = new User(SystemUserId, 0);
-            var socialDomainAdmin = new User(SocialDomainAdminId, 0);
+            // Payer and Receiver are proxies to the real Payer and Receiver
+            // Payer and Receiver has a column for each concrete Payer and Receiver class
+            // Payer and Receiver share id from their concrete class
+            modelBuilder.Entity<Payer>(o =>
+            {
+                o.Property(x => x.Id).ValueGeneratedNever();
+                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.Payer);
+
+                // Setup payer for social domain admin and system user
+                o.HasData(new { Id = SocialDomainAdminId, UserId = SocialDomainAdminId, SubjectType = SubjectType.User});
+                o.HasData(new { Id = SystemUserId, UserId = SystemUserId, SubjectType = SubjectType.User });
+
+                // Setup payer for social domain
+                o.HasData(new { Id = SocialDomainId, DomainId = SocialDomainId, SubjectType = SubjectType.Domain });
+            });
+
+            modelBuilder.Entity<Receiver>(o =>
+            {
+                o.Property(x => x.Id).ValueGeneratedNever();
+                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.Receiver);
+
+                // Setup receiver for System and Social Domain
+                o.HasData(new { Id = SystemGuid, SystemId = SystemGuid, SubjectType = SubjectType.System });
+                o.HasData(new { Id = SocialDomainId, DomainId = SocialDomainId, SubjectType = SubjectType.Domain });
+                
+            });
 
             modelBuilder.Entity<SystemEntity>(o =>
             {
                 // init system
-                o.HasData(new { Id = SystemGuid, SystemReceiverId = systemUser.Id });
+                o.HasData(new { Id = SystemGuid, ReceiveUserId = SystemUserId, ReceiverId = SystemGuid });
 
-                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverSystem);
+                o.HasOne(e => e.Receiver).WithOne(e => e.System).HasForeignKey<Receiver>("SystemId");
+
+                o.Ignore(e => e.ReceivedOrgTransactions);
             });
 
             modelBuilder.Entity<User>(o =>
             {
-                // init social domain user and system user
-                o.HasData(socialDomainAdmin);
-                o.HasData(systemUser);
+                // init social domain admin and system user
+                o.HasData(new { Id = SocialDomainAdminId, Balance = 0m, ReceiverId = SocialDomainAdminId, Active = true });
+                o.HasData(new { Id = SystemUserId, Balance = 0m, ReceiverId = SystemUserId, Active = true });
 
                 o.HasMany(e => e.ReceivedUserTransactions).WithOne(e => e.Receiver).IsRequired();
                 o.HasMany(e => e.PayedUserTransactions).WithOne(e => e.Payer);
-                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerUser);
+
+                // Must configure the foreign key to 
+                // https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key#one-to-one
+                // Foreign key is configured on the child side
+                o.HasOne(e => e.Payer).WithOne(e => e.User).HasForeignKey<Payer>("UserId");
+
+                o.Ignore(e => e.PayedOrgTransactions);
             });
 
             modelBuilder.Entity<DomainEntity>(o =>
             {
                 o.OwnsOne(e => e.Quota);
 
-                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerDomain);
-                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverDomain);
+                // Necessary
+                o.Ignore(e => e.PayedOrgTransactions);
+                o.Ignore(e => e.ReceivedOrgTransactions);
 
+                o.HasOne(e => e.Payer).WithOne(e => e.Domain).HasForeignKey<Payer>("DomainId");
+                o.HasOne(e => e.Receiver).WithOne(e => e.Domain).HasForeignKey<Receiver>("DomainId");
 
                 // init social domain
-                o.HasData(new { Id = SocialDomainId, PayerId = socialDomainAdmin.Id, Resources = Domain.ValueObjects.Resources.Zero });
+                o.HasData(new { Id = SocialDomainId, PayerId = SocialDomainId, ReceiverId = SocialDomainId, PayUserId = SocialDomainAdminId, Resources = Resources.Zero });
 
             });
 
             modelBuilder.Entity<UserDomainAssignment>(o =>
             {
                 o.Property(e => e.Id).ValueGeneratedNever();
-                o.HasOne(e => e.User).WithMany(e => e.Domains);
-                o.HasOne(e => e.Domain).WithMany(e => e.Users);
+
+                //o.HasOne(e => e.User).WithMany(e => e.Domains);
+                //o.HasOne(e => e.Domain).WithMany(e => e.Users);
             });
 
             modelBuilder.Entity<UserProjectAssignment>(o =>
@@ -94,13 +129,12 @@ namespace AcademyCloud.Expenses.Data
             {
                 o.OwnsOne(e => e.Quota);
 
-                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerProject);
-                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverProject);
-            });
+                o.HasOne(e => e.Payer).WithOne(e => e.Project).HasForeignKey<Payer>("ProjectId");
+                o.HasOne(e => e.Receiver).WithOne(e => e.Project).HasForeignKey<Receiver>("ProjectId");
 
-            modelBuilder.Entity<Payer>(o =>
-            {
-                o.HasKey(e => e.RecordId);
+                // Necessary
+                o.Ignore(e => e.PayedOrgTransactions);
+                o.Ignore(e => e.ReceivedOrgTransactions);
             });
 
             modelBuilder.Entity<UserTransaction>(o =>
@@ -113,16 +147,8 @@ namespace AcademyCloud.Expenses.Data
 
             modelBuilder.Entity<OrgTransaction>(o =>
             {
-                o.OwnsOne(e => e.Reason);
                 o.Property(e => e.Id).ValueGeneratedNever();
-
-                o.HasOne(e => e.ReceiverSystem).WithMany(e => e.ReceivedOrgTransactions);
-                o.HasOne(e => e.ReceiverDomain).WithMany(e => e.ReceivedOrgTransactions);
-                o.HasOne(e => e.ReceiverProject).WithMany(e => e.ReceivedOrgTransactions);
-
-                o.HasOne(e => e.PayerUser).WithMany(e => e.PayedOrgTransactions);
-                o.HasOne(e => e.PayerProject).WithMany(e => e.PayedOrgTransactions);
-                o.HasOne(e => e.PayerDomain).WithMany(e => e.PayedOrgTransactions);
+                o.OwnsOne(e => e.Reason);
             });
 
             modelBuilder.Entity<BillingCycle>(o =>

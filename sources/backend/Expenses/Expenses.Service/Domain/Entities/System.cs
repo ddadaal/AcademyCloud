@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class System : IReceiver
+    public class System: IReceiver
     {
         public Guid Id { get; set; }
 
@@ -14,21 +14,23 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<User> SystemUsers { get; set; } = new List<User>();
 
-        public virtual ICollection<OrgTransaction> ReceivedOrgTransactions { get; set; } = new List<OrgTransaction>();
-
-        public virtual User SystemReceiver { get; set; }
+        public virtual Receiver Receiver { get;set; }
+        public virtual User ReceiveUser { get; set; }
 
         public SubjectType SubjectType => SubjectType.System;
+
+        public ICollection<OrgTransaction> ReceivedOrgTransactions => Receiver.ReceivedOrgTransactions;
 
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
         {
             throw new NotImplementedException();
         }
 
-        public System(Guid id, User systemReceiver)
+        public System(Guid id, User receiveUser)
         {
             Id = id;
-            SystemReceiver = systemReceiver;
+            ReceiveUser = receiveUser;
+            Receiver = new Receiver(this);
         }
 
         public System()

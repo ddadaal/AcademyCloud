@@ -14,19 +14,23 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<UserDomainAssignment> Users { get; set; } = new List<UserDomainAssignment>();
 
-        public virtual User Payer { get; set; }
+        public virtual User PayUser { get; set; }
 
         public virtual Resources Quota { get; set; }
+        
+        public virtual Payer Payer { get; set; }
+        public virtual Receiver Receiver { get; set; }
 
-        public bool Active => Payer.Active;
 
         public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
 
         public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
 
+        public bool Active => PayUser.Active;
 
-        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } = new List<OrgTransaction>();
-        public virtual ICollection<OrgTransaction> ReceivedOrgTransactions { get; set; } = new List<OrgTransaction>();
+
+        public ICollection<OrgTransaction> PayedOrgTransactions => Payer.PayedOrgTransactions;
+        public ICollection<OrgTransaction> ReceivedOrgTransactions => Receiver.ReceivedOrgTransactions;
 
         public SubjectType SubjectType => SubjectType.Domain;
 
@@ -55,8 +59,11 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public Domain(Guid id, User payer, Resources quota)
         {
             Id = id;
-            Payer = payer;
+            PayUser = payer;
             Quota = quota;
+
+            Payer = new Payer(this);
+            Receiver = new Receiver(this);
         }
 
         public Domain()
