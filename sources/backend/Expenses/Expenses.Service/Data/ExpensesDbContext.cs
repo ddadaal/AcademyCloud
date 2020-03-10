@@ -56,7 +56,6 @@ namespace AcademyCloud.Expenses.Data
                 // init social domain user and system user
                 o.HasData(socialDomainAdmin);
                 o.HasData(systemUser);
-                o.Ignore(e => e.SubjectType);
 
                 o.HasMany(e => e.ReceivedUserTransactions).WithOne(e => e.Receiver).IsRequired();
                 o.HasMany(e => e.PayedUserTransactions).WithOne(e => e.Payer);
@@ -66,10 +65,7 @@ namespace AcademyCloud.Expenses.Data
 
             modelBuilder.Entity<DomainEntity>(o =>
             {
-                o.Ignore(e => e.Active);
                 o.OwnsOne(e => e.Quota);
-                o.Ignore(e => e.SubjectType);
-                o.Ignore(e => e.Resources);
                 o.HasOne(e => e.Payer).WithMany(e => e.Domains);
 
                 o.HasMany(e => e.PayedOrgTransaction).WithOne(e => e.PayerDomain);
@@ -83,15 +79,12 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<UserProjectAssignment>(o =>
             {
                 o.OwnsOne(e => e.Quota);
-                o.Ignore(e => e.Resources);
+                o.OwnsOne(e => e.Resources);
             });
 
             modelBuilder.Entity<Project>(o =>
             {
                 o.OwnsOne(e => e.Quota);
-                o.Ignore(e => e.SubjectType);
-                o.Ignore(e => e.Resources);
-                o.Ignore(e => e.Active);
 
                 o.HasMany(e => e.PayedOrgTransaction).WithOne(e => e.PayerProject);
                 o.HasMany(e => e.ReceivedOrgTransaction).WithOne(e => e.ReceiverProject);
@@ -100,10 +93,6 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<Payer>(o =>
             {
                 o.HasKey(e => e.RecordId);
-                o.Ignore(e => e.Id);
-                o.Ignore(e => e.SubjectType);
-                o.Ignore(e => e.Active);
-
             });
 
             modelBuilder.Entity<UserTransaction>(o =>
