@@ -17,7 +17,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual Resources Quota { get; set; }
         public virtual Resources Resources { get; set; } = Resources.Zero;
 
-        public virtual ICollection<UseCycle> UseCycleRecords { get; set; }
+        public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
 
         public void Settle(Resources resources, decimal price)
         {

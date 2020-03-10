@@ -115,6 +115,14 @@ namespace AcademyCloud.Expenses.Data
             {
                 o.OwnsOne(e => e.Reason);
                 o.Property(e => e.Id).ValueGeneratedNever();
+
+                o.HasOne(e => e.ReceiverSystem).WithMany(e => e.ReceivedOrgTransactions);
+                o.HasOne(e => e.ReceiverDomain).WithMany(e => e.ReceivedOrgTransactions);
+                o.HasOne(e => e.ReceiverProject).WithMany(e => e.ReceivedOrgTransactions);
+
+                o.HasOne(e => e.PayerUser).WithMany(e => e.PayedOrgTransactions);
+                o.HasOne(e => e.PayerProject).WithMany(e => e.PayedOrgTransactions);
+                o.HasOne(e => e.PayerDomain).WithMany(e => e.PayedOrgTransactions);
             });
 
             modelBuilder.Entity<BillingCycle>(o =>

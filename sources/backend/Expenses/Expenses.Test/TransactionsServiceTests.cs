@@ -18,6 +18,7 @@ namespace AcademyCloud.Expenses.Test
             service = new TransactionsService(MockTokenClaimsAccessor(cjdlqTokenClaims), db);
         }
 
+
         [Fact]
         public async Task TestGetAccountTransactions()
         {
@@ -29,20 +30,16 @@ namespace AcademyCloud.Expenses.Test
                 null,
                 cjd
             ));
-
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
             var resp = await service.GetAccountTransactions(new Protos.Transactions.GetAccountTransactionsRequest(), TestContext);
 
             Assert.Single(resp.Transactions);
         }
 
-        [Fact]
-        public async Task TestGetDomainTransactions()
+        private void NjuPayManagementFee()
         {
-            service = new TransactionsService(MockTokenClaimsAccessor(njuadminnjuTokenClaims), db);
             var system = db.Systems.First();
-
             nju.PayedOrgTransactions.Add(new Domain.Entities.OrgTransaction(
                 Guid.NewGuid(),
                 DateTime.UtcNow,
@@ -58,6 +55,14 @@ namespace AcademyCloud.Expenses.Test
                     nju.Payer,
                     system.SystemReceiver
             )));
+        }
+
+        [Fact]
+        public async Task TestGetDomainTransactions()
+        {
+            service = new TransactionsService(MockTokenClaimsAccessor(njuadminnjuTokenClaims), db);
+
+            NjuPayManagementFee();
 
             await db.SaveChangesAsync();
 
@@ -99,5 +104,67 @@ namespace AcademyCloud.Expenses.Test
 
             Assert.Single(resp.Transactions);
         }
+
+        private void CjdPayManagementFee()
+        {
+            var system = db.Systems.First();
+
+            cjd.PayedOrgTransactions.Add(new Domain.Entities.OrgTransaction(
+                Guid.NewGuid(),
+                DateTime.UtcNow,
+                -10,
+                Domain.ValueObjects.TransactionReason.UserManagement,
+                cjd,
+                system,
+                new Domain.Entities.UserTransaction(
+                    Guid.NewGuid(),
+                    DateTime.UtcNow,
+                    -10,
+                    Domain.ValueObjects.TransactionReason.UserManagement,
+                    cjd,
+                    system.SystemReceiver
+                    )));
+        }
+
+        [Fact]
+        public async Task TestGetSystemTransactions()
+        {
+            NjuPayManagementFee();
+            CjdPayManagementFee();
+
+            db.SaveChanges();
+
+            service = new TransactionsService(MockTokenClaimsAccessor(njuadminnjuTokenClaims), db);
+
+            var resp = await service.GetSystemTransactions(new Protos.Transactions.GetSystemTransactionsRequest { }, TestContext);
+
+            Assert.Equal(2, resp.Transactions.Count);
+        }
+
+        [Fact]
+        public async Task TestLimit()
+        {
+            NjuPayManagementFee();
+            CjdPayManagementFee();
+
+            db.SaveChanges();
+
+            service = new TransactionsService(MockTokenClaimsAccessor(njuadminnjuTokenClaims), db);
+
+            var resp = await service.GetSystemTransactions(new Protos.Transactions.GetSystemTransactionsRequest { }, TestContext);
+
+            Assert.Equal(2, resp.Transactions.Count);
+
+            resp = await service.GetSystemTransactions(new Protos.Transactions.GetSystemTransactionsRequest { Limit = 2 }, TestContext);
+            Assert.Equal(2, resp.Transactions.Count);
+
+            resp = await service.GetSystemTransactions(new Protos.Transactions.GetSystemTransactionsRequest { Limit = 1 }, TestContext);
+            Assert.Equal(1, resp.Transactions.Count);
+
+            resp = await service.GetSystemTransactions(new Protos.Transactions.GetSystemTransactionsRequest { Limit = -1 }, TestContext);
+            Assert.Equal(2, resp.Transactions.Count);
+        }
+
+
     }
 }

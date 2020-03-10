@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
+    /// <summary>
+    /// Represents a transaction from organization or user (user only pays management fee) to organization
+    /// Receiver cannot be UserProjectAssignment since User doesn't pay for their resources use
+    /// </summary>
     public class OrgTransaction
     {
         public Guid Id { get; set; }
@@ -25,8 +29,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual System? ReceiverSystem { get; set; }
         public virtual Domain? ReceiverDomain { get; set; }
         public virtual Project? ReceiverProject { get; set; }
-        public virtual User? ReceiverUser { get; set; }
-        public IReceiver Receiver => (ReceiverSystem as IReceiver) ?? (ReceiverDomain as IReceiver) ?? (ReceiverProject as IReceiver) ?? (ReceiverUser as IReceiver)!;
+
+        public IReceiver Receiver => (ReceiverSystem as IReceiver) ?? (ReceiverDomain as IReceiver) ?? (ReceiverProject as IReceiver)!;
 
 
         public virtual UserTransaction UserTransaction { get; set; }
@@ -64,9 +68,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
                     break;
                 case Project project:
                     ReceiverProject = project;
-                    break;
-                case User user:
-                    ReceiverUser = user;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(receiver));
