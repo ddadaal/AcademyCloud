@@ -31,12 +31,16 @@ namespace AcademyCloud.Expenses.Services
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             var transactions = user.ReceivedUserTransactions
-                .Concat(user.PayedUserTransactions)
-                .Select(x => x.ToGrpc());
+                .Concat(user.PayedUserTransactions);
+
+            if (request.Limit >= 0)
+            {
+                transactions = transactions.Take(request.Limit);
+            }
 
             return new GetAccountTransactionsResponse
             {
-                Transactions = { transactions }
+                Transactions = { transactions.Select(x => x.ToGrpc()) }
             };
         }
 
@@ -50,12 +54,17 @@ namespace AcademyCloud.Expenses.Services
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
             var transactions = domain.ReceivedOrgTransactions
-                .Concat(domain.PayedOrgTransactions)
-                .Select(x => x.ToGrpc());
+                .Concat(domain.PayedOrgTransactions);
+
+            if (request.Limit >= 0)
+
+            {
+                transactions = transactions.Take(request.Limit);
+            }
 
             return new GetDomainTransactionsResponse
             {
-                Transactions = { transactions }
+                Transactions = { transactions.Select(x => x.ToGrpc()) }
             };
 
         }
@@ -71,13 +80,18 @@ namespace AcademyCloud.Expenses.Services
                 .FirstOrDefault(x => x.Id.ToString() == request.ProjectId)
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
+
             var transactions = project.ReceivedOrgTransactions
-                .Concat(project.PayedOrgTransactions)
-                .Select(x => x.ToGrpc());
+                .Concat(project.PayedOrgTransactions);
+
+            if (request.Limit >= 0)
+            {
+                transactions = transactions.Take(request.Limit);
+            }
 
             return new GetProjectTransactionsResponse
             {
-                Transactions = { transactions }
+                Transactions = { transactions.Select(x => x.ToGrpc())}
             };
         }
 
@@ -86,12 +100,16 @@ namespace AcademyCloud.Expenses.Services
             // let it throw if there is no system instance
             var system = await dbContext.Systems.FirstAsync();
 
-            var transactions = system.ReceivedOrgTransactions
-                .Select(x => x.ToGrpc());
+            var transactions = system.ReceivedOrgTransactions.AsQueryable();
+            
+            if (request.Limit >= 0)
+            {
+                transactions = transactions.Take(request.Limit);
+            }
 
             return new GetSystemTransactionsResponse
             {
-                Transactions = { transactions }
+                Transactions = { transactions.Select(x => x.ToGrpc()) }
             };
         }
     }
