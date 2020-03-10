@@ -10,7 +10,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
     {
         public Guid Id { get; set; }
 
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
 
         public virtual User Payer { get; set; }
 
@@ -18,9 +18,9 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public bool Active => Payer.Active;
 
-        public virtual ICollection<UseCycle> UseCycleRecords { get; set; }
+        public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
 
-        public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; }
+        public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
 
         public SubjectType SubjectType => SubjectType.Domain;
 
@@ -44,6 +44,17 @@ namespace AcademyCloud.Expenses.Domain.Entities
         void IUseCycleSubject.Settle(Resources resources, decimal price)
         {
             throw new NotImplementedException();
+        }
+
+        public Domain(Guid id, User payer, Resources quota)
+        {
+            Id = id;
+            Payer = payer;
+            Quota = quota;
+        }
+
+        public Domain()
+        {
         }
     }
 }

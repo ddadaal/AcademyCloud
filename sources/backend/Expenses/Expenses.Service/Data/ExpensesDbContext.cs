@@ -6,11 +6,14 @@ using AcademyCloud.Expenses.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using DomainEntity = AcademyCloud.Expenses.Domain.Entities.Domain;
 using SystemEntity = AcademyCloud.Expenses.Domain.Entities.System;
+using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Expenses.Data
 {
     public class ExpensesDbContext : DbContext
     {
+        public readonly Guid SystemGuid = Guid.Parse("FB7D021C-7284-43C5-92CA-F1164F61B808");
+
         public DbSet<UserTransaction> UserTransactions { get; set; }
 
         public DbSet<OrgTransaction> OrgTransactions { get; set; }
@@ -37,13 +40,36 @@ namespace AcademyCloud.Expenses.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the models
+            var systemUser = new User(SystemUserId, 0);
+            var socialDomainAdmin = new User(SocialDomainAdminId, 0);
+
+            modelBuilder.Entity<SystemEntity>(o =>
+            {
+                // init system
+                o.HasData(new { Id = SystemGuid, SystemReceiverId = systemUser.Id });
+            });
+
+            modelBuilder.Entity<User>(o =>
+            {
+                // init social domain user and system user
+                o.HasData(socialDomainAdmin);
+                o.HasData(systemUser);
+                o.Ignore(e => e.SubjectType);
+            });
 
             modelBuilder.Entity<DomainEntity>(o =>
             {
                 o.Ignore(e => e.Active);
+                o.OwnsOne(e => e.Quota);
+                o.Ignore(e => e.SubjectType);
+                o.Ignore(e => e.Resources);
                 o.HasOne(e => e.Payer).WithMany(e => e.Domains);
+
+                // init social domain
+                o.HasData(new { Id = SocialDomainId, PayerId = socialDomainAdmin.Id, Resources = Domain.ValueObjects.Resources.Zero });
+
             });
-            
+
             modelBuilder.Entity<UserProjectAssignment>(o =>
             {
                 o.OwnsOne(e => e.Quota);
@@ -58,17 +84,6 @@ namespace AcademyCloud.Expenses.Data
                 o.Ignore(e => e.Active);
             });
 
-            modelBuilder.Entity<User>(o =>
-            {
-                o.Ignore(e => e.SubjectType);
-            });
-
-            modelBuilder.Entity<DomainEntity>(o =>
-            {
-                o.OwnsOne(e => e.Quota);
-                o.Ignore(e => e.SubjectType);
-                o.Ignore(e => e.Resources);
-            });
 
             modelBuilder.Entity<UserTransaction>(o =>
             {

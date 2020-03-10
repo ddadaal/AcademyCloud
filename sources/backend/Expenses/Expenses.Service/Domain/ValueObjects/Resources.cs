@@ -33,6 +33,6 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
             return new Resources(op1.Cpu + op2.Cpu, op1.Memory + op2.Memory, op1.Storage + op2.Storage);
         }
 
-        public static readonly Resources Zero = new Resources(0, 0, 0);
+        public static Resources Zero => new Resources(0, 0, 0);
     }
 }

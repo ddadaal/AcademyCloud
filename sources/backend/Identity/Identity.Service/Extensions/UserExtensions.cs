@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Protos.Authentication;
+using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Identity.Extensions
 {
@@ -31,7 +32,7 @@ namespace AcademyCloud.Identity.Extensions
             var scopes = user.Projects.Select(x => new Scope()
             {
                 System = false,
-                Social = x.Project.Domain.Id == IdentityDbContext.SocialDomainId,
+                Social = x.Project.Domain.Id == SocialDomainId,
                 DomainId = x.Project.Domain.Id.ToString(),
                 DomainName = x.Project.Domain.Name,
                 ProjectId = x.Project.Id.ToString(),
@@ -50,7 +51,7 @@ namespace AcademyCloud.Identity.Extensions
                 .Select(x => new Scope()
                 {
                     System = false,
-                    Social = x.Domain.Id == IdentityDbContext.SocialDomainId,
+                    Social = x.Domain.Id == SocialDomainId,
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
                     Role = (Protos.Common.UserRole)x.Role,

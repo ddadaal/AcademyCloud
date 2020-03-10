@@ -10,6 +10,7 @@ using AcademyCloud.Shared;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Identity.Services
 {
@@ -143,7 +144,7 @@ namespace AcademyCloud.Identity.Services
             dbContext.Users.Add(newUser);
 
             // Create a social project whose project name is the new user
-            Guid socialDomainId = IdentityDbContext.SocialDomainId;
+            Guid socialDomainId = SocialDomainId;
             var socialDomain = await dbContext.Domains.FirstAsync((domain) => domain.Id == socialDomainId);
             var newProject = new Project(Guid.NewGuid(), request.Username, socialDomain);
             dbContext.Projects.Add(newProject);

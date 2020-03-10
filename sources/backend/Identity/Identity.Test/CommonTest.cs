@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Identity.Test
 {
@@ -83,8 +84,8 @@ namespace AcademyCloud.Identity.Test
 
             FillData(db);
 
-            db.Entry(db.Users.Find(IdentityDbContext.SocialDomainAdminId)).Collection(x => x.Domains).Load();
-            db.Entry(db.Domains.Find(IdentityDbContext.SocialDomainId)).Collection(x => x.Users).Load();
+            db.Entry(db.Users.Find(SocialDomainAdminId)).Collection(x => x.Domains).Load();
+            db.Entry(db.Domains.Find(SocialDomainId)).Collection(x => x.Users).Load();
 
         }
 

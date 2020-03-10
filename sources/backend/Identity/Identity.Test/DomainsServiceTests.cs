@@ -8,6 +8,7 @@ using AcademyCloud.Identity.Domain.ValueObjects;
 using AcademyCloud.Identity.Protos.Domains;
 using AcademyCloud.Identity.Protos;
 using AcademyCloud.Identity.Services;
+using static AcademyCloud.Shared.Constants;
 using Xunit;
 
 namespace AcademyCloud.Identity.Test
@@ -33,7 +34,7 @@ namespace AcademyCloud.Identity.Test
         [Fact]
         public async Task GetUsersOfDomain()
         {
-            var resp = await service.GetUsersOfDomain(new GetUsersOfDomainRequest { DomainId = IdentityDbContext.SocialDomainId.ToString() }, TestContext);
+            var resp = await service.GetUsersOfDomain(new GetUsersOfDomainRequest { DomainId = SocialDomainId.ToString() }, TestContext);
 
             Assert.Single(resp.Admins);
             Assert.Equal("Social Admin", resp.Admins[0].Name);

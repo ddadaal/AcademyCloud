@@ -29,6 +29,11 @@ namespace AcademyCloud.Shared
             ProjectId = projectId;
             Role = role;
         }
+        public TokenClaims(bool system, bool social, Guid userId, Guid domainId, Guid? projectId, UserRole role)
+            : this(system, social, userId.ToString(), domainId.ToString(), projectId?.ToString(), role)
+        {
+        }
+
 
         public bool IsSystem => System;
 

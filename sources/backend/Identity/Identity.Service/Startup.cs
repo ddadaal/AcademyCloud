@@ -83,8 +83,8 @@ namespace AcademyCloud.Identity
             dbContext.Database.EnsureCreated();
 
             // forcefully reload the social user and social domain's relationships
-            dbContext.Entry(dbContext.Users.Find(IdentityDbContext.SocialDomainAdminId)).Collection(x => x.Domains).Load();
-            dbContext.Entry(dbContext.Domains.Find(IdentityDbContext.SocialDomainId)).Collection(x => x.Users).Load();
+            dbContext.Entry(dbContext.Users.Find(SocialDomainAdminId)).Collection(x => x.Domains).Load();
+            dbContext.Entry(dbContext.Domains.Find(SocialDomainId)).Collection(x => x.Users).Load();
 
 
             app.UseRouting();

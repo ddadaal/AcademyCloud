@@ -15,13 +15,25 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual User User { get; set; }
 
         public virtual Resources Quota { get; set; }
-        public virtual Resources Resources { get; set; }
+        public virtual Resources Resources { get; set; } = Resources.Zero;
 
         public virtual ICollection<UseCycle> UseCycleRecords { get; set; }
 
         public void Settle(Resources resources, decimal price)
         {
             throw new NotImplementedException();
+        }
+
+        public UserProjectAssignment(Guid id, User user, Project project,  Resources quota)
+        {
+            Id = id;
+            User = user;
+            Project = project;
+            Quota = quota;
+        }
+
+        public UserProjectAssignment()
+        {
         }
     }
 }

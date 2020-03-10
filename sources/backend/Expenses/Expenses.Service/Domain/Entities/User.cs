@@ -10,18 +10,18 @@ namespace AcademyCloud.Expenses.Domain.Entities
     {
         public Guid Id { get; set; }
 
-        public decimal Balance { get; set; }
+        public decimal Balance { get; set; } = 0;
 
-        public virtual ICollection<UserProjectAssignment> Projects { get; set; }
+        public virtual ICollection<UserProjectAssignment> Projects { get; set; } = new List<UserProjectAssignment>();
 
-        public virtual ICollection<Domain> Domains { get; set; }
+        public virtual ICollection<Domain> Domains { get; set; } = new List<Domain>();
 
-        public bool Active { get; set; }
+        public bool Active { get; set; } = true;
 
         public SubjectType SubjectType => SubjectType.User;
 
-        public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; }
-        public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; }
+        public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; } = new List<UserTransaction>();
+        public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; } = new List<UserTransaction>();
 
         public void ApplyTransaction(UserTransaction transaction)
         {
@@ -65,6 +65,16 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
         {
             throw new NotImplementedException();
+        }
+
+        public User(Guid id, decimal balance)
+        {
+            Id = id;
+            Balance = balance;
+        }
+
+        public User()
+        {
         }
     }
 }

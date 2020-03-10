@@ -10,6 +10,7 @@ using AcademyCloud.Identity.Protos.Account;
 using AcademyCloud.Identity.Services;
 using Xunit;
 using static AcademyCloud.Identity.Test.Helpers.AuthenticatedCallContext;
+using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Identity.Test
 {
@@ -106,7 +107,7 @@ namespace AcademyCloud.Identity.Test
             var user = db.Users.First(x => x.Username == "test");
             Assert.Equal(9, db.Users.Count());
 
-            var socialDomain = db.Domains.Find(IdentityDbContext.SocialDomainId);
+            var socialDomain = db.Domains.Find(SocialDomainId);
             Assert.Equal(2, socialDomain.Users.Count());
             Assert.Single(socialDomain.Projects);
 
