@@ -93,6 +93,7 @@ namespace AcademyCloud.Expenses.Data
                 o.OwnsOne(e => e.Reason);
                 o.HasOne(e => e.Payer).WithMany(e => e.PayedUserTransactions);
                 o.HasOne(e => e.Receiver).WithMany(e => e.ReceivedUserTransactions).IsRequired();
+                o.Property(e => e.Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<OrgTransaction>(o =>

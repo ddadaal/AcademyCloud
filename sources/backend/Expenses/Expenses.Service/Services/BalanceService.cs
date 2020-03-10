@@ -38,12 +38,7 @@ namespace AcademyCloud.Expenses.Services
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
-            var transaction = user.Charge(request.Amount);
-
-            // The transaction added inside charge is set to Modified state
-            // which should be Added state
-            // it's definitely a bug
-            dbContext.Entry(transaction).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+            user.Charge(request.Amount);
 
             await dbContext.SaveChangesAsync();
 

@@ -10,18 +10,18 @@ namespace AcademyCloud.Expenses.Domain.Entities
     {
         public Guid Id { get; set; }
 
-        public decimal Balance { get; set; }
+        public decimal Balance { get; set; } = 0;
 
-        public virtual ICollection<UserProjectAssignment> Projects { get; set; }
+        public virtual ICollection<UserProjectAssignment> Projects { get; set; } = new List<UserProjectAssignment>();
 
-        public virtual ICollection<Domain> Domains { get; set; }
+        public virtual ICollection<Domain> Domains { get; set; } = new List<Domain>();
 
         public bool Active { get; set; } = true;
 
         public SubjectType SubjectType => SubjectType.User;
 
-        public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; }
-        public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; }
+        public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; } = new List<UserTransaction>();
+        public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; } = new List<UserTransaction>();
 
         public void ApplyTransaction(UserTransaction transaction)
         {
@@ -51,11 +51,10 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         }
 
-        public UserTransaction Charge(decimal amount)
+        public void Charge(decimal amount)
         {
             var transaction = new UserTransaction(Guid.NewGuid(), DateTime.UtcNow, amount, new TransactionReason(TransactionType.Charge, ""), null, this);
             ApplyTransaction(transaction);
-            return transaction;
         }
 
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
@@ -72,10 +71,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
         {
             Id = id;
             Balance = balance;
-            Projects = new List<UserProjectAssignment>();
-            ReceivedUserTransactions = new List<UserTransaction>();
-            PayedUserTransactions = new List<UserTransaction>();
-            Domains = new List<Domain>();
         }
 
         public User()
