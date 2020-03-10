@@ -22,11 +22,6 @@ message Resources {
   int32 storage = 3;
 }
 
-enum BillSubjectType {
-  Domain = 0;
-  Project = 1;
-  User = 2;
-}
 
 message CurrentUsedBilling {
   string subjectId = 1;
@@ -61,7 +56,7 @@ message HistoryAllocatedBilling {
 }
 
 message GetCurrentAllocatedBillingsRequest {
-  BillSubjectType subjectType = 1;
+  common.SubjectType subjectType = 1;
 }
 
 message GetCurrentAllocatedBillingsResponse {
@@ -69,7 +64,7 @@ message GetCurrentAllocatedBillingsResponse {
 }
 
 message GetCurrentAllocatedBillingRequest {
-  BillSubjectType subjectType = 1;
+  common.SubjectType subjectType = 1;
   string id = 2;
 }
 
@@ -78,7 +73,7 @@ message GetCurrentAllocatedBillingResponse {
 }
 
 message GetCurrentUsedBillingsRequest {
-  BillSubjectType subjectType = 1; 
+  common.SubjectType subjectType = 1; 
 }
 
 message GetCurrentUsedBillingsResponse {
@@ -86,7 +81,7 @@ message GetCurrentUsedBillingsResponse {
 }
 
 message GetCurrentUsedBillingRequest {
-  BillSubjectType subjectType = 1;
+  common.SubjectType subjectType = 1;
   string id = 2;
 }
 
@@ -95,7 +90,7 @@ message GetCurrentUsedBillingResponse {
 }
 
 message GetHistoryAllocatedBillingsRequest {
-  BillSubjectType subjectType = 1;
+  common.SubjectType subjectType = 1;
   string id = 2;
 }
 
@@ -104,7 +99,7 @@ message GetHistoryAllocatedBillingsResponse {
 }
 
 message GetHistoryUsedBillingsRequest {
-  BillSubjectType subjectType = 1;
+  common.SubjectType subjectType = 1;
   string id = 2;
 }
 

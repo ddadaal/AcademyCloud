@@ -49,12 +49,20 @@ message GetSystemTransactionsRequest {
   int32 limit = 1;
 }
 
+message OrgTransactionSubject {
+  string id = 1;
+  common.SubjectType type = 2;
+  string userId = 3; 
+}
+
 message OrgTransaction {
+    
+
   string id = 1;
   google.protobuf.Timestamp time = 2;
   common.DecimalValue amount = 3;
-  string payerId = 4;
-  string receiverId = 5;
+  OrgTransactionSubject payer = 4;
+  OrgTransactionSubject receiver = 5;
   TransactionReason reason = 6;
 }
 

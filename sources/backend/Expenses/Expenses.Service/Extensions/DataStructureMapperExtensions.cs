@@ -36,8 +36,18 @@ namespace AcademyCloud.Expenses.Extensions
                 Amount = transaction.Amount,
                 Reason = transaction.Reason.ToGrpc(),
                 Time = Timestamp.FromDateTime(transaction.Time),
-                PayerId = transaction.Payer.Id.ToString(),
-                ReceiverId = transaction.Receiver.Id.ToString(),
+                Payer = new Protos.Transactions.OrgTransactionSubject
+                {
+                    Id = transaction.Payer.Id.ToString(),
+                    Type = (Protos.Common.SubjectType) transaction.Payer.SubjectType,
+                    UserId = transaction.UserTransaction.Payer!.Id.ToString(),
+                },
+                Receiver = new Protos.Transactions.OrgTransactionSubject
+                {
+                    Id = transaction.Receiver.Id.ToString(),
+                    Type = (Protos.Common.SubjectType) transaction.Receiver.SubjectType,
+                    UserId = transaction.UserTransaction.Receiver!.Id.ToString(),
+                }
             };
         }
     }

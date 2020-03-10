@@ -20,3 +20,10 @@ message DecimalValue {
   // For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
   int32 nanos = 2;
 }
+
+enum SubjectType {
+  System = 0;
+  Domain = 1;
+  Project = 2;
+  User = 3;
+}
