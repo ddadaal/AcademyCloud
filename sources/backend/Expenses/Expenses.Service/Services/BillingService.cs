@@ -1,5 +1,8 @@
-﻿using AcademyCloud.Expenses.Protos.Billing;
+﻿using AcademyCloud.Expenses.Data;
+using AcademyCloud.Expenses.Extensions;
+using AcademyCloud.Expenses.Protos.Billing;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,36 +10,46 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Services
 {
+    [Authorize]
     public class BillingService : Billing.BillingBase
     {
-        public override Task<GetCurrentAllocatedBillingResponse> GetCurrentAllocatedBilling(GetCurrentAllocatedBillingRequest request, ServerCallContext context)
+        private TokenClaimsAccessor tokenClaimsAccessor;
+        private ExpensesDbContext dbContext;
+
+        public BillingService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext)
         {
-            return base.GetCurrentAllocatedBilling(request, context);
+            this.tokenClaimsAccessor = tokenClaimsAccessor;
+            this.dbContext = dbContext;
         }
 
-        public override Task<GetCurrentAllocatedBillingsResponse> GetCurrentAllocatedBillings(GetCurrentAllocatedBillingsRequest request, ServerCallContext context)
+        public override async Task<GetCurrentAllocatedBillingResponse> GetCurrentAllocatedBilling(GetCurrentAllocatedBillingRequest request, ServerCallContext context)
         {
-            return base.GetCurrentAllocatedBillings(request, context);
+            return await base.GetCurrentAllocatedBilling(request, context);
         }
 
-        public override Task<GetCurrentUsedBillingResponse> GetCurrentUsedBilling(GetCurrentUsedBillingRequest request, ServerCallContext context)
+        public override async Task<GetCurrentAllocatedBillingsResponse> GetCurrentAllocatedBillings(GetCurrentAllocatedBillingsRequest request, ServerCallContext context)
         {
-            return base.GetCurrentUsedBilling(request, context);
+            return await base.GetCurrentAllocatedBillings(request, context);
         }
 
-        public override Task<GetCurrentUsedBillingsResponse> GetCurrentUsedBillings(GetCurrentUsedBillingsRequest request, ServerCallContext context)
+        public override async Task<GetCurrentUsedBillingResponse> GetCurrentUsedBilling(GetCurrentUsedBillingRequest request, ServerCallContext context)
         {
-            return base.GetCurrentUsedBillings(request, context);
+            return await base.GetCurrentUsedBilling(request, context);
         }
 
-        public override Task<GetHistoryAllocatedBillingsResponse> GetHistoryAllocatedBillings(GetHistoryAllocatedBillingsRequest request, ServerCallContext context)
+        public override async Task<GetCurrentUsedBillingsResponse> GetCurrentUsedBillings(GetCurrentUsedBillingsRequest request, ServerCallContext context)
         {
-            return base.GetHistoryAllocatedBillings(request, context);
+            return await base.GetCurrentUsedBillings(request, context);
         }
 
-        public override Task<GetHistoryUsedBillingsResponse> GetHistoryUsedBillings(GetHistoryUsedBillingsRequest request, ServerCallContext context)
+        public override async Task<GetHistoryAllocatedBillingsResponse> GetHistoryAllocatedBillings(GetHistoryAllocatedBillingsRequest request, ServerCallContext context)
         {
-            return base.GetHistoryUsedBillings(request, context);
+            return await base.GetHistoryAllocatedBillings(request, context);
+        }
+
+        public override async Task<GetHistoryUsedBillingsResponse> GetHistoryUsedBillings(GetHistoryUsedBillingsRequest request, ServerCallContext context)
+        {
+            return await base.GetHistoryUsedBillings(request, context);
         }
     }
 }

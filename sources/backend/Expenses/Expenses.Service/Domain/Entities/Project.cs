@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
+    /// <summary>
+    /// Dummy implementation to persist any type of IPayer into the database
+    /// </summary>
     public class Project: IPayer, IReceiver, IBillingCycleSubject, IUseCycleSubject
     {
         public Guid Id { get; set; }
@@ -22,6 +25,9 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
 
         public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
+
+        public virtual ICollection<OrgTransaction> PayedOrgTransaction { get; set; } = new List<OrgTransaction>();
+        public virtual ICollection<OrgTransaction> ReceivedOrgTransaction { get; set; } = new List<OrgTransaction>();
 
         public SubjectType SubjectType => SubjectType.Project;
 

@@ -22,6 +22,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<UserTransaction> ReceivedUserTransactions { get; set; } = new List<UserTransaction>();
         public virtual ICollection<UserTransaction> PayedUserTransactions { get; set; } = new List<UserTransaction>();
+        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } = new List<OrgTransaction>();
 
         public void ApplyTransaction(UserTransaction transaction)
         {

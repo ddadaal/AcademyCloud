@@ -6,9 +6,11 @@ using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Protos.Balance;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademyCloud.Expenses.Services
 {
+    [Authorize]
     public class BalanceService : Balance.BalanceBase
     {
         private TokenClaimsAccessor tokenClaimsAccessor;

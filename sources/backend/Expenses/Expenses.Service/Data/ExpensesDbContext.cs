@@ -47,6 +47,8 @@ namespace AcademyCloud.Expenses.Data
             {
                 // init system
                 o.HasData(new { Id = SystemGuid, SystemReceiverId = systemUser.Id });
+
+                o.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.ReceiverSystem);
             });
 
             modelBuilder.Entity<User>(o =>
@@ -58,6 +60,8 @@ namespace AcademyCloud.Expenses.Data
 
                 o.HasMany(e => e.ReceivedUserTransactions).WithOne(e => e.Receiver).IsRequired();
                 o.HasMany(e => e.PayedUserTransactions).WithOne(e => e.Payer);
+
+                o.HasMany(e => e.PayedOrgTransactions).WithOne(e => e.PayerUser);
             });
 
             modelBuilder.Entity<DomainEntity>(o =>
@@ -67,6 +71,9 @@ namespace AcademyCloud.Expenses.Data
                 o.Ignore(e => e.SubjectType);
                 o.Ignore(e => e.Resources);
                 o.HasOne(e => e.Payer).WithMany(e => e.Domains);
+
+                o.HasMany(e => e.PayedOrgTransaction).WithOne(e => e.PayerDomain);
+                o.HasMany(e => e.ReceivedOrgTransaction).WithOne(e => e.ReceiverDomain);
 
                 // init social domain
                 o.HasData(new { Id = SocialDomainId, PayerId = socialDomainAdmin.Id, Resources = Domain.ValueObjects.Resources.Zero });
@@ -85,8 +92,19 @@ namespace AcademyCloud.Expenses.Data
                 o.Ignore(e => e.SubjectType);
                 o.Ignore(e => e.Resources);
                 o.Ignore(e => e.Active);
+
+                o.HasMany(e => e.PayedOrgTransaction).WithOne(e => e.PayerProject);
+                o.HasMany(e => e.ReceivedOrgTransaction).WithOne(e => e.ReceiverProject);
             });
 
+            modelBuilder.Entity<Payer>(o =>
+            {
+                o.HasKey(e => e.RecordId);
+                o.Ignore(e => e.Id);
+                o.Ignore(e => e.SubjectType);
+                o.Ignore(e => e.Active);
+
+            });
 
             modelBuilder.Entity<UserTransaction>(o =>
             {
@@ -99,8 +117,6 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<OrgTransaction>(o =>
             {
                 o.OwnsOne(e => e.Reason);
-                o.OwnsOne(e => e.Payer);
-                o.OwnsOne(e => e.Receiver);
             });
 
             modelBuilder.Entity<BillingCycle>(o =>

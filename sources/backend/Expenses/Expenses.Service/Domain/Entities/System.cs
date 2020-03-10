@@ -14,6 +14,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<User> SystemUsers { get; set; } = new List<User>();
 
+        public virtual ICollection<OrgTransaction> ReceivedOrgTransactions { get; set; } = new List<OrgTransaction>();
+
         public virtual User SystemReceiver { get; set; }
 
         public SubjectType SubjectType => SubjectType.System;

@@ -26,6 +26,9 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public Resources Resources => Projects.Select(x => x.Resources).Aggregate(Resources.Zero, (s, a) => s + a);
 
+        public virtual ICollection<OrgTransaction> PayedOrgTransaction { get; set; } = new List<OrgTransaction>();
+        public virtual ICollection<OrgTransaction> ReceivedOrgTransaction { get; set; } = new List<OrgTransaction>();
+
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
         {
             throw new NotImplementedException();
