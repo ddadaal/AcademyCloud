@@ -32,21 +32,39 @@ namespace AcademyCloud.API.Controllers.Expenses
                 Transactions = expensesResp.Transactions.Select(x => x.ToApiModel()),
             };
         }
-        
-        private async Task<OrgTransaction> ConvertToApiTransaction(AcademyCloud.Expenses.Protos.Transactions.OrgTransaction grpcTransaction)
-        {
-            return new OrgTransaction
-            {
-                Id = grpcTransaction.Id,
-                Amount = grpcTransaction.Amount,
-                PayerId = grpcTransaction.Payer.Id,
-                PayerName = grpcTransaction.Payer.Id,
-                ReceiverId = grpcTransaction.Receiver.Id,
-                ReceiverName = grpcTransaction.Receiver.Id,
-                Reason = grpcTransaction.Reason,
-                Time = grpcTransaction.Time.ToDateTime(),
-            };
 
+        private async Task<IEnumerable<OrgTransaction>> ConvertToApiModels(IEnumerable<AcademyCloud.Expenses.Protos.Transactions.OrgTransaction> input)
+        {
+            // Pick all ids and types
+            var subjects = input.Select(x => x.Payer)
+                .Concat(input.Select(x => x.Receiver))
+                .Select(x => new AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.Subject
+                {
+                    Id = x.Id,
+                    Type = (AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.SubjectType)x.Type,
+                });
+
+            // Send to Identity service to check their names
+            var nameMapResp = await (await factory.GetInteropClientAsync())
+                .GetNamesAsync(new AcademyCloud.Identity.Protos.Interop.GetNamesRequest
+                {
+                    Subjects = { subjects }
+                });
+
+            var nameMap = nameMapResp.IdNameMap;
+
+            // Set their names to their respective transaction
+            return input.Select(x => new OrgTransaction
+            {
+                Id = x.Id,
+                Amount = x.Amount,
+                PayerId = x.Payer.Id,
+                PayerName = nameMap[x.Payer.Id],
+                ReceiverId = x.Receiver.Id,
+                ReceiverName = nameMap[x.Receiver.Id],
+                Reason = x.Reason,
+                Time = x.Time.ToDateTime(),
+            });
         }
 
         [HttpGet("system")]
@@ -58,13 +76,12 @@ namespace AcademyCloud.API.Controllers.Expenses
                     Limit = limit
                 });
 
-            var transformed = expensesResp.Transactions.Select(ConvertToApiTransaction);
+            var converted = await ConvertToApiModels(expensesResp.Transactions);
 
-            await Task.WhenAll(transformed);
 
             return new TransactionResponse<OrgTransaction>
             {
-                Transactions = transformed.Select(x => x.Result)
+                Transactions = converted,
             };
         }
 
@@ -77,13 +94,11 @@ namespace AcademyCloud.API.Controllers.Expenses
                     Limit = limit
                 });
 
-            var transformed = expensesResp.Transactions.Select(ConvertToApiTransaction);
-
-            await Task.WhenAll(transformed);
+            var converted = await ConvertToApiModels(expensesResp.Transactions);
 
             return new TransactionResponse<OrgTransaction>
             {
-                Transactions = transformed.Select(x => x.Result)
+                Transactions = converted,
             };
         }
 
@@ -96,13 +111,11 @@ namespace AcademyCloud.API.Controllers.Expenses
                     Limit = limit
                 });
 
-            var transformed = expensesResp.Transactions.Select(ConvertToApiTransaction);
-
-            await Task.WhenAll(transformed);
+            var converted = await ConvertToApiModels(expensesResp.Transactions);
 
             return new TransactionResponse<OrgTransaction>
             {
-                Transactions = transformed.Select(x => x.Result)
+                Transactions = converted,
             };
         }
     }

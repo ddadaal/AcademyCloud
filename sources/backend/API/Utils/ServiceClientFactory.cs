@@ -16,6 +16,7 @@ using Microsoft.Extensions.Primitives;
 using AcademyCloud.Expenses.Protos.Balance;
 using AcademyCloud.Expenses.Protos.Transactions;
 using AcademyCloud.Expenses.Protos.Billing;
+using AcademyCloud.Identity.Protos.Interop;
 
 namespace AcademyCloud.API.Utils
 {
@@ -85,6 +86,10 @@ namespace AcademyCloud.API.Utils
         public async Task<Users.UsersClient> GetUsersClientAsync()
         {
             return new Users.UsersClient(await GetInvoker(IdentityService));
+        }
+        public async Task<Interop.InteropClient> GetInteropClientAsync()
+        {
+            return new Interop.InteropClient(await GetInvoker(IdentityService));
         }
 
         public async Task<Balance.BalanceClient> GetBalanceClient()

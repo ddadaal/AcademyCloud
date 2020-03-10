@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "AcademyCloud.Identity.Protos.Interop";
+
+package interop;
+
+service Interop {
+  rpc GetNames (GetNamesRequest) returns (GetNamesResponse);
+}
+
+message GetNamesRequest {
+  enum SubjectType {
+    System = 0;
+    Domain = 1;
+    Project = 2;
+    User = 3;
+  }
+  message Subject {
+    string id = 1;
+    SubjectType type = 2;
+  }
+  repeated Subject subjects = 1;
+}
+
+message GetNamesResponse {
+  map<string, string> idNameMap = 1;
+}
+

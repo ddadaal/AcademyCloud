@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AcademyCloud.Identity.Services
 {
     [Authorize]
-    public class DomainsService : Protos.Domains.Domains.DomainsBase
+    public class DomainsService : Domains.DomainsBase
     {
         private readonly IdentityDbContext dbContext;
 

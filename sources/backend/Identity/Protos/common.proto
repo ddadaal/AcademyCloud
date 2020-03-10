@@ -27,3 +27,4 @@ message Project {
   repeated User admins = 3;
   repeated User members = 5;
 }
+

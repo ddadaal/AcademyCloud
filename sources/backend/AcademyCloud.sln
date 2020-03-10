@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{AF1A03
 		Identity\Protos\authentication.proto = Identity\Protos\authentication.proto
 		Identity\Protos\common.proto = Identity\Protos\common.proto
 		Identity\Protos\domains.proto = Identity\Protos\domains.proto
+		Identity\Protos\interop.proto = Identity\Protos\interop.proto
 		Identity\Protos\projects.proto = Identity\Protos\projects.proto
 		Identity\Protos\users.proto = Identity\Protos\users.proto
 	EndProjectSection
