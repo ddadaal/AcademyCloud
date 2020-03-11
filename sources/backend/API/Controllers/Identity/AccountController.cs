@@ -70,6 +70,7 @@ namespace AcademyCloud.API.Controllers.Identity
                 .UpdateProfileAsync(new AcademyCloud.Identity.Protos.Account.UpdateProfileRequest()
                 {
                     Email = request.Email,
+                    Name = request.Name,
                 });
 
             return NoContent();

@@ -15,8 +15,8 @@ const getProfile = async () => {
   return profile;
 }
 
-const updateProfile = async ([email]) => {
-  const resp = await service.updateProfile({ email });
+const updateProfile = async ([email, name]: [string, string]) => {
+  const resp = await service.updateProfile(email, name);
   return resp.profile;
 };
 
@@ -46,8 +46,8 @@ export const ProfileForm: React.FC = () => {
   });
 
 
-  const handleSubmit = ({ email }) => {
-    run(email);
+  const handleSubmit = ({ email, name }) => {
+    run(email, name);
   };
 
   return (
@@ -59,6 +59,9 @@ export const ProfileForm: React.FC = () => {
         </Form.Item>
         <Form.Item label={<Localized id={root.username} />} name="username">
           <Input disabled={true} />
+        </Form.Item>
+        <Form.Item rules={[{ required: true, message: required }]} label={<Localized id={root.name} />} name="name" >
+          <Input />
         </Form.Item>
         <Form.Item
           rules={[{ type: "email", message: email }, { required: true, message: required }]}

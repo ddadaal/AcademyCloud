@@ -175,6 +175,7 @@ export default {
             title: "基本信息",
             id: "用户ID",
             username: "用户名",
+            name: "姓名",
             email: "电子邮箱",
             update: "更新",
             opName: "基本信息修改",

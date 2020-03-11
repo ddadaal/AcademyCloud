@@ -154,9 +154,11 @@ namespace AcademyCloud.Identity.Test
             await service.UpdateProfile(new UpdateProfileRequest
             {
                 Email = "1@1.com",
+                Name = "101"
             }, TestContext);
 
             Assert.Equal("1@1.com", cjd.Email);
+            Assert.Equal("101", cjd.Name);
         }
 
     }

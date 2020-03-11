@@ -47,7 +47,10 @@ message Profile {
   string email = 4;
 }
 
-message UpdateProfileRequest { string email = 1; }
+message UpdateProfileRequest {
+  string email = 1;
+  string name = 2;
+}
 
 message UpdateProfileResponse {}
 

@@ -209,6 +209,7 @@ namespace AcademyCloud.Identity.Services
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             user.Email = request.Email;
+            user.Name = request.Name;
 
             await dbContext.SaveChangesAsync();
 

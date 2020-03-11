@@ -7,10 +7,6 @@ export interface ProfileResponse {
   profile: Profile;
 }
 
-export interface UpdateProfileRequest {
-  email?: string;
-}
-
 export interface GetJoinedDomainsResponse {
   domains: UserDomainAssignment[];
 }
@@ -48,11 +44,11 @@ export class AccountService extends HttpService {
     return response;
   }
 
-  async updateProfile(request: UpdateProfileRequest): Promise<ProfileResponse> {
+  async updateProfile(email: string, name: string): Promise<ProfileResponse> {
     const response = await this.fetch<ProfileResponse>({
       method: HttpMethod.PATCH,
       path: "/identity/account/profile",
-      body: request,
+      body: { email, name },
     });
 
     return response;

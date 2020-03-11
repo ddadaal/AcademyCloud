@@ -1,4 +1,4 @@
-import { AccountService, ProfileResponse, UpdateProfileRequest, GetJoinedDomainsResponse, GetJoinableDomainsResponse, GetScopesResponse } from './AccountService';
+import { AccountService, ProfileResponse, GetJoinedDomainsResponse, GetJoinableDomainsResponse, GetScopesResponse } from './AccountService';
 import { makeHttpError } from '../HttpService';
 
 export class AccountServiceMock extends AccountService {
@@ -25,17 +25,19 @@ export class AccountServiceMock extends AccountService {
         id: "e10fcbe0-443e-440f-ba88-2a3dde2f534a",
         username: "test",
         email: "ddadaal@outlook.com",
+        name: "Chen Junda",
       }
     }
   }
 
-  async updateProfile(request: UpdateProfileRequest): Promise<ProfileResponse> {
+  async updateProfile(email: string, name: string): Promise<ProfileResponse> {
     await this.delay();
     return {
       profile: {
         id: "e10fcbe0-443e-440f-ba88-2a3dde2f534a",
         username: "test",
-        email: request.email ?? "ddadaal@outlook.com",
+        email: email ?? "ddadaal@outlook.com",
+        name: name,
       }
     }
   }

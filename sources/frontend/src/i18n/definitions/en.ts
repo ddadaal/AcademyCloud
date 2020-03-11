@@ -175,6 +175,8 @@ export default {
             title: "Basic Information",
             id: "User ID",
             username: "Username",
+            name: "Name",
+
             email: "Email",
             update: "Update",
             opName: "Basic information update",
