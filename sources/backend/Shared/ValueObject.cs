@@ -7,6 +7,8 @@ namespace AcademyCloud.Shared
 {
     public abstract class ValueObject
     {
+        
+
         protected static bool EqualOperator(ValueObject left, ValueObject right)
         {
             if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))

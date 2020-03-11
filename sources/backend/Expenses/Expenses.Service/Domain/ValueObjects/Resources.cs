@@ -37,11 +37,25 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
             Storage = storage;
         }
 
+
+        public static Resources Zero => new Resources(0, 0, 0);
+
+        public Resources Clone()
+        {
+            return new Resources(Cpu, Memory, Storage);
+        }
+
+        public static Resources operator *(Resources op, int times)
+        {
+            return new Resources(op.Cpu * times, op.Memory * times, op.Storage * times);
+        }
+        public static Resources operator *(int times, Resources resources)
+        {
+            return resources * times;
+        }
         public static Resources operator +(Resources op1, Resources op2)
         {
             return new Resources(op1.Cpu + op2.Cpu, op1.Memory + op2.Memory, op1.Storage + op2.Storage);
         }
-
-        public static Resources Zero => new Resources(0, 0, 0);
     }
 }
