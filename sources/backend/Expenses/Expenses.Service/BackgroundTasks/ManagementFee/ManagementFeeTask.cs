@@ -1,6 +1,7 @@
 ﻿using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Domain.Entities;
 using AcademyCloud.Expenses.Domain.ValueObjects;
+using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,10 +18,10 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
     public class ManagementFeeTask : BackgroundService
     {
         private readonly ManagementFeeConfiguration configuration;
-        private readonly IServiceProvider provider;
+        private readonly ScopedDbProvider provider;
         private readonly ILogger<ManagementFeeTask> logger;
 
-        public ManagementFeeTask(IOptions<ManagementFeeConfiguration> configuration, IServiceProvider provider, ILogger<ManagementFeeTask> logger)
+        public ManagementFeeTask(IOptions<ManagementFeeConfiguration> configuration, ScopedDbProvider provider, ILogger<ManagementFeeTask> logger)
         {
             this.configuration = configuration.Value;
             this.provider = provider;
@@ -35,30 +36,28 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
 
                 logger.LogDebug($"Start charging management fees at {time}..");
 
-                using var scope = provider.CreateScope();
-
-                var dbContext = scope.ServiceProvider.GetService<ExpensesDbContext>();
-
-                var system = await dbContext.Systems.FirstAsync();
-
-
-                await foreach (var i in dbContext.ManagementFeeEntries.AsAsyncEnumerable())
+                await provider.WithDbContext(async dbContext =>
                 {
-                    if ((time - i.LastSettled).TotalMilliseconds > configuration.ChargeCycleMs)
+                    var system = await dbContext.Systems.FirstAsync();
+
+                    await foreach (var i in dbContext.ManagementFeeEntries.AsAsyncEnumerable())
                     {
-                        logger.LogDebug($"{i} is being charged with management fee {i.Amount}.");
+                        if ((time - i.LastSettled).TotalMilliseconds > configuration.ChargeCycleMs)
+                        {
+                            logger.LogDebug($"{i} is being charged with management fee {i.Amount}.");
 
-                        i.Charge(system, time);
+                            i.Charge(system, time);
 
-                        logger.LogDebug($"Charging {i} for management fee is completed.");
+                            logger.LogDebug($"Charging {i} for management fee is completed.");
+                        }
+                        else
+                        {
+                            logger.LogDebug($"{i} will not be charged with management fee this time.");
+                        }
                     }
-                    else
-                    {
-                        logger.LogDebug($"{i} will not be charged with management fee this time.");
-                    }
-                }
 
-                await dbContext.SaveChangesAsync();
+                    await dbContext.SaveChangesAsync();
+                });
 
                 logger.LogDebug("End charging management fee.");
 

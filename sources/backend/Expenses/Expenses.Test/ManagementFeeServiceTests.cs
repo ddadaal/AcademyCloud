@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.Data;
+using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Test.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -33,6 +34,7 @@ namespace AcademyCloud.Expenses.Test
             var services = new ServiceCollection();
 
             services.AddSingleton(db);
+            services.AddSingleton<ScopedDbProvider>();
             services.AddLogging(o => o.AddConsole());
             services.AddSingleton(mockIOptions.Object);
             services.AddSingleton<ManagementFeeTask>();

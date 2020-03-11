@@ -81,6 +81,8 @@ namespace AcademyCloud.Expenses
 
             services.AddHttpContextAccessor();
 
+            services.AddSingleton<ScopedDbProvider>();
+
             // Add background tasks
             services.AddSingleton<ManagementFeeTask>();
 
