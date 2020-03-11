@@ -23,9 +23,9 @@ namespace AcademyCloud.Expenses.Data.Configurations
             // Must configure the foreign key to 
             // https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key#one-to-one
             // Foreign key is configured on the child side
-            builder.HasOne(e => e.Domain).WithOne(e => e.Payer).HasPrincipalKey<Domain.Entities.Domain>(e => e.Id);
-            builder.HasOne(e => e.Project).WithOne(e => e.Payer).HasPrincipalKey<Project>(e => e.Id);
-            builder.HasOne(e => e.User).WithOne(e => e.Payer).HasPrincipalKey<User>(e => e.Id);
+            builder.HasOne(e => e.Domain).WithOne(e => e.Payer).HasForeignKey<Payer>("DomainId");
+            builder.HasOne(e => e.Project).WithOne(e => e.Payer).HasForeignKey<Payer>("ProjectId");
+            builder.HasOne(e => e.User).WithOne(e => e.Payer).HasForeignKey<Payer>("UserId");
 
             // Setup payer for social domain admin and system user
             builder.HasData(new { Id = SocialDomainAdminId, UserId = SocialDomainAdminId, SubjectType = SubjectType.User });

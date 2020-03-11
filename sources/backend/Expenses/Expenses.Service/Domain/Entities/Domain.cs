@@ -29,7 +29,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         #region Properties and Methods
 
-        public virtual ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
+        public ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
 
         public bool Active => PayUser.Active;
 
@@ -68,6 +68,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
             Payer = new Payer(this);
             Receiver = new Receiver(this);
+            UseCycleSubject = new UseCycleSubject(this);
         }
 
         public Domain()

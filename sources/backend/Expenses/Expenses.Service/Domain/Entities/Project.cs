@@ -67,6 +67,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
             Payer = new Payer(this);
             Receiver = new Receiver(this);
+            UseCycleSubject = new UseCycleSubject(this);
         }
 
         public Project()

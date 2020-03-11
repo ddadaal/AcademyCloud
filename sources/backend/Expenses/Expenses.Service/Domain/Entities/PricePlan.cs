@@ -38,6 +38,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
         /// Sample price plan.
         /// 1 Core, 2 GB RAM and 40 GB Storage causes 50.4 per month.
         /// </summary>
-        public PricePlan Instance = new PricePlan { Cpu = 0.01m, Memory = 0.01m, Storage = 0.001m };
+        public static PricePlan Instance => new PricePlan { Cpu = 0.01m, Memory = 0.01m, Storage = 0.001m };
     }
 }

@@ -12,6 +12,11 @@ using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Shared;
 using Moq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.Threading;
+using Microsoft.Extensions.Hosting;
 
 namespace AcademyCloud.Expenses.Test.Helpers
 {
@@ -112,6 +117,43 @@ namespace AcademyCloud.Expenses.Test.Helpers
             mockHttpAccessor.Setup(x => x.HttpContext).Returns(httpContext);
 
             return new TokenClaimsAccessor(mockHttpAccessor.Object);
+        }
+
+        public TTask ConfigureTask<TTask, TConfiguration>(TConfiguration configuration) 
+            where TConfiguration: class, new()
+            where TTask: class
+        {
+
+            var mockIOptions = new Mock<IOptions<TConfiguration>>();
+            mockIOptions.Setup(x => x.Value).Returns(configuration);
+
+            var services = new ServiceCollection();
+
+            services.AddSingleton(db);
+            services.AddSingleton<ScopedDbProvider>();
+            services.AddLogging(o => o.AddConsole());
+            services.AddSingleton(mockIOptions.Object);
+            services.AddSingleton<TTask>();
+
+            var provider = services.BuildServiceProvider();
+
+            return provider.GetService<TTask>();
+        }
+
+        public async Task WaitForTaskForExecuteCycles<TTask>(TTask task, int spanMs, int times)
+            where TTask: IHostedService
+        {
+
+            var token = new CancellationToken();
+
+            await task.StartAsync(token);
+
+            for (int i = 0; i < times; i++)
+            {
+                await Task.Delay(spanMs + 100, token);
+            }
+
+            await task.StopAsync(token);
         }
     }
 }

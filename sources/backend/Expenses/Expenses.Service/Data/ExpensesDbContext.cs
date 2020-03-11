@@ -12,6 +12,7 @@ using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Data.Configurations;
+using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 
 namespace AcademyCloud.Expenses.Data
 {
@@ -34,6 +35,8 @@ namespace AcademyCloud.Expenses.Data
         public DbSet<UserProjectAssignment> UserProjectAssignments { get; set; }
 
         public DbSet<ManagementFeeEntry> ManagementFeeEntries { get; set; }
+
+        public DbSet<UseCycleEntry> UseCycleEntries { get; set; }
 
         public ExpensesDbContext(DbContextOptions<ExpensesDbContext> options) : base(options)
         {

@@ -28,36 +28,12 @@ namespace AcademyCloud.Expenses.Test
 
         private ManagementFeeTask CreateTask()
         {
-            var mockIOptions = new Mock<IOptions<ManagementFeeConfiguration>>();
-            mockIOptions.Setup(x => x.Value).Returns(configuration);
-
-            var services = new ServiceCollection();
-
-            services.AddSingleton(db);
-            services.AddSingleton<ScopedDbProvider>();
-            services.AddLogging(o => o.AddConsole());
-            services.AddSingleton(mockIOptions.Object);
-            services.AddSingleton<ManagementFeeTask>();
-
-            var provider = services.BuildServiceProvider();
-
-            return provider.GetService<ManagementFeeTask>();
+            return ConfigureTask<ManagementFeeTask, ManagementFeeConfiguration>(configuration);
         }
 
         private async Task Wait(int waitTimes = 1)
         {
-            var task = CreateTask();
-
-            var token = new CancellationToken();
-
-            await task.StartAsync(token);
-
-            for (int i = 0; i < waitTimes; i++)
-            {
-                await Task.Delay(configuration.CheckCycleMs + 100, token);
-            }
-
-            await task.StopAsync(token);
+            await WaitForTaskForExecuteCycles(CreateTask(), configuration.CheckCycleMs, waitTimes);
         }
 
         [Fact]

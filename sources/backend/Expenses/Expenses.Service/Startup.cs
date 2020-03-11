@@ -1,6 +1,7 @@
 ﻿using System;
 using AcademyCloud.Expenses.BackgroundTasks;
 using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
+using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Exceptions;
 using AcademyCloud.Expenses.Extensions;
@@ -39,13 +40,15 @@ namespace AcademyCloud.Expenses
             services.AddDbContext<ExpensesDbContext>(options =>
             {
                 options.UseLazyLoadingProxies();
-                options.UseInMemoryDatabase("Test");
+                options.UseSqlite("DataSource=:memory:");
+                //options.UseInMemoryDatabase("Test");
             });
 
             // Strongly typed configuration
             services.AddOptions();
 
             services.Configure<ManagementFeeConfiguration>(Configuration.GetSection("ManagementFee"));
+            services.Configure<UseCycleConfiguration>(Configuration.GetSection("UseCycle"));
 
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
@@ -85,6 +88,7 @@ namespace AcademyCloud.Expenses
 
             // Add background tasks
             services.AddSingleton<ManagementFeeTask>();
+            services.AddSingleton<UseCycleTask>();
 
         }
 
@@ -96,6 +100,7 @@ namespace AcademyCloud.Expenses
                 app.UseDeveloperExceptionPage();
             }
 
+            dbContext.Database.OpenConnection();
             dbContext.Database.EnsureCreated();
 
             app.UseRouting();

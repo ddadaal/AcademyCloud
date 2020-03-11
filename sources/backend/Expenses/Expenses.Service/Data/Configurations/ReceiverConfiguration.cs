@@ -20,9 +20,10 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.HasMany(e => e.ReceivedOrgTransactions).WithOne(e => e.Receiver);
 
             // Configure one-to-one relationships
-            builder.HasOne(e => e.Domain).WithOne(e => e.Receiver).HasPrincipalKey<Domain.Entities.Domain>(e => e.Id);
-            builder.HasOne(e => e.Project).WithOne(e => e.Receiver).HasPrincipalKey<Project>(e => e.Id);
-            builder.HasOne(e => e.System).WithOne(e => e.Receiver).HasPrincipalKey<Domain.Entities.System>(e => e.Id);
+            // Add a DomainId foreign key on Receiver (HasForeignKey) referencing Domain
+            builder.HasOne(e => e.Domain).WithOne(e => e.Receiver).HasForeignKey<Receiver>("DomainId");
+            builder.HasOne(e => e.Project).WithOne(e => e.Receiver).HasForeignKey<Receiver>("ProjectId");
+            builder.HasOne(e => e.System).WithOne(e => e.Receiver).HasForeignKey<Receiver>("SystemId");
 
             // Setup receiver for System and Social Domain
             builder.HasData(new { Id = SystemGuid, SystemId = SystemGuid, SubjectType = SubjectType.System });

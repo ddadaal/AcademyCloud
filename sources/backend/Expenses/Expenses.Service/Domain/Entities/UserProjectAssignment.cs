@@ -30,6 +30,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
             User = user;
             Project = project;
             Quota = quota;
+
+            UseCycleSubject = new UseCycleSubject(this);
         }
 
         public UserProjectAssignment()

@@ -22,16 +22,16 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder
                 .HasOne(x => x.Domain)
                 .WithOne(x => x.UseCycleSubject)
-                .HasPrincipalKey<Domain.Entities.Domain>(e => e.Id);
+                .HasForeignKey<UseCycleSubject>("DomainId");
 
             builder
                 .HasOne(x => x.Project)
                 .WithOne(x => x.UseCycleSubject)
-                .HasPrincipalKey<Project>(e => e.Id);
+                .HasForeignKey<UseCycleSubject>("ProjectId");
             builder
                 .HasOne(x => x.UserProjectAssignment)
                 .WithOne(x => x.UseCycleSubject)
-                .HasPrincipalKey<UserProjectAssignment>(e => e.Id);
+                .HasForeignKey<UseCycleSubject>("UserProjectAssignmentId");
 
         }
     }
