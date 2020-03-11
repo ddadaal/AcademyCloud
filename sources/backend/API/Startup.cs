@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AcademyCloud.API.Utils;
 using AcademyCloud.Shared;
@@ -40,7 +41,10 @@ namespace AcademyCloud.API
                 });
             });
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
 
             services.AddHttpContextAccessor();
 

@@ -12,7 +12,7 @@ const opResult = lang.components.operationResult;
 
 const service = getApiService(BalanceService);
 
-const charge = (amount: number) => service.charge(amount).then((x) => x.balance);
+const charge = (amount: string) => service.charge(parseInt(amount)).then((x) => x.balance);
 
 interface Props {
   reload: (newBalance: number) => void;

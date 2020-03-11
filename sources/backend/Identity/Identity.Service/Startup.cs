@@ -98,6 +98,7 @@ namespace AcademyCloud.Identity
                 endpoints.MapGrpcService<DomainsService>();
                 endpoints.MapGrpcService<ProjectsService>();
                 endpoints.MapGrpcService<UsersService>();
+                endpoints.MapGrpcService<InteropService>();
 
                 endpoints.MapGet("/", async context =>
                 {

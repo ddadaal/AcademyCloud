@@ -31,7 +31,9 @@ namespace AcademyCloud.Expenses.Services
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
             var transactions = user.ReceivedUserTransactions
-                .Concat(user.PayedUserTransactions);
+                .Concat(user.PayedUserTransactions)
+                .OrderByDescending(x => x.Time)
+                .AsEnumerable();
 
             if (request.Limit > 0)
             {
@@ -54,7 +56,9 @@ namespace AcademyCloud.Expenses.Services
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
             var transactions = domain.ReceivedOrgTransactions
-                .Concat(domain.PayedOrgTransactions);
+                .Concat(domain.PayedOrgTransactions)
+                .OrderByDescending(x => x.Time)
+                .AsEnumerable();
 
             if (request.Limit > 0)
 
@@ -82,7 +86,9 @@ namespace AcademyCloud.Expenses.Services
 
 
             var transactions = project.ReceivedOrgTransactions
-                .Concat(project.PayedOrgTransactions);
+                .Concat(project.PayedOrgTransactions)
+                .OrderByDescending(x => x.Time)
+                .AsEnumerable();
 
             if (request.Limit > 0)
             {
