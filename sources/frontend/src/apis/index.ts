@@ -17,7 +17,7 @@ import { TransactionsServiceMock } from "src/apis/expenses/TransactionsServiceMo
 import { BillingService } from './expenses/BillingService';
 import { BillingServiceMock } from './expenses/BillingServiceMock';
 
-export const USE_MOCK = false;
+export const USE_MOCK = true;
 
 const services = [
   [AuthenticationService, USE_MOCK ? AuthenticationServiceMock : AuthenticationService],
