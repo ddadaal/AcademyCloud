@@ -1,4 +1,5 @@
-﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+﻿using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,11 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual Resources Quota { get; set; }
         public virtual Resources Resources { get; set; } = Resources.Zero;
 
-        public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
+        public virtual UseCycleSubject UseCycleSubject { get; set; }
 
-        public void Settle(Resources resources, decimal price)
-        {
-            throw new NotImplementedException();
-        }
+        public ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
+
+        public SubjectType SubjectType => SubjectType.User;
 
         public UserProjectAssignment(Guid id, User user, Project project,  Resources quota)
         {
@@ -34,6 +34,11 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public UserProjectAssignment()
         {
+        }
+
+        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        {
+            UseCycleSubject.Settle(plan, lastSettled, now);
         }
     }
 }

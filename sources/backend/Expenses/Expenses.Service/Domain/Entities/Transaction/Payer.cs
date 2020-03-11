@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.Domain.Entities
+namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 {
     /// <summary>
     /// Dummy entity to persist any type of IPayer into the database
@@ -17,7 +17,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual Project? Project { get; set; }
         public virtual Domain? Domain { get; set; }
 
-        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; } 
+        public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; }
 
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
             SubjectType.User => User!,
             SubjectType.Project => Project!,
             SubjectType.Domain => Domain!,
-            SubjectType.System => throw new InvalidOperationException(),
+            _ => throw new InvalidOperationException(),
         };
 
         public bool Active => RealPayer.Active;

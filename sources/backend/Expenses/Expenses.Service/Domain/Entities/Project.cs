@@ -1,4 +1,6 @@
-﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+﻿using AcademyCloud.Expenses.Domain.Entities.Transaction;
+using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
     /// <summary>
     /// Dummy implementation to persist any type of IPayer into the database
     /// </summary>
-    public class Project: IPayer, IReceiver
+    public class Project: IPayer, IReceiver, IUseCycleSubject
     {
         public Guid Id { get; set; }
 
@@ -23,9 +25,10 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual Payer Payer { get; set; }
 
         public virtual Receiver Receiver { get; set; }
+        public virtual UseCycleSubject UseCycleSubject { get; set; }
 
 
-        public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
+        public virtual ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
 
         public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
 
@@ -48,6 +51,11 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
         {
             return Payer.Pay(receiver, amount, reason);
+        }
+
+        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        {
+            UseCycleSubject.Settle(plan, lastSettled, now);
         }
 
         public Project(Guid id, User payUser, Domain domain, Resources quota)

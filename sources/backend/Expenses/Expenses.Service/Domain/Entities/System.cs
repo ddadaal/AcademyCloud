@@ -1,4 +1,5 @@
-﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+﻿using AcademyCloud.Expenses.Domain.Entities.Transaction;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

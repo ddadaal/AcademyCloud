@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.Domain.Entities
+namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 {
-    public class Receiver: IReceiver
+    public class Receiver : IReceiver
     {
         public Guid Id { get; set; }
 
@@ -21,10 +21,10 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         private IReceiver RealReceiver => SubjectType switch
         {
-            SubjectType.User => throw new InvalidOperationException(),
             SubjectType.Project => Project!,
             SubjectType.Domain => Domain!,
             SubjectType.System => System!,
+            _ => throw new InvalidOperationException(),
         };
 
         public User ReceiveUser => RealReceiver.ReceiveUser;

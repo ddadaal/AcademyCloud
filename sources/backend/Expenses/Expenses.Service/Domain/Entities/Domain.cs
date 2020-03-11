@@ -1,4 +1,6 @@
-﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+﻿using AcademyCloud.Expenses.Domain.Entities.Transaction;
+using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class Domain: IPayer, IReceiver
+    public class Domain : IPayer, IReceiver, IUseCycleSubject
     {
+        #region Fields
         public Guid Id { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; } = new List<Project>();
@@ -17,14 +20,16 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual User PayUser { get; set; }
 
         public virtual Resources Quota { get; set; }
-        
+
         public virtual Payer Payer { get; set; }
         public virtual Receiver Receiver { get; set; }
 
+        public virtual UseCycleSubject UseCycleSubject { get; set; }
+        #endregion
 
-        public virtual ICollection<UseCycle> UseCycleRecords { get; set; } = new List<UseCycle>();
+        #region Properties and Methods
 
-        public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
+        public virtual ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
 
         public bool Active => PayUser.Active;
 
@@ -47,6 +52,13 @@ namespace AcademyCloud.Expenses.Domain.Entities
         {
             return Receiver.Receive(from, fromUser, amount, reason);
         }
+
+        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        {
+            UseCycleSubject.Settle(plan, lastSettled, now);
+        }
+
+        #endregion
 
         public Domain(Guid id, User payer, Resources quota)
         {

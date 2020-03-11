@@ -8,10 +8,19 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
 {
     public class Resources: ValueObject
     {
+        /// <summary>
+        /// CPU Core.
+        /// </summary>
         public int Cpu { get; set; }
         
+        /// <summary>
+        /// Memory in GB.
+        /// </summary>
         public int Memory { get; set; }
 
+        /// <summary>
+        /// Storage in GB
+        /// </summary>
         public int Storage { get; set; }
 
         protected override IEnumerable<object> GetAtomicValues()

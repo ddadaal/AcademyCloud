@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.Domain.Entities
+namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
 {
     public interface IUseCycleSubject
     {
+        Guid Id { get; }
+
+        SubjectType SubjectType { get; }
+
         Resources Resources { get; }
 
-        void Settle(Resources resources, decimal price);
+        void Settle(PricePlan plan, DateTime lastSettled, DateTime now);
     }
 }

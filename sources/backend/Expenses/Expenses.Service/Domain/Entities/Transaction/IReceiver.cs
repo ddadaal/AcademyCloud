@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.Domain.Entities
+namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 {
     public interface IReceiver
     {
