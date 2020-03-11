@@ -13,7 +13,7 @@ using static AcademyCloud.API.Utils.Dummies;
 
 namespace AcademyCloud.API.Controllers.Identity
 {
-    [Route("/identity/users")]
+    [Route("/identity")]
     [ApiController]
     [Authorize]
     public class UsersController : ControllerBase
@@ -25,7 +25,7 @@ namespace AcademyCloud.API.Controllers.Identity
             this.factory = factory;
         }
 
-        [HttpGet]
+        [HttpGet("allUsers")]
         public async Task<ActionResult<GetAllUsersResponse>> GetAllUsers() 
         {
             var resp = await (await factory.GetUsersClientAsync())
@@ -62,7 +62,7 @@ namespace AcademyCloud.API.Controllers.Identity
             };
         }
 
-        [HttpGet]
+        [HttpGet("users")]
         public async Task<ActionResult<GetAccessibleUsersResponse>> GetAccessibleUsers()
         {
             // Request to expenses
@@ -78,7 +78,7 @@ namespace AcademyCloud.API.Controllers.Identity
             };
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete("users/{userId}")]
         public async Task<ActionResult> RemoveUserFromSystem([FromRoute] string userId)
         {
             // TODO request to expenses

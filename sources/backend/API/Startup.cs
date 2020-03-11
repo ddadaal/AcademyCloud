@@ -85,6 +85,7 @@ namespace AcademyCloud.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AcademyCloud API", Version = "v1" });
+                c.CustomSchemaIds(x => x.FullName);
             });
         }
 
