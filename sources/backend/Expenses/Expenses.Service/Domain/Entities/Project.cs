@@ -9,7 +9,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
     /// <summary>
     /// Dummy implementation to persist any type of IPayer into the database
     /// </summary>
-    public class Project: IPayer, IReceiver, IBillingCycleSubject, IUseCycleSubject
+    public class Project: IPayer, IReceiver
     {
         public Guid Id { get; set; }
 
@@ -38,24 +38,16 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public Resources Resources => Users.Select(x => x.Resources).Aggregate(Resources.Zero, (s, a) => s + a);
 
-        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
-        {
-            throw new NotImplementedException();
-        }
+        public User ReceiveUser => PayUser;
 
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
         {
-            throw new NotImplementedException();
+            return Receiver.Receive(from, fromUser, amount, reason);
         }
 
-        void IBillingCycleSubject.Settle(Resources quota, decimal price)
+        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
         {
-            throw new NotImplementedException();
-        }
-
-        void IUseCycleSubject.Settle(Resources resources, decimal price)
-        {
-            throw new NotImplementedException();
+            return Payer.Pay(receiver, amount, reason);
         }
 
         public Project(Guid id, User payUser, Domain domain, Resources quota)

@@ -27,9 +27,19 @@ namespace AcademyCloud.Expenses.Domain.Entities
             SubjectType.System => System!,
         };
 
+        public User ReceiveUser => RealReceiver.ReceiveUser;
+
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
         {
-            return RealReceiver.Receive(from, fromUser, amount, reason);
+            var time = DateTime.UtcNow;
+
+            var userTransaction = new UserTransaction(Guid.NewGuid(), time, amount, reason, fromUser, ReceiveUser);
+            ReceiveUser.ApplyTransaction(userTransaction);
+
+            var orgTransaction = new OrgTransaction(Guid.NewGuid(), time, amount, reason, from as Payer, this, userTransaction);
+            ReceivedOrgTransactions.Add(orgTransaction);
+
+            return orgTransaction;
         }
 
         public Receiver(IReceiver receiver)

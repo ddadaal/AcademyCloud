@@ -8,6 +8,7 @@ using DomainEntity = AcademyCloud.Expenses.Domain.Entities.Domain;
 using SystemEntity = AcademyCloud.Expenses.Domain.Entities.System;
 using static AcademyCloud.Shared.Constants;
 using AcademyCloud.Expenses.Domain.ValueObjects;
+using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 
 namespace AcademyCloud.Expenses.Data
 {
@@ -32,6 +33,8 @@ namespace AcademyCloud.Expenses.Data
         public DbSet<UseCycle> UseCycles { get; set; }
 
         public DbSet<BillingCycle> BillingCycles { get; set; }
+
+        public DbSet<ManagementFeeEntry> ManagementFeeEntries { get; set; }
 
         public ExpensesDbContext(DbContextOptions<ExpensesDbContext> options) : base(options)
         {

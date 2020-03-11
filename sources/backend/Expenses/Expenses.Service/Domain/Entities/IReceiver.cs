@@ -8,11 +8,15 @@ namespace AcademyCloud.Expenses.Domain.Entities
 {
     public interface IReceiver
     {
-        OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason);
 
         Guid Id { get; }
 
         SubjectType SubjectType { get; }
-        
+
+        ICollection<OrgTransaction> ReceivedOrgTransactions { get; }
+
+        User ReceiveUser { get; }
+
+        OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason);
     }
 }

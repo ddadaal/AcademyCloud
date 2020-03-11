@@ -8,7 +8,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
 {
     public interface IPayer
     {
-        bool Pay(IReceiver receiver, decimal amount, TransactionReason reason);
 
         Guid Id { get; }
 
@@ -16,5 +15,10 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         bool Active { get; }
 
+        ICollection<OrgTransaction> PayedOrgTransactions { get; }
+
+        User PayUser { get; }
+
+        bool Pay(IReceiver receiver, decimal amount, TransactionReason reason);
     }
 }

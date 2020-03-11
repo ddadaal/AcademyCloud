@@ -33,12 +33,19 @@ namespace AcademyCloud.Expenses.Domain.Entities
             SubjectType.System => throw new InvalidOperationException(),
         };
 
-
         public bool Active => RealPayer.Active;
+
+        public User PayUser => RealPayer.PayUser;
 
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
         {
-            return RealPayer.Pay(receiver, amount, reason);
+            var orgTransaction = receiver.Receive(this, PayUser, amount, reason);
+
+            PayedOrgTransactions.Add(orgTransaction);
+
+            PayUser.ApplyTransaction(orgTransaction.UserTransaction);
+
+            return Active;
         }
 
         public Payer(IPayer payer)

@@ -23,7 +23,15 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
         {
-            throw new NotImplementedException();
+            var time = DateTime.UtcNow;
+
+            var userTransaction = new UserTransaction(Guid.NewGuid(), time, amount, reason, fromUser, ReceiveUser);
+            ReceiveUser.ApplyTransaction(userTransaction);
+
+            var orgTransaction = new OrgTransaction(Guid.NewGuid(), time, amount, reason, fromUser.Payer, Receiver, userTransaction);
+            ReceivedOrgTransactions.Add(orgTransaction);
+
+            return orgTransaction;
         }
 
         public System(Guid id, User receiveUser)

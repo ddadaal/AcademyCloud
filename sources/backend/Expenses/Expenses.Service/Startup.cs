@@ -1,4 +1,6 @@
 ﻿using System;
+using AcademyCloud.Expenses.BackgroundTasks;
+using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Exceptions;
 using AcademyCloud.Expenses.Extensions;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +21,13 @@ namespace AcademyCloud.Expenses
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        private IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -31,6 +41,11 @@ namespace AcademyCloud.Expenses
                 options.UseLazyLoadingProxies();
                 options.UseInMemoryDatabase("Test");
             });
+
+            // Strongly typed configuration
+            services.AddOptions();
+
+            services.Configure<ManagementFeeConfiguration>(Configuration.GetSection("ManagementFee"));
 
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
@@ -63,8 +78,12 @@ namespace AcademyCloud.Expenses
                     };
                 });
 
+
             services.AddHttpContextAccessor();
-            services.AddSingleton<TokenClaimsAccessor>();
+
+            // Add background tasks
+            services.AddSingleton<ManagementFeeTask>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -28,6 +28,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public bool Active { get; set; } = true;
 
+        public User PayUser => this;
+
         public void ApplyTransaction(UserTransaction transaction)
         {
             if (transaction.Receiver == this)
@@ -62,15 +64,15 @@ namespace AcademyCloud.Expenses.Domain.Entities
             ApplyTransaction(transaction);
         }
 
-        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
-        {
-            throw new NotImplementedException();
-        }
-
         public void JoinDomain(Domain domain)
         {
             Domains.Add(new UserDomainAssignment(Guid.NewGuid(), domain, this));
 
+        }
+
+        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
+        {
+            return Payer.Pay(receiver, amount, reason);
         }
 
         public User(Guid id, decimal balance)
