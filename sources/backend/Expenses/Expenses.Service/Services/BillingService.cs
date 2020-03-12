@@ -55,7 +55,7 @@ namespace AcademyCloud.Expenses.Services
             {
                 SubjectId = entry.Id.ToString(),
                 PayerId = entry.Subject.PayUser.Id.ToString(),
-                Resources = entry.Quota.ToGrpc(),
+                Quota = entry.Quota.ToGrpc(),
                 Amount = billingCycleTask.CalculatePrice(entry.Quota),
                 NextDue = Timestamp.FromDateTime(billingCycleTask.NextDue(entry.LastSettled)),
             };
@@ -154,7 +154,7 @@ namespace AcademyCloud.Expenses.Services
                         Id = x.Id.ToString(),
                         Amount = x.Amount,
                         PayerId = x.OrgTransaction.UserTransaction.Payer!.Id.ToString(),
-                        Resources = x.Quota.ToGrpc(),
+                        Quota = x.Quota.ToGrpc(),
                         StartTime = x.StartTime.ToGrpc(),
                         EndTime = x.EndTime.ToGrpc(),
                     })

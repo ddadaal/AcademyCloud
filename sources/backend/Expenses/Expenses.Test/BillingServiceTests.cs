@@ -57,7 +57,7 @@ namespace AcademyCloud.Expenses.Test
 
             Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)resp.Billing.Amount);
             Assert.Equal(nju.Id.ToString(), resp.Billing.SubjectId);
-            Assert.Equal(quota.ToGrpc(), resp.Billing.Resources);
+            Assert.Equal(quota.ToGrpc(), resp.Billing.Quota);
             Assert.Equal(njuadmin.Id.ToString(), resp.Billing.PayerId);
         }
 
@@ -137,7 +137,7 @@ namespace AcademyCloud.Expenses.Test
             var billing = Assert.Single(resp.Billings);
             Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)billing.Amount);
             Assert.Equal(lq.Id.ToString(), billing.PayerId);
-            Assert.Equal(quota.ToGrpc(), billing.Resources);
+            Assert.Equal(quota.ToGrpc(), billing.Quota);
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace AcademyCloud.Expenses.Test
             // User does not pay, but will know how much they should have paid.
             Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)billing.Amount);
             Assert.Equal(cjd.Id.ToString(), billing.PayerId);
-            Assert.Equal(quota.ToGrpc(), billing.Resources);
+            Assert.Equal(quota.ToGrpc(), billing.Quota);
 
         }
 
@@ -281,7 +281,7 @@ namespace AcademyCloud.Expenses.Test
             Assert.Equal(2, resp.Billings.Count);
 
             var billing = resp.Billings.First();
-            Assert.Equal(quota.ToGrpc(), billing.Resources);
+            Assert.Equal(quota.ToGrpc(), billing.Quota);
             Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)billing.Amount);
         }
 
@@ -309,7 +309,7 @@ namespace AcademyCloud.Expenses.Test
 
             var billing = resp.Billings.First();
 
-            Assert.Equal(quota.ToGrpc(), billing.Resources);
+            Assert.Equal(quota.ToGrpc(), billing.Quota);
             // User should not actually for the resources
             Assert.Equal(0, (decimal)billing.Amount);
         }

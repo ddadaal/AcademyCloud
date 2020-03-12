@@ -32,7 +32,7 @@ message CurrentUsedBilling {
 
 message CurrentAllocatedBilling {
   string subjectId = 1;
-  Resources resources = 2;
+  Resources quota = 2;
   common.DecimalValue amount = 3;
   google.protobuf.Timestamp nextDue = 4;
   string payerId = 5;
@@ -48,7 +48,7 @@ message HistoryUsedBilling {
 
 message HistoryAllocatedBilling {
   string id = 1;
-  Resources resources = 2;
+  Resources quota = 2;
   common.DecimalValue amount = 3;
   google.protobuf.Timestamp startTime = 4;
   google.protobuf.Timestamp endTime = 5;
