@@ -28,5 +28,7 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         public static TransactionReason DomainManagement => new TransactionReason(TransactionType.DomainManagementFee, "");
         public static TransactionReason ProjectManagement => new TransactionReason(TransactionType.ProjectManagementFee, "");
         public static TransactionReason UserManagement => new TransactionReason(TransactionType.UserManagementFee, "");
+        public static TransactionReason DomainResources => new TransactionReason(TransactionType.DomainResources, "");
+        public static TransactionReason ProjectResources => new TransactionReason(TransactionType.ProjectResources, "");
     }
 }

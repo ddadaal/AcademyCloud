@@ -18,6 +18,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual ICollection<UserDomainAssignment> Users { get; set; } = new List<UserDomainAssignment>();
 
+        public virtual System System { get; set; }
+
         public virtual User PayUser { get; set; }
 
         public virtual Resources Quota { get; set; }
@@ -46,6 +48,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public User ReceiveUser => PayUser;
 
+        public IReceiver BillingReceiver => System;
+
         public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
         {
             return Payer.Pay(receiver, amount, reason, time);
@@ -68,11 +72,12 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         #endregion
 
-        public Domain(Guid id, User payer, Resources quota)
+        public Domain(Guid id, User payer, Resources quota, System system)
         {
             Id = id;
             PayUser = payer;
             Quota = quota;
+            System = system;
 
             Payer = new Payer(this);
             Receiver = new Receiver(this);

@@ -1,4 +1,5 @@
-﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+﻿using AcademyCloud.Expenses.Domain.Entities.Transaction;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,13 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public Resources Quota => RealSubject.Quota;
 
+        public IReceiver BillingReceiver => RealSubject.BillingReceiver;
+
+        public bool Active => RealSubject.Active;
+
+        public ICollection<OrgTransaction> PayedOrgTransactions => RealSubject.PayedOrgTransactions;
+
+        public User PayUser => RealSubject.PayUser;
 
         public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
         {
@@ -34,10 +42,17 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
             var price = plan.Calculate(resources);
 
+            RealSubject.Pay(BillingReceiver, price, TransactionReason.DomainResources, now);
+
             var cycle = new BillingCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price);
 
             BillingCycleRecords.Add(cycle);
 
+        }
+
+        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
+        {
+            return RealSubject.Pay(receiver, amount, reason, time);
         }
 
         protected BillingCycleSubject() { }

@@ -45,6 +45,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public User ReceiveUser => PayUser;
 
+        public IReceiver BillingReceiver => Domain;
+
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason, DateTime time)
         {
             return Receiver.Receive(from, fromUser, amount, reason, time);

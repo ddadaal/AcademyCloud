@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace AcademyCloud.Expenses.Test.Helpers
 {
@@ -43,10 +44,10 @@ namespace AcademyCloud.Expenses.Test.Helpers
         public TokenClaims njuadminnjuTokenClaims;
         public TokenClaims fcfcTokenClaims;
 
-        public void InitializeVariables()
+        public void InitializeVariables(Domain.Entities.System system)
         {
-            nju = new DomainEntity(Guid.NewGuid(), njuadmin, new Domain.ValueObjects.Resources(10, 20, 30));
-            pku = new DomainEntity(Guid.NewGuid(), fc, new Domain.ValueObjects.Resources(20, 30, 40));
+            nju = new DomainEntity(Guid.NewGuid(), njuadmin, new Domain.ValueObjects.Resources(10, 20, 30), system);
+            pku = new DomainEntity(Guid.NewGuid(), fc, new Domain.ValueObjects.Resources(20, 30, 40), system);
             cjd.JoinDomain(nju);
             cjd.JoinDomain(pku);
             lq.JoinDomain(nju);
@@ -84,7 +85,6 @@ namespace AcademyCloud.Expenses.Test.Helpers
 
         public CommonTest()
         {
-            InitializeVariables();
             var options = new DbContextOptionsBuilder<ExpensesDbContext>()
                 .UseLazyLoadingProxies()
                 .UseSqlite("DataSource=:memory:")
@@ -92,6 +92,9 @@ namespace AcademyCloud.Expenses.Test.Helpers
 
             db = new ExpensesDbContext(options);
 
+            var system = db.Systems.First();
+
+            InitializeVariables(system);
             FillData(db);
 
             db.Entry(db.Users.Find(SocialDomainAdminId)).Collection(x => x.Domains).Load();
