@@ -240,6 +240,7 @@ namespace AcademyCloud.Expenses.Test
 
             db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
             db.UseCycleEntries.Add(new UseCycleEntry(lqproject.UseCycleSubject));
+            await db.SaveChangesAsync();
 
             var (service, _, useTask) = CreateService();
 
