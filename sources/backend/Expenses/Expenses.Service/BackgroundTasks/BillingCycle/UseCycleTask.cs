@@ -1,4 +1,5 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +26,15 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
             this.logger = logger;
         }
 
+        public DateTime NextDue(DateTime now)
+        {
+            return now.AddMilliseconds(configuration.SettleCycleMs);
+        }
+        public decimal CalculatePrice(Resources resources)
+        {
+            return PricePlan.Instance.Calculate(resources);
+        }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -37,11 +47,9 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                 {
                     await foreach (var i in dbContext.BillingCycleEntries.AsAsyncEnumerable())
                     {
-                        if ((time - i.LastSettled).TotalMilliseconds > configuration.SettleCycleMs)
-                        {
-                            logger.LogDebug($"Settling billing cycle for {i}");
-
-                            i.Settle(time);
+                        if (time >= NextDue(i.LastSettled))
+                        { 
+                            i.Settle(CalculatePrice(i.Quota), time);
 
                             logger.LogDebug($"Settling billing cycle for {i} completed.");
                         }

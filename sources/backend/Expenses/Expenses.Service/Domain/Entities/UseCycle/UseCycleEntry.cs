@@ -1,4 +1,5 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,14 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
 
         public DateTime LastSettled { get; set; }
 
-        public UseCycleEntry(Guid id, UseCycleSubject subject)
+        public Resources Resources => Subject.Resources;
+        public SubjectType SubjectType { get; set; }
+
+        public UseCycleEntry(UseCycleSubject subject)
         {
-            Id = id;
+            Id = subject.Id;
             Subject = subject;
+            SubjectType = subject.SubjectType;
             LastSettled = DateTime.UtcNow;
         }
 
@@ -25,9 +30,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
         {
         }
 
-        public void Settle(DateTime now)
+        public void Settle(decimal price, DateTime now)
         {
-            Subject.Settle(PricePlan.Instance, LastSettled, now);
+            Subject.Settle(price, LastSettled, now);
         }
 
 

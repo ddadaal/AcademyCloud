@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,11 +13,16 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
         public virtual BillingCycleSubject Subject { get; set; }
 
         public DateTime LastSettled { get; set; }
+        
+        public SubjectType SubjectType { get; set; }
 
-        public BillingCycleEntry(Guid id, BillingCycleSubject subject)
+        public Resources Quota => Subject.Quota;
+
+        public BillingCycleEntry(BillingCycleSubject subject)
         {
-            Id = id;
+            Id = subject.Id;
             Subject = subject;
+            SubjectType = subject.SubjectType;
             LastSettled = DateTime.UtcNow;
         }
 
@@ -24,9 +30,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
         {
         }
 
-        public void Settle(DateTime now)
+        public void Settle(decimal price, DateTime now)
         {
-            Subject.Settle(PricePlan.Instance, LastSettled, now);
+            Subject.Settle(price, LastSettled, now);
         }
 
 

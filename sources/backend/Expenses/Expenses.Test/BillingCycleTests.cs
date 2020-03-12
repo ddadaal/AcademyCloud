@@ -39,7 +39,7 @@ namespace AcademyCloud.Expenses.Test
             var previousNjuadminBalance = njuadmin.Balance;
             // add 1 CPU, 2 GB RAM and 40 Storage quota on 67 project
             lqproject.Quota = quota;
-            db.BillingCycleEntries.Add(new BillingCycleEntry(Guid.NewGuid(), lqproject.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new BillingCycleEntry(lqproject.BillingCycleSubject));
             await db.SaveChangesAsync();
 
             // Wait 2 cycles to settle once.

@@ -16,6 +16,6 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
         Resources Quota { get; }
         IReceiver BillingReceiver { get; }
 
-        void Settle(PricePlan plan, DateTime lastSettled, DateTime now);
+        void Settle(decimal price, DateTime lastSettled, DateTime now);
     }
 }

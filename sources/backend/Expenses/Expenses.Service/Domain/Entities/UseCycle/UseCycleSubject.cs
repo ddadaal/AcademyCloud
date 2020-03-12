@@ -31,11 +31,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
         public Resources Resources => RealSubject.Resources;
 
 
-        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        public void Settle(decimal price, DateTime lastSettled, DateTime now)
         {
             var resources = Resources;
-
-            var price = plan.Calculate(resources);
 
             var cycle = new UseCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price);
 

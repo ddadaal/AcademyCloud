@@ -36,11 +36,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public User PayUser => RealSubject.PayUser;
 
-        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        public void Settle(decimal price, DateTime lastSettled, DateTime now)
         {
             var resources = Quota;
-
-            var price = plan.Calculate(resources);
 
             RealSubject.Pay(BillingReceiver, price, TransactionReason.DomainResources, now);
 

@@ -37,7 +37,7 @@ namespace AcademyCloud.Expenses.Test
             var resources = new Resources(1, 2, 40);
             // add cjd to use 1 CPU, 2 GB RAM and 40 Storage on 67 project
             cjd67project.Resources = resources;
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), cjd67project.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
             await db.SaveChangesAsync();
 
             // Wait 2 cycles to settle once.
@@ -57,9 +57,9 @@ namespace AcademyCloud.Expenses.Test
             // add cjd to use 1 CPU, 2 GB RAM and 40 Storage on 67 project
             cjd67project.Resources = resources;
             // Register NJU domain, lqproject Project and CJD on lq User
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), cjd67project.UseCycleSubject));
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), lqproject.UseCycleSubject));
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), nju.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(lqproject.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(nju.UseCycleSubject));
             await db.SaveChangesAsync();
 
             // Wait 2 cycles to settle once.
@@ -91,9 +91,9 @@ namespace AcademyCloud.Expenses.Test
             cjd67project.Resources = resources.Clone();
             lq67project.Resources = resources.Clone();
             // Register NJU domain, lqproject Project and CJD on lq User
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), cjd67project.UseCycleSubject));
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), lqproject.UseCycleSubject));
-            db.UseCycleEntries.Add(new UseCycleEntry(Guid.NewGuid(), nju.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(lqproject.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(nju.UseCycleSubject));
             await db.SaveChangesAsync();
 
             await Wait(2);
