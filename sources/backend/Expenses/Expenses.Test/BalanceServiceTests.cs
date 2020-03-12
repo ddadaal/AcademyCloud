@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Expenses.Test
+namespace AcademyCloud.Expenses.Test
 {
     public class BalanceServiceTests : CommonTest
     {
