@@ -69,8 +69,6 @@ namespace AcademyCloud.Expenses.Test.Helpers
         public void FillData(ExpensesDbContext context)
         {
             // system user: system, system
-            context.Database.OpenConnection();
-            context.Database.EnsureCreated();
 
             context.Domains.AddRange(nju, pku);
 
@@ -91,6 +89,8 @@ namespace AcademyCloud.Expenses.Test.Helpers
                 .Options;
 
             db = new ExpensesDbContext(options);
+            db.Database.OpenConnection();
+            db.Database.EnsureCreated();
 
             var system = db.Systems.First();
 

@@ -92,7 +92,7 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<BillingCycleRecord>(o =>
             {
                 o.Property(e => e.Id).ValueGeneratedNever();
-                o.OwnsOne(e => e.Resources);
+                o.OwnsOne(e => e.Quota);
             });
 
             modelBuilder.Entity<UseCycleRecord>(o =>

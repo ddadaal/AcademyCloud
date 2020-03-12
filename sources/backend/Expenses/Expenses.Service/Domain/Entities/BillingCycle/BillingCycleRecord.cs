@@ -10,7 +10,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
     {
         public Guid Id { get; set; }
 
-        public virtual Resources Resources { get; set; }
+        public virtual Resources Quota { get; set; }
 
         public DateTime StartTime { get; set; }
 
@@ -18,10 +18,10 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public decimal Amount { get; set; }
 
-        public BillingCycleRecord(Guid id, Resources resources, DateTime startTime, DateTime endTime, decimal amount)
+        public BillingCycleRecord(Guid id, Resources quota, DateTime startTime, DateTime endTime, decimal amount)
         {
             Id = id;
-            Resources = resources;
+            Quota = quota;
             StartTime = startTime;
             EndTime = endTime;
             Amount = amount;
