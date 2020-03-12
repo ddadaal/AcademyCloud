@@ -11,5 +11,6 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         Domain,
         Project,
         User,
+        UserProjectAssignment,
     }
 }

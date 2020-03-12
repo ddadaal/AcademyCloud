@@ -29,6 +29,7 @@ export default {
           Domain: "Domain",
           Project: "Project",
           User: "User",
+          UserProjectAssignment: "User in Project",
         },
         table: {
           resources: "Resources",

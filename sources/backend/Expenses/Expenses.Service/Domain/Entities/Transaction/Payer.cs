@@ -16,6 +16,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 
         public virtual Project? Project { get; set; }
         public virtual Domain? Domain { get; set; }
+        public virtual UserProjectAssignment? UserProjectAssignment { get; set; }
 
         public virtual ICollection<OrgTransaction> PayedOrgTransactions { get; set; }
 
@@ -30,6 +31,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
             SubjectType.User => User!,
             SubjectType.Project => Project!,
             SubjectType.Domain => Domain!,
+            SubjectType.UserProjectAssignment => UserProjectAssignment!,
             _ => throw new InvalidOperationException(),
         };
 
@@ -63,6 +65,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
                     break;
                 case Domain domain:
                     Domain = domain;
+                    break;
+                case UserProjectAssignment userProjectAssignment:
+                    UserProjectAssignment = userProjectAssignment;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(payer));

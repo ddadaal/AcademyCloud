@@ -15,6 +15,8 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public virtual Project? Project { get; set; }
 
+        public virtual UserProjectAssignment? UserProjectAssignment { get; set; }
+
         public virtual ICollection<BillingCycleRecord> BillingCycleRecords { get; set; } = new List<BillingCycleRecord>();
 
         public SubjectType SubjectType { get; set; }
@@ -23,6 +25,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
         {
             SubjectType.Domain => Domain!,
             SubjectType.Project => Project!,
+            SubjectType.UserProjectAssignment => UserProjectAssignment!,
             _ => throw new InvalidOperationException(),
         };
 
@@ -67,6 +70,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
                     break;
                 case Project project:
                     Project = project;
+                    break;
+                case UserProjectAssignment userProjectAssignment:
+                    UserProjectAssignment = userProjectAssignment;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(subject));

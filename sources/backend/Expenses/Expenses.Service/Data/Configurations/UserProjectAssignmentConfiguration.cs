@@ -15,7 +15,10 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.Property(e => e.Id).ValueGeneratedNever();
             builder.OwnsOne(e => e.Quota);
             builder.OwnsOne(e => e.Resources);
+
+            builder.Ignore(e => e.PayedOrgTransactions);
             builder.Ignore(e => e.UseCycleRecords);
+            builder.Ignore(e => e.BillingCycleRecords);
 
             // Relationship to UseCycleSubject has been configured on the UseCycleSubject
         }

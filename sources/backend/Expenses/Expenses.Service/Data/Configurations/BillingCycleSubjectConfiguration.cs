@@ -32,6 +32,12 @@ namespace AcademyCloud.Expenses.Data.Configurations
                 .HasOne(x => x.Project)
                 .WithOne(x => x.BillingCycleSubject)
                 .HasForeignKey<BillingCycleSubject>("ProjectId");
+
+            builder
+                .HasOne(x => x.UserProjectAssignment)
+                .WithOne(x => x.BillingCycleSubject)
+                .HasForeignKey<BillingCycleSubject>("UserProjectAssignmentId");
+                
         }
     }
 }

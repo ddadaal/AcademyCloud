@@ -35,4 +35,5 @@ export enum BillSubjectType {
   Domain = "Domain",
   Project = "Project",
   User = "User",
+  UserProjectAssignment = "UserProjectAssignment",
 }

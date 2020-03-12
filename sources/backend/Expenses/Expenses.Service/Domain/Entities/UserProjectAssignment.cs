@@ -1,4 +1,6 @@
-﻿using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+﻿using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
+using AcademyCloud.Expenses.Domain.Entities.Transaction;
+using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class UserProjectAssignment: IUseCycleSubject
+    public class UserProjectAssignment: IPayer, IUseCycleSubject, IBillingCycleSubject
     {
 
         public Guid Id { get; set; }
@@ -18,11 +20,24 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual Resources Quota { get; set; }
         public virtual Resources Resources { get; set; } = Resources.Zero;
 
+        public virtual Payer Payer { get; set; }
+
         public virtual UseCycleSubject UseCycleSubject { get; set; }
 
-        public ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
+        public virtual BillingCycleSubject BillingCycleSubject { get; set; }
 
-        public SubjectType SubjectType => SubjectType.User;
+        public ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
+        public ICollection<BillingCycleRecord> BillingCycleRecords => BillingCycleSubject.BillingCycleRecords;
+
+        public SubjectType SubjectType => SubjectType.UserProjectAssignment;
+
+        public IReceiver BillingReceiver => Project;
+
+        public bool Active => User.Active && Project.Active;
+
+        public ICollection<OrgTransaction> PayedOrgTransactions => Payer.PayedOrgTransactions;
+
+        public User PayUser => User;
 
         public UserProjectAssignment(Guid id, User user, Project project,  Resources quota)
         {
@@ -31,16 +46,28 @@ namespace AcademyCloud.Expenses.Domain.Entities
             Project = project;
             Quota = quota;
 
+            Payer = new Payer(this);
             UseCycleSubject = new UseCycleSubject(this);
+            BillingCycleSubject = new BillingCycleSubject(this);
         }
 
         public UserProjectAssignment()
         {
         }
 
-        public void Settle(decimal price, DateTime lastSettled, DateTime now)
+        void IUseCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
         {
             UseCycleSubject.Settle(price, lastSettled, now);
+        }
+
+        void IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
+        {
+            BillingCycleSubject.Settle(price, lastSettled, now);
+        }
+
+        public OrgTransaction Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
+        {
+            return Payer.Pay(receiver, amount, reason, time);
         }
     }
 }

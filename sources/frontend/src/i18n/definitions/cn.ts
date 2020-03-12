@@ -29,6 +29,7 @@ export default {
           Domain: "域",
           Project: "项目",
           User: "用户",
+          UserProjectAssignment: "项目用户",
         },
         table: {
           resources: "资源",

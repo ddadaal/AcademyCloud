@@ -35,7 +35,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
             SubjectType.Domain => TransactionReason.DomainManagement,
             SubjectType.Project => TransactionReason.ProjectManagement,
             SubjectType.User => TransactionReason.UserManagement,
-            SubjectType.System => throw new InvalidOperationException(),
+            _ => throw new InvalidOperationException(),
         };
 
 

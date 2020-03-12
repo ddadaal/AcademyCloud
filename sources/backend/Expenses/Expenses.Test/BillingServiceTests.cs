@@ -43,7 +43,7 @@ namespace AcademyCloud.Expenses.Test
         {
             var quota = new Domain.ValueObjects.Resources(1, 20, 30);
             nju.Quota = quota;
-            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(nju.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new BillingCycleEntry(nju.BillingCycleSubject));
             await db.SaveChangesAsync();
 
             var (service, _, _) = CreateService();
@@ -95,6 +95,14 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetCurrentAllocatedBillings()
         {
+            var quota = new Domain.ValueObjects.Resources(1, 20, 30);
+            nju.Quota = quota;
+            cjd67project.Quota = quota;
+            db.BillingCycleEntries.Add(new BillingCycleEntry(nju.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new BillingCycleEntry(cjd67project.BillingCycleSubject));
+            await db.SaveChangesAsync();
+
+
 
         }
 
@@ -114,7 +122,7 @@ namespace AcademyCloud.Expenses.Test
             var resp = await service.GetHistoryUsedBillings(new GetHistoryUsedBillingsRequest
             {
                 Id = cjd67project.Id.ToString(),
-                SubjectType = Protos.Common.SubjectType.User
+                SubjectType = Protos.Common.SubjectType.UserProjectAssignment
             }, TestContext);
 
             Assert.Single(resp.Billings);

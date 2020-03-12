@@ -1,6 +1,7 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Data;
+using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Exceptions;
 using AcademyCloud.Expenses.Extensions;
@@ -44,20 +45,47 @@ namespace AcademyCloud.Expenses.Services
 
             return new GetCurrentAllocatedBillingResponse
             {
-                Billing = new CurrentAllocatedBilling
-                {
-                    SubjectId = request.Id,
-                    PayerId = data.Subject.PayUser.Id.ToString(),
-                    Resources = data.Quota.ToGrpc(),
-                    Amount = billingCycleTask.CalculatePrice(data.Quota),
-                    NextDue = Timestamp.FromDateTime(billingCycleTask.NextDue(data.LastSettled)),
-                }
+                Billing = ToCurrentAllocatedBilling(data)
+            };
+        }
+
+        private CurrentAllocatedBilling ToCurrentAllocatedBilling(BillingCycleEntry entry)
+        {
+            return new CurrentAllocatedBilling
+            {
+                SubjectId = entry.Id.ToString(),
+                PayerId = entry.Subject.PayUser.Id.ToString(),
+                Resources = entry.Quota.ToGrpc(),
+                Amount = billingCycleTask.CalculatePrice(entry.Quota),
+                NextDue = Timestamp.FromDateTime(billingCycleTask.NextDue(entry.LastSettled)),
             };
         }
 
         public override async Task<GetCurrentAllocatedBillingsResponse> GetCurrentAllocatedBillings(GetCurrentAllocatedBillingsRequest request, ServerCallContext context)
         {
-            return await base.GetCurrentAllocatedBillings(request, context);
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
+
+            var data = dbContext.BillingCycleEntries.Where(x => x.SubjectType == (Domain.ValueObjects.SubjectType)request.SubjectType)
+                .AsEnumerable();
+
+            if (request.SubjectType == SubjectType.Project)
+            {
+                // only the projects under current domain
+                var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaims.DomainId);
+                data = data.Where(x => x.Subject.Project!.Domain == domain);
+            }
+            else if (request.SubjectType == SubjectType.UserProjectAssignment)
+            {
+                // only the user project assignment under current project
+                if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Social User cannot access Users allocated resources.")); }
+                var project = await dbContext.Projects.FindIfNullThrowAsync(tokenClaims.ProjectId);
+                data = data.Where(x => x.Subject.UserProjectAssignment!.Project == project);
+            }
+
+            return new GetCurrentAllocatedBillingsResponse
+            {
+                Billings = { data.Select(ToCurrentAllocatedBilling) }
+            };
         }
 
         public override async Task<GetCurrentUsedBillingResponse> GetCurrentUsedBilling(GetCurrentUsedBillingRequest request, ServerCallContext context)

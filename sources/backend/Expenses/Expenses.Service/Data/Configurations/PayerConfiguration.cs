@@ -26,6 +26,7 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.HasOne(e => e.Domain).WithOne(e => e.Payer).HasForeignKey<Payer>("DomainId");
             builder.HasOne(e => e.Project).WithOne(e => e.Payer).HasForeignKey<Payer>("ProjectId");
             builder.HasOne(e => e.User).WithOne(e => e.Payer).HasForeignKey<Payer>("UserId");
+            builder.HasOne(e => e.UserProjectAssignment).WithOne(e => e.Payer).HasForeignKey<Payer>("UserProjectAssignmentId");
 
             // Setup payer for social domain admin and system user
             builder.HasData(new { Id = SocialDomainAdminId, UserId = SocialDomainAdminId, SubjectType = SubjectType.User });

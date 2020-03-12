@@ -24,7 +24,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
         {
             SubjectType.Domain => Domain!,
             SubjectType.Project => Project!,
-            SubjectType.User => UserProjectAssignment!,
+            SubjectType.UserProjectAssignment => UserProjectAssignment!,
             _ => throw new InvalidOperationException(),
         };
 

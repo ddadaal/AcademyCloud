@@ -14,7 +14,7 @@ const UsersAllocated: React.FC<RouteComponentProps> = () => {
   return (
     <CurrentBillingsPage
       billType={BillType.Allocated}
-      subjectType={BillSubjectType.User}
+      subjectType={BillSubjectType.UserProjectAssignment}
       promiseFn={getUsers}
     />
   );
@@ -27,7 +27,7 @@ const HistoryUserAllocated: React.FC<RouteComponentProps<{ userId: string }>> = 
     <HistoryBillingsPage
       id={userId!!}
       billType={BillType.Allocated}
-      subjectType={BillSubjectType.User}
+      subjectType={BillSubjectType.UserProjectAssignment}
       getData={getData}
       location={location!!}
     />

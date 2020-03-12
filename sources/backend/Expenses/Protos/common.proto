@@ -26,4 +26,5 @@ enum SubjectType {
   Domain = 1;
   Project = 2;
   User = 3;
+  UserProjectAssignment = 4;
 }
