@@ -12,6 +12,7 @@ using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Data.Configurations;
 using AcademyCloud.Expenses.Domain.Entities.ManagementFee;
+using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
 
 namespace AcademyCloud.Expenses.Data
 {
@@ -87,13 +88,15 @@ namespace AcademyCloud.Expenses.Data
                 o.OwnsOne(e => e.Reason);
             });
 
-            modelBuilder.Entity<BillingCycle>(o =>
+            modelBuilder.Entity<BillingCycleRecord>(o =>
             {
+                o.Property(e => e.Id).ValueGeneratedNever();
                 o.OwnsOne(e => e.Resources);
             });
 
             modelBuilder.Entity<UseCycleRecord>(o =>
             {
+                o.Property(e => e.Id).ValueGeneratedNever();
                 o.OwnsOne(e => e.Resources);
             });
 

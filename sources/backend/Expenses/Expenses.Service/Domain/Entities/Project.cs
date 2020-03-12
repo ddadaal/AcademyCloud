@@ -1,4 +1,5 @@
-﻿using AcademyCloud.Expenses.Domain.Entities.Transaction;
+﻿using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
+using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
@@ -11,7 +12,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
     /// <summary>
     /// Dummy implementation to persist any type of IPayer into the database
     /// </summary>
-    public class Project: IPayer, IReceiver, IUseCycleSubject
+    public class Project: IPayer, IReceiver, IUseCycleSubject, IBillingCycleSubject
     {
         public Guid Id { get; set; }
 
@@ -26,11 +27,12 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual Receiver Receiver { get; set; }
         public virtual UseCycleSubject UseCycleSubject { get; set; }
+        public virtual BillingCycleSubject BillingCycleSubject { get; set; }
 
 
-        public virtual ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
+        public ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
 
-        public virtual ICollection<BillingCycle> BillingCycleRecords { get; set; } = new List<BillingCycle>();
+        public ICollection<BillingCycleRecord> BillingCycleRecords => BillingCycleSubject.BillingCycleRecords;
 
         public bool Active => Domain.Active && PayUser.Active;
 
@@ -53,9 +55,14 @@ namespace AcademyCloud.Expenses.Domain.Entities
             return Payer.Pay(receiver, amount, reason, time);
         }
 
-        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        void IUseCycleSubject.Settle(PricePlan plan, DateTime lastSettled, DateTime now)
         {
             UseCycleSubject.Settle(plan, lastSettled, now);
+        }
+
+        void IBillingCycleSubject.Settle(PricePlan pricePlan, DateTime lastSettled, DateTime now)
+        {
+            BillingCycleSubject.Settle(pricePlan, lastSettled, now);
         }
 
         public Project(Guid id, User payUser, Domain domain, Resources quota)
@@ -68,6 +75,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
             Payer = new Payer(this);
             Receiver = new Receiver(this);
             UseCycleSubject = new UseCycleSubject(this);
+            BillingCycleSubject = new BillingCycleSubject(this);
         }
 
         public Project()

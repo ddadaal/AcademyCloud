@@ -18,6 +18,7 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.Ignore(e => e.PayedOrgTransactions);
             builder.Ignore(e => e.ReceivedOrgTransactions);
             builder.Ignore(e => e.UseCycleRecords);
+            builder.Ignore(e => e.BillingCycleRecords);
         }
     }
 }

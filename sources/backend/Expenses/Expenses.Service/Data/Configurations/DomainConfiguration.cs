@@ -19,6 +19,7 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.Ignore(e => e.PayedOrgTransactions);
             builder.Ignore(e => e.ReceivedOrgTransactions);
             builder.Ignore(e => e.UseCycleRecords);
+            builder.Ignore(e => e.BillingCycleRecords);
 
             // init social domain
             builder.HasData(new { Id = SocialDomainId, PayerId = SocialDomainId, ReceiverId = SocialDomainId, PayUserId = SocialDomainAdminId, Resources = Resources.Zero });

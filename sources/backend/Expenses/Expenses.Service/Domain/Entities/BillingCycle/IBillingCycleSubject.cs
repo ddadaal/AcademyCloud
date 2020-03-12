@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.Domain.Entities
+namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 {
     public interface IBillingCycleSubject
     {
+        Guid Id { get; }
+
+        SubjectType SubjectType { get; }
+
         Resources Quota { get; }
 
-        void Settle(Resources quota, decimal price);
+        void Settle(PricePlan plan, DateTime lastSettled, DateTime now);
     }
 }

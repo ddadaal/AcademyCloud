@@ -1,4 +1,5 @@
-﻿using AcademyCloud.Expenses.Domain.Entities.Transaction;
+﻿using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
+using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class Domain : IPayer, IReceiver, IUseCycleSubject
+    public class Domain : IPayer, IReceiver, IUseCycleSubject, IBillingCycleSubject
     {
         #region Fields
         public Guid Id { get; set; }
@@ -25,11 +26,13 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public virtual Receiver Receiver { get; set; }
 
         public virtual UseCycleSubject UseCycleSubject { get; set; }
+        public virtual BillingCycleSubject BillingCycleSubject { get; set; }
         #endregion
 
         #region Properties and Methods
 
         public ICollection<UseCycleRecord> UseCycleRecords => UseCycleSubject.UseCycleRecords;
+        public ICollection<BillingCycleRecord> BillingCycleRecords => BillingCycleSubject.BillingCycleRecords;
 
         public bool Active => PayUser.Active;
 
@@ -53,9 +56,14 @@ namespace AcademyCloud.Expenses.Domain.Entities
             return Receiver.Receive(from, fromUser, amount, reason, time);
         }
 
-        public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)
+        void IUseCycleSubject.Settle(PricePlan plan, DateTime lastSettled, DateTime now)
         {
             UseCycleSubject.Settle(plan, lastSettled, now);
+        }
+
+        void IBillingCycleSubject.Settle(PricePlan pricePlan, DateTime lastSettled, DateTime now)
+        {
+            BillingCycleSubject.Settle(pricePlan, lastSettled, now);
         }
 
         #endregion
@@ -69,6 +77,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
             Payer = new Payer(this);
             Receiver = new Receiver(this);
             UseCycleSubject = new UseCycleSubject(this);
+            BillingCycleSubject = new BillingCycleSubject(this);
         }
 
         public Domain()
