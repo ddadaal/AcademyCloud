@@ -166,6 +166,73 @@ namespace AcademyCloud.Expenses.Test
         }
 
         [Fact]
+        public async Task TestGetDomainsCurrentUsedBillings()
+        {
+            var resources = new Domain.ValueObjects.Resources(1, 20, 30);
+            cjd67project.Resources = resources;
+            db.UseCycleEntries.Add(new UseCycleEntry(nju.UseCycleSubject));
+            await db.SaveChangesAsync();
+
+            var (service, _, useTask) = CreateService(systemTokenClaims);
+
+            await WaitForTaskForExecuteCycles(useTask, useConfiguration.CheckCycleMs, 2);
+
+            var resp = await service.GetCurrentUsedBillings(new GetCurrentUsedBillingsRequest
+            {
+                SubjectType = Protos.Common.SubjectType.Domain
+            }, TestContext);
+
+            Assert.Single(resp.Billings);
+
+            // the content should be the same with GetCurrentUsedBilling
+        }
+
+        [Fact]
+        public async Task TestGetProjectsCurrentUsedBillings()
+        {
+            var resources = new Domain.ValueObjects.Resources(1, 20, 30);
+            cjd67project.Resources = resources;
+            db.UseCycleEntries.Add(new UseCycleEntry(lqproject.UseCycleSubject));
+            await db.SaveChangesAsync();
+
+            var (service, _, useTask) = CreateService(njuadminnjuTokenClaims);
+
+            await WaitForTaskForExecuteCycles(useTask, useConfiguration.CheckCycleMs, 2);
+
+            var resp = await service.GetCurrentUsedBillings(new GetCurrentUsedBillingsRequest
+            {
+                SubjectType = Protos.Common.SubjectType.Project
+            }, TestContext);
+
+            var billing = Assert.Single(resp.Billings);
+            Assert.Equal(PricePlan.Instance.Calculate(resources), (decimal)billing.Amount);
+            Assert.Equal(resources.ToGrpc(), billing.Resources);
+        }
+
+        [Fact]
+        public async Task TestGetUsersCurrentUsedBillings()
+        {
+            var resources = new Domain.ValueObjects.Resources(1, 20, 30);
+            cjd67project.Resources = resources;
+            db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
+            await db.SaveChangesAsync();
+
+            var (service, billingTask, _) = CreateService(lqlqTokenClaims);
+
+            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2);
+
+            var resp = await service.GetCurrentUsedBillings(new GetCurrentUsedBillingsRequest
+            {
+                SubjectType = Protos.Common.SubjectType.UserProjectAssignment
+            }, TestContext);
+
+            var billing = Assert.Single(resp.Billings);
+            // User does not pay, but will know how much they should have paid.
+            Assert.Equal(PricePlan.Instance.Calculate(resources), (decimal)billing.Amount);
+            Assert.Equal(resources.ToGrpc(), billing.Resources);
+        }
+
+        [Fact]
         public async Task TestGetHistoryUsedBillings()
         {
             var usedResources = new Domain.ValueObjects.Resources(5, 10, 15);
