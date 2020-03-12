@@ -16,6 +16,6 @@ namespace AcademyCloud.API.Utils
 
         // Dummy resources
         // Should be retrieved from expenses
-        public static Resources DummyResources { get; } = new Resources { CPU = 4, Memory = 128, Storage = 256 };
+        public static Resources DummyResources { get; } = new Resources { Cpu = 4, Memory = 128, Storage = 256 };
     }
 }

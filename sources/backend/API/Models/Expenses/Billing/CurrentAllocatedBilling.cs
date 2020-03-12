@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.API.Models.Expenses.Billing
 {
-    public class BillingResponse<T>
+    public class CurrentAllocatedBilling: CurrentUsedBilling
     {
-        public T Billing { get; set; }
+        public string PayerId { get; set; }
+
+        public string PayerName { get; set; }
     }
 }

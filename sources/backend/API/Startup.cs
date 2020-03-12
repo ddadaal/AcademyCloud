@@ -51,6 +51,7 @@ namespace AcademyCloud.API
             services.AddConsul("http://consul:8500");
 
             services.AddSingleton<ServiceClientFactory>();
+            services.AddSingleton<InteropServices>();
 
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
