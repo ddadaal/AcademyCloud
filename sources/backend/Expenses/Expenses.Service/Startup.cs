@@ -47,8 +47,8 @@ namespace AcademyCloud.Expenses
             // Strongly typed configuration
             services.AddOptions();
 
-            services.Configure<ManagementFeeConfiguration>(Configuration.GetSection("ManagementFee"));
-            services.Configure<UseCycleConfiguration>(Configuration.GetSection("UseCycle"));
+            services.Configure<ManagementFeeConfigurations>(Configuration.GetSection("ManagementFee"));
+            services.Configure<UseCycleConfigurations>(Configuration.GetSection("UseCycle"));
 
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);

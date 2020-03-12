@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
 {
-    public class ManagementFeeConfiguration
+    public class ManagementFeeConfigurations
     {
         public int CheckCycleMs { get; set; }
         public int ChargeCycleMs { get; set; }

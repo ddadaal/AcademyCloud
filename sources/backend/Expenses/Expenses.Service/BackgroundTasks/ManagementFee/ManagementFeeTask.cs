@@ -17,11 +17,11 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
 {
     public class ManagementFeeTask : BackgroundService
     {
-        private readonly ManagementFeeConfiguration configuration;
+        private readonly ManagementFeeConfigurations configuration;
         private readonly ScopedDbProvider provider;
         private readonly ILogger<ManagementFeeTask> logger;
 
-        public ManagementFeeTask(IOptions<ManagementFeeConfiguration> configuration, ScopedDbProvider provider, ILogger<ManagementFeeTask> logger)
+        public ManagementFeeTask(IOptions<ManagementFeeConfigurations> configuration, ScopedDbProvider provider, ILogger<ManagementFeeTask> logger)
         {
             this.configuration = configuration.Value;
             this.provider = provider;

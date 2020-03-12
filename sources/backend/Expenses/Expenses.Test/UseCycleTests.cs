@@ -15,7 +15,7 @@ namespace AcademyCloud.Expenses.Test
 {
     public class UseCycleTests : CommonTest
     {
-        private UseCycleConfiguration configuration = new UseCycleConfiguration
+        private UseCycleConfigurations configuration = new UseCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
@@ -23,7 +23,7 @@ namespace AcademyCloud.Expenses.Test
 
         private UseCycleTask CreateTask()
         {
-            return ConfigureTask<UseCycleTask, UseCycleConfiguration>(configuration);
+            return ConfigureTask<UseCycleTask, UseCycleConfigurations>(configuration);
         }
 
         private async Task Wait(int waitTimes = 1)

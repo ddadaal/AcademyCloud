@@ -14,11 +14,11 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
 {
     public class UseCycleTask : BackgroundService
     {
-        private readonly UseCycleConfiguration configuration;
+        private readonly UseCycleConfigurations configuration;
         private readonly ScopedDbProvider provider;
         private readonly ILogger<UseCycleTask> logger;
 
-        public UseCycleTask(IOptions<UseCycleConfiguration> configuration, ScopedDbProvider provider, ILogger<UseCycleTask> logger)
+        public UseCycleTask(IOptions<UseCycleConfigurations> configuration, ScopedDbProvider provider, ILogger<UseCycleTask> logger)
         {
             this.configuration = configuration.Value;
             this.provider = provider;

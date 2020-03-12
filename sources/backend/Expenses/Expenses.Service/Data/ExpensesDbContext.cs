@@ -8,11 +8,10 @@ using DomainEntity = AcademyCloud.Expenses.Domain.Entities.Domain;
 using SystemEntity = AcademyCloud.Expenses.Domain.Entities.System;
 using static AcademyCloud.Shared.Constants;
 using AcademyCloud.Expenses.Domain.ValueObjects;
-using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Data.Configurations;
-using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
+using AcademyCloud.Expenses.Domain.Entities.ManagementFee;
 
 namespace AcademyCloud.Expenses.Data
 {

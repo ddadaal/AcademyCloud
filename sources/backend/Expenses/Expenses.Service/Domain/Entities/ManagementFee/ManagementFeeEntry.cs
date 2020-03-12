@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SystemEntity = AcademyCloud.Expenses.Domain.Entities.System;
 
-namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
+namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
 {
     public class ManagementFeeEntry
     {

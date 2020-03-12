@@ -1,11 +1,10 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
-using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
+namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
 {
     public class UseCycleEntry
     {

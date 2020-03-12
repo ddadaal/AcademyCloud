@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
 {
-    public class UseCycleConfiguration
+    public class UseCycleConfigurations
     {
         public int CheckCycleMs { get; set; }
 
