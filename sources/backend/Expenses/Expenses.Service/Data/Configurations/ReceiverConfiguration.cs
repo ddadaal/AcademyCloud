@@ -26,7 +26,7 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.HasOne(e => e.System).WithOne(e => e.Receiver).HasForeignKey<Receiver>("SystemId");
 
             // Setup receiver for System and Social Domain
-            builder.HasData(new { Id = SystemGuid, SystemId = SystemGuid, SubjectType = SubjectType.System });
+            builder.HasData(new { Id = SystemId, SystemId = SystemId, SubjectType = SubjectType.System });
             builder.HasData(new { Id = SocialDomainId, DomainId = SocialDomainId, SubjectType = SubjectType.Domain });
         }
     }

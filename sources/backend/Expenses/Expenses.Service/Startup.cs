@@ -1,5 +1,6 @@
 ﻿using System;
 using AcademyCloud.Expenses.BackgroundTasks;
+using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Data;
@@ -49,6 +50,7 @@ namespace AcademyCloud.Expenses
 
             services.Configure<ManagementFeeConfigurations>(Configuration.GetSection("ManagementFee"));
             services.Configure<UseCycleConfigurations>(Configuration.GetSection("UseCycle"));
+            services.Configure<BillingCycleConfigurations>(Configuration.GetSection("BillingCycle"));
 
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);

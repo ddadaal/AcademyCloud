@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using static AcademyCloud.Shared.Constants;
 using AcademyCloud.Expenses.Domain.ValueObjects;
+using static AcademyCloud.Expenses.Data.ExpensesDbContext;
 
 namespace AcademyCloud.Expenses.Data.Configurations
 {
@@ -22,7 +23,15 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder.Ignore(e => e.BillingCycleRecords);
 
             // init social domain
-            builder.HasData(new { Id = SocialDomainId, PayerId = SocialDomainId, ReceiverId = SocialDomainId, PayUserId = SocialDomainAdminId, Resources = Resources.Zero });
+            builder.HasData(new 
+            { 
+                Id = SocialDomainId, 
+                PayerId = SocialDomainId, 
+                ReceiverId = SocialDomainId, 
+                PayUserId = SocialDomainAdminId, 
+                Resources = Resources.Zero ,
+                SystemId = SystemId,
+            });
         }
     }
 }

@@ -18,7 +18,7 @@ namespace AcademyCloud.Expenses.Data
 {
     public class ExpensesDbContext : DbContext
     {
-        public static readonly Guid SystemGuid = Guid.Parse("FB7D021C-7284-43C5-92CA-F1164F61B808");
+        public static readonly Guid SystemId = Guid.Parse("FB7D021C-7284-43C5-92CA-F1164F61B808");
 
         public DbSet<UserTransaction> UserTransactions { get; set; }
 
@@ -37,6 +37,7 @@ namespace AcademyCloud.Expenses.Data
         public DbSet<ManagementFeeEntry> ManagementFeeEntries { get; set; }
 
         public DbSet<UseCycleEntry> UseCycleEntries { get; set; }
+        public DbSet<BillingCycleEntry> BillingCycleEntries { get; set; }
 
         public ExpensesDbContext(DbContextOptions<ExpensesDbContext> options) : base(options)
         {
@@ -55,7 +56,7 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.Entity<SystemEntity>(o =>
             {
                 // init system
-                o.HasData(new { Id = SystemGuid, ReceiveUserId = SystemUserId, ReceiverId = SystemGuid });
+                o.HasData(new { Id = SystemId, ReceiveUserId = SystemUserId, ReceiverId = SystemId });
 
                 o.Ignore(e => e.ReceivedOrgTransactions);
             });
@@ -101,6 +102,7 @@ namespace AcademyCloud.Expenses.Data
             });
 
             modelBuilder.ApplyConfiguration(new UseCycleSubjectConfiguration());
+            modelBuilder.ApplyConfiguration(new BillingCycleSubjectConfiguration());
 
         }
     }

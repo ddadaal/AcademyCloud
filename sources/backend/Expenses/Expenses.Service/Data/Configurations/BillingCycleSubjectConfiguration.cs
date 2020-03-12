@@ -19,6 +19,9 @@ namespace AcademyCloud.Expenses.Data.Configurations
             // Not care about subject. It's not a aggregate root and will not be accessed directly.
             builder.HasMany(x => x.BillingCycleRecords).WithOne();
 
+            // Necessary
+            builder.Ignore(x => x.PayedOrgTransactions);
+
             // Configuration one-to-one relationship of each column
             builder
                 .HasOne(x => x.Domain)
