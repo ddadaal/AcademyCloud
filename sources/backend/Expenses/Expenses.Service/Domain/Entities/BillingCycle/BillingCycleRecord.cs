@@ -18,13 +18,16 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public decimal Amount { get; set; }
 
-        public BillingCycleRecord(Guid id, Resources quota, DateTime startTime, DateTime endTime, decimal amount)
+        public virtual OrgTransaction OrgTransaction { get; set; }
+
+        public BillingCycleRecord(Guid id, Resources quota, DateTime startTime, DateTime endTime, decimal amount, OrgTransaction orgTransaction)
         {
             Id = id;
             Quota = quota;
             StartTime = startTime;
             EndTime = endTime;
             Amount = amount;
+            OrgTransaction = orgTransaction;
         }
 
         protected BillingCycleRecord() { }

@@ -50,7 +50,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public IReceiver BillingReceiver => System;
 
-        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
+        public OrgTransaction Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
         {
             return Payer.Pay(receiver, amount, reason, time);
         }

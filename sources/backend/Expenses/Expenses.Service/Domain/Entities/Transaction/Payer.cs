@@ -37,7 +37,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 
         public User PayUser => RealPayer.PayUser;
 
-        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
+        public OrgTransaction Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
         {
             var orgTransaction = receiver.Receive(this, PayUser, amount, reason, time);
 
@@ -45,7 +45,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 
             PayUser.ApplyTransaction(orgTransaction.UserTransaction);
 
-            return Active;
+            return orgTransaction;
         }
 
         public Payer(IPayer payer)

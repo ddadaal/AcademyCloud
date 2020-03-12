@@ -61,6 +61,11 @@ namespace AcademyCloud.Expenses.Extensions
             return (Protos.Common.SubjectType)type;
         }
 
+        public static Timestamp ToGrpc(this DateTime time)
+        {
+            return Timestamp.FromDateTime(time);
+        }
+
     }
 
 }

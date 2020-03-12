@@ -19,6 +19,6 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 
         User PayUser { get; }
 
-        bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time);
+        OrgTransaction Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time);
     }
 }

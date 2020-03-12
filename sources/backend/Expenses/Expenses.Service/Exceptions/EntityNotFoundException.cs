@@ -10,15 +10,15 @@ namespace AcademyCloud.Expenses.Exceptions
         public Type EntityType { get; set; }
         public string Predicate { get; set; }
 
-        public EntityNotFoundException(Type entityType, string predicate)
+        public EntityNotFoundException(Type entityType, params object[] predicates)
         {
             EntityType = entityType;
-            Predicate = predicate;
+            Predicate = string.Join(", ", predicates);
         }
 
-        public static EntityNotFoundException Create<T>(string predicate)
+        public static EntityNotFoundException Create<T>(params object[] predicates)
         {
-            return new EntityNotFoundException(typeof(T), predicate);
+            return new EntityNotFoundException(typeof(T), predicates);
         }
     }
 }

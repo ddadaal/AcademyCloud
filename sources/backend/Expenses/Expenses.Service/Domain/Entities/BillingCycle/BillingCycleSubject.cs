@@ -40,15 +40,15 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
         {
             var resources = Quota;
 
-            RealSubject.Pay(BillingReceiver, price, TransactionReason.DomainResources, now);
+            var orgTransaction = RealSubject.Pay(BillingReceiver, price, TransactionReason.DomainResources, now);
 
-            var cycle = new BillingCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price);
+            var cycle = new BillingCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price, orgTransaction);
 
             BillingCycleRecords.Add(cycle);
 
         }
 
-        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
+        public OrgTransaction Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
         {
             return RealSubject.Pay(receiver, amount, reason, time);
         }
