@@ -14,7 +14,7 @@ export const UserAllocated: React.FC = (props) => {
   return (
     <StatsPage
       billType={BillType.Allocated}
-      billSubjectType={BillSubjectType.User}
+      billSubjectType={BillSubjectType.UserProjectAssignment}
       id={userId}
       name={username}
     />
