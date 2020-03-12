@@ -43,6 +43,7 @@ namespace AcademyCloud.Expenses.Test.Helpers
         public TokenClaims lqlqTokenClaims;
         public TokenClaims njuadminnjuTokenClaims;
         public TokenClaims fcfcTokenClaims;
+        public TokenClaims systemTokenClaims;
 
         public void InitializeVariables(Domain.Entities.System system)
         {
@@ -64,6 +65,7 @@ namespace AcademyCloud.Expenses.Test.Helpers
             lqlqTokenClaims = new TokenClaims(false, false, lq.Id, nju.Id, lqproject.Id, UserRole.Admin);
             njuadminnjuTokenClaims = new TokenClaims(false, false, njuadmin.Id, nju.Id, null, UserRole.Admin);
             fcfcTokenClaims = new TokenClaims(false, false, fc.Id, pku.Id, fcproject.Id, UserRole.Admin);
+            systemTokenClaims = new TokenClaims(true, false, SystemUserId, nju.Id, null, UserRole.Admin);
         }
 
         public void FillData(ExpensesDbContext context)

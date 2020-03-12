@@ -10,6 +10,8 @@ namespace AcademyCloud.Expenses.Exceptions
         public Type EntityType { get; set; }
         public string Predicate { get; set; }
 
+        public override string Message => Predicate;
+
         public EntityNotFoundException(Type entityType, params object[] predicates)
         {
             EntityType = entityType;

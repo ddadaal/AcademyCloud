@@ -1,4 +1,5 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
+using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,18 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         {
             return now.AddMilliseconds(configuration.SettleCycleMs);
         }
+
+        public decimal CalculatePrice(BillingCycleEntry entry)
+        {
+            if (entry.SubjectType == SubjectType.UserProjectAssignment)
+            {
+                return 0;
+            } else
+            {
+                return CalculatePrice(entry.Quota);
+            }
+        }
+
         public decimal CalculatePrice(Resources resources)
         {
             return PricePlan.Instance.Calculate(resources);
@@ -49,7 +62,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                     {
                         if (time >= NextDue(i.LastSettled))
                         { 
-                            i.Settle(CalculatePrice(i.Quota), time);
+                            i.Settle(CalculatePrice(i), time);
 
                             logger.LogDebug($"Settling billing cycle for {i} completed.");
                         }

@@ -7,6 +7,7 @@ using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Protos.Billing;
 using AcademyCloud.Expenses.Services;
 using AcademyCloud.Expenses.Test.Helpers;
+using AcademyCloud.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +30,11 @@ namespace AcademyCloud.Expenses.Test
             SettleCycleMs = 1000,
         };
 
-        public (BillingService, BillingCycleTask, UseCycleTask) CreateService()
+        public (BillingService, BillingCycleTask, UseCycleTask) CreateService(TokenClaims? tokenClaims = null)
         {
             var billingTask = ConfigureTask<BillingCycleTask, BillingCycleConfigurations>(billingConfiguration);
             var useTask = ConfigureTask<UseCycleTask, UseCycleConfigurations>(useConfiguration);
-            var claimsAccessor = MockTokenClaimsAccessor(njuadminnjuTokenClaims);
+            var claimsAccessor = MockTokenClaimsAccessor(tokenClaims ?? njuadminnjuTokenClaims);
 
             return (new BillingService(claimsAccessor, db, useTask, billingTask), billingTask, useTask);
         }
@@ -93,16 +94,74 @@ namespace AcademyCloud.Expenses.Test
         }
 
         [Fact]
-        public async Task TestGetCurrentAllocatedBillings()
+        public async Task TestGetDomainsCurrentAllocatedBillings()
         {
             var quota = new Domain.ValueObjects.Resources(1, 20, 30);
-            nju.Quota = quota;
-            cjd67project.Quota = quota;
+            nju.Quota = quota.Clone();
+            pku.Quota = quota.Clone();
             db.BillingCycleEntries.Add(new BillingCycleEntry(nju.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new BillingCycleEntry(pku.BillingCycleSubject));
+            await db.SaveChangesAsync();
+
+            var (service, billingTask, _) = CreateService(systemTokenClaims);
+
+            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2);
+
+            var resp = await service.GetCurrentAllocatedBillings(new GetCurrentAllocatedBillingsRequest
+            {
+                SubjectType = Protos.Common.SubjectType.Domain
+            }, TestContext);
+
+            Assert.Equal(2, resp.Billings.Count);
+
+            // the content should be the same with GetCurrentUsedBilling
+        }
+
+        [Fact]
+        public async Task TestGetProjectsCurrentAllocatedBillings()
+        {
+            var quota = new Domain.ValueObjects.Resources(1, 20, 30);
+            lqproject.Quota = quota.Clone();
+            db.BillingCycleEntries.Add(new BillingCycleEntry(lqproject.BillingCycleSubject));
+            await db.SaveChangesAsync();
+
+            var (service, billingTask, _) = CreateService(njuadminnjuTokenClaims);
+
+            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2);
+
+            var resp = await service.GetCurrentAllocatedBillings(new GetCurrentAllocatedBillingsRequest
+            {
+                SubjectType = Protos.Common.SubjectType.Project
+            }, TestContext);
+
+            var billing = Assert.Single(resp.Billings);
+            Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)billing.Amount);
+            Assert.Equal(lq.Id.ToString(), billing.PayerId);
+            Assert.Equal(quota.ToGrpc(), billing.Resources);
+        }
+
+        [Fact]
+        public async Task TestGetUsersCurrentAllocatedBillings()
+        {
+            var quota = new Domain.ValueObjects.Resources(1, 20, 30);
+            cjd67project.Quota = quota.Clone();
             db.BillingCycleEntries.Add(new BillingCycleEntry(cjd67project.BillingCycleSubject));
             await db.SaveChangesAsync();
 
+            var (service, billingTask, _) = CreateService(lqlqTokenClaims);
 
+            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2);
+
+            var resp = await service.GetCurrentAllocatedBillings(new GetCurrentAllocatedBillingsRequest
+            {
+                SubjectType = Protos.Common.SubjectType.UserProjectAssignment
+            }, TestContext);
+
+            var billing = Assert.Single(resp.Billings);
+            // User does not pay, but will know how much they should have paid.
+            Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)billing.Amount);
+            Assert.Equal(cjd.Id.ToString(), billing.PayerId);
+            Assert.Equal(quota.ToGrpc(), billing.Resources);
 
         }
 
@@ -133,12 +192,13 @@ namespace AcademyCloud.Expenses.Test
         }
 
         [Fact]
-        public async Task TestGetHistoryAllocatedBillings()
+        public async Task TestProjectGetHistoryAllocatedBillings()
         {
             var quota = new Domain.ValueObjects.Resources(5, 10, 15);
             lqproject.Quota = quota;
 
             db.BillingCycleEntries.Add(new BillingCycleEntry(lqproject.BillingCycleSubject));
+            await db.SaveChangesAsync();
 
             var (service, billingTask, _) = CreateService();
 
@@ -156,6 +216,35 @@ namespace AcademyCloud.Expenses.Test
             var billing = resp.Billings.First();
             Assert.Equal(quota.ToGrpc(), billing.Resources);
             Assert.Equal(PricePlan.Instance.Calculate(quota), (decimal)billing.Amount);
+        }
+
+        [Fact]
+        public async Task TestUsersGetHistoryAllocatedBillings()
+        {
+            var quota = new Domain.ValueObjects.Resources(5, 10, 15);
+            cjd67project.Quota = quota;
+
+            db.BillingCycleEntries.Add(new BillingCycleEntry(cjd67project.BillingCycleSubject));
+            await db.SaveChangesAsync();
+
+            var (service, billingTask, _) = CreateService();
+
+            // wait 2 cycles
+            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2 * 2);
+
+            var resp = await service.GetHistoryAllocatedBillings(new GetHistoryAllocatedBillingsRequest
+            {
+                Id = cjd67project.Id.ToString(),
+                SubjectType = Protos.Common.SubjectType.UserProjectAssignment,
+            }, TestContext);
+
+            Assert.Equal(2, resp.Billings.Count);
+
+            var billing = resp.Billings.First();
+
+            Assert.Equal(quota.ToGrpc(), billing.Resources);
+            // User should not actually for the resources
+            Assert.Equal(0, (decimal)billing.Amount);
         }
     }
 }
