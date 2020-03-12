@@ -43,14 +43,14 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public User ReceiveUser => PayUser;
 
-        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason)
+        public bool Pay(IReceiver receiver, decimal amount, TransactionReason reason, DateTime time)
         {
-            return Payer.Pay(receiver, amount, reason);
+            return Payer.Pay(receiver, amount, reason, time);
         }
 
-        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
+        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason, DateTime time)
         {
-            return Receiver.Receive(from, fromUser, amount, reason);
+            return Receiver.Receive(from, fromUser, amount, reason, time);
         }
 
         public void Settle(PricePlan plan, DateTime lastSettled, DateTime now)

@@ -29,10 +29,8 @@ namespace AcademyCloud.Expenses.Domain.Entities.Transaction
 
         public User ReceiveUser => RealReceiver.ReceiveUser;
 
-        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
+        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason, DateTime time)
         {
-            var time = DateTime.UtcNow;
-
             var userTransaction = new UserTransaction(Guid.NewGuid(), time, amount, reason, fromUser, ReceiveUser);
             ReceiveUser.ApplyTransaction(userTransaction);
 

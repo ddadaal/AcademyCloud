@@ -41,7 +41,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
 
         public void Charge(SystemEntity system, DateTime time)
         {
-            Payer.Pay(system, Amount, Reason);
+            Payer.Pay(system, Amount, Reason, time);
             LastSettled = time;
         }
     }

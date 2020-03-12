@@ -22,17 +22,9 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public ICollection<OrgTransaction> ReceivedOrgTransactions => Receiver.ReceivedOrgTransactions;
 
-        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason)
+        public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason, DateTime time)
         {
-            var time = DateTime.UtcNow;
-
-            var userTransaction = new UserTransaction(Guid.NewGuid(), time, amount, reason, fromUser, ReceiveUser);
-            ReceiveUser.ApplyTransaction(userTransaction);
-
-            var orgTransaction = new OrgTransaction(Guid.NewGuid(), time, amount, reason, fromUser.Payer, Receiver, userTransaction);
-            ReceivedOrgTransactions.Add(orgTransaction);
-
-            return orgTransaction;
+            return Receiver.Receive(from, fromUser, amount, reason, time);
         }
 
         public System(Guid id, User receiveUser)
