@@ -35,6 +35,19 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
         {
             return PricePlan.Instance.Calculate(resources);
         }
+        public bool TrySettle(UseCycleEntry entry)
+        {
+            if (entry.Settle(CalculatePrice(entry.Resources), DateTime.UtcNow))
+            {
+                logger.LogDebug($"{entry} has no resources. Skip settling.");
+                return true;
+            }
+            else
+            {
+                logger.LogDebug($"Settling use cycle for {entry} completed.");
+                return false;
+            }
+        }
 
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -53,9 +66,10 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
                         {
                             logger.LogDebug($"Settling use cycle for {i}");
 
-                            i.Settle(CalculatePrice(i.Resources), time);
-                            await dbContext.SaveChangesAsync();
-                            logger.LogDebug($"Settling use cycle for {i} completed.");
+                            if (i.Settle(CalculatePrice(i.Resources), time))
+                            {
+                                await dbContext.SaveChangesAsync();
+                            }
                         }
                         else
                         {

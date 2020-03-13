@@ -30,9 +30,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
         {
         }
 
-        public void Settle(decimal price, DateTime now)
+        public bool Settle(decimal price, DateTime now)
         {
-            Subject.Settle(price, LastSettled, now);
+            return Subject.Settle(price, LastSettled, now);
         }
 
 

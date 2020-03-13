@@ -48,15 +48,17 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         {
             return PricePlan.Instance.Calculate(resources);
         }
-        public void TrySettle(BillingCycleEntry entry, TransactionReason reason)
+        public bool TrySettle(BillingCycleEntry entry, TransactionReason reason)
         {
             if (entry.Settle(CalculatePrice(entry), DateTime.UtcNow, reason))
             {
                 logger.LogDebug($"{entry} has no quota. Skip settling.");
+                return true;
             }
             else
             {
                 logger.LogDebug($"Settling billing cycle for {entry} completed.");
+                return false;
             }
         }
 
@@ -74,8 +76,10 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                     {
                         if (time >= NextDue(i.LastSettled))
                         {
-                            TrySettle(i, TransactionReason.DomainResources);
-                            await dbContext.SaveChangesAsync();
+                            if (TrySettle(i, TransactionReason.DomainResources))
+                            {
+                                await dbContext.SaveChangesAsync();
+                            }
                         }
                         else
                         {
