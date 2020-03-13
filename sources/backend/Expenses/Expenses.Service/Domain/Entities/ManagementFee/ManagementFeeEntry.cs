@@ -15,14 +15,15 @@ namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
         public virtual Payer Payer { get; set; }
 
         public DateTime LastSettled { get; set; }
+        
+        public SubjectType SubjectType { get; set; }
 
-        public decimal Amount { get; set; }
 
-        public ManagementFeeEntry(Guid id, Payer payer, decimal amount)
+        public ManagementFeeEntry(Payer payer)
         {
-            Id = id;
+            Id = payer.Id;
             Payer = payer;
-            Amount = amount;
+            SubjectType = payer.SubjectType;
             LastSettled = DateTime.UtcNow;
         }
 
@@ -30,7 +31,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
         {
 
         }
-        private TransactionReason Reason => Payer.SubjectType switch
+        private TransactionReason Reason => SubjectType switch
         {
             SubjectType.Domain => TransactionReason.DomainManagement,
             SubjectType.Project => TransactionReason.ProjectManagement,
@@ -39,9 +40,9 @@ namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
         };
 
 
-        public void Charge(SystemEntity system, DateTime time)
+        public void Charge(SystemEntity system, decimal amount, DateTime time)
         {
-            Payer.Pay(system, Amount, Reason, time);
+            Payer.Pay(system, amount, Reason, time);
             LastSettled = time;
         }
     }
