@@ -41,6 +41,7 @@ namespace AcademyCloud.Expenses.Services
 
             dbContext.Domains.Add(domain);
             dbContext.UserDomainAssignments.Add(userDomainAssignment);
+            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(domain.BillingCycleSubject));
 
             await dbContext.SaveChangesAsync();
             return new AddDomainResponse { };
