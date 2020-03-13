@@ -33,7 +33,10 @@ namespace AcademyCloud.Identity.Services
 
             await dbContext.SaveChangesAsync();
 
-            return new AddUserToDomainResponse { };
+            return new AddUserToDomainResponse 
+            { 
+                UserDomainAssignmentId = assignment.Id.ToString(),
+            };
         }
 
         public override async Task<ChangeUserRoleResponse> ChangeUserRole(ChangeUserRoleRequest request, ServerCallContext context)
@@ -63,7 +66,11 @@ namespace AcademyCloud.Identity.Services
 
             await dbContext.SaveChangesAsync();
 
-            return new CreateDomainResponse { };
+            return new CreateDomainResponse
+            {
+                DomainId = domain.Id.ToString(),
+                AdminDomainAssignmentId = adminAssignment.Id.ToString(),
+            };
 
         }
 

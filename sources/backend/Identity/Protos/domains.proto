@@ -36,7 +36,9 @@ message AddUserToDomainRequest {
   common.UserRole role = 3;
 }
 
-message AddUserToDomainResponse {}
+message AddUserToDomainResponse {
+  string userDomainAssignmentId = 1;
+}
 
 message ChangeUserRoleRequest {
   string domainId = 1;
@@ -58,7 +60,10 @@ message CreateDomainRequest {
   string adminId = 2;
 }
 
-message CreateDomainResponse {}
+message CreateDomainResponse {
+  string domainId = 1;
+  string adminDomainAssignmentId = 2;
+}
 
 message DeleteDomainRequest { string domainId = 1; }
 

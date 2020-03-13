@@ -36,7 +36,10 @@ namespace AcademyCloud.Identity.Services
 
             await dbContext.SaveChangesAsync();
 
-            return new AddUserToProjectResponse { };
+            return new AddUserToProjectResponse
+            {
+                UserProjectAssignmentId = assignment.Id.ToString(),
+            };
         }
 
         public override async Task<ChangeUserRoleResponse> ChangeUserRole(ChangeUserRoleRequest request, ServerCallContext context)
@@ -70,7 +73,11 @@ namespace AcademyCloud.Identity.Services
 
             await dbContext.SaveChangesAsync();
 
-            return new CreateProjectResponse { };
+            return new CreateProjectResponse
+            {
+                ProjectId = project.Id.ToString(),
+                AdminAssignmentId = adminAssignment.Id.ToString(),
+            };
         }
 
         public override async Task<DeleteProjectResponse> DeleteProject(DeleteProjectRequest request, ServerCallContext context)

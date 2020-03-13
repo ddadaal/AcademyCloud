@@ -40,7 +40,9 @@ message AddUserToProjectRequest {
   common.UserRole role = 3;
 }
 
-message AddUserToProjectResponse {}
+message AddUserToProjectResponse {
+  string userProjectAssignmentId = 1;
+}
 
 message ChangeUserRoleRequest {
   string projectId = 1;
@@ -62,7 +64,10 @@ message CreateProjectRequest {
   string adminId = 2;
 }
 
-message CreateProjectResponse {}
+message CreateProjectResponse {
+  string projectId = 1;
+  string adminAssignmentId = 2;
+}
 
 message DeleteProjectRequest { string projectId = 1; }
 
