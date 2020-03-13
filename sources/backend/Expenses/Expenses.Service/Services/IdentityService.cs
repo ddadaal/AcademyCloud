@@ -68,6 +68,7 @@ namespace AcademyCloud.Expenses.Services
             dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(userProjectAssignment.UseCycleSubject));
             dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(project.UseCycleSubject));
 
+            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(userProjectAssignment.BillingCycleSubject));
             dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(project.BillingCycleSubject));
 
             dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(project.Payer));
