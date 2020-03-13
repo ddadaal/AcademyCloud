@@ -11,7 +11,7 @@ namespace AcademyCloud.API.Utils
     {
         public static User TransformUser(Identity.Protos.Common.User user)
         {
-            return new User { Id = user.Id, Name = user.Name, Username = user.Username };
+            return new User { Id = user.Id, Name = user.Name };
         }
 
         // Dummy resources

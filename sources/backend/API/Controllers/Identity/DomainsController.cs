@@ -34,6 +34,40 @@ namespace AcademyCloud.API.Controllers.Identity
 
                 });
 
+            var subjects = resp.Domains.Select(x => new AcademyCloud.Expenses.Protos.Interop.Subject
+            {
+                Id = x.Id,
+                Type = AcademyCloud.Expenses.Protos.Common.SubjectType.Domain,
+            });
+
+            // get pay users
+            var payUsers = await (await factory.GetExpensesInteropClientAsync())
+                .GetPayUserAsync(new AcademyCloud.Expenses.Protos.Interop.GetPayUserRequest
+                {
+                    Subjects = { subjects }
+                });
+
+            // get pay user's names
+            var payUserNames = await (await factory.GetIdentityInteropClientAsync())
+                .GetNamesAsync(new AcademyCloud.Identity.Protos.Interop.GetNamesRequest
+                {
+                    Subjects =
+                    {
+                        payUsers.PayUsers.Values.Select(x => new AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.Subject
+                        {
+                            Id = x,
+                            Type = AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.SubjectType.User,
+                        })
+                    }
+                });
+
+            // get resources
+            var resources = await (await factory.GetExpensesInteropClientAsync())
+                .GetQuotaAsync(new AcademyCloud.Expenses.Protos.Interop.GetQuotaRequest
+                {
+                    Subjects = { subjects }
+                });
+
             return new GetDomainsResponse
             {
                 Domains = resp.Domains.Select(x => new Domain
@@ -42,8 +76,8 @@ namespace AcademyCloud.API.Controllers.Identity
                     Name = x.Name,
                     Active = true,
                     Admins = x.Admins.Select(TransformUser),
-                    PayUser = TransformUser(x.Admins[0]),
-                    Resources = DummyResources,
+                    PayUser = new User { Id = payUsers.PayUsers[x.Id], Name = payUserNames.IdNameMap[payUsers.PayUsers[x.Id]] },
+                    Quota = resources.Resources[x.Id],
                 })
             };
         }

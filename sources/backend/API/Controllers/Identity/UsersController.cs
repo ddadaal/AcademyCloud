@@ -34,7 +34,7 @@ namespace AcademyCloud.API.Controllers.Identity
             // request to expenses to get user activity
 
             // Pick ids and types
-            var subjects = resp.Users.Select(x => new AcademyCloud.Expenses.Protos.Interop.GetActivityRequest.Types.Subject
+            var subjects = resp.Users.Select(x => new AcademyCloud.Expenses.Protos.Interop.Subject
             {
                 Id = x.Id,
                 Type = AcademyCloud.Expenses.Protos.Common.SubjectType.User,
@@ -53,7 +53,6 @@ namespace AcademyCloud.API.Controllers.Identity
                 Id = x.Id,
                 Active = activitiesResp.Activities[x.Id],
                 Name = x.Name,
-                Username = x.Username,
             });
 
             return new GetAllUsersResponse 

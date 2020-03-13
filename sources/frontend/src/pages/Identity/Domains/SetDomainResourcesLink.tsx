@@ -21,6 +21,6 @@ export const SetDomainResourcesLink: React.FC<Props> = ({ domain, reload }) => {
   }, [domain.id, reload]);
 
   return (
-    <SetResourcesLink initial={domain.resources} onConfirm={onConfirm} />
+    <SetResourcesLink initial={domain.quota} onConfirm={onConfirm} />
   );
 }

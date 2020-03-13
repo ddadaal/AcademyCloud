@@ -3,8 +3,8 @@ import { Resources } from "src/models/Resources";
 import { User } from "src/models/User";
 import { UserRole } from "src/models/Scope";
 
-const cjd: User = { id: "CJDID", username: "CJD", name: "CJD" };
-const cjy: User = { id: "CJYID", username: "CJY", name: "CJY" };
+const cjd: User = { id: "CJDID",  name: "CJD" };
+const cjy: User = { id: "CJYID",  name: "CJY" };
 
 export class DomainsServiceMock extends DomainsService {
   async getDomains(): Promise<GetDomainsResponse> {
@@ -17,7 +17,7 @@ export class DomainsServiceMock extends DomainsService {
           active: true,
           payUser: cjd,
           admins: [cjd, cjy],
-          resources: { cpu: 4, memory: 64, storage: 5000 },
+          quota: { cpu: 4, memory: 64, storage: 5000 },
         },
         {
           id: "PKUID",
@@ -25,7 +25,7 @@ export class DomainsServiceMock extends DomainsService {
           active: false,
           payUser: cjd,
           admins: [cjd],
-          resources: { cpu: 8, memory: 128, storage: 10000 },
+          quota: { cpu: 8, memory: 128, storage: 10000 },
         }
       ]
     };

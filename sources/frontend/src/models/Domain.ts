@@ -7,5 +7,5 @@ export interface Domain {
   active: boolean;
   admins: User[];
   payUser: User;
-  resources: Resources;
+  quota: Resources;
 }

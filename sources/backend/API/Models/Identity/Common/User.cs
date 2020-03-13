@@ -9,8 +9,6 @@ namespace AcademyCloud.API.Models.Identity.Common
     {
         public string Id { get; set; }
 
-        public string Username { get; set; }
-
         public string Name { get; set; }
 
     }

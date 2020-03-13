@@ -1,8 +1,8 @@
 import { UsersService, GetAccessibleUsersResponse, GetAllUsersResponse } from "src/apis/identity/UsersService";
 import { User } from "src/models/User";
 
-const cjd: User = { id: "CJDID", username: "CJD", name: "CJD" };
-const cjy: User = { id: "CJYID", username: "CJY", name: "CJY"};
+const cjd: User = { id: "CJDID",  name: "CJD" };
+const cjy: User = { id: "CJYID",  name: "CJY"};
 
 export class UsersServiceMock extends UsersService {
   async getAccessibleUsers(): Promise<GetAccessibleUsersResponse> {
