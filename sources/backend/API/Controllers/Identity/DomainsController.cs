@@ -62,7 +62,7 @@ namespace AcademyCloud.API.Controllers.Identity
                 });
 
             // get resources
-            var resources = await (await factory.GetExpensesInteropClientAsync())
+            var quotas = await (await factory.GetExpensesInteropClientAsync())
                 .GetQuotaAsync(new AcademyCloud.Expenses.Protos.Interop.GetQuotaRequest
                 {
                     Subjects = { subjects }
@@ -77,7 +77,7 @@ namespace AcademyCloud.API.Controllers.Identity
                     Active = true,
                     Admins = x.Admins.Select(TransformUser),
                     PayUser = new User { Id = payUsers.PayUsers[x.Id], Name = payUserNames.IdNameMap[payUsers.PayUsers[x.Id]] },
-                    Quota = resources.Resources[x.Id],
+                    Quota = quotas.Quotas[x.Id],
                 })
             };
         }
@@ -91,12 +91,21 @@ namespace AcademyCloud.API.Controllers.Identity
                     DomainId = domainId
                 });
 
-            // TODO get pay user from expenses
+            var users = await (await factory.GetExpensesInteropClientAsync())
+                .GetPayUserAsync(new AcademyCloud.Expenses.Protos.Interop.GetPayUserRequest
+                {
+                    Subjects =
+                    {
+                        new AcademyCloud.Expenses.Protos.Interop.Subject{ Id = domainId, Type = AcademyCloud.Expenses.Protos.Common.SubjectType.Domain }
+                    }
+                });
+
             return new GetUsersOfDomainResponse
             {
                 Admins = resp.Admins.Select(TransformUser),
                 Members = resp.Members.Select(TransformUser),
-                PayUser = resp.Admins.Select(TransformUser).First(),
+                // the pay user should be in admins
+                PayUser = TransformUser(resp.Admins.First(x => x.Id == users.PayUsers[domainId]))
             };
         }
 
@@ -231,7 +240,7 @@ namespace AcademyCloud.API.Controllers.Identity
                     DomainId = domainId,
                     UserId = userId,
                 });
-            // TODO delete in the expenses
+            // delete in the expenses
             await (await factory.GetExpensesIdentityClient())
                 .RemoveUserFromDomainAsync(new AcademyCloud.Expenses.Protos.Identity.RemoveUserFromDomainRequest
                 {
