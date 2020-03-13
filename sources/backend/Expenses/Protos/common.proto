@@ -28,3 +28,9 @@ enum SubjectType {
   User = 3;
   UserProjectAssignment = 4;
 }
+
+message Resources {
+  int32 cpu = 1;
+  int32 memory = 2;
+  int32 storage = 3;
+}

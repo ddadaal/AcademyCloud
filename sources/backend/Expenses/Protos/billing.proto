@@ -16,23 +16,18 @@ service Billing {
    rpc GetHistoryUsedBillings (GetHistoryUsedBillingsRequest) returns (GetHistoryUsedBillingsResponse);
 }
 
-message Resources {
-  int32 cpu = 1;
-  int32 memory = 2;
-  int32 storage = 3;
-}
 
 
 message CurrentUsedBilling {
   string subjectId = 1;
-  Resources resources = 2;
+  common.Resources resources = 2;
   common.DecimalValue amount = 3;
   google.protobuf.Timestamp nextDue = 4;
 }
 
 message CurrentAllocatedBilling {
   string subjectId = 1;
-  Resources quota = 2;
+  common.Resources quota = 2;
   common.DecimalValue amount = 3;
   google.protobuf.Timestamp nextDue = 4;
   string payerId = 5;
@@ -40,7 +35,7 @@ message CurrentAllocatedBilling {
 
 message HistoryUsedBilling {
   string id = 1;
-  Resources resources = 2;
+  common.Resources resources = 2;
   common.DecimalValue amount = 3;
   google.protobuf.Timestamp startTime = 4;
   google.protobuf.Timestamp endTime = 5;
@@ -48,7 +43,7 @@ message HistoryUsedBilling {
 
 message HistoryAllocatedBilling {
   string id = 1;
-  Resources quota = 2;
+  common.Resources quota = 2;
   common.DecimalValue amount = 3;
   google.protobuf.Timestamp startTime = 4;
   google.protobuf.Timestamp endTime = 5;

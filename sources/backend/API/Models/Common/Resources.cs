@@ -12,9 +12,14 @@ namespace AcademyCloud.API.Models.Common
 
         public int Storage { get; set; }
 
-        public static implicit operator Resources(AcademyCloud.Expenses.Protos.Billing.Resources resources)
+        public static implicit operator Resources(AcademyCloud.Expenses.Protos.Common.Resources resources)
         {
             return new Resources() { Cpu = resources.Cpu, Memory = resources.Memory, Storage = resources.Storage };
+        }
+
+        public static implicit operator AcademyCloud.Expenses.Protos.Common.Resources(Resources resources)
+        {
+            return new AcademyCloud.Expenses.Protos.Common.Resources() { Cpu = resources.Cpu, Memory = resources.Memory, Storage = resources.Storage };
         }
     }
 }
