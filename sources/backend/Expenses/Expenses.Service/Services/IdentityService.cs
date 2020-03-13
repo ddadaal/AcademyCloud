@@ -156,9 +156,18 @@ namespace AcademyCloud.Expenses.Services
             return new RemoveUserFromDomainResponse { };
         }
 
-        public override Task<RemoveUserFromProjectResponse> RemoveUserFromProject(RemoveUserFromProjectRequest request, ServerCallContext context)
+        public override async Task<RemoveUserFromProjectResponse> RemoveUserFromProject(RemoveUserFromProjectRequest request, ServerCallContext context)
         {
-            return base.RemoveUserFromProject(request, context);
+            var domain = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+
+            var assignment = await dbContext.UserProjectAssignments.FirstIfNotNullThrowAsync(x => x.Project == domain && x.User == user);
+
+            dbContext.UserProjectAssignments.Remove(assignment);
+
+            await dbContext.SaveChangesAsync();
+
+            return new RemoveUserFromProjectResponse { };
         }
 
         public override async Task<SetDomainPayUserResponse> SetDomainPayUser(SetDomainPayUserRequest request, ServerCallContext context)

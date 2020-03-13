@@ -93,5 +93,27 @@ namespace AcademyCloud.Expenses.Test
             Assert.Empty(db.UseCycleEntries.Where(x => x.Subject.UserProjectAssignment.Id == payUserAssignmentId));
             Assert.Empty(cjd.Projects.Where(x => x.Project.Id == projectId));
         }
+
+        [Fact]
+        public async Task TestRemoveUserFromProject()
+        {
+            // Then add cjy
+            await service.AddUserToProject(new Protos.Identity.AddUserToProjectRequest
+            {
+                UserId = cjy.Id.ToString(),
+                ProjectId = projectId.ToString(),
+                UserProjectAssignmentId = Guid.NewGuid().ToString(),
+            }, TestContext);
+
+            // Then remove cjy
+            await service.RemoveUserFromProject(new Protos.Identity.RemoveUserFromProjectRequest
+            {
+                UserId = cjy.Id.ToString(),
+                ProjectId = projectId.ToString(),
+            }, TestContext);
+
+            Assert.Single(db.Projects.Find(projectId).Users);
+            Assert.Empty(cjy.Projects);
+        }
     }
 }

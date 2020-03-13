@@ -114,7 +114,6 @@ namespace AcademyCloud.API.Controllers.Identity
         [HttpDelete("{projectId}/users/{userId}")]
         public async Task<ActionResult> RemoveUserFromProject([FromRoute] string projectId, [FromRoute] string userId)
         {
-            // TODO request to expenses
             var resp1 = await (await factory.GetProjectsClientAsync())
                 .RemoveUserFromProjectAsync(new AcademyCloud.Identity.Protos.Projects.RemoveUserFromProjectRequest
                 {
@@ -122,6 +121,13 @@ namespace AcademyCloud.API.Controllers.Identity
                     UserId = userId,
                 });
 
+            // request to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .RemoveUserFromProjectAsync(new AcademyCloud.Expenses.Protos.Identity.RemoveUserFromProjectRequest
+                {
+                    UserId = userId,
+                    ProjectId = projectId,
+                });
 
             return NoContent();
         }
