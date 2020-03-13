@@ -44,6 +44,16 @@ namespace AcademyCloud.API.Controllers.Identity
                     Email = request.Email,
                 });
 
+            // add user to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .AddUserAsync(new AcademyCloud.Expenses.Protos.Identity.AddUserRequest
+                {
+                    UserId = resp.UserId,
+                    SocialProjectId = resp.SocialProjectId,
+                    SocialDomainAssignmentId = resp.SocialDomainAssignmentId,
+                    SocialProjectAssignmentId = resp.SocialProjectAssignmentId,
+                });
+
             return new RegisterResponse() { Scope = resp.Scope, Token = resp.Token };
 
         }

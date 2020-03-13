@@ -32,8 +32,12 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-  string token = 1;
-  authentication.Scope scope = 2;
+  string userId = 1;
+  string socialProjectId = 2;
+  string socialProjectAssignmentId = 3;
+  string socialDomainAssignmentId = 4;
+  string token = 5;
+  authentication.Scope scope = 6;
 }
 
 message GetProfileRequest {}

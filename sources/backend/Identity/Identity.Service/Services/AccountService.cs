@@ -176,6 +176,10 @@ namespace AcademyCloud.Identity.Services
 
             return new RegisterResponse()
             {
+                UserId = newUser.Id.ToString(),
+                SocialProjectId = newProject.Id.ToString(),
+                SocialDomainAssignmentId = domainAssignment.Id.ToString(),
+                SocialProjectAssignmentId = projectAssignment.Id.ToString(),
                 Scope = scope,
                 Token = token,
             };
