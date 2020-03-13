@@ -37,7 +37,8 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
             if (entry.SubjectType == SubjectType.UserProjectAssignment)
             {
                 return 0;
-            } else
+            }
+            else
             {
                 return CalculatePrice(entry.Quota);
             }
@@ -46,6 +47,17 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         public decimal CalculatePrice(Resources resources)
         {
             return PricePlan.Instance.Calculate(resources);
+        }
+        public void TrySettle(BillingCycleEntry entry, TransactionReason reason)
+        {
+            if (entry.Settle(CalculatePrice(entry), DateTime.UtcNow, reason))
+            {
+                logger.LogDebug($"{entry} has no quota. Skip settling.");
+            }
+            else
+            {
+                logger.LogDebug($"Settling billing cycle for {entry} completed.");
+            }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -61,10 +73,9 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                     await foreach (var i in dbContext.BillingCycleEntries.AsAsyncEnumerable())
                     {
                         if (time >= NextDue(i.LastSettled))
-                        { 
-                            i.Settle(CalculatePrice(i), time);
-
-                            logger.LogDebug($"Settling billing cycle for {i} completed.");
+                        {
+                            TrySettle(i, TransactionReason.DomainResources);
+                            await dbContext.SaveChangesAsync();
                         }
                         else
                         {
@@ -72,7 +83,6 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                         }
                     }
 
-                    await dbContext.SaveChangesAsync();
                 });
 
                 logger.LogDebug("End settling billing cycle.");

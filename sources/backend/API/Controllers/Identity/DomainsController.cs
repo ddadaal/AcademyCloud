@@ -85,6 +85,7 @@ namespace AcademyCloud.API.Controllers.Identity
                 {
                     DomainId = domainId,
                     UserId = request.UserId,
+                    UserDomainAssignmentId = resp.UserDomainAssignmentId,
                 });
 
             return NoContent();

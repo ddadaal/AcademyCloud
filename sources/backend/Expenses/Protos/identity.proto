@@ -94,6 +94,7 @@ message SetDomainPayUserResponse {
 message AddUserToProjectRequest {
   string projectId = 1;
   string userId = 2;
+  string userProjectAssignmentId = 3;
 }
 
 message AddUserToProjectResponse {
@@ -112,6 +113,7 @@ message RemoveUserFromProjectResponse {
 message AddUserToDomainRequest {
   string domainId = 1;
   string userId = 2;
+  string userDomainAssignmentId = 3;
 }
 
 message AddUserToDomainResponse {

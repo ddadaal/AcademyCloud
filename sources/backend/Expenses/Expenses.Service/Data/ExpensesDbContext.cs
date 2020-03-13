@@ -30,6 +30,8 @@ namespace AcademyCloud.Expenses.Data
 
         public DbSet<DomainEntity> Domains { get; set; }
 
+        public DbSet<UserDomainAssignment> UserDomainAssignments { get; set; }
+
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<UserProjectAssignment> UserProjectAssignments { get; set; }

@@ -12,7 +12,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
     /// <summary>
     /// Dummy implementation to persist any type of IPayer into the database
     /// </summary>
-    public class Project: IPayer, IReceiver, IUseCycleSubject, IBillingCycleSubject
+    public class Project : IPayer, IReceiver, IUseCycleSubject, IBillingCycleSubject
     {
         public Guid Id { get; set; }
 
@@ -20,7 +20,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public virtual User PayUser { get; set; }
         public virtual Domain Domain { get; set; }
-        
+
         public virtual Resources Quota { get; set; }
 
         public virtual Payer Payer { get; set; }
@@ -57,14 +57,14 @@ namespace AcademyCloud.Expenses.Domain.Entities
             return Payer.Pay(receiver, amount, reason, time);
         }
 
-        void IUseCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
+        bool IUseCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
         {
-            UseCycleSubject.Settle(price, lastSettled, now);
+            return UseCycleSubject.Settle(price, lastSettled, now);
         }
 
-        void IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
+        bool IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reason)
         {
-            BillingCycleSubject.Settle(price, lastSettled, now);
+            return BillingCycleSubject.Settle(price, lastSettled, now, reason);
         }
 
         public Project(Guid id, User payUser, Domain domain, Resources quota)

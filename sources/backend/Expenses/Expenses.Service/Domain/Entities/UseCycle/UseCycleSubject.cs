@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
 {
-    public class UseCycleSubject: IUseCycleSubject
-    {   
+    public class UseCycleSubject : IUseCycleSubject
+    {
         public Guid Id { get; set; }
 
         public virtual Domain? Domain { get; set; }
@@ -31,13 +31,20 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
         public Resources Resources => RealSubject.Resources;
 
 
-        public void Settle(decimal price, DateTime lastSettled, DateTime now)
+        public bool Settle(decimal price, DateTime lastSettled, DateTime now)
         {
+            
             var resources = Resources;
 
-            var cycle = new UseCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price);
+            if (resources == Resources.Zero)
+            {
+                return false;
+            }
 
+            var cycle = new UseCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price);
             UseCycleRecords.Add(cycle);
+
+            return true;
 
         }
 
@@ -62,7 +69,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
                 default:
                     throw new ArgumentOutOfRangeException(nameof(subject));
             }
-            
+
 
         }
     }

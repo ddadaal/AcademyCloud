@@ -14,6 +14,6 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
 
         Resources Resources { get; }
 
-        void Settle(decimal price, DateTime lastSettled, DateTime now);
+        bool Settle(decimal price, DateTime lastSettled, DateTime now);
     }
 }

@@ -9,13 +9,17 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 {
     public interface IBillingCycleSubject : IPayer
     {
-        Guid Id { get; }
-
-        SubjectType SubjectType { get; }
 
         Resources Quota { get; }
         IReceiver BillingReceiver { get; }
 
-        void Settle(decimal price, DateTime lastSettled, DateTime now);
+        /// <summary>
+        /// Try settle. If quota is Zero, it will not be settled.
+        /// </summary>
+        /// <param name="price"></param>
+        /// <param name="lastSettled"></param>
+        /// <param name="now"></param>
+        /// <returns></returns>
+        bool Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reson);
     }
 }

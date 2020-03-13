@@ -1,4 +1,5 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
+using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,6 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
         {
             return PricePlan.Instance.Calculate(resources);
         }
-
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -52,7 +52,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
                             logger.LogDebug($"Settling use cycle for {i}");
 
                             i.Settle(CalculatePrice(i.Resources), time);
-
+                            await dbContext.SaveChangesAsync();
                             logger.LogDebug($"Settling use cycle for {i} completed.");
                         }
                         else
@@ -61,7 +61,6 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
                         }
                     }
 
-                    await dbContext.SaveChangesAsync();
                 });
 
                 logger.LogDebug("End settling use cycle.");

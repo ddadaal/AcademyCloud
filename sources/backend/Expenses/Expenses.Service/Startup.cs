@@ -114,6 +114,7 @@ namespace AcademyCloud.Expenses
                 endpoints.MapGrpcService<TransactionsService>();
                 endpoints.MapGrpcService<BillingService>();
                 endpoints.MapGrpcService<InteropService>();
+                endpoints.MapGrpcService<IdentityService>();
 
                 endpoints.MapGet("/", async context =>
                 {

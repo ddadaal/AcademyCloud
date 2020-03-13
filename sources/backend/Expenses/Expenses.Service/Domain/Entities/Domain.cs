@@ -60,14 +60,14 @@ namespace AcademyCloud.Expenses.Domain.Entities
             return Receiver.Receive(from, fromUser, amount, reason, time);
         }
 
-        void IUseCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
+        bool IUseCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
         {
-            UseCycleSubject.Settle(price, lastSettled, now);
+            return UseCycleSubject.Settle(price, lastSettled, now);
         }
 
-        void IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
+        bool IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reason)
         {
-            BillingCycleSubject.Settle(price, lastSettled, now);
+            return BillingCycleSubject.Settle(price, lastSettled, now, reason);
         }
 
         #endregion
