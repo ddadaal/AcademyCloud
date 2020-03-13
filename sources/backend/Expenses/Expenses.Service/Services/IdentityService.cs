@@ -47,9 +47,26 @@ namespace AcademyCloud.Expenses.Services
             return new AddDomainResponse { };
         }
 
-        public override Task<AddProjectResponse> AddProject(AddProjectRequest request, ServerCallContext context)
+        public override async Task<AddProjectResponse> AddProject(AddProjectRequest request, ServerCallContext context)
         {
-            return base.AddProject(request, context);
+            var payer = await dbContext.Users.FindIfNullThrowAsync(request.PayUserId);
+            var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaimsAccessor.TokenClaims.DomainId);
+
+            var project = new Project(Guid.Parse(request.Id), payer, domain, Resources.Zero);
+            var payUserProjectAssignment = new UserProjectAssignment(Guid.Parse(request.PayUserAssignmentId), payer, project, Resources.Zero);
+
+            dbContext.Projects.Add(project);
+            dbContext.UserProjectAssignments.Add(payUserProjectAssignment);
+
+            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(project.BillingCycleSubject));
+            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(payUserProjectAssignment.BillingCycleSubject));
+
+            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(project.UseCycleSubject));
+            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(payUserProjectAssignment.UseCycleSubject));
+
+            await dbContext.SaveChangesAsync();
+
+            return new AddProjectResponse { };
         }
 
         public override async Task<AddUserResponse> AddUser(AddUserRequest request, ServerCallContext context)

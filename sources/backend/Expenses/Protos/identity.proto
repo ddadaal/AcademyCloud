@@ -46,6 +46,7 @@ message DeleteDomainResponse {
 message AddProjectRequest {
   string id = 1;
   string payUserId = 2;
+  string payUserAssignmentId = 3;
 }
 
 message AddProjectResponse {

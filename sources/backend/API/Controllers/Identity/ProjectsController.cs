@@ -135,7 +135,16 @@ namespace AcademyCloud.API.Controllers.Identity
                     AdminId = request.PayUserId,
                 });
 
-            return NoContent();
+            // add project to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .AddProjectAsync(new AcademyCloud.Expenses.Protos.Identity.AddProjectRequest
+                {
+                    Id = res.ProjectId,
+                    PayUserAssignmentId = res.AdminAssignmentId,
+                    PayUserId = request.PayUserId,
+                });
+
+            return Created(res.ProjectId, res.ProjectId);
         }
 
         [HttpDelete("{projectId}")]
