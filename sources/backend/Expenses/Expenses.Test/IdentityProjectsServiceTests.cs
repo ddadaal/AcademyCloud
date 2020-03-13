@@ -115,5 +115,19 @@ namespace AcademyCloud.Expenses.Test
             Assert.Single(db.Projects.Find(projectId).Users);
             Assert.Empty(cjy.Projects);
         }
+
+        [Fact]
+        public async Task TestSetPayUser()
+        {
+            Assert.Equal(cjd, db.Projects.Find(projectId).PayUser);
+
+            await service.SetProjectPayUser(new Protos.Identity.SetProjectPayUserRequest
+            {
+                ProjectId = projectId.ToString(),
+                PayUserId = cjy.Id.ToString(),
+            }, TestContext);
+
+            Assert.Equal(cjy, db.Projects.Find(projectId).PayUser);
+        }
     }
 }

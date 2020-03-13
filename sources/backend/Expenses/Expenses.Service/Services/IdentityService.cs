@@ -202,9 +202,16 @@ namespace AcademyCloud.Expenses.Services
             return new SetDomainQuotaResponse { };
         }
 
-        public override Task<SetProjectPayUserResponse> SetProjectPayUser(SetProjectPayUserRequest request, ServerCallContext context)
+        public override async Task<SetProjectPayUserResponse> SetProjectPayUser(SetProjectPayUserRequest request, ServerCallContext context)
         {
-            return base.SetProjectPayUser(request, context);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.PayUserId);
+
+            project.PayUser = user;
+
+            await dbContext.SaveChangesAsync();
+
+            return new SetProjectPayUserResponse { };
         }
 
         public override Task<SetProjectQuotaResponse> SetProjectQuota(SetProjectQuotaRequest request, ServerCallContext context)

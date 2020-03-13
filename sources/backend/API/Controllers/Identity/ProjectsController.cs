@@ -183,11 +183,15 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> SetPayUser([FromRoute] string projectId, [FromBody] SetPayUserRequest request)
         {
             // request to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .SetProjectPayUserAsync(new AcademyCloud.Expenses.Protos.Identity.SetProjectPayUserRequest
+                {
+                    ProjectId = projectId,
+                    PayUserId = request.PayUserId,
+                });
+
             return NoContent();
         }
-
-
-
 
     }
 }
