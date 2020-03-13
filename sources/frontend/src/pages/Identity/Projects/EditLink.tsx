@@ -4,7 +4,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { lang, Localized } from "src/i18n";
 import { Project } from "src/models/Project";
 import { ManageUsersLink } from "src/pages/Identity/Projects/ManageUsersLink";
-import { SetProjectResourcesLink } from "src/pages/Identity/Projects/SetProjectResourcesLink";
+import { SetProjectQuotasLink } from "src/pages/Identity/Projects/SetProjectQuotaLink";
 
 const root = lang.identity.projects.table;
 
@@ -21,7 +21,7 @@ export const EditLink: React.FC<Props> = ({ project, reload }) => {
           <ManageUsersLink project={project} reload={reload} />
         </Menu.Item>
         <Menu.Item>
-          <SetProjectResourcesLink project={project} reload={reload} />
+          <SetProjectQuotasLink project={project} reload={reload} />
         </Menu.Item>
       </Menu>
     )}>

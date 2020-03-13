@@ -14,8 +14,8 @@ namespace AcademyCloud.API.Models.Identity.Projects
         public IEnumerable<User> Admins {get;set;}
         public IEnumerable<User> Members { get; set; }
 
-        public Resources Resources { get; set; }
+        public Resources Quota { get; set; }
 
-        public IDictionary<string, Resources> UserResources { get; set; }
+        public IDictionary<string, Resources> UserQuotas { get; set; }
     }
 }

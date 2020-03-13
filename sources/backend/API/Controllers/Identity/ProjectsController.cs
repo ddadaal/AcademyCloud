@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.API.Models.Common;
 using AcademyCloud.API.Models.Identity.Projects;
 using AcademyCloud.API.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +34,56 @@ namespace AcademyCloud.API.Controllers.Identity
 
                 });
 
+            var subjects = resp.Projects
+                .Select(x => new AcademyCloud.Expenses.Protos.Interop.Subject
+                {
+                    Id = x.Id,
+                    Type = AcademyCloud.Expenses.Protos.Common.SubjectType.Project,
+                });
+
+
+            // get pay users
+            var payUsers = await (await factory.GetExpensesInteropClientAsync())
+                .GetPayUserAsync(new AcademyCloud.Expenses.Protos.Interop.GetPayUserRequest
+                {
+                    Subjects = { subjects }
+                });
+
+            // get pay user's names
+            var payUserNames = await (await factory.GetIdentityInteropClientAsync())
+                .GetNamesAsync(new AcademyCloud.Identity.Protos.Interop.GetNamesRequest
+                {
+                    Subjects =
+                    {
+                        payUsers.PayUsers.Values.Select(x => new AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.Subject
+                        {
+                            Id = x,
+                            Type = AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.SubjectType.User,
+                        })
+                    }
+                });
+
+            var quotaSubjects = subjects
+                .Concat(
+                resp.Projects
+                    .Select(x => x.Admins)
+                    .Concat(resp.Projects.Select(x => x.Members))
+                        .SelectMany(x => x)
+                        .Select(x => new AcademyCloud.Expenses.Protos.Interop.Subject
+                        {
+                            Id = x.UserProjectAssignmentId.ToString(),
+                            Type = AcademyCloud.Expenses.Protos.Common.SubjectType.UserProjectAssignment
+                        }
+                ));
+
+            // get quotas
+            var quotas = await (await factory.GetExpensesInteropClientAsync())
+                .GetQuotaAsync(new AcademyCloud.Expenses.Protos.Interop.GetQuotaRequest
+                {
+                    Subjects = { quotaSubjects }
+                });
+
+
             return new GetAccessibleProjectsResponse()
             {
                 Projects = resp.Projects.Select(x => new Project()
@@ -40,10 +91,10 @@ namespace AcademyCloud.API.Controllers.Identity
                     Id = x.Id,
                     Name = x.Name,
                     Active = true,
-                    Admins = x.Admins.Select(TransformUser),
-                    Members = x.Members.Select(TransformUser),
-                    Resources = DummyResources,
-                    UserResources = x.Admins.Concat(x.Members).ToDictionary(user => user.Id, user => DummyResources)
+                    Admins = x.Admins.Select(x => FromGrpc(x.User)),
+                    Members = x.Members.Select(x => FromGrpc(x.User)),
+                    Quota = quotas.Quotas[x.Id],
+                    UserQuotas = x.Admins.Concat(x.Members).ToDictionary(user => user.User.Id, user => (Resources)quotas.Quotas[user.UserProjectAssignmentId])
                 })
             };
         }
@@ -57,12 +108,25 @@ namespace AcademyCloud.API.Controllers.Identity
                     ProjectId = projectId
                 });
 
+            // get quotas from expenses
+            var subjects = resp.Admins.Concat(resp.Members)
+                .Select(x => new AcademyCloud.Expenses.Protos.Interop.Subject
+                {
+                    Id = x.UserProjectAssignmentId.ToString(),
+                    Type = AcademyCloud.Expenses.Protos.Common.SubjectType.UserProjectAssignment
+                });
+
+            var quotas = await (await factory.GetExpensesInteropClientAsync())
+                .GetQuotaAsync(new AcademyCloud.Expenses.Protos.Interop.GetQuotaRequest
+                {
+                    Subjects = { subjects }
+                });
+
             return new GetUsersOfProjectResponse
             {
-                Admins = resp.Admins.Select(TransformUser),
-                Members = resp.Members.Select(TransformUser),
-                PayUser = TransformUser(resp.Admins[0]),
-                UserResources = resp.Admins.Concat(resp.Members).ToDictionary(user => user.Id, user => DummyResources)
+                Admins = resp.Admins.Select(x => FromGrpc(x.User)),
+                Members = resp.Members.Select(x => FromGrpc(x.User)),
+                UserResources = resp.Admins.Concat(resp.Members).ToDictionary(user => user.User.Id, user => (Resources)quotas.Quotas[user.UserProjectAssignmentId])
             };
         }
 

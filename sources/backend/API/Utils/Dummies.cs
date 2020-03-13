@@ -9,7 +9,7 @@ namespace AcademyCloud.API.Utils
 {
     public static class Dummies
     {
-        public static User TransformUser(Identity.Protos.Common.User user)
+        public static User FromGrpc(Identity.Protos.Common.User user)
         {
             return new User { Id = user.Id, Name = user.Name };
         }

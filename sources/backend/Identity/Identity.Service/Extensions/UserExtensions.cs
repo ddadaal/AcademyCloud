@@ -68,7 +68,6 @@ namespace AcademyCloud.Identity.Extensions
             {
                 Id = user.Id.ToString(),
                 Name = user.Name,
-                Username = user.Username
             };
 
         }

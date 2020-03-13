@@ -6,8 +6,7 @@ package common;
 
 message User {
   string id = 1;
-  string username = 2;
-  string name = 3;
+  string name = 2;
 }
 
 message Domain {
@@ -21,10 +20,15 @@ enum UserRole {
   Member = 1;
 }
 
+message ProjectUser {
+  User user = 1;
+  string userProjectAssignmentId = 2;
+}
+
 message Project {
   string id = 1;
   string name = 2;
-  repeated User admins = 3;
-  repeated User members = 5;
+  repeated ProjectUser admins = 3;
+  repeated ProjectUser members = 4;
 }
 

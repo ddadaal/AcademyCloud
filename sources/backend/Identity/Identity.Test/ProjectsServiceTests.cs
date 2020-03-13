@@ -99,10 +99,10 @@ namespace AcademyCloud.Identity.Test
             Assert.Equal(lqproject.Id.ToString(), project.Id);
 
             Assert.Single(project.Admins);
-            Assert.Equal(lq.Id.ToString(), project.Admins.First().Id);
+            Assert.Equal(lq.Id.ToString(), project.Admins.First().User.Id);
 
             Assert.Single(project.Members);
-            Assert.Equal(cjd.Id.ToString(), project.Members.First().Id);
+            Assert.Equal(cjd.Id.ToString(), project.Members.First().User.Id);
         }
 
         [Fact]
@@ -114,10 +114,10 @@ namespace AcademyCloud.Identity.Test
             }, TestContext);
 
             Assert.Single(resp.Admins);
-            Assert.Equal(lq.Id.ToString(), resp.Admins.First().Id);
+            Assert.Equal(lq.Id.ToString(), resp.Admins.First().User.Id);
 
             Assert.Single(resp.Members);
-            Assert.Equal(cjd.Id.ToString(), resp.Members.First().Id);
+            Assert.Equal(cjd.Id.ToString(), resp.Members.First().User.Id);
         }
 
         [Fact]

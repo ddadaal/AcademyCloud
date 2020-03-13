@@ -8,8 +8,8 @@ export interface Project {
   admins: User[];
   payUser: User;
   members: User[];
-  resources: Resources;
+  quota: Resources;
 
-  userResources: {[id: string]: Resources};
+  userQuotas: {[id: string]: Resources};
 
 }

@@ -75,7 +75,7 @@ namespace AcademyCloud.API.Controllers.Identity
                     Id = x.Id,
                     Name = x.Name,
                     Active = true,
-                    Admins = x.Admins.Select(TransformUser),
+                    Admins = x.Admins.Select(FromGrpc),
                     PayUser = new User { Id = payUsers.PayUsers[x.Id], Name = payUserNames.IdNameMap[payUsers.PayUsers[x.Id]] },
                     Quota = quotas.Quotas[x.Id],
                 })
@@ -102,10 +102,10 @@ namespace AcademyCloud.API.Controllers.Identity
 
             return new GetUsersOfDomainResponse
             {
-                Admins = resp.Admins.Select(TransformUser),
-                Members = resp.Members.Select(TransformUser),
+                Admins = resp.Admins.Select(FromGrpc),
+                Members = resp.Members.Select(FromGrpc),
                 // the pay user should be in admins
-                PayUser = TransformUser(resp.Admins.First(x => x.Id == users.PayUsers[domainId]))
+                PayUser = FromGrpc(resp.Admins.First(x => x.Id == users.PayUsers[domainId]))
             };
         }
 

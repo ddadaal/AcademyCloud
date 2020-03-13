@@ -91,19 +91,25 @@ namespace AcademyCloud.Identity.Services
             return new DeleteProjectResponse { };
         }
 
-        private (IEnumerable<Protos.Common.User>, IEnumerable<Protos.Common.User>) GetProjectUsers(Project project)
+        private (IEnumerable<Protos.Common.ProjectUser>, IEnumerable<Protos.Common.ProjectUser>) GetProjectUsers(Project project)
         {
             var allUsers = project.Users.AsEnumerable();
 
             var admins = allUsers
                 .Where(x => x.Role == Domain.ValueObjects.UserRole.Admin)
-                .Select(x => x.User)
-                .Select(x => new Protos.Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
+                .Select(x => new Protos.Common.ProjectUser
+                {
+                    User = new Protos.Common.User { Id = x.User.Id.ToString(), Name = x.User.Name },
+                    UserProjectAssignmentId = x.Id.ToString(),
+                });
 
             var members = allUsers
                 .Where(x => x.Role == Domain.ValueObjects.UserRole.Member)
-                .Select(x => x.User)
-                .Select(x => new Protos.Common.User() { Id = x.Id.ToString(), Name = x.Name, Username = x.Username });
+                .Select(x => new Protos.Common.ProjectUser
+                {
+                    User = new Protos.Common.User { Id = x.User.Id.ToString(), Name = x.User.Name },
+                    UserProjectAssignmentId = x.Id.ToString(),
+                });
 
             return (admins, members);
 

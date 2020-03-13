@@ -29,9 +29,10 @@ message GetUsersOfProjectRequest {
   string projectId = 1;
 }
 
+
 message GetUsersOfProjectResponse {
-  repeated common.User admins = 1;
-  repeated common.User members = 2;
+  repeated common.ProjectUser admins = 1;
+  repeated common.ProjectUser members = 2;
 }
 
 message AddUserToProjectRequest {

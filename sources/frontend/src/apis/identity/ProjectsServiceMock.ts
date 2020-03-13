@@ -14,12 +14,12 @@ export class ProjectsServiceMock extends ProjectsService {
     return {
       projects: [
         {
-          id: "67ID", name: "67", active: true, admins: [lq], payUser: lq, members: [cjd, cjy], resources: { cpu: 4, memory: 8, storage: 512, },
-          userResources: { "lqID": { cpu: 1, memory: 4, storage: 256 }, "CJDID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
+          id: "67ID", name: "67", active: true, admins: [lq], payUser: lq, members: [cjd, cjy], quota: { cpu: 4, memory: 8, storage: 512, },
+          userQuotas: { "lqID": { cpu: 1, memory: 4, storage: 256 }, "CJDID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
         },
         {
-          id: "fghID", name: "fgh", active: false, admins: [fgh], payUser: fgh, members: [cjy], resources: { cpu: 4, memory: 8, storage: 512, },
-          userResources: { "fghID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
+          id: "fghID", name: "fgh", active: false, admins: [fgh], payUser: fgh, members: [cjy], quota: { cpu: 4, memory: 8, storage: 512, },
+          userQuotas: { "fghID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
         },
       ]
     }
@@ -61,7 +61,7 @@ export class ProjectsServiceMock extends ProjectsService {
       members: [cjd, cjy],
       payUser: lq,
 
-      userResources: { "lqID": { cpu: 1, memory: 4, storage: 256 }, "CJDID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
+      userQuotas: { "lqID": { cpu: 1, memory: 4, storage: 256 }, "CJDID": { cpu: 1, memory: 4, storage: 256 }, "CJYID": { cpu: 2, memory: 2, storage: 128 } }
     }
   }
   async setPayUser(projectId: string, userId: string): Promise<void> {

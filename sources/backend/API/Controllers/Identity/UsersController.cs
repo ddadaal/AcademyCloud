@@ -73,7 +73,7 @@ namespace AcademyCloud.API.Controllers.Identity
 
             return new GetAccessibleUsersResponse
             {
-                Users = resp.Users.Select(TransformUser),
+                Users = resp.Users.Select(FromGrpc),
             };
         }
 

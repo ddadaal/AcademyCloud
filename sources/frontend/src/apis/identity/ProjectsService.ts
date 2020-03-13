@@ -12,7 +12,7 @@ export interface GetUsersOfProjectResponse {
   admins: User[];
   members: User[];
   payUser: User;
-  userResources: { [userId: string]: Resources };
+  userQuotas: { [userId: string]: Resources };
 }
 
 export class ProjectsService extends HttpService {

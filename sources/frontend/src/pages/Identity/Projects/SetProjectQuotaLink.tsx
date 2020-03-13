@@ -13,7 +13,7 @@ interface Props {
 
 const service = getApiService(ProjectsService);
 
-export const SetProjectResourcesLink: React.FC<Props> = ({ project, reload }) => {
+export const SetProjectQuotasLink: React.FC<Props> = ({ project, reload }) => {
 
   const onConfirm = useCallback(async (resources: Resources) => {
     await service.setResources(project.id, resources);
@@ -21,6 +21,6 @@ export const SetProjectResourcesLink: React.FC<Props> = ({ project, reload }) =>
   }, [project.id, reload]);
 
   return (
-    <SetResourcesLink initial={project.resources} onConfirm={onConfirm} />
+    <SetResourcesLink initial={project.quota} onConfirm={onConfirm} />
   );
 }
