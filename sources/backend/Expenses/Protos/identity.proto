@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+import "common.proto";
+option csharp_namespace = "AcademyCloud.Expenses.Protos.Identity";
+
+package identity;
+
+service Identity {
+  rpc AddDomain (AddDomainRequest) returns (AddDomainResponse);
+  rpc DeleteDomain (DeleteDomainRequest) returns (DeleteDomainResponse);
+  rpc SetDomainPayUser (SetDomainPayUserRequest) returns (SetDomainPayUserResponse);
+  rpc AddUserToDomain (AddUserToDomainRequest) returns (AddUserToDomainResponse);
+  rpc RemoveUserFromDomain (RemoveUserFromDomainRequest) returns (RemoveUserFromDomainResponse);
+
+  rpc AddUser (AddUserRequest) returns (AddUserResponse);
+
+  rpc AddProject (AddProjectRequest) returns (AddProjectResponse);
+  rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectResponse);
+  rpc SetProjectPayUser (SetProjectPayUserRequest) returns (SetProjectPayUserResponse);
+  rpc AddUserToProject (AddUserToProjectRequest) returns (AddUserToProjectResponse);
+  rpc RemoveUserFromProject (RemoveUserFromProjectRequest) returns (RemoveUserFromProjectResponse);
+
+
+  rpc SetDomainQuota (SetDomainQuotaRequest) returns (SetDomainQuotaResponse);
+  rpc SetProjectQuota (SetProjectQuotaRequest) returns (SetProjectQuotaResponse);
+}
+
+message AddDomainRequest {
+  string id = 1;
+  string payUserId = 2;
+  string payUserAssignmentId = 3;
+}
+
+message AddDomainResponse {
+  
+}
+
+message DeleteDomainRequest {
+  string id = 1;
+}
+
+message DeleteDomainResponse {
+  
+}
+
+message AddProjectRequest {
+  string id = 1;
+  string payUserId = 2;
+}
+
+message AddProjectResponse {
+  
+}
+
+message DeleteProjectRequest {
+  string id = 1;
+}
+
+message DeleteProjectResponse {
+  
+}
+
+message AddUserRequest {
+  string userId = 1;
+  string socialProjectId = 2;
+  string socialDomainAssignmentId = 3;
+  string socialProjectAssignmentId = 4;
+}
+
+message AddUserResponse {
+  
+}
+
+
+message SetProjectPayUserRequest {
+  string projectId = 1;
+  string payUserId = 2;
+}
+
+message SetProjectPayUserResponse {
+  
+}
+
+message SetDomainPayUserRequest {
+  string domainId = 1;
+  string payUserId = 2;
+}
+
+message SetDomainPayUserResponse {
+  
+}
+
+
+message AddUserToProjectRequest {
+  string projectId = 1;
+  string userId = 2;
+}
+
+message AddUserToProjectResponse {
+  
+}
+
+message RemoveUserFromProjectRequest {
+  string projectId = 1;
+  string userId = 2;
+}
+
+message RemoveUserFromProjectResponse {
+  
+}
+
+message AddUserToDomainRequest {
+  string domainId = 1;
+  string userId = 2;
+}
+
+message AddUserToDomainResponse {
+  
+}
+
+message RemoveUserFromDomainRequest {
+  string domainId = 1;
+  string userId = 2;
+}
+
+message RemoveUserFromDomainResponse {
+  
+}
+
+message SetDomainQuotaRequest {
+  string domainId = 1;
+  common.Resources quota = 2;
+}
+
+message SetDomainQuotaResponse {
+  
+}
+
+message SetProjectQuotaRequest {
+  string projectId = 1; 
+  common.Resources quota = 2;
+}
+
+message SetProjectQuotaResponse {
+  
+}
+
