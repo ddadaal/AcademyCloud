@@ -109,5 +109,10 @@ namespace AcademyCloud.API.Utils
             return new Expenses.Protos.Interop.Interop.InteropClient(await GetInvoker(ExpensesService));
         }
 
+        public async Task<Expenses.Protos.Identity.Identity.IdentityClient> GetExpensesIdentityClient()
+        {
+            return new Expenses.Protos.Identity.Identity.IdentityClient(await GetInvoker(ExpensesService));
+        }
+
     }
 }
