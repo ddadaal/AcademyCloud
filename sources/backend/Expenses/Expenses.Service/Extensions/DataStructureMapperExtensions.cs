@@ -57,7 +57,7 @@ namespace AcademyCloud.Expenses.Extensions
         }
         public static Domain.ValueObjects.Resources FromGrpc(this Protos.Common.Resources resources)
         {
-            return new Domain.ValueObjects.Resources(resources.Cpu, resources.Memory, resources.Storage );
+            return new Domain.ValueObjects.Resources(resources.Cpu, resources.Memory, resources.Storage);
         }
 
         public static Protos.Common.SubjectType ToGrpc(this Domain.ValueObjects.SubjectType type)

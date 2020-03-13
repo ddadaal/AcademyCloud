@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.Entities
 {
-    public class UserProjectAssignment: IPayer, IUseCycleSubject, IBillingCycleSubject
+    public class UserProjectAssignment : IPayer, IUseCycleSubject, IBillingCycleSubject
     {
 
         public Guid Id { get; set; }
@@ -39,7 +39,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public User PayUser => User;
 
-        public UserProjectAssignment(Guid id, User user, Project project,  Resources quota)
+        public UserProjectAssignment(Guid id, User user, Project project, Resources quota)
         {
             Id = id;
             User = user;
@@ -57,7 +57,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         bool IUseCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now)
         {
-           return UseCycleSubject.Settle(price, lastSettled, now);
+            return UseCycleSubject.Settle(price, lastSettled, now);
         }
 
         bool IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reason)

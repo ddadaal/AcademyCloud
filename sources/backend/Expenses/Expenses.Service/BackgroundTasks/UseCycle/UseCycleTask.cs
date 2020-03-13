@@ -35,6 +35,8 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
         {
             return PricePlan.Instance.Calculate(resources);
         }
+
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
