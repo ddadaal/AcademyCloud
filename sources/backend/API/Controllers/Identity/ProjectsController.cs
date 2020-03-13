@@ -73,17 +73,25 @@ namespace AcademyCloud.API.Controllers.Identity
             return NoContent();
         }
 
-        [HttpPost("{projectId}/users/{userId}")]
+        [HttpPost("{projectId}/users")]
         public async Task<ActionResult> AddUserToProject([FromRoute] string projectId, [FromBody] AddUserToProjectRequest request)
         {
 
-            // TODO request to expenses
             var resp = await (await factory.GetProjectsClientAsync())
                 .AddUserToProjectAsync(new AcademyCloud.Identity.Protos.Projects.AddUserToProjectRequest
                 {
                     ProjectId = projectId,
                     UserId = request.UserId,
                     Role = (AcademyCloud.Identity.Protos.Common.UserRole)request.Role,
+                });
+
+            // add to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .AddUserToProjectAsync(new AcademyCloud.Expenses.Protos.Identity.AddUserToProjectRequest
+                {
+                    ProjectId = projectId,
+                    UserId = request.UserId,
+                    UserProjectAssignmentId = resp.UserProjectAssignmentId,
                 });
 
             return NoContent();

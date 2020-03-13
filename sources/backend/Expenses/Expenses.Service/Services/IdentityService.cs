@@ -110,9 +110,16 @@ namespace AcademyCloud.Expenses.Services
 
         }
 
-        public override Task<AddUserToProjectResponse> AddUserToProject(AddUserToProjectRequest request, ServerCallContext context)
+        public override async Task<AddUserToProjectResponse> AddUserToProject(AddUserToProjectRequest request, ServerCallContext context)
         {
-            return base.AddUserToProject(request, context);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+
+            dbContext.UserProjectAssignments.Add(new UserProjectAssignment(Guid.Parse(request.UserProjectAssignmentId), user, project, Resources.Zero));
+
+            await dbContext.SaveChangesAsync();
+
+            return new AddUserToProjectResponse { };
         }
 
         public override async Task<DeleteDomainResponse> DeleteDomain(DeleteDomainRequest request, ServerCallContext context)

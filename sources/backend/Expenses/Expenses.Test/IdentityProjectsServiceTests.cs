@@ -63,5 +63,20 @@ namespace AcademyCloud.Expenses.Test
             Assert.Single(project.Users);
             Assert.Equal(cjd, project.PayUser);
         }
+
+        [Fact]
+        public async Task TestAddUserToProject()
+        {
+            // Then add 67 into the project
+            await service.AddUserToProject(new Protos.Identity.AddUserToProjectRequest
+            {
+                UserId = lq.Id.ToString(),
+                ProjectId = projectId.ToString(),
+                UserProjectAssignmentId = Guid.NewGuid().ToString(),
+            }, TestContext);
+
+            var project = db.Projects.Find(projectId);
+            Assert.Equal(new[] { cjd.Id, lq.Id }.ToList(), project.Users.Select(x => x.User.Id).ToList());
+        }
     }
 }
