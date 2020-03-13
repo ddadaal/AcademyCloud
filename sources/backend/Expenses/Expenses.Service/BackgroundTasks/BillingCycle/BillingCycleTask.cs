@@ -52,12 +52,12 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         {
             if (entry.Settle(CalculatePrice(entry), DateTime.UtcNow, reason))
             {
-                logger.LogDebug($"{entry} has no quota. Skip settling.");
+                logger.LogDebug($"Settling billing cycle for {entry} completed.");
                 return true;
             }
             else
             {
-                logger.LogDebug($"Settling billing cycle for {entry} completed.");
+                logger.LogDebug($"{entry} has no quota. Skip settling.");
                 return false;
             }
         }

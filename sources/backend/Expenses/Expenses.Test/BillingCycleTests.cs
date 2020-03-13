@@ -55,6 +55,23 @@ namespace AcademyCloud.Expenses.Test
             Assert.Equal(previousNjuadminBalance + expectedPrice, njuadmin.Balance);
         }
 
+        [Fact]
+        public async Task TestZeroQuota()
+        {
+            var quota = Resources.Zero;
+            lqproject.Quota = quota;
+            db.BillingCycleEntries.Add(new BillingCycleEntry(lqproject.BillingCycleSubject));
+            await db.SaveChangesAsync();
+
+            // Wait 3 cycles to settle once.
+            await Wait(3);
+
+            // Check 67 project
+            // zero quota means no settled
+            Assert.Empty(lqproject.BillingCycleRecords);
+            Assert.Empty(lqproject.PayedOrgTransactions);
+        }
+
 
         // Need great overhalt to test design
         // Don't want to do it anymore

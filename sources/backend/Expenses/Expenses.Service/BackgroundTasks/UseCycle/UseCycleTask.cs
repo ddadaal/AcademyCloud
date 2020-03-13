@@ -39,12 +39,12 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
         {
             if (entry.Settle(CalculatePrice(entry.Resources), DateTime.UtcNow))
             {
-                logger.LogDebug($"{entry} has no resources. Skip settling.");
+                logger.LogDebug($"Settling use cycle for {entry} completed.");
                 return true;
             }
             else
             {
-                logger.LogDebug($"Settling use cycle for {entry} completed.");
+                logger.LogDebug($"{entry} has no resources. Skip settling.");
                 return false;
             }
         }

@@ -106,6 +106,22 @@ namespace AcademyCloud.Expenses.Test
 
         }
 
+        [Fact]
+        public async Task TestZeroQuota()
+        {
+            var resources = Resources.Zero;
+            // add cjd to use 1 CPU, 2 GB RAM and 40 Storage on 67 project
+            cjd67project.Resources = resources.Clone();
+            db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
+            await db.SaveChangesAsync();
+
+            // Wait 3 cycles to settle once.
+            await Wait(3);
+
+            // zero resources means no settled
+            Assert.Empty(cjd67project.UseCycleRecords);
+        }
+
         // Need great overhalt to test design
         // Don't want to do it anymore
         //[Fact]
