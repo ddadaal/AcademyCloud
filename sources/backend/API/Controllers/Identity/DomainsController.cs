@@ -1,7 +1,6 @@
 ﻿using AcademyCloud.API.Models.Common;
 using AcademyCloud.API.Models.Identity.Common;
 using AcademyCloud.API.Models.Identity.Domains;
-using AcademyCloud.API.Models.Identity.Projects;
 using AcademyCloud.API.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -134,7 +133,7 @@ namespace AcademyCloud.API.Controllers.Identity
         }
 
         [HttpPost("{domainId}/payUser")]
-        public async Task<ActionResult> SetPayUser([FromRoute] string domainId, [FromBody] Models.Identity.Domains.SetPayUserRequest request)
+        public async Task<ActionResult> SetPayUser([FromRoute] string domainId, [FromBody] SetPayUserRequest request)
         {
             // set the pay user in the expenses
 

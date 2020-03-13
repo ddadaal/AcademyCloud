@@ -133,9 +133,16 @@ namespace AcademyCloud.API.Controllers.Identity
         }
 
         [HttpPatch("{projectId}/resources")]
-        public async Task<ActionResult> SetResources([FromRoute] string projectId)
+        public async Task<ActionResult> SetResources([FromRoute] string projectId, [FromBody] SetResourcesRequest request)
         {
-            // TODO request to expenses
+            // request to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .SetProjectQuotaAsync(new AcademyCloud.Expenses.Protos.Identity.SetProjectQuotaRequest
+                {
+                    ProjectId = projectId,
+                    Quota = request.Resources,
+                });
+
             return NoContent();
         }
 
