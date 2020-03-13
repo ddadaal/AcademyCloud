@@ -25,6 +25,9 @@ namespace AcademyCloud.Expenses.Test
         {
             CheckCycleMs = 500,
             ChargeCycleMs = 1000,
+            UserPrice = 5,
+            DomainPrice = 10,
+            ProjectPrice = 15,
         };
 
         private ManagementFeeTask CreateTask()
@@ -41,16 +44,15 @@ namespace AcademyCloud.Expenses.Test
         public async Task TestUserPayManagmentFee()
         {
             var previousBalance = cjd.Balance;
-            var price = 5;
 
             // Add cjd into the ManagementFeeEntry
-            db.ManagementFeeEntries.Add(new ManagementFeeEntry(Guid.NewGuid(), cjd.Payer, price));
+            db.ManagementFeeEntries.Add(new ManagementFeeEntry(cjd.Payer));
             db.SaveChanges();
 
             // Wait 2 check cycles (1 charge cycle)
             await Wait(2);
 
-            Assert.Equal(previousBalance - price, cjd.Balance);
+            Assert.Equal(previousBalance - configuration.UserPrice, cjd.Balance);
         }
 
         [Fact]
@@ -58,15 +60,14 @@ namespace AcademyCloud.Expenses.Test
         {
             // Add nju into the ManagementFeeEntry
             var previousBalance = njuadmin.Balance;
-            var price = 5;
 
-            db.ManagementFeeEntries.Add(new ManagementFeeEntry(Guid.NewGuid(), nju.Payer, price));
+            db.ManagementFeeEntries.Add(new ManagementFeeEntry(nju.Payer));
             db.SaveChanges();
 
             // Wait 2 check cycles (1 charge cycle)
             await Wait(2);
 
-            Assert.Equal(previousBalance - price, njuadmin.Balance);
+            Assert.Equal(previousBalance - configuration.DomainPrice, njuadmin.Balance);
         }
 
         [Fact]
@@ -74,15 +75,14 @@ namespace AcademyCloud.Expenses.Test
         {
             // Add nju into the ManagementFeeEntry
             var previousBalance = fc.Balance;
-            var price = 5;
 
-            db.ManagementFeeEntries.Add(new ManagementFeeEntry(Guid.NewGuid(), fcproject.Payer, price));
+            db.ManagementFeeEntries.Add(new ManagementFeeEntry(fcproject.Payer));
             db.SaveChanges();
 
             // Wait 2 check cycles (1 charge cycle)
             await Wait(2);
 
-            Assert.Equal(previousBalance - price, fc.Balance);
+            Assert.Equal(previousBalance - configuration.ProjectPrice, fc.Balance);
         }
 
         [Fact]
@@ -91,16 +91,15 @@ namespace AcademyCloud.Expenses.Test
 
             // Add nju into the ManagementFeeEntry
             var previousBalance = njuadmin.Balance;
-            var price = 5;
 
-            db.ManagementFeeEntries.Add(new ManagementFeeEntry(Guid.NewGuid(), nju.Payer, price));
+            db.ManagementFeeEntries.Add(new ManagementFeeEntry(nju.Payer));
             db.SaveChanges();
 
             // wait 3 check cycles
             await Wait(3);
 
             // Will only pass 1 charge cycle
-            Assert.Equal(previousBalance - price, njuadmin.Balance);
+            Assert.Equal(previousBalance - configuration.DomainPrice, njuadmin.Balance);
         }
     }
 }

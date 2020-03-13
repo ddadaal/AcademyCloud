@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Domain.Entities;
+using AcademyCloud.Expenses.Domain.Entities.ManagementFee;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,17 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
             this.logger = logger;
         }
 
+        private int GetPrice(ManagementFeeEntry entry)
+        {
+            return entry.SubjectType switch
+            {
+                SubjectType.Domain => configuration.DomainPrice,
+                SubjectType.Project => configuration.ProjectPrice,
+                SubjectType.User => configuration.UserPrice,
+                _ => throw new ArgumentOutOfRangeException(nameof(entry.SubjectType))
+            };
+        }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -44,11 +56,13 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
                     {
                         if ((time - i.LastSettled).TotalMilliseconds > configuration.ChargeCycleMs)
                         {
-                            logger.LogDebug($"{i} is being charged with management fee {i.Amount}.");
+                            var amount = GetPrice(i);
+                            logger.LogDebug($"{i} is being charged with management fee {amount}.");
 
-                            i.Charge(system, time);
+                            i.Charge(system, amount, time);
 
                             logger.LogDebug($"Charging {i} for management fee is completed.");
+                            await dbContext.SaveChangesAsync();
                         }
                         else
                         {
@@ -56,7 +70,6 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
                         }
                     }
 
-                    await dbContext.SaveChangesAsync();
                 });
 
                 logger.LogDebug("End charging management fee.");
