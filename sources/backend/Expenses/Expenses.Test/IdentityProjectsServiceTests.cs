@@ -56,8 +56,8 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestAddProject()
         {
-            Assert.Equal(new[] { projectId, payUserAssignmentId }.ToList(), db.BillingCycleEntries.Select(x => x.Id).ToList());
-            Assert.Equal(new[] { projectId, payUserAssignmentId }.ToList(), db.UseCycleEntries.Select(x => x.Id).ToList());
+            AssertIEnumerableIgnoreOrder(new[] { projectId, payUserAssignmentId }, db.BillingCycleEntries.Select(x => x.Id));
+            AssertIEnumerableIgnoreOrder(new[] { projectId, payUserAssignmentId }, db.UseCycleEntries.Select(x => x.Id));
             var project = db.BillingCycleEntries.Find(projectId).Subject.Project;
             Assert.NotNull(project);
             Assert.Single(project.Users);

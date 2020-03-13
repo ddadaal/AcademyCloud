@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using Xunit;
 
 namespace AcademyCloud.Expenses.Test.Helpers
 {
@@ -81,6 +82,14 @@ namespace AcademyCloud.Expenses.Test.Helpers
             context.UserProjectAssignments.AddRange(lq67project, cjd67project, fcfcproject);
 
             context.SaveChanges();
+        }
+
+        public void AssertIEnumerableIgnoreOrder<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        {
+            var comparer = typeof(IComparable).IsAssignableFrom(typeof(T)) 
+                ? Comparer<T>.Default
+                : Comparer<T>.Create((a, b) => a.GetHashCode() - b.GetHashCode());
+            Assert.Equal(expected.OrderBy(x => x, comparer), actual.OrderBy(x => x, comparer));
         }
 
         public CommonTest()
