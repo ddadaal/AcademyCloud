@@ -23,6 +23,7 @@ service Identity {
 
   rpc SetDomainQuota (SetDomainQuotaRequest) returns (SetDomainQuotaResponse);
   rpc SetProjectQuota (SetProjectQuotaRequest) returns (SetProjectQuotaResponse);
+  rpc SetProjectUserQuota (SetProjectUserQuotaRequest) returns (SetProjectUserQuotaResponse);
 }
 
 message AddDomainRequest {
@@ -145,6 +146,16 @@ message SetProjectQuotaRequest {
 }
 
 message SetProjectQuotaResponse {
+  
+}
+
+message SetProjectUserQuotaRequest {
+  string projectId = 1;
+  string userId = 2;
+  common.Resources quota = 3;
+}
+
+message SetProjectUserQuotaResponse {
   
 }
 

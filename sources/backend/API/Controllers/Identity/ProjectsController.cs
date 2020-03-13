@@ -70,6 +70,14 @@ namespace AcademyCloud.API.Controllers.Identity
         public async Task<ActionResult> SetResourcesOfUser([FromRoute] string projectId, [FromRoute] string userId, [FromBody] SetResourcesOfUserRequest request)
         {
             // request to expenses
+            await (await factory.GetExpensesIdentityClient())
+                .SetProjectUserQuotaAsync(new AcademyCloud.Expenses.Protos.Identity.SetProjectUserQuotaRequest
+                {
+                    ProjectId = projectId,
+                    UserId = userId,
+                    Quota = request.Resources,
+                });
+
             return NoContent();
         }
 

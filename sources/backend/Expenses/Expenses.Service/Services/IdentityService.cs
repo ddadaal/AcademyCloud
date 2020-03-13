@@ -232,5 +232,26 @@ namespace AcademyCloud.Expenses.Services
 
             return new SetProjectQuotaResponse { };
         }
+
+        public override async Task<SetProjectUserQuotaResponse> SetProjectUserQuota(SetProjectUserQuotaRequest request, ServerCallContext context)
+        {
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
+            var quota = request.Quota;
+
+            var userAssignment = await dbContext.UserProjectAssignments.FirstIfNotNullThrowAsync(x => x.User == user && x.Project == project);
+
+            // BillingCycleEntry share id with its subject.
+            var entry = await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userAssignment.Id);
+            billingCycleTask.TrySettle(entry, TransactionReason.ProjectQuotaChange);
+            
+            // then, change the quota
+            userAssignment.Quota = quota.FromGrpc();
+
+            await dbContext.SaveChangesAsync();
+
+            return new SetProjectUserQuotaResponse { };
+            
+        }
     }
 }

@@ -159,5 +159,37 @@ namespace AcademyCloud.Expenses.Test
             var record = Assert.Single(project.BillingCycleRecords);
             Assert.Equal(record.Quota, newQuota);
         }
+
+        [Fact]
+        public async Task TestSetProjectUserQuota()
+        {
+            var userAssignment = db.UserProjectAssignments.Find(payUserAssignmentId);
+            Assert.Equal(Resources.Zero, userAssignment.Quota);
+
+            var newQuota = new Resources(10, 10, 10);
+            await service.SetProjectUserQuota(new Protos.Identity.SetProjectUserQuotaRequest
+            {
+                ProjectId = projectId.ToString(),
+                UserId = cjd.Id.ToString(),
+                Quota = newQuota.ToGrpc(),
+            }, TestContext);
+
+            Assert.Equal(newQuota, userAssignment.Quota);
+            // Since previously it has zero quota, there should be no records
+            Assert.Empty(userAssignment.BillingCycleRecords);
+            Assert.Empty(userAssignment.PayedOrgTransactions);
+
+            // change quota
+            await service.SetProjectUserQuota(new Protos.Identity.SetProjectUserQuotaRequest
+            {
+                ProjectId = projectId.ToString(),
+                UserId = cjd.Id.ToString(),
+                Quota = new Protos.Common.Resources { Cpu = 1, Memory = 1, Storage = 1 }
+            }, TestContext);
+
+            // Previous quota is not zero, there should be records
+            var record = Assert.Single(userAssignment.BillingCycleRecords);
+            Assert.Equal(record.Quota, newQuota);
+        }
     }
 }
