@@ -15,7 +15,7 @@ using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Expenses.Test
 {
-    public class IdentityProjectsServiceTests: CommonTest
+    public class IdentityProjectsServiceTests : CommonTest
     {
         private BillingCycleConfigurations billingConfiguration = new BillingCycleConfigurations
         {
@@ -77,6 +77,21 @@ namespace AcademyCloud.Expenses.Test
 
             var project = db.Projects.Find(projectId);
             Assert.Equal(new[] { cjd.Id, lq.Id }.ToList(), project.Users.Select(x => x.User.Id).ToList());
+        }
+
+        [Fact]
+        public async Task TestRemoveProject()
+        {
+            await service.DeleteProject(new Protos.Identity.DeleteProjectRequest
+            {
+                Id = projectId.ToString(),
+            }, TestContext);
+
+            Assert.Empty(db.BillingCycleEntries.Where(x => x.Subject.Project.Id == projectId));
+            Assert.Empty(db.UseCycleEntries.Where(x => x.Subject.Project.Id == projectId));
+            Assert.Empty(db.BillingCycleEntries.Where(x => x.Subject.UserProjectAssignment.Id == payUserAssignmentId));
+            Assert.Empty(db.UseCycleEntries.Where(x => x.Subject.UserProjectAssignment.Id == payUserAssignmentId));
+            Assert.Empty(cjd.Projects.Where(x => x.Project.Id == projectId));
         }
     }
 }

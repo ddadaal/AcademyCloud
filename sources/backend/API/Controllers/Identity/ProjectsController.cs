@@ -164,6 +164,12 @@ namespace AcademyCloud.API.Controllers.Identity
                     ProjectId = projectId
                 });
 
+            await (await factory.GetExpensesIdentityClient())
+                .DeleteProjectAsync(new AcademyCloud.Expenses.Protos.Identity.DeleteProjectRequest
+                {
+                    Id = projectId
+                });
+
             return NoContent();
         }
 

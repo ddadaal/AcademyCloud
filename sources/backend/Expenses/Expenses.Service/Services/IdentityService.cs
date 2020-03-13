@@ -132,9 +132,14 @@ namespace AcademyCloud.Expenses.Services
             return new DeleteDomainResponse { };
         }
 
-        public override Task<DeleteProjectResponse> DeleteProject(DeleteProjectRequest request, ServerCallContext context)
+        public override async Task<DeleteProjectResponse> DeleteProject(DeleteProjectRequest request, ServerCallContext context)
         {
-            return base.DeleteProject(request, context);
+            var project = await dbContext.Projects.FindIfNullThrowAsync(request.Id);
+            dbContext.Projects.Remove(project);
+
+            await dbContext.SaveChangesAsync();
+
+            return new DeleteProjectResponse { };
         }
 
         public override async Task<RemoveUserFromDomainResponse> RemoveUserFromDomain(RemoveUserFromDomainRequest request, ServerCallContext context)
