@@ -5,6 +5,8 @@ export enum TransactionType {
   ProjectManagementFee = "ProjectManagementFee",
   DomainResources = "DomainResources",
   ProjectResources = "ProjectResources",
+  DomainQuotaChange = "DomainQuotaChange",
+  ProjectQuotaChange = "ProjectQuotaChange",
 }
 
 export interface TransactionReason {

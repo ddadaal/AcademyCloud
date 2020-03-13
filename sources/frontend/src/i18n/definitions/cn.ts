@@ -80,8 +80,10 @@ export default {
           UserManagementFee: "用户管理费",
           DomainManagementFee: "域管理费",
           ProjectManagementFee: "项目管理费",
-          DomainResources: "域资源费用",
-          ProjectResources: "项目资源费用",
+          DomainResources: "域资源费用周期结算",
+          ProjectResources: "项目资源费用周期结算",
+          DomainQuotaChange: "域更改资源",
+          ProjectQuotaChange: "项目更改资源",
         },
       },
       users: {

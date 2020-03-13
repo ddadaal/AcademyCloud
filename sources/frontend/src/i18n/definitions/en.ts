@@ -82,6 +82,8 @@ export default {
           ProjectManagementFee: "Project Management Fee",
           DomainResources: "Domain Resources Fee",
           ProjectResources: "Project Resources Fee",
+          DomainQuotaChange: "Domain Resources Change",
+          ProjectQuotaChange: "Project Resources Change",
         },
       },
       users: {
