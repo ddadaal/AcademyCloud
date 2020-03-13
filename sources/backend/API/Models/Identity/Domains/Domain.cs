@@ -18,6 +18,6 @@ namespace AcademyCloud.API.Models.Identity.Domains
 
         public User PayUser { get; set; }
 
-        public Resources Resources { get; set; }
+        public Resources Quota { get; set; }
     }
 }

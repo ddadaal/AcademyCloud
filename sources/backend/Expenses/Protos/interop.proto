@@ -8,13 +8,16 @@ package interop;
 
 service Interop {
   rpc GetActivity (GetActivityRequest) returns (GetActivityResponse);
+  rpc GetPayUser (GetPayUserRequest) returns (GetPayUserResponse);
+  rpc GetQuota (GetQuotaRequest) returns (GetQuotaResponse);
+}
+
+message Subject {
+  common.SubjectType type = 1;
+  string id = 2;
 }
 
 message GetActivityRequest {
-  message Subject {
-    common.SubjectType type = 1;
-    string id = 2;
-  }
   repeated Subject subjects = 1;
 }
 
@@ -22,3 +25,18 @@ message GetActivityResponse {
   map<string, bool> activities = 1;
 }
 
+message GetPayUserRequest {
+  repeated Subject subjects = 1;
+}
+
+message GetPayUserResponse {
+  map<string, string> payUsers = 1;
+}
+
+message GetQuotaRequest {
+  repeated Subject subjects = 1;
+}
+
+message GetQuotaResponse {
+  map<string, common.Resources> quotas = 1;
+}
