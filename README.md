@@ -38,6 +38,17 @@ Check the demo version now! https://academycloud.ddadaal.me
       - self-made **i18n solution** based on simstate
       - **All hooks** projects with no use of class components whatsoever
 
+## Progress
+
+- [x] Requirement Analysis (initial version ended at around **02/12**, result: [0211-requirements.md](docs/requirements/0211-requirements.md))
+- [x] Design (initial version ended at around **02/19**, artifact: [Domain Models and System Architecture](docs/architecture))
+- [ ] Development 
+    - [x] Identity module (ended at **02/28**)
+    - [x] Expenses module (ended at **03/15**)
+    - [ ] Resources module
+- [ ] Integration test and Article Writing
+
+
 ## License
 
 Nothing from this project shall be used until my graduation.
