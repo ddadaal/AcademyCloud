@@ -8,9 +8,17 @@ AcademyCloud is a public IaaS cloud that is:
 - built on OpenStack
 - also my undergraduate graduation project
 
-Check the demo version now! https://academycloud.ddadaal.me
 
 [Opening Proposal](docs/research-proposal.md)
+
+# Demo
+
+https://academycloud.ddadaal.me
+
+All mock data running at frontend. No APIs call is involved.
+
+Use username `system` and any password to login as system user.
+Use any other username and any password to login as a normal user with all possible scopes available.
 
 # Contents
 
