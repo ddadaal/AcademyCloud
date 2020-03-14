@@ -48,9 +48,11 @@ Use any other username and any password to login as a **normal user** with all p
 
 ## Progress
 
+Development starts from **01/28**.
+
 - [x] Requirement Analysis (initial version ended at around **02/12**, result: [0211-requirements.md](docs/requirements/0211-requirements.md))
 - [x] Design (initial version ended at around **02/19**, artifact: [Domain Models and System Architecture](docs/architecture))
-- [ ] Development 
+- [ ] Development and unit test
     - [x] Identity module (ended at **02/28**)
     - [x] Expenses module (ended at **03/15**)
     - [ ] Resources module
