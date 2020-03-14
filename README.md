@@ -15,10 +15,11 @@ AcademyCloud is a public IaaS cloud that is:
 
 https://academycloud.ddadaal.me
 
-All mock data running at frontend. No APIs call is involved.
+All mock data running at frontend. No API call is involved.
 
-Use username `system` and any password to login as system user.
-Use any other username and any password to login as a normal user with all possible scopes available.
+Use username `system` and any password to login as **system user**.
+
+Use any other username and any password to login as a **normal user** with all possible scopes available.
 
 # Contents
 
@@ -31,20 +32,19 @@ Use any other username and any password to login as a normal user with all possi
 - [documentations](/docs)
   - [important talks between me and mentor](docs/important-talks.md)
 - [sources](/sources)
-  - The source code for the project, including
-    - [backend](sources/backend)
-      - Microservices communicating with each other by `gRPC`
-      - `C# ASP.NET Core 3.1` used in 2 microservices + 1 API Gateway
-      - `Python` used in 1 microservices
-      - `consul` for service registration and discovery
-      - `registrator` to automatically register containers when up and de-register when down
-      - `docker-compose` for dev environment 
-    - [frontend](sources/frontend)
-      - `React` + `TypeScript` + `ant-design`
-      - complete mock data for backend-less development
-      - self-made [simstate](https://github.com/ddadaal/simstate) for state management
-      - self-made **i18n solution** based on simstate
-      - **All hooks** projects with no use of class components whatsoever
+  - [backend](sources/backend)
+    - Microservices communicating with each other by `gRPC`
+    - `C# ASP.NET Core 3.1` used in 2 microservices + 1 API Gateway
+    - `Python` used in 1 microservices
+    - `consul` for service registration and discovery
+    - `registrator` to automatically register containers when up and de-register when down
+    - `docker-compose` for dev environment 
+  - [frontend](sources/frontend)
+    - `React` + `TypeScript` + `ant-design`
+    - complete mock data for backend-less development
+    - self-made [simstate](https://github.com/ddadaal/simstate) for state management
+    - self-made **i18n solution** based on simstate
+    - **All hooks** projects with no use of class components whatsoever
 
 ## Progress
 
@@ -54,7 +54,7 @@ Use any other username and any password to login as a normal user with all possi
     - [x] Identity module (ended at **02/28**)
     - [x] Expenses module (ended at **03/15**)
     - [ ] Resources module
-- [ ] Integration test and Article Writing
+- [ ] Integration test and Paper Writing
 
 
 ## License
