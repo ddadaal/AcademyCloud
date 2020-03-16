@@ -11,7 +11,6 @@ export interface Scope {
   role: UserRole;
 }
 
-
 export function scopeId(scope: Scope): string {
   return `${scope.domainId}+${scope.projectId ?? ""}`;
 }
@@ -51,3 +50,4 @@ export function isProjectAdmin(scope: Scope): boolean {
   return isProjectScope(scope) && isAdmin(scope);
 }
 
+export const isResourcesDisabled = (scope?: Scope) => !scope || isSystemScope(scope) || (isDomainScope(scope) && scope.role === "member");

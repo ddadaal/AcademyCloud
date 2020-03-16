@@ -6,6 +6,7 @@ import PageLoading from "src/components/PageLoading";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { ErrorPage } from "src/components/ErrorPage";
+import { isResourcesDisabled } from 'src/models/Scope';
 
 const ResourcesPage = React.lazy(() => import("./Resources"));
 const IdentityPage = React.lazy(() => import("./Identity"));
@@ -21,12 +22,17 @@ const NormalPages: React.FC<RouteComponentProps> = () => {
     );
   }
 
+  const { scope } = userStore.user!;
+
   return (
     <RootLayout>
       <FunctionLayout>
         <Suspense fallback={<PageLoading />}>
           <Router>
-            <ResourcesPage path="resources/*" />
+            {isResourcesDisabled(scope)
+              ? null
+              : <ResourcesPage path="resources/*" />
+            }
             <ExpensesPage path="expenses/*" />
             <IdentityPage path="identity/*" />
             <ErrorPage path="*" />

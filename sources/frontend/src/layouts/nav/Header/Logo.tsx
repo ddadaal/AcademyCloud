@@ -7,6 +7,7 @@ import { UserStore } from "src/stores/UserStore";
 import { navigate } from "@reach/router";
 import { antdBreakpoints } from "src/layouts/constants";
 import MediaQuery, { useMediaQuery } from "react-responsive";
+import { isResourcesDisabled } from "src/models/Scope";
 
 
 const StyledLogo = styled(LogoSvg)`
@@ -37,11 +38,11 @@ export const Logo: React.FC = () => {
 
   const jump = useCallback(() => {
     if (userStore.loggedIn) {
-      navigate("/resources");
+      navigate(isResourcesDisabled(userStore.user?.scope) ? "/expenses" : "/resources");
     } else {
       navigate("/");
     }
-  }, [userStore.loggedIn]);
+  }, [userStore.loggedIn, userStore.user]);
 
   return small ? (
     <StyledNoTextLogo onClick={jump} />
