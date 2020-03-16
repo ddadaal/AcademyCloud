@@ -1,7 +1,11 @@
+from sqlalchemy.ext.declarative import declarative_base
+
 import uuid
 
 from sqlalchemy import TypeDecorator, CHAR
 from sqlalchemy.dialects.postgresql import UUID
+
+Base = declarative_base()
 
 
 class GUID(TypeDecorator):

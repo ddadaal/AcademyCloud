@@ -1,48 +1,39 @@
 from enum import Enum
 
-from db import db
-from db.models.utils import GUID
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 
-class UserResourceUsage(db.Model):
-    """
-    用户资源使用量记录。
-    若用户改变对资源的使用量，则需要在这里加一条
-    """
-    id = db.Column(GUID(), primary_key=True)
-
-    domain_id = db.Column(db.String, index=True)
-    project_id = db.Column(db.String, index=True)
-    user_id = db.Column(db.String, index=True)
+from db.models.utils import GUID, Base
 
 
-class Instance(db.Model):
+class Instance(Base):
     """
     实例
     """
-    id = db.Column(GUID(), primary_key=True)
+    __tablename__ = "instance"
+    id = Column(GUID(), primary_key=True)
 
     """对应的OpenStack系统中的ID"""
-    os_id = db.Column(GUID())
+    os_id = Column(GUID())
 
-    cpu = db.Column(db.Integer)
+    cpu = Column(Integer)
     """单位: MB"""
-    memory = db.Column(db.Integer)
+    memory = Column(Integer)
+
+    owner_id = Column(GUID(), ForeignKey("user.id"))
+
+    volumes = relationship("Volume")
 
 
-class Volume(db.Model):
+class Volume(Base):
     """云硬盘"""
+    __tablename__ = "volume"
 
-    id = db.Column(GUID(), primary_key=True)
+    id = Column(GUID(), primary_key=True)
 
-    os_id = db.Column(GUID())
+    os_id = Column(GUID())
 
-    size = db.Column(db.Integer)
+    size = Column(Integer)
+    owner_id = Column(GUID(), ForeignKey("user.id"))
 
-
-class VolumeMount(db.Model):
-    """云硬盘挂载情况"""
-    id = db.Column(GUID(), primary_key=True)
-
-    instance_id = db.Column(GUID())
-    volume_id = db.Column(GUID())
-    mount_time = db.Column(db.DateTime)
+    instance_id = Column(GUID(), ForeignKey("instance.id"))

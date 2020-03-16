@@ -27,7 +27,6 @@
     <Compile Include="client\__init__.py" />
     <Compile Include="config.py" />
     <Compile Include="db\models\account.py" />
-    <Compile Include="db\models\billing.py" />
     <Compile Include="db\models\resources.py" />
     <Compile Include="db\models\utils.py" />
     <Compile Include="db\__init__.py" />

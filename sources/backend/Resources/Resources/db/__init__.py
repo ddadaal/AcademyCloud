@@ -1,10 +1,10 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+import config
 
-db = SQLAlchemy()
 
+# 初始化数据库连接:
+engine = create_engine(config.database_url)
 
-def init_db(app: Flask):
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
+# 创建DBSession类型:
+DBSession = sessionmaker(bind=engine)
