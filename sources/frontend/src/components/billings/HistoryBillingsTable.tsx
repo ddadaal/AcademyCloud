@@ -21,7 +21,7 @@ export const HistoryBillingsTable: React.FC<Props> = ({ data, type, loading }) =
         render={(time: string) => <LocalizedDate dateTimeString={time} />} />
       <Table.Column title={<Localized id={root.endTime} />} dataIndex="endTime"
         render={(time: string) => <LocalizedDate dateTimeString={time} />} />
-      <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
+      <Table.Column title={<Localized id={root.quota} />} dataIndex="resources"
         render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.amount} />} dataIndex="amount"
         render={(amount: number) => amount.toFixed(2)} />

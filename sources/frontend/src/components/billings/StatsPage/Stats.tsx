@@ -38,7 +38,7 @@ export const Stats: React.FC<Props> = ({ billType, billSubjectType, id, refreshT
     <Spin spinning={isPending}>
       <Row gutter={16}>
         <Col xs={24} sm={12} md={showPayer ? 6 : 8}>
-          <BillingStat titleId={root.resources} data={data?.resources} >
+          <BillingStat titleId={root.quota} data={data?.resources} >
             {data => <ResourcesModalLink resources={data} />}
           </BillingStat>
         </Col>

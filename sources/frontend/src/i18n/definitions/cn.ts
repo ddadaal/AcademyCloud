@@ -32,7 +32,7 @@ export default {
           UserProjectAssignment: "项目用户",
         },
         table: {
-          resources: "资源",
+          quota: "资源限额",
           amount: "应付",
           payer: "支付人",
           nextDue: "下一次结算时间",
@@ -44,7 +44,7 @@ export default {
         stats: {
           title: "{} {} 当前{}周期",
           history: "历史周期",
-          resources: "资源",
+          quota: "资源限额",
           amount: "应支付额",
           nextDue: "下一次结算时间",
           payer: "支付人",

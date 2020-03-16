@@ -32,7 +32,7 @@ export default {
           UserProjectAssignment: "User in Project",
         },
         table: {
-          resources: "Resources",
+          quota: "Quota",
           amount: "Payable",
           payer: "Payer",
           nextDue: "Next Due",
@@ -44,7 +44,7 @@ export default {
         stats: {
           title: "{} {} Current {} Cycle",
           history: "History Cycles",
-          resources: "Resources",
+          quota: "Quota",
           amount: "Payable",
           nextDue: "Next Due",
           payer: "Payer",
