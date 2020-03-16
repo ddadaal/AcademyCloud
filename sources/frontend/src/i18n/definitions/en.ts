@@ -50,6 +50,16 @@ export default {
           payer: "Payer",
         }
       },
+      flavor: {
+        title: "Flavor",
+        type: "Type",
+        value: "Value",
+        id: "ID",
+        name: "Name",
+        cpu: "CPU Core",
+        memory: "Memory (MB)",
+        rootDisk: "root disk (GB)"
+      },
       resources: {
         modalTitle: "Resources",
         resourceType: "Resource Type",
@@ -316,9 +326,26 @@ export default {
       },
     },
     resources: {
+      instance: {
+        id: "ID",
+        name: "Name",
+        ip: "IP",
+        flavor: "Flavor",
+        imageName: "Image Name",
+        status: {
+          label: "Status",
+          Shutoff: "Shutoff",
+        },
+        createTime: "Create Time",
+        startTime: "Total Startup Time",
+      },
       dashboard: {
         title: "Dashboard",
-      }
+        instanceList: {
+          title: "Instances",
+          detail: "To Details",
+        }
+      },
     },
     nav: {
       errorPage: {

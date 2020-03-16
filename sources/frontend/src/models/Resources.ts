@@ -5,5 +5,5 @@ export interface Resources {
 }
 
 export function resourcesString({cpu,memory, storage}: Resources) {
-  return `${cpu} | ${memory} MB | ${storage} GB`;
+  return `${cpu} | ${memory} GB | ${storage} GB`;
 }

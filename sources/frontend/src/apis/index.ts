@@ -17,12 +17,15 @@ import { TransactionsServiceMock } from "src/apis/expenses/TransactionsServiceMo
 import { BillingService } from './expenses/BillingService';
 import { BillingServiceMock } from './expenses/BillingServiceMock';
 import { ResourcesServiceMock } from "./resources/ResourcesServiceMock";
+import { InstanceServiceMock } from './resources/InstanceServiceMock';
+import { InstanceService } from "src/apis/resources/InstanceService";
 
 export const USE_MOCK = true;
 
 const services = [
   [AuthenticationService, USE_MOCK ? AuthenticationServiceMock : AuthenticationService],
   [ResourcesService, USE_MOCK ? ResourcesServiceMock : ResourcesService],
+  [InstanceService, USE_MOCK ? InstanceServiceMock : InstanceService],
   [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
   [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
   [UsersService, USE_MOCK ? UsersServiceMock : UsersService],

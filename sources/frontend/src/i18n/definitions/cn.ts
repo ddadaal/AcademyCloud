@@ -50,6 +50,16 @@ export default {
           payer: "支付人",
         }
       },
+      flavor: {
+        title: "配置",
+        type: "类型",
+        value: "值",
+        id: "ID",
+        name: "配置名",
+        cpu: "CPU核心数",
+        memory: "内存 (MB)",
+        rootDisk: "根目录磁盘大小 (GB)"
+      },
       resources: {
         modalTitle: "资源",
         resourceType: "资源类型",
@@ -315,8 +325,25 @@ export default {
       },
     },
     resources: {
+      instance: {
+        id: "ID",
+        name: "名字",
+        ip: "IP地址",
+        flavor: "配置",
+        imageName: "镜像名字",
+        status: {
+          label: "状态",
+          Shutoff: "关机",
+        },
+        createTime: "创建时间",
+        startTime: "总开机时间",
+      },
       dashboard: {
         title: "仪表盘",
+        instanceList: {
+          title: "实例列表",
+          detail: "查看详细",
+        }
       },
     },
     nav: {
