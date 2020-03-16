@@ -54,6 +54,10 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
     await projectsService.setResourcesOfUser(projectId, userId, resources);
   }, [projectId]);
 
+  const getAvailableQuota = useCallback(async (userId: string) => {
+    return await projectsService.getAvailableQuotaOfUser(projectId, userId);
+  }, [projectId]);
+
   if (isPending) {
     return (<Spin spinning={true} />);
   }
@@ -66,6 +70,7 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
         payUser={data!!.payUser}
         userResources={data!!.userQuotas}
         onResourcesChange={data!!.userQuotas ? onResourcesChange : undefined}
+        getAvailableQuota={data!!.userQuotas ? getAvailableQuota : undefined}
         onAdd={onAdd}
         onRoleChange={onRoleChange}
         onRemove={onRemove}
