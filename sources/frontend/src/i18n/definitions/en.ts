@@ -343,7 +343,7 @@ export default {
           dashboard: "Dashboard",
           instance: "Instances",
           network: "Network",
-          volume: "Volume",
+          volume: "Volumes",
         },
         expenses: {
           root: "Expenses",
