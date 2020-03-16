@@ -1,7 +1,7 @@
 import React from "react";
 import { Menu } from "antd";
 import { layoutConstants } from 'src/layouts/constants';
-import { mainNavs, selectMainNavs } from "src/layouts/nav/Header/mainNavs";
+import { mainNavs } from "src/layouts/nav/Header/mainNavs";
 import { Localized } from "src/i18n";
 import styled from "styled-components";
 import { useStore } from "simstate";
@@ -32,7 +32,7 @@ export function HeaderNavMenu(props: {
       mode={vertical ? "vertical" : "horizontal"}
       selectedKeys={selectedKeys}
       style={vertical ? dropdownMenuStyle : horizontalMenuStyle}>
-      {selectMainNavs(user?.scope).map((x) =>
+      {mainNavs.map((x) =>
         <Menu.Item
           key={x.path}
           onClick={() => to(x.path)}>

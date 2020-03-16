@@ -12,6 +12,7 @@ import { FormButton } from "src/pages/Home/HomePageLayout";
 import { PageMetadata } from "src/utils/PageMetadata";
 import { required } from "src/utils/validateMessages";
 import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
+import { isResourcesDisabled } from 'src/models/Scope';
 
 const root = lang.homepage.loginForm;
 
@@ -25,7 +26,6 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
   const [loggingIn, setLoggingIn] = useState(false);
 
   // The original signature is any.
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = async (values: { [key: string]: any }) => {
     const { username, password } = values;
     try {
@@ -44,7 +44,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
         remember: values.remember,
       });
       availableScopesStore.setScopes(scopesResp.scopes, values.remember);
-      await navigate("/resources");
+      await navigate(isResourcesDisabled(scope) ? "/expenses" : "/resources");
 
     } catch (e) {
       api.error({

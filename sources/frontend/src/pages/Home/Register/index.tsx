@@ -12,6 +12,7 @@ import { AvailableScopesStore } from "src/stores/AvailableScopesStore";
 import { HttpError } from "src/apis/HttpService";
 import { PageMetadata } from "src/utils/PageMetadata";
 import { required, email as emailMessage } from "src/utils/validateMessages";
+import { isResourcesDisabled } from 'src/models/Scope';
 
 const root = lang.homepage.registerForm;
 
@@ -40,7 +41,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
         remember: true
       });
       availableScopesStore.setScopes([scope], true);
-      await navigate("/resources");
+      await navigate(isResourcesDisabled(scope) ? "/expenses" : "/resources");
     } catch (e) {
       const ex = e as HttpError;
       if (ex.status === 403) {
@@ -76,7 +77,7 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
       </Form.Item>
       <Form.Item name="email" rules={[
         { type: "email", message: emailMessage },
-        { required: true, message: required  }
+        { required: true, message: required }
       ]}>
         <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder={email} />
       </Form.Item>

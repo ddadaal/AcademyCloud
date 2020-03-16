@@ -326,6 +326,11 @@ export default {
       },
     },
     resources: {
+      notAvailable: {
+        title: "Resources Management Not Available",
+        description: "You have to use a project scope to use cloud resources.",
+        toExpenses: "To Expenses Management",
+      },
       instance: {
         id: "ID",
         name: "Name",

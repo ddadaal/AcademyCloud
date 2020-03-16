@@ -325,6 +325,11 @@ export default {
       },
     },
     resources: {
+      notAvailable: {
+        title: "资源管理不可用",
+        description: "您必须使用一个加入项目的范围登录才可以使用云资源。",
+        toExpenses: "去资费管理",
+      },
       instance: {
         id: "ID",
         name: "名字",
