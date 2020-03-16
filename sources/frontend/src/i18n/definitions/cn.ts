@@ -68,8 +68,8 @@ export default {
         memory: "内存 (GB)",
         storage: "存储 (GB)",
         setResources: {
-          link: "分配资源",
-          title: "分配资源",
+          link: "设置资源限额",
+          title: "设置资源限额",
         },
       },
       transactions: {
@@ -112,7 +112,7 @@ export default {
           true: "可用",
           false: "停用",
         },
-        resources: "资源",
+        quota: "资源配额",
         role: {
           title: "角色",
           admin: "管理员",
@@ -242,7 +242,7 @@ export default {
         },
         payUser: "付款用户",
         admins: "管理员",
-        resources: "分配的资源",
+        quota: "资源配额",
         actions: "操作",
         edit: "编辑",
         setAdmins: {
@@ -289,7 +289,7 @@ export default {
           payUser: "付款用户",
           users: "用户",
           actions: "操作",
-          resources: "分配的资源",
+          quota: "资源配额",
           edit: "编辑",
           manageUsers: {
             link: "管理用户",

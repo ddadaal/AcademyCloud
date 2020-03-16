@@ -60,8 +60,8 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
             {project.admins.length + project.members.length}
           </ModalLink>
         )} />
-      <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
-        render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
+      <Table.Column title={<Localized id={root.quota} />} dataIndex="quota"
+        render={(quota: Resources) => <ResourcesModalLink resources={quota} />} />
       {isDomainAdmin
         ? (
           <Table.Column title={<Localized id={root.actions} />}

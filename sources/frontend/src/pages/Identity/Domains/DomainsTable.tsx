@@ -48,7 +48,7 @@ export const DomainsTable: React.FC<Props> = ({ refreshToken }) => {
             {admins.length <= 1 ? admins[0].name : admins.length}
           </ModalLink>
         )} />
-      <Table.Column title={<Localized id={root.resources} />} dataIndex="resources"
+      <Table.Column title={<Localized id={root.quota} />} dataIndex="quota"
         render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.actions} />}
         dataIndex="id"

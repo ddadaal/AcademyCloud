@@ -76,7 +76,7 @@ export const ExistingTable: React.FC<Props> = (props) => {
         {
           onResourcesChange
             ? (
-              <Table.Column title={<Localized id={root.resources} />}
+              <Table.Column title={<Localized id={root.quota} />}
                 dataIndex="resources"
                 render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
             ) : null}

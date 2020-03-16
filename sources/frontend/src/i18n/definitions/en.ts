@@ -68,8 +68,8 @@ export default {
         memory: "Memory (GB)",
         storage: "Storage (GB)",
         setResources: {
-          link: "Set Resources",
-          title: "Set Resources",
+          link: "Set Quota",
+          title: "Set Quota",
         },
       },
       transactions: {
@@ -112,7 +112,7 @@ export default {
           true: "Active",
           false: "Inactive",
         },
-        resources: "Resources",
+        quota: "Quota",
         role: {
           title: "Role",
           admin: "Admin",
@@ -243,7 +243,7 @@ export default {
         },
         payUser: "Pay User",
         admins: "Admins",
-        resources: "Reources",
+        quota: "Quota",
         actions: "Actions",
         edit: "Edit",
         setAdmins: {
@@ -289,7 +289,7 @@ export default {
           },
           payUser: "Pay User",
           users: "Users",
-          resources: "Reources",
+          quota: "Quota",
           actions: "Action",
           edit: "Edit",
           manageUsers: {
