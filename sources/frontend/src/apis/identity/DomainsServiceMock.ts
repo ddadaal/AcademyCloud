@@ -47,14 +47,6 @@ export class DomainsServiceMock extends DomainsService {
     await this.delay();
   }
 
-  async getAvailableQuota(domainId: string): Promise<{ used: Resources; total: Resources }> {
-    await this.delay();
-    return {
-      used: { cpu: 1, memory: 2, storage: 3 },
-      total: { cpu: 2, memory: 4, storage: 6 }
-    };
-  }
-
   async setResources(domainId: string, resources: Resources): Promise<void> {
     await this.delay();
     return undefined;

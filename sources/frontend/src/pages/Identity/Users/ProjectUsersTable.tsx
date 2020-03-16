@@ -8,6 +8,8 @@ import { UsersService } from "src/apis/identity/UsersService";
 import { Spin } from "antd";
 import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 import { Resources } from "src/models/Resources";
+import { QuotaService } from "src/apis/expenses/QuotaService";
+import { BillSubjectType } from "src/models/Billings";
 
 interface Props {
   projectId: string;
@@ -18,6 +20,8 @@ interface Props {
 const projectsService = getApiService(ProjectsService);
 
 const usersService = getApiService(UsersService);
+
+const quotaService= getApiService(QuotaService);
 
 const getAccessibleUsers = async () => {
   const resp = await usersService.getAccessibleUsers();
@@ -55,7 +59,7 @@ export const ProjectUsersTable: React.FC<Props> = ({ projectId, isAdmin, refresh
   }, [projectId]);
 
   const getAvailableQuota = useCallback(async (userId: string) => {
-    return await projectsService.getAvailableQuotaOfUser(projectId, userId);
+    return await quotaService.getQuotaStatus(BillSubjectType.Project, projectId);
   }, [projectId]);
 
   if (isPending) {

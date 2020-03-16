@@ -7,6 +7,8 @@ import { getApiService } from "src/apis";
 import { UsersService } from "src/apis/identity/UsersService";
 import { ProjectsService } from "src/apis/identity/ProjectsService";
 import { UserRole } from "src/models/Scope";
+import { QuotaService } from "src/apis/expenses/QuotaService";
+import { BillType, BillSubjectType } from "src/models/Billings";
 
 interface Props {
   project: Project;
@@ -20,6 +22,8 @@ const usersService = getApiService(UsersService);
 const getAccessibleUsers = () => usersService.getAccessibleUsers().then((x) => x.users);
 
 const projectsService = getApiService(ProjectsService);
+
+const quotaService = getApiService(QuotaService);
 
 export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
 
@@ -54,7 +58,7 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
   }, [changed]);
 
   const getAvailableQuota = useCallback(async (userId: string) => {
-    return await projectsService.getAvailableQuotaOfUser(project.id, userId);
+    return await quotaService.getQuotaStatus(BillSubjectType.Project, project.id);
   }, [project]);
 
   return (

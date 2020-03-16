@@ -28,14 +28,6 @@ export class ProjectsServiceMock extends ProjectsService {
     await this.delay();
   }
 
-  async getAvailableQuotaOfUser(): Promise<{ used: Resources; total: Resources }> {
-    await this.delay();
-    return {
-      used: { cpu: 1, memory: 2, storage: 3 },
-      total: { cpu: 2, memory: 4, storage: 6 }
-    };
-  }
-
   async setResourcesOfUser(projectId: string, userId: string, resources: Resources): Promise<void> {
     await this.delay();
   }
@@ -48,14 +40,6 @@ export class ProjectsServiceMock extends ProjectsService {
   async removeUserFromProject(projectId: string, userId: string): Promise<void> {
     await this.delay();
     throw { code: "onlyAdmin" };
-  }
-
-  async getAvailableQuota(projectId: string): Promise<{ used: Resources; total: Resources }> {
-    await this.delay();
-    return {
-      used: { cpu: 1, memory: 2, storage: 3 },
-      total: { cpu: 2, memory: 4, storage: 6 }
-    };
   }
 
   async setResources(projectId: string, resources: Resources): Promise<void> {

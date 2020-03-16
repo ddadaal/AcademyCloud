@@ -32,6 +32,7 @@ export enum BillType {
 }
 
 export enum BillSubjectType {
+  System = "System",
   Domain = "Domain",
   Project = "Project",
   User = "User",

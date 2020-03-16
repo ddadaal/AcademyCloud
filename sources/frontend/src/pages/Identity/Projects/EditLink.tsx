@@ -9,11 +9,12 @@ import { SetProjectQuotasLink } from "src/pages/Identity/Projects/SetProjectQuot
 const root = lang.identity.projects.table;
 
 interface Props {
+  domainId: string;
   project: Project;
   reload: () => void;
 }
 
-export const EditLink: React.FC<Props> = ({ project, reload }) => {
+export const EditLink: React.FC<Props> = ({ project, reload, domainId }) => {
   return (
     <Dropdown overlay={(
       <Menu>
@@ -21,7 +22,7 @@ export const EditLink: React.FC<Props> = ({ project, reload }) => {
           <ManageUsersLink project={project} reload={reload} />
         </Menu.Item>
         <Menu.Item>
-          <SetProjectQuotasLink project={project} reload={reload} />
+          <SetProjectQuotasLink domainId={domainId} project={project} reload={reload} />
         </Menu.Item>
       </Menu>
     )}>

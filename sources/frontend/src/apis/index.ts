@@ -19,6 +19,8 @@ import { BillingServiceMock } from './expenses/BillingServiceMock';
 import { ResourcesServiceMock } from "./resources/ResourcesServiceMock";
 import { InstanceServiceMock } from './resources/InstanceServiceMock';
 import { InstanceService } from "src/apis/resources/InstanceService";
+import { QuotaService } from './expenses/QuotaService';
+import { QuotaServiceMock } from './expenses/QuotaServiceMock';
 
 export const USE_MOCK = true;
 
@@ -30,6 +32,7 @@ const services = [
   [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
   [UsersService, USE_MOCK ? UsersServiceMock : UsersService],
   [ProjectsService, USE_MOCK ? ProjectsServiceMock : ProjectsService],
+  [QuotaService, USE_MOCK ? QuotaServiceMock : QuotaService],
   [BalanceService, USE_MOCK ? BalanceServiceMock : BalanceService],
   [TransactionsService, USE_MOCK ? TransactionsServiceMock : TransactionsService],
   [BillingService, USE_MOCK ? BillingServiceMock : BillingService],

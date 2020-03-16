@@ -1,16 +1,13 @@
 import React, { useCallback } from "react";
 import { getApiService } from "src/apis";
 import { ProjectsService } from "src/apis/identity/ProjectsService";
-import { useStore } from "simstate";
-import { UserStore } from "src/stores/UserStore";
 import { useAsync } from "react-async";
 import { Table, Divider } from "antd";
 import { lang, Localized } from "src/i18n";
 import { ModalLink } from "src/components/ModalLink";
 import { User } from "src/models/User";
 import { UsersViewTable } from "src/components/users/UsersViewTable";
-import { resourcesString, Resources } from "src/models/Resources";
-import { ResourcesViewTable } from "src/components/resources/ResourcesViewTable";
+import { Resources } from "src/models/Resources";
 import { UsersRoleViewTable } from "src/components/users/UsersRoleViewTable";
 import { Project } from "src/models/Project";
 import { EditLink } from "src/pages/Identity/Projects/EditLink";
@@ -67,7 +64,7 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
           <Table.Column title={<Localized id={root.actions} />}
             render={(_, project: Project) => (
               <span>
-                <EditLink project={project} reload={reload} />
+                <EditLink domainId={scope.domainId} project={project} reload={reload} />
                 <Divider type="vertical" />
                 <DeleteProjectLink project={project} reload={reload} />
               </span>
