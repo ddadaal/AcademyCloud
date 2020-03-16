@@ -62,7 +62,7 @@ export const ProjectsTable: React.FC<Props> = ({ refreshToken, scope }) => {
         )} />
       <Table.Column title={<Localized id={root.quota} />} dataIndex="quota"
         render={(quota: Resources) => <ResourcesModalLink resources={quota} />} />
-      {isDomainAdmin
+      {isDomainAdmin(scope)
         ? (
           <Table.Column title={<Localized id={root.actions} />}
             render={(_, project: Project) => (
