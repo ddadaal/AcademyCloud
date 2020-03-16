@@ -60,6 +60,8 @@ namespace AcademyCloud.Expenses.Data
                 // init system
                 o.HasData(new { Id = SystemId, ReceiveUserId = SystemUserId, ReceiverId = SystemId });
 
+                o.Ignore(x => x.Resources);
+
                 o.Ignore(e => e.ReceivedOrgTransactions);
             });
 

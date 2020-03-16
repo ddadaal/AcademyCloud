@@ -10,6 +10,7 @@ service Interop {
   rpc GetActivity (GetActivityRequest) returns (GetActivityResponse);
   rpc GetPayUser (GetPayUserRequest) returns (GetPayUserResponse);
   rpc GetQuota (GetQuotaRequest) returns (GetQuotaResponse);
+  rpc GetQuotaStatus (GetQuotaStatusRequest) returns (GetQuotaStatusResponse);
 }
 
 message Subject {
@@ -39,4 +40,14 @@ message GetQuotaRequest {
 
 message GetQuotaResponse {
   map<string, common.Resources> quotas = 1;
+}
+
+
+message GetQuotaStatusRequest {
+  Subject subject = 1;
+}
+
+message GetQuotaStatusResponse {
+  common.Resources used = 1;
+  common.Resources total = 2;
 }

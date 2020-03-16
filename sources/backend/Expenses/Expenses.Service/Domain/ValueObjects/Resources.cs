@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.Expenses.Domain.ValueObjects
 {
-    public class Resources: ValueObject
+    public class Resources : ValueObject
     {
         /// <summary>
         /// CPU Core.
         /// </summary>
         public int Cpu { get; set; }
-        
+
         /// <summary>
         /// Memory in GB.
         /// </summary>
@@ -57,5 +57,16 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         {
             return new Resources(op1.Cpu + op2.Cpu, op1.Memory + op2.Memory, op1.Storage + op2.Storage);
         }
+
+        public static Resources Sum(IEnumerable<Resources> resources)
+        {
+            return resources.Aggregate(Resources.Zero, (a, b) => a + b);
+        }
+
+        public static Resources operator -(Resources op1, Resources op2)
+        {
+            return new Resources(op1.Cpu - op2.Cpu, op1.Memory - op2.Memory, op1.Storage - op2.Storage);
+        }
     }
+
 }

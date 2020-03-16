@@ -20,6 +20,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public SubjectType SubjectType => SubjectType.System;
 
+        public Resources Resources => Domains.Aggregate(Resources.Zero, (a, b) => a + b.Resources);
+
         public ICollection<OrgTransaction> ReceivedOrgTransactions => Receiver.ReceivedOrgTransactions;
 
         public OrgTransaction Receive(IPayer from, User fromUser, decimal amount, TransactionReason reason, DateTime time)

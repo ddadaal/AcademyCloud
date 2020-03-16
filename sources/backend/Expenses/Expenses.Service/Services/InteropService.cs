@@ -25,8 +25,13 @@ namespace AcademyCloud.Expenses.Services
             this.dbContext = dbContext;
         }
 
-        private async Task<Dictionary<string, TItem>> Collect<TItem>(
-            IEnumerable<Subject> subjects,
+        private void ThrowFunc<T>(T o)
+        {
+            throw new ArgumentOutOfRangeException(nameof(o));
+        }
+
+        private async Task<TItem> Dispatch<TItem>(
+            Subject subject,
             Func<Domain.Entities.System, TItem>? systemFunc = null,
             Func<Domain.Entities.Domain, TItem>? domainFunc = null,
             Func<Project, TItem>? projectFunc = null,
@@ -36,15 +41,27 @@ namespace AcademyCloud.Expenses.Services
 
             Func<object, TItem> throwFunc = (o) => { throw new ArgumentOutOfRangeException("Type"); };
 
-            return (await subjects.SelectAsync(x => x.Type switch
+            return await (subject.Type switch
             {
-                SubjectType.System => dbContext.Systems.FirstAsync().Then(r => (x.Id, (systemFunc ?? throwFunc)(r))),
-                SubjectType.Domain => dbContext.Domains.FindIfNullThrowAsync(x.Id).Then(r => (x.Id, (domainFunc ?? throwFunc)(r))),
-                SubjectType.Project => dbContext.Projects.FindIfNullThrowAsync(x.Id).Then(r => (x.Id, (projectFunc ?? throwFunc)(r))),
-                SubjectType.UserProjectAssignment => dbContext.UserProjectAssignments.FindIfNullThrowAsync(x.Id).Then(r => (x.Id, (userProjectAssignmentFunc ?? throwFunc)(r))),
-                SubjectType.User => dbContext.Users.FindIfNullThrowAsync(x.Id).Then(r => (x.Id, (userFunc ?? throwFunc)(r))),
-                _ => throw new ArgumentOutOfRangeException(nameof(x.Type))
-            }))
+                SubjectType.System => dbContext.Systems.FirstAsync().Then(r => (systemFunc ?? throwFunc)(r)),
+                SubjectType.Domain => dbContext.Domains.FindIfNullThrowAsync(subject.Id).Then(r => (domainFunc ?? throwFunc)(r)),
+                SubjectType.Project => dbContext.Projects.FindIfNullThrowAsync(subject.Id).Then(r => (projectFunc ?? throwFunc)(r)),
+                SubjectType.UserProjectAssignment => dbContext.UserProjectAssignments.FindIfNullThrowAsync(subject.Id).Then(r => ((userProjectAssignmentFunc ?? throwFunc)(r))),
+                SubjectType.User => dbContext.Users.FindIfNullThrowAsync(subject.Id).Then(r => (userFunc ?? throwFunc)(r)),
+                _ => throw new ArgumentOutOfRangeException(nameof(subject.Type))
+            });
+        }
+
+        private async Task<Dictionary<string, TItem>> Collect<TItem>(
+            IEnumerable<Subject> subjects,
+            Func<Domain.Entities.System, TItem>? systemFunc = null,
+            Func<Domain.Entities.Domain, TItem>? domainFunc = null,
+            Func<Project, TItem>? projectFunc = null,
+            Func<User, TItem>? userFunc = null,
+            Func<UserProjectAssignment, TItem>? userProjectAssignmentFunc = null)
+        {
+
+            return (await subjects.SelectAsync(async x => (x.Id, await Dispatch(x, systemFunc, domainFunc, projectFunc, userFunc, userProjectAssignmentFunc))))
             .ToDictionary(x => x.Id, x => x.Item2);
 
         }
@@ -97,6 +114,23 @@ namespace AcademyCloud.Expenses.Services
                     )
                 }
             };
+        }
+
+        public override async Task<GetQuotaStatusResponse> GetQuotaStatus(GetQuotaStatusRequest request, ServerCallContext context)
+        {
+            var totalSystemResources = new Domain.ValueObjects.Resources(1000, 1000, 1000);
+            var (total, used) = await Dispatch(request.Subject,
+                systemFunc: x => (totalSystemResources, Domain.ValueObjects.Resources.Sum(x.Domains.Select(x => x.Quota))),
+                domainFunc: x => (x.Quota, Domain.ValueObjects.Resources.Sum(x.Projects.Select(x => x.Quota))),
+                projectFunc: x => (x.Quota, Domain.ValueObjects.Resources.Sum(x.Users.Select(x => x.Quota)))
+                );
+
+            return new GetQuotaStatusResponse
+            {
+                Total = total.ToGrpc(),
+                Used = used.ToGrpc(),
+            };
+
         }
     }
 }

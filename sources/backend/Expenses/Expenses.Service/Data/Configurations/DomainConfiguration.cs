@@ -14,7 +14,17 @@ namespace AcademyCloud.Expenses.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Domain> builder)
         {
-            builder.OwnsOne(e => e.Quota);
+            builder
+                .OwnsOne(e => e.Quota)
+                // seed the social domain's quota
+                .HasData(new
+                {
+                    DomainId = SocialDomainId,
+                    Cpu = 0,
+                    Memory = 0,
+                    Storage = 0
+                });
+
 
             // Necessary
             builder.Ignore(e => e.PayedOrgTransactions);
@@ -29,7 +39,6 @@ namespace AcademyCloud.Expenses.Data.Configurations
                 PayerId = SocialDomainId, 
                 ReceiverId = SocialDomainId, 
                 PayUserId = SocialDomainAdminId, 
-                Resources = Resources.Zero ,
                 SystemId = SystemId,
             });
         }
