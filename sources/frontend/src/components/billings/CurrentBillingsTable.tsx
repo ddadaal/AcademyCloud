@@ -28,7 +28,7 @@ export const CurrentBillingsTable: React.FC<Props> = ({ subjectType, type, data,
       <Table.Column title={<Localized id={root.subjectType[subjectType]} />} dataIndex="subject"
         render={(_, item: AllocatedDataItem) => (
           <Tooltip overlay={item.subjectId}>
-            {item.subjectName}
+            <span>{item.subjectName}</span>
           </Tooltip>
         )} />
       <Table.Column title={<Localized id={root.table.resources} />} dataIndex="resources"
@@ -37,7 +37,7 @@ export const CurrentBillingsTable: React.FC<Props> = ({ subjectType, type, data,
         render={(amount: number) => amount.toFixed(2)} />
       {(type === BillType.Allocated && subjectType !== BillSubjectType.User && subjectType !== BillSubjectType.UserProjectAssignment) ? (
         <Table.Column title={<Localized id={root.table.payer} />} dataIndex="payerName"
-          render={(_, item: AllocatedDataItem) => <Tooltip overlay={item.payerId}>{item.payerName}</Tooltip>} />
+          render={(_, item: AllocatedDataItem) => <Tooltip overlay={item.payerId}><span>{item.payerName}</span></Tooltip>} />
       ) : null}
       <Table.Column title={<Localized id={root.table.nextDue} />} dataIndex="nextDue" render={(date: string) => <LocalizedDate dateTimeString={date} />} />
       <Table.Column title={<Localized id={root.table.actions} />} dataIndex="subject"

@@ -27,7 +27,7 @@ export const HistoryBillingsTable: React.FC<Props> = ({ data, type, loading }) =
         render={(amount: number) => amount.toFixed(2)} />
       {type === BillType.Allocated ? (
         <Table.Column title={<Localized id={root.payer} />} dataIndex="payerName"
-          render={(_, item: HistoryAllocatedBilling) => <Tooltip overlay={item.payerId}>{item.payerName}</Tooltip>} />
+          render={(_, item: HistoryAllocatedBilling) => <Tooltip overlay={item.payerId}><span>{item.payerName}</span></Tooltip>} />
       ) : null}
     </Table>
   )
