@@ -5,11 +5,14 @@ import { useStore } from "simstate";
 import { HomePageLayout } from "src/pages/Home/HomePageLayout";
 import { LoginForm } from "src/pages/Home/Login";
 import { RegisterForm } from "src/pages/Home/Register";
+import { isResourcesDisabled } from "src/models/Scope";
 
 const HomePage: React.FC<RouteComponentProps> = () => {
   const userStore = useStore(UserStore);
   if (userStore.loggedIn) {
-    return <Redirect noThrow={true} to="/resources" />;
+    const { scope } = userStore.user!;
+
+    return <Redirect noThrow={true} to={isResourcesDisabled(scope) ? "/expenses" : "/resources"} />;
   }
 
   return (

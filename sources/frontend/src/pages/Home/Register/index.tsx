@@ -41,7 +41,6 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
         remember: true
       });
       availableScopesStore.setScopes([scope], true);
-      await navigate(isResourcesDisabled(scope) ? "/expenses" : "/resources");
     } catch (e) {
       const ex = e as HttpError;
       if (ex.status === 403) {

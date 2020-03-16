@@ -25,7 +25,6 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
 
   const [loggingIn, setLoggingIn] = useState(false);
 
-  // The original signature is any.
   const onFinish = async (values: { [key: string]: any }) => {
     const { username, password } = values;
     try {
@@ -35,6 +34,7 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
 
       // select default; if not, select lastLogin; if not, the first
       const scope = scopesResp.defaultScope ?? scopesResp.lastLoginScope ?? scopesResp.scopes[0];
+
       const loginResponse = await accountService.login(username, password, scope);
       userStore.login({
         userId: loginResponse.userId,
@@ -44,8 +44,6 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
         remember: values.remember,
       });
       availableScopesStore.setScopes(scopesResp.scopes, values.remember);
-      await navigate(isResourcesDisabled(scope) ? "/expenses" : "/resources");
-
     } catch (e) {
       api.error({
         message: <Localized id={root.loginFailTitle} />,
