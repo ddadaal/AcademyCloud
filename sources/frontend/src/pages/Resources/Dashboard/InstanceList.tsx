@@ -42,7 +42,7 @@ export const InstanceList: React.FC = (props) => {
   return (
     <Section
       title={<Localized id={root.dashboard.instanceList.title} />}
-      extra={<Link to="instances"><Localized id={root.dashboard.instanceList.detail} /></Link>}>
+      extra={<Link to="../instances"><Localized id={root.dashboard.instanceList.detail} /></Link>}>
       <SimpleInstanceTable />
     </Section>
   )
