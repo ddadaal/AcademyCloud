@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Localized, lang } from "src/i18n";
 import { useAsync } from "react-async";
-import Modal from "antd/lib/modal/Modal";
+import { Modal, Form } from "antd";
 import { ResourcesEditForm } from "src/components/resources/ResourcesEditForm";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { Resources } from "src/models/Resources";
@@ -16,15 +16,17 @@ const opResult = lang.components.operationResult;
 
 export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm, getAvailableQuota }) => {
 
-  const [modalShown, setModalShown] = useState(false);
+  const [form] = Form.useForm();
 
-  const [resources, setResources] = useState(initial);
+  const [modalShown, setModalShown] = useState(false);
 
   const [api, contextHolder] = useLocalizedNotification();
 
-  const deferFn = useCallback(async ([resources]: [Resources]) => {
+  const deferFn = useCallback(async () => {
+    const resources = await form.validateFields() as Resources;
     await onConfirm(resources);
   }, [onConfirm])
+
 
   const { run, isPending } = useAsync({
     deferFn,
@@ -32,8 +34,11 @@ export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm, getAvail
       setModalShown(false);
       api.success({ messageId: [opResult.success, [root.title]] });
     },
-    onReject: () => {
-      api.error({ messageId: [opResult.fail, [root.title]] });
+    onReject: (e) => {
+      // if errorFields in e, it is a error caused by form validation, ignore it.
+      if (!("errorFields" in e)) {
+        api.error({ messageId: [opResult.fail, [root.title]] });
+      }
     }
   });
 
@@ -46,11 +51,15 @@ export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm, getAvail
       <Modal
         visible={modalShown}
         title={<Localized id={root.title} />}
-        onOk={() => run(resources)}
+        onOk={run}
         onCancel={() => setModalShown(false)}
         confirmLoading={isPending}
+        destroyOnClose={true}
       >
-        <ResourcesEditForm getAvailableQuota={getAvailableQuota} initial={resources} onValuesChange={setResources} />
+        <ResourcesEditForm
+          getAvailableQuota={getAvailableQuota}
+          initial={initial}
+          form={form} />
       </Modal>
     </>
   );
