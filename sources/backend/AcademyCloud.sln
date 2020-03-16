@@ -45,6 +45,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expenses.Service", "Expense
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expenses.Test", "Expenses\Expenses.Test\Expenses.Test.csproj", "{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{A71C49FF-EF95-4352-90AA-80BC1D1EAA9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{6EA4F672-CF12-4AEA-ABC5-D862504200E3}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\Protos\identity.proto = Resources\Protos\identity.proto
+	EndProjectSection
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Resources", "Resources\Resources\Resources.pyproj", "{921AF286-A20F-462E-ADA1-2ED0A7F4018A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +88,8 @@ Global
 		{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{921AF286-A20F-462E-ADA1-2ED0A7F4018A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{921AF286-A20F-462E-ADA1-2ED0A7F4018A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +101,8 @@ Global
 		{4164EAD5-5DB4-4AF8-A184-1B78D0254D96} = {20E147B3-FF61-4A75-8C25-40FE6F862DC1}
 		{37235BC0-3B2B-4AC0-9D75-6A00088FBDF0} = {20E147B3-FF61-4A75-8C25-40FE6F862DC1}
 		{F5D0C5AE-0A7A-489B-947A-6A2489E66AB5} = {20E147B3-FF61-4A75-8C25-40FE6F862DC1}
+		{6EA4F672-CF12-4AEA-ABC5-D862504200E3} = {A71C49FF-EF95-4352-90AA-80BC1D1EAA9B}
+		{921AF286-A20F-462E-ADA1-2ED0A7F4018A} = {A71C49FF-EF95-4352-90AA-80BC1D1EAA9B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C116664B-0F4A-44B7-B6E1-FF14035BE60C}

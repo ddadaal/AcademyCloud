@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "AcademyCloud.Resources.Services";
+
+package identity;
+
+service Identity {
+  rpc AddUser (AddUserRequest) returns (AddUserResponse);
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
+}
+
+message AddUserRequest {
+  
+}
+
+message AddUserResponse {
+  
+}
+
+message DeleteUserRequest {
+  
+}
+
+message DeleteUserResponse {
+  
+}
+
+
+
