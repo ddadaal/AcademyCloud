@@ -53,6 +53,10 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
     }
   }, [changed]);
 
+  const getAvailableQuota = useCallback(async (userId: string) => {
+    return await projectsService.getAvailableQuotaOfUser(project.id, userId);
+  }, [project]);
+
   return (
     <>
       <a onClick={() => setModalShown(true)}>
@@ -79,6 +83,7 @@ export const ManageUsersLink: React.FC<Props> = ({ project, reload }) => {
           onRemove={onRemove}
           onPayUserSet={onPayUserSet}
           getAccessibleUsers={getAccessibleUsers}
+          getAvailableQuota={getAvailableQuota}
         />
       </Modal>
     </>

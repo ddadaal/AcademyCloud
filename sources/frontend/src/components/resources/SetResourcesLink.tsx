@@ -9,11 +9,12 @@ import { Resources } from "src/models/Resources";
 interface Props {
   initial: Resources;
   onConfirm: (resources: Resources) => Promise<void>;
+  getAvailableQuota: () => Promise<{ used: Resources; total: Resources }>;
 }
 const root = lang.components.resources.setResources;
 const opResult = lang.components.operationResult;
 
-export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm }) => {
+export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm, getAvailableQuota }) => {
 
   const [modalShown, setModalShown] = useState(false);
 
@@ -49,7 +50,7 @@ export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm }) => {
         onCancel={() => setModalShown(false)}
         confirmLoading={isPending}
       >
-        <ResourcesEditForm initial={resources} onValuesChange={setResources} />
+        <ResourcesEditForm getAvailableQuota={getAvailableQuota} initial={resources} onValuesChange={setResources} />
       </Modal>
     </>
   );

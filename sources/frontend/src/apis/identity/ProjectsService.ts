@@ -34,6 +34,13 @@ export class ProjectsService extends HttpService {
     return resp as GetUsersOfProjectResponse;
   }
 
+  async getAvailableQuotaOfUser(projectId: string, userId: string): Promise<{ used: Resources; total: Resources }> {
+    return await this.fetch({
+      method: HttpMethod.GET,
+      path: `/identity/projects/${projectId}/users/${userId}/availableQuota`,
+    });
+  }
+
   async setResourcesOfUser(projectId: string, userId: string, resources: Resources): Promise<void> {
     await this.fetch({
       method: HttpMethod.PATCH,
@@ -64,6 +71,13 @@ export class ProjectsService extends HttpService {
     await this.fetch({
       method: HttpMethod.DELETE,
       path: `/identity/projects/${projectId}/users/${userId}`,
+    });
+  }
+
+  async getAvailableQuota(projectId: string): Promise<{ used: Resources; total: Resources }> {
+    return await this.fetch({
+      method: HttpMethod.GET,
+      path: `/identity/projects/${projectId}/availableQuota`,
     });
   }
 

@@ -20,7 +20,11 @@ export const SetProjectQuotasLink: React.FC<Props> = ({ project, reload }) => {
     reload();
   }, [project.id, reload]);
 
+  const getAvailableQuota = useCallback(async () => {
+    return await service.getAvailableQuota(project.id);
+  }, [project]);
+
   return (
-    <SetResourcesLink initial={project.quota} onConfirm={onConfirm} />
+    <SetResourcesLink getAvailableQuota={getAvailableQuota} initial={project.quota} onConfirm={onConfirm} />
   );
 }

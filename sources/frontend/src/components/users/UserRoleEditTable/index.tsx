@@ -17,12 +17,13 @@ interface Props {
 
   userResources?: { [userId: string]: Resources };
   onResourcesChange?: (userId: string, resources: Resources) => Promise<void>;
+  getAvailableQuota?: (userId: string) => Promise<{ used: Resources; total: Resources }>;
 
   getAccessibleUsers: () => Promise<User[]>;
 }
 
 export const UserRoleEditTable: React.FC<Props> = (props) => {
-  const { admins, members, onAdd, onRoleChange, getAccessibleUsers, onRemove, payUser, onPayUserSet, onResourcesChange } = props;
+  const { admins, members, onAdd, onRoleChange, getAccessibleUsers, onRemove, payUser, onPayUserSet, onResourcesChange, getAvailableQuota } = props;
 
   const [allUsers, setAllUsers] = useState(() => ({ admins, members, payUser }));
   const [userResources, setUserResources] = useState(props.userResources);
@@ -91,6 +92,7 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
         admins={allUsers.admins}
         userResources={userResources}
         onResourcesChange={onResourcesChange ? handleResourcesChange : undefined}
+        getAvailableQuota={getAvailableQuota}
         onRoleChange={handleRoleChange}
         onRemove={handleRemove}
         onPayUserSet={handleSetPayUser}

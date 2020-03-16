@@ -24,6 +24,8 @@ interface Props {
   payUser: User;
   userResources?: { [userId: string]: Resources };
 
+  getAvailableQuota?: (userId: string) => Promise<{ used: Resources; total: Resources }>;
+
   onResourcesChange?: (user: User, resources: Resources) => Promise<void>;
   onRoleChange: (user: User, role: UserRole) => Promise<void>;
   onPayUserSet: (user: User) => Promise<void>;
@@ -103,7 +105,10 @@ export const ExistingTable: React.FC<Props> = (props) => {
                   <DisabledA disabled={true} >
                     <Localized id={root.setAsPayUser.link} />
                   </DisabledA>
-                  <SetUserResourcesLink user={user} onConfirm={onResourcesChange} />
+                  {props.getAvailableQuota
+                    ? <SetUserResourcesLink getAvailableQuota={props.getAvailableQuota} user={user} onConfirm={onResourcesChange} />
+                    : null
+                  }
                 </span>
               )
               : (
@@ -111,7 +116,10 @@ export const ExistingTable: React.FC<Props> = (props) => {
                   <RemoveLink user={user} onRemove={handleRemove} disabled={!!settingPayUserId || removingId === user.id} />
                   <Divider type="vertical" />
                   <SetAsPayUserLink user={user} onSet={handleSetPayUser} disabled={!!settingPayUserId || removingId === user.id} />
-                  <SetUserResourcesLink user={user} onConfirm={onResourcesChange} />
+                  {props.getAvailableQuota
+                    ? <SetUserResourcesLink getAvailableQuota={props.getAvailableQuota} user={user} onConfirm={onResourcesChange} />
+                    : null
+                  }
                 </span>
               )
 

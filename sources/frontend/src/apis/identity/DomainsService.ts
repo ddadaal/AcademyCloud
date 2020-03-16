@@ -50,6 +50,12 @@ export class DomainsService extends HttpService {
     });
   }
 
+  async getAvailableQuota(domainId: string): Promise<{ used: Resources; total: Resources }> {
+    return await this.fetch({
+      method: HttpMethod.GET,
+      path: `/identity/domains/${domainId}/availableQuota`,
+    });
+  }
 
   async setResources(domainId: string, resources: Resources): Promise<void> {
     await this.fetch({

@@ -20,7 +20,11 @@ export const SetDomainResourcesLink: React.FC<Props> = ({ domain, reload }) => {
     reload();
   }, [domain.id, reload]);
 
+  const getAvailableQuota = useCallback(async () => {
+    return await service.getAvailableQuota(domain.id);
+  }, [domain.id]);
+
   return (
-    <SetResourcesLink initial={domain.quota} onConfirm={onConfirm} />
+    <SetResourcesLink getAvailableQuota={getAvailableQuota} initial={domain.quota} onConfirm={onConfirm} />
   );
 }
