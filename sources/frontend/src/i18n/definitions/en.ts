@@ -55,7 +55,7 @@ export default {
         resourceType: "Resource Type",
         values: "Resource Quantity",
         cpu: "CPU Cores",
-        memory: "Memory (MB)",
+        memory: "Memory (GB)",
         storage: "Storage (GB)",
         setResources: {
           link: "Set Resources",
@@ -315,7 +315,11 @@ export default {
         },
       },
     },
-    resources: {},
+    resources: {
+      dashboard: {
+        title: "Dashboard",
+      }
+    },
     nav: {
       errorPage: {
         title: "Not Exists Or Not Authorized",

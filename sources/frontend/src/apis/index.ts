@@ -1,7 +1,7 @@
 import { HttpService } from "./HttpService";
 import { AuthenticationService } from "./account/AuthenticationService";
 import { AuthenticationServiceMock } from "./account/AuthenticationServiceMock";
-import { InstanceService } from "./instance/InstanceService";
+import { ResourcesService } from "./resources/ResourcesService";
 import { AccountService } from "src/apis/identity/AccountService";
 import { AccountServiceMock } from "src/apis/identity/AccountServiceMock";
 import { DomainsService } from "src/apis/identity/DomainsService";
@@ -16,12 +16,13 @@ import { TransactionsService } from "src/apis/expenses/TransactionsService";
 import { TransactionsServiceMock } from "src/apis/expenses/TransactionsServiceMock";
 import { BillingService } from './expenses/BillingService';
 import { BillingServiceMock } from './expenses/BillingServiceMock';
+import { ResourcesServiceMock } from "./resources/ResourcesServiceMock";
 
 export const USE_MOCK = true;
 
 const services = [
   [AuthenticationService, USE_MOCK ? AuthenticationServiceMock : AuthenticationService],
-  [InstanceService, InstanceService],
+  [ResourcesService, USE_MOCK ? ResourcesServiceMock : ResourcesService],
   [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
   [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
   [UsersService, USE_MOCK ? UsersServiceMock : UsersService],

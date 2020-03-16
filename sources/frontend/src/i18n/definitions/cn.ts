@@ -55,7 +55,7 @@ export default {
         resourceType: "资源类型",
         values: "资源量",
         cpu: "CPU核心数",
-        memory: "内存 (MB)",
+        memory: "内存 (GB)",
         storage: "存储 (GB)",
         setResources: {
           link: "分配资源",
@@ -314,7 +314,11 @@ export default {
         }
       },
     },
-    resources: {},
+    resources: {
+      dashboard: {
+        title: "仪表盘",
+      },
+    },
     nav: {
       errorPage: {
         title: "无权限或不存在",
