@@ -60,7 +60,7 @@ export class AuthenticationServiceMock extends AuthenticationService {
     return {
       userId: "123",
       token: "testtoken",
-      scope: { domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" }
+      scope: { social: true, domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" }
     }
   }
 
