@@ -31,3 +31,6 @@ systemctl disable NetworkManager firewalld
 cp /vagrant/scripts/network/ifcfg-eth1 /etc/sysconfig/network-scripts/ 
 systemctl enable network
 systemctl restart network
+
+# Install vim
+yum install -y vim

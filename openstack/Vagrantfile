@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
     controller.vm.hostname =  "controller"
     controller.vm.network "private_network", ip: "192.168.56.2"
 
-    # open another public_network with ip 10.0.077 
+    # open another public_network with ip 10.0.0.77 
     # to allow access from other machines in the same local network
     controller.vm.network "public_network", ip: "10.0.0.77"
     controller.vm.provider "virtualbox" do |vb|

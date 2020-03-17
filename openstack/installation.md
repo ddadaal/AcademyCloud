@@ -14,6 +14,11 @@
     - `generic/centos7`好像不支持root登录，没试过
     - `bento/centos-7`可以root登录，但是没有vim，可以用vi
 
+
+# 下载cirros
+
+在验证glance的过程中会从github上下cirros的镜像，为了防止速度过慢，请先把cirros下到本地`scripts`目录，在验证时将会直接使用本地的镜像。若本地镜像不存在，脚本将自动重新下载。
+
 # Vagrant的配置
 
 需要安装两个插件
@@ -24,13 +29,15 @@ vagrant plugin install vagrant-vbguest
 
 # Controller Node
 
+网络已经预先配置好。eth1为provider网络。详情看[配置网络](#network)。
+
 需要安装的包：
 - [基础包](#openstack)
 - [数据库](#database)
 - [消息队列](#rabbitmq)
 - [memcached](#memcached)
 - [etcd](#etcd)
-- [配置网络](#network-of-controller)
+
 
 需要安装以下服务：
 - Identity ([keystone](#keystone))
@@ -48,6 +55,8 @@ vagrant plugin install vagrant-vbguest
 
 # Compute Node
 
+网络已经预先配置好。eth1为provider网络。详情看[配置网络](#network)。
+
 包需要安装和配置：
 - [基础包](#openstack)
 
@@ -63,6 +72,22 @@ vagrant plugin install vagrant-vbguest
 ```
 
 # 安装脚本
+
+## network
+
+网络已经配置好。
+
+默认的话，provider口为均为eth1。`init.sh`已经根据以下教程配置好网络。
+
+controller：
+
+https://docs.openstack.org/install-guide/environment-networking-controller.html
+
+compute:
+
+https://docs.openstack.org/install-guide/environment-networking-compute.html
+
+block-storage不需要手动配.
 
 ## openstack packages
 
@@ -249,3 +274,4 @@ su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 # https://docs.openstack.org/cinder/train/install/cinder-verify.html
 /vagrant/scripts/services/cinder/controller/verify.sh
 ```
+

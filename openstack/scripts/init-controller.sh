@@ -46,5 +46,5 @@ read -p "Configure cinder on block-storage node and then press to continue" R
 "$SH_DIR/services/cinder/controller/verify.sh"
 
 # ceilometer
-"$SH_DIR/services/ceilometer/controller/install.sh"
-read -p "Configure ceilometer on compute node and then press to continue" R
+# "$SH_DIR/services/ceilometer/controller/install.sh"
+# read -p "Configure ceilometer on compute node and then press to continue" R
