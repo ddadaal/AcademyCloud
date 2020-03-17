@@ -61,7 +61,7 @@ export const AddInstanceModal: React.FC<Props> = ({ visible, close, onCreated })
       confirmLoading={submitting}
     >
       {contextHolder}
-      <Form form={form} layout="vertical" initialValues={{ name: Math.random() }}>
+      <Form form={form} layout="vertical" initialValues={{ name: new Date().toISOString() }}>
         <Form.Item label={<StrongLabel id={root.name} />} name="name" rules={[{ required: true, message: required }]}>
           <Input />
         </Form.Item>
