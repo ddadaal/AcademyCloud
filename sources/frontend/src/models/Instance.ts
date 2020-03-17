@@ -27,3 +27,9 @@ export interface Instance {
   totalStartupHours: number;
 
 }
+
+export interface Image {
+  id: string;
+  name: string;
+  minDisk: number;
+}

@@ -358,7 +358,10 @@ export default {
           name: "Name",
           flavor: "Flavor",
           available: "Available",
-          mustSmallerThanAvailable: "The flavor must be smaller than or equal to the available limit.",
+          flavorLimit: "The flavor must be smaller than or equal to the available limit.",
+          volume: "Volume Size (GB)",
+          volumeLimit: "The volume must be smaller than or equal to the available limit.",
+          image: "Image",
         }
       },
       dashboard: {

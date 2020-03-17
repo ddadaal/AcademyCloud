@@ -357,7 +357,10 @@ export default {
           name: "名字",
           flavor: "配置",
           available: "可用",
-          mustSmallerThanAvailable: "您所选择的配置必须小于或者等于可用配置。",
+          flavorLimit: "您所选择的配置必须小于或者等于可用配置。",
+          volume: "磁盘大小 (GB)",
+          volumeLimit: "要创建的磁盘大小必须小于或者等于可用磁盘空间。",
+          image: "启动镜像",
         }
       },
       dashboard: {

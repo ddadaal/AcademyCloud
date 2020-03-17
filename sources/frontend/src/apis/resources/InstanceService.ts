@@ -1,5 +1,5 @@
 import { HttpService, HttpMethod } from '../HttpService';
-import { Instance, Flavor } from "src/models/Instance";
+import { Instance, Flavor, Image } from "src/models/Instance";
 
 export interface GetInstancesResponse {
   instances: Instance[];
@@ -16,6 +16,21 @@ export class InstanceService extends HttpService {
     return await this.fetch({
       method: HttpMethod.GET,
       path: "/resources/instances/flavors",
+    });
+  }
+
+  async getImages(): Promise<{ images: Image[] }> {
+    return await this.fetch({
+      method: HttpMethod.GET,
+      path: "/resources/instances/images",
+    });
+  }
+
+  async createInstance(name: string, flavorId: string, imageId: string, volume: number): Promise<void> {
+    return await this.fetch({
+      method: HttpMethod.POST,
+      path: "/resources/instances",
+      body: { name, flavorId, imageId, volume },
     });
   }
 }
