@@ -3,7 +3,7 @@ cd /root
 
 imgname="cirros-0.4.0-x86_64-disk.img"
 
-if [ -f "/vagrant/$imgname" ]; then
+if [ -f "/vagrant/scripts/$imgname" ]; then
   echo "Use existing img"
   cp "/vagrant/$imgname" /root
 else
