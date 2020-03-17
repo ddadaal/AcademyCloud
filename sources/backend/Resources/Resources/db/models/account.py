@@ -16,10 +16,11 @@ class User(Base):
     # The id of UserProjectAssignment
     id = Column(GUID, primary_key=True)
 
-    user_id = Column(GUID)
-    project_id = Column(GUID)
+    user_id = Column(GUID, nullable=False)
+    project_id = Column(GUID, nullable=False)
 
-    instances = relationship("Instance")
+    instances = relationship("Instance", cascade="save-update, merge, delete")
+    volumes = relationship("Volume", cascade="save-update, merge, delete")
 
 
 

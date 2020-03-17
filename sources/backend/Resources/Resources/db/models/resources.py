@@ -15,7 +15,7 @@ class Instance(Base):
     """直接对应openstack系统里的ID"""
     id = Column(GUID(), primary_key=True)
 
-    owner_id = Column(GUID(), ForeignKey("user.id"))
+    owner_id = Column(GUID(), ForeignKey("user.id"), nullable=False)
 
     volumes = relationship("Volume")
 
@@ -30,6 +30,6 @@ class Volume(Base):
 
     """" 单位GB"""
     size = Column(Integer)
-    owner_id = Column(GUID(), ForeignKey("user.id"))
+    owner_id = Column(GUID(), ForeignKey("user.id"), nullable=False)
 
-    instance_id = Column(GUID(), ForeignKey("instance.id"))
+    instance_id = Column(GUID(), ForeignKey("instance.id"), nullable=True)
