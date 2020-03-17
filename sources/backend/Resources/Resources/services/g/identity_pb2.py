@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='identity',
   syntax='proto3',
   serialized_options=b'\252\002/AcademyCloud.ResourceManagement.Protos.Identity',
-  serialized_pb=b'\n\x0eidentity.proto\x12\x08identity\"T\n\x0e\x41\x64\x64UserRequest\x12\x1f\n\x17userProjectAssignmentId\x18\x01 \x01(\t\x12\x0e\n\x06userId\x18\x02 \x01(\t\x12\x11\n\tprojectId\x18\x03 \x01(\t\"\x11\n\x0f\x41\x64\x64UserResponse\"4\n\x11\x44\x65leteUserRequest\x12\x1f\n\x17userProjectAssignmentId\x18\x01 \x01(\t\"\x14\n\x12\x44\x65leteUserResponse2\x93\x01\n\x08Identity\x12>\n\x07\x41\x64\x64User\x12\x18.identity.AddUserRequest\x1a\x19.identity.AddUserResponse\x12G\n\nDeleteUser\x12\x1b.identity.DeleteUserRequest\x1a\x1c.identity.DeleteUserResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Identityb\x06proto3'
+  serialized_pb=b'\n\x0eidentity.proto\x12\x08identity\"T\n\x0e\x41\x64\x64UserRequest\x12\x1f\n\x17userProjectAssignmentId\x18\x01 \x01(\t\x12\x0e\n\x06userId\x18\x02 \x01(\t\x12\x11\n\tprojectId\x18\x03 \x01(\t\"\x11\n\x0f\x41\x64\x64UserResponse\"6\n\x11\x44\x65leteUserRequest\x12\x0e\n\x06userId\x18\x01 \x01(\t\x12\x11\n\tprojectId\x18\x02 \x01(\t\"\x14\n\x12\x44\x65leteUserResponse2\x93\x01\n\x08Identity\x12>\n\x07\x41\x64\x64User\x12\x18.identity.AddUserRequest\x1a\x19.identity.AddUserResponse\x12G\n\nDeleteUser\x12\x1b.identity.DeleteUserRequest\x1a\x1c.identity.DeleteUserResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Identityb\x06proto3'
 )
 
 
@@ -101,8 +101,15 @@ _DELETEUSERREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='userProjectAssignmentId', full_name='identity.DeleteUserRequest.userProjectAssignmentId', index=0,
+      name='userId', full_name='identity.DeleteUserRequest.userId', index=0,
       number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='projectId', full_name='identity.DeleteUserRequest.projectId', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -120,7 +127,7 @@ _DELETEUSERREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=133,
-  serialized_end=185,
+  serialized_end=187,
 )
 
 
@@ -143,8 +150,8 @@ _DELETEUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=187,
-  serialized_end=207,
+  serialized_start=189,
+  serialized_end=209,
 )
 
 DESCRIPTOR.message_types_by_name['AddUserRequest'] = _ADDUSERREQUEST
@@ -190,8 +197,8 @@ _IDENTITY = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=210,
-  serialized_end=357,
+  serialized_start=212,
+  serialized_end=359,
   methods=[
   _descriptor.MethodDescriptor(
     name='AddUser',

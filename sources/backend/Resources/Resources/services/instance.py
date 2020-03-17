@@ -4,7 +4,7 @@ from grpc import ServicerContext
 
 import services.g.instance_pb2_grpc as g
 from client import create_client
-from db import DBSession
+from db import DBSession, get_user_from_claims
 import uuid
 
 from db.models.account import User
@@ -19,7 +19,7 @@ class InstanceManagement(g.InstanceServiceServicer):
     def GetInstances(self, request: GetInstancesRequest, context: ServicerContext,
                      claims: TokenClaims) -> GetInstancesResponse:
         session = DBSession()
-        user = session.query(User).filter_by(user_id=claims["UserId"], project_id=claims["ProjectId"]).one()
+        user = get_user_from_claims(claims)
         instance_ids = [str(x.id) for x in user.instances]
 
         # find the instances

@@ -20,7 +20,8 @@ message AddUserResponse {
 }
 
 message DeleteUserRequest {
-  string userProjectAssignmentId = 1;
+  string userId = 1;
+  string projectId = 2;
 }
 
 message DeleteUserResponse {

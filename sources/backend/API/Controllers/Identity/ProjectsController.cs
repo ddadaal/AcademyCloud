@@ -166,6 +166,15 @@ namespace AcademyCloud.API.Controllers.Identity
                     UserProjectAssignmentId = resp.UserProjectAssignmentId,
                 });
 
+            // add to resources
+            await (await factory.GetResourcesIdentityServiceClient())
+                .AddUserAsync(new AcademyCloud.ResourceManagement.Protos.Identity.AddUserRequest
+                {
+                    UserId = request.UserId,
+                    ProjectId = projectId,
+                    UserProjectAssignmentId = resp.UserProjectAssignmentId,
+                });
+
             return NoContent();
         }
 
@@ -199,6 +208,15 @@ namespace AcademyCloud.API.Controllers.Identity
                 {
                     UserId = userId,
                     ProjectId = projectId,
+                });
+
+
+            // request to resources
+            await (await factory.GetResourcesIdentityServiceClient())
+                .DeleteUserAsync(new AcademyCloud.ResourceManagement.Protos.Identity.DeleteUserRequest
+                {
+                    UserId = userId,
+                    ProjectId = projectId
                 });
 
             return NoContent();
