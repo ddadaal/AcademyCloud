@@ -6,6 +6,7 @@ import { Localized } from "src/i18n";
 import styled from "styled-components";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
+import { Link } from "@reach/router";
 
 export const dropdownMenuStyle: React.CSSProperties = {
   width: "256px",
@@ -25,8 +26,6 @@ export function HeaderNavMenu(props: {
 }) {
   const { vertical, selectedKeys, to } = props;
 
-  const { user } = useStore(UserStore);
-
   return (
     <Menu theme={"dark"}
       mode={vertical ? "vertical" : "horizontal"}
@@ -34,13 +33,15 @@ export function HeaderNavMenu(props: {
       style={vertical ? dropdownMenuStyle : horizontalMenuStyle}>
       {mainNavs.map((x) =>
         <Menu.Item
-          key={x.path}
-          onClick={() => to(x.path)}>
-          {React.createElement(x.Icon)}
-          <Localized id={x.textId} />
+          key={x.path}>
+          <Link to={x.path}>
+            {React.createElement(x.Icon)}
+            <Localized id={x.textId} />
+          </Link>
         </Menu.Item>,
-      )}
-    </Menu>
+      )
+      }
+    </Menu >
   );
 }
 
