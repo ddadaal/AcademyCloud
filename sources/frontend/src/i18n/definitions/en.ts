@@ -362,6 +362,7 @@ export default {
           volume: "Volume Size (GB)",
           volumeLimit: "The volume must be smaller than or equal to the available limit.",
           image: "Image",
+          opName: "Create Instance",
         }
       },
       dashboard: {

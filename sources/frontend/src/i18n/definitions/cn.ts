@@ -361,6 +361,7 @@ export default {
           volume: "磁盘大小 (GB)",
           volumeLimit: "要创建的磁盘大小必须小于或者等于可用磁盘空间。",
           image: "启动镜像",
+          opName: "创建实例",
         }
       },
       dashboard: {

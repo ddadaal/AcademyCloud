@@ -22,7 +22,7 @@ const InstancePage: React.FC<RouteComponentProps> = (props) => {
           <Localized id={root.title} />
         </TitleText>
         <span>
-          <AddInstanceButton />
+          <AddInstanceButton reload={refresh} />
           <Divider type="vertical" />
           <ClickableA onClick={refresh}>
             <Localized id={root.refresh} />
