@@ -71,6 +71,17 @@ vagrant plugin install vagrant-vbguest
 /vagrant/scripts/init-compute.sh
 ```
 
+# 配置好后
+
+需要进行初始化。
+
+```
+/vagrant/scripts/launch/launch.sh
+/vagrant/scripts/launch/network/create.sh
+/vagrant/scripts/launch/network/verify.sh
+
+```
+
 # 安装脚本
 
 ## network
