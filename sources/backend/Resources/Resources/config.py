@@ -1,4 +1,4 @@
-database_url = "sqlite:///:memory:"
+database_url = "sqlite:///test.db"
 token_header = "Bearer "
 token_header_key = "authorization"
 jwt_secret = "this key should be as long as possible hahahahahahaaha"

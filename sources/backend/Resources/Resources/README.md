@@ -16,3 +16,8 @@ API for AcademyCloud resources.
 - `python shell` to enter venv
 - `nvim-qt .` to start vim
 
+## Make sure the connectivity from project machine to openstack
+
+The authentication to openstack identity returns the catalog of server endpoints, which are the addresses to each server.
+
+If the machine your openstack is running on is different to the machine this project is running, you must ensure that it is accessible from the project machine to the openstack machine.

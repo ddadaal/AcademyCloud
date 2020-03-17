@@ -14,7 +14,10 @@ class User(Base):
     __tablename__ = "user"
 
     # The id of UserProjectAssignment
-    id = Column(GUID(), primary_key=True)
+    id = Column(GUID, primary_key=True)
+
+    user_id = Column(GUID)
+    project_id = Column(GUID)
 
     instances = relationship("Instance")
 

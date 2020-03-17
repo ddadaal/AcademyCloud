@@ -2,8 +2,11 @@ from client.extended_apis import ExtendedApis
 from client.identity import IdentityService
 from client.models import Project, Domain, Token, RoleName
 from openstack.connection import Connection
+import openstack
 import config
 
+
+openstack.enable_logging(debug=True, http_debug=True)
 
 class Client:
     extended_apis: ExtendedApis

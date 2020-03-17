@@ -29,11 +29,13 @@ class GUID(TypeDecorator):
         elif dialect.name == 'postgresql':
             return str(value)
         else:
+            if isinstance(value, str):
+                value = uuid.UUID(value)
             if not isinstance(value, uuid.UUID):
-                return "%.32x" % uuid.UUID(value)
+                return "%.32x" % uuid.UUID(value).int
             else:
                 # hexstring
-                return "%.32x" % value
+                return "%.32x" % value.int
 
     def process_result_value(self, value, dialect):
         if value is None:
