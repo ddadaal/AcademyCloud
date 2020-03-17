@@ -10,7 +10,9 @@ service Identity {
 }
 
 message AddUserRequest {
-  
+  string userProjectAssignmentId = 1;
+  string userId = 2;
+  string projectId = 3;
 }
 
 message AddUserResponse {
@@ -18,7 +20,7 @@ message AddUserResponse {
 }
 
 message DeleteUserRequest {
-  
+  string userProjectAssignmentId = 1;
 }
 
 message DeleteUserResponse {

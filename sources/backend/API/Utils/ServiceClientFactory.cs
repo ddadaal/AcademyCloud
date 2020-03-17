@@ -125,5 +125,12 @@ namespace AcademyCloud.API.Utils
 
         }
 
+        public async Task<ResourceManagement.Protos.Identity.Identity.IdentityClient> GetResourcesIdentityServiceClient()
+        {
+            return new ResourceManagement.Protos.Identity.Identity.IdentityClient(AppendAuthHeader(GrpcChannel.ForAddress("http://localhost:50052")));
+            //return new ResourceManagement.Protos.Identity.Identity.IdentityClient(await GetInvoker(ResourcesService));
+
+        }
+
     }
 }

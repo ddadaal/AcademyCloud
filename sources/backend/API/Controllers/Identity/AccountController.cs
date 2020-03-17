@@ -54,6 +54,15 @@ namespace AcademyCloud.API.Controllers.Identity
                     SocialProjectAssignmentId = resp.SocialProjectAssignmentId,
                 });
 
+            // add user to resources
+            await (await factory.GetResourcesIdentityServiceClient())
+                .AddUserAsync(new AcademyCloud.ResourceManagement.Protos.Identity.AddUserRequest
+                {
+                    UserId = resp.UserId,
+                    ProjectId = resp.SocialProjectId,
+                    UserProjectAssignmentId = resp.SocialProjectAssignmentId,
+                }) ;
+
             return new RegisterResponse() { Scope = resp.Scope, Token = resp.Token };
 
         }

@@ -17,8 +17,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='identity.proto',
   package='identity',
   syntax='proto3',
-  serialized_options=b'\252\002&AcademyCloud.Resources.Protos.Identity',
-  serialized_pb=b'\n\x0eidentity.proto\x12\x08identity\"\x10\n\x0e\x41\x64\x64UserRequest\"\x11\n\x0f\x41\x64\x64UserResponse\"\x13\n\x11\x44\x65leteUserRequest\"\x14\n\x12\x44\x65leteUserResponse2\x93\x01\n\x08Identity\x12>\n\x07\x41\x64\x64User\x12\x18.identity.AddUserRequest\x1a\x19.identity.AddUserResponse\x12G\n\nDeleteUser\x12\x1b.identity.DeleteUserRequest\x1a\x1c.identity.DeleteUserResponseB)\xaa\x02&AcademyCloud.Resources.Protos.Identityb\x06proto3'
+  serialized_options=b'\252\002/AcademyCloud.ResourceManagement.Protos.Identity',
+  serialized_pb=b'\n\x0eidentity.proto\x12\x08identity\"T\n\x0e\x41\x64\x64UserRequest\x12\x1f\n\x17userProjectAssignmentId\x18\x01 \x01(\t\x12\x0e\n\x06userId\x18\x02 \x01(\t\x12\x11\n\tprojectId\x18\x03 \x01(\t\"\x11\n\x0f\x41\x64\x64UserResponse\"4\n\x11\x44\x65leteUserRequest\x12\x1f\n\x17userProjectAssignmentId\x18\x01 \x01(\t\"\x14\n\x12\x44\x65leteUserResponse2\x93\x01\n\x08Identity\x12>\n\x07\x41\x64\x64User\x12\x18.identity.AddUserRequest\x1a\x19.identity.AddUserResponse\x12G\n\nDeleteUser\x12\x1b.identity.DeleteUserRequest\x1a\x1c.identity.DeleteUserResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Identityb\x06proto3'
 )
 
 
@@ -31,6 +31,27 @@ _ADDUSERREQUEST = _descriptor.Descriptor(
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='userProjectAssignmentId', full_name='identity.AddUserRequest.userProjectAssignmentId', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='userId', full_name='identity.AddUserRequest.userId', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='projectId', full_name='identity.AddUserRequest.projectId', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -44,7 +65,7 @@ _ADDUSERREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=28,
-  serialized_end=44,
+  serialized_end=112,
 )
 
 
@@ -67,8 +88,8 @@ _ADDUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=46,
-  serialized_end=63,
+  serialized_start=114,
+  serialized_end=131,
 )
 
 
@@ -79,6 +100,13 @@ _DELETEUSERREQUEST = _descriptor.Descriptor(
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='userProjectAssignmentId', full_name='identity.DeleteUserRequest.userProjectAssignmentId', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -91,8 +119,8 @@ _DELETEUSERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=65,
-  serialized_end=84,
+  serialized_start=133,
+  serialized_end=185,
 )
 
 
@@ -115,8 +143,8 @@ _DELETEUSERRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=86,
-  serialized_end=106,
+  serialized_start=187,
+  serialized_end=207,
 )
 
 DESCRIPTOR.message_types_by_name['AddUserRequest'] = _ADDUSERREQUEST
@@ -162,8 +190,8 @@ _IDENTITY = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=109,
-  serialized_end=256,
+  serialized_start=210,
+  serialized_end=357,
   methods=[
   _descriptor.MethodDescriptor(
     name='AddUser',
