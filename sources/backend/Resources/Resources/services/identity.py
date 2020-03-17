@@ -16,10 +16,24 @@ class UserManagement(g.IdentityServicer):
 
     def DeleteUser(self, request: DeleteUserRequest, context) -> DeleteUserResponse:
         session = DBSession()
-        user = get_user(request.userId, request.projectId)
-        session.delete(user)
+        for user in session.query(User).filter_by(user_id=request.userId):
+            session.delete(user)
         session.commit()
         return DeleteUserResponse()
+
+    def RemoveUserFromProject(self, request: RemoveUserFromProjectRequest, context) -> RemoveUserFromProjectResponse:
+        session = DBSession()
+        user = get_user(session, request.userId, request.projectId)
+        session.delete(user)
+        session.commit()
+        return RemoveUserFromProjectResponse()
+
+    def DeleteProject(self, request, context):
+        session = DBSession()
+        for project in session.query(User).filter_by(project_id=request.projectId):
+            session.delete(project)
+        session.commit()
+        return DeleteProjectResponse()
 
 
 def add_to_server(server):

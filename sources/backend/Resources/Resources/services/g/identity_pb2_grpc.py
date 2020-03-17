@@ -19,6 +19,16 @@ class IdentityStub(object):
         request_serializer=identity__pb2.AddUserRequest.SerializeToString,
         response_deserializer=identity__pb2.AddUserResponse.FromString,
         )
+    self.RemoveUserFromProject = channel.unary_unary(
+        '/identity.Identity/RemoveUserFromProject',
+        request_serializer=identity__pb2.RemoveUserFromProjectRequest.SerializeToString,
+        response_deserializer=identity__pb2.RemoveUserFromProjectResponse.FromString,
+        )
+    self.DeleteProject = channel.unary_unary(
+        '/identity.Identity/DeleteProject',
+        request_serializer=identity__pb2.DeleteProjectRequest.SerializeToString,
+        response_deserializer=identity__pb2.DeleteProjectResponse.FromString,
+        )
     self.DeleteUser = channel.unary_unary(
         '/identity.Identity/DeleteUser',
         request_serializer=identity__pb2.DeleteUserRequest.SerializeToString,
@@ -31,6 +41,20 @@ class IdentityServicer(object):
   pass
 
   def AddUser(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def RemoveUserFromProject(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteProject(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -51,6 +75,16 @@ def add_IdentityServicer_to_server(servicer, server):
           servicer.AddUser,
           request_deserializer=identity__pb2.AddUserRequest.FromString,
           response_serializer=identity__pb2.AddUserResponse.SerializeToString,
+      ),
+      'RemoveUserFromProject': grpc.unary_unary_rpc_method_handler(
+          servicer.RemoveUserFromProject,
+          request_deserializer=identity__pb2.RemoveUserFromProjectRequest.FromString,
+          response_serializer=identity__pb2.RemoveUserFromProjectResponse.SerializeToString,
+      ),
+      'DeleteProject': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteProject,
+          request_deserializer=identity__pb2.DeleteProjectRequest.FromString,
+          response_serializer=identity__pb2.DeleteProjectResponse.SerializeToString,
       ),
       'DeleteUser': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteUser,

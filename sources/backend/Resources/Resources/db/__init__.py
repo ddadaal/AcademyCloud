@@ -18,10 +18,9 @@ DBSession = sessionmaker(bind=engine)
 
 
 # Will Throw if no user is or multiple users are found.
-def get_user_from_claims(claims: TokenClaims) -> User:
-    return get_user(claims["UserId"], claims["ProjectId"])
+def get_user_from_claims(session, claims: TokenClaims) -> User:
+    return get_user(session, claims["UserId"], claims["ProjectId"])
 
 
-def get_user(user_id: str, project_id: str) -> User:
-    session = DBSession()
+def get_user(session, user_id: str, project_id: str) -> User:
     return session.query(User).filter_by(user_id=user_id, project_id=project_id).one()

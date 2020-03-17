@@ -213,7 +213,7 @@ namespace AcademyCloud.API.Controllers.Identity
 
             // request to resources
             await (await factory.GetResourcesIdentityServiceClient())
-                .DeleteUserAsync(new AcademyCloud.ResourceManagement.Protos.Identity.DeleteUserRequest
+                .RemoveUserFromProjectAsync(new AcademyCloud.ResourceManagement.Protos.Identity.RemoveUserFromProjectRequest
                 {
                     UserId = userId,
                     ProjectId = projectId
@@ -271,6 +271,12 @@ namespace AcademyCloud.API.Controllers.Identity
                 .DeleteProjectAsync(new AcademyCloud.Expenses.Protos.Identity.DeleteProjectRequest
                 {
                     Id = projectId
+                });
+
+            await (await factory.GetResourcesIdentityServiceClient())
+                .DeleteProjectAsync(new AcademyCloud.ResourceManagement.Protos.Identity.DeleteProjectRequest
+                {
+                    ProjectId = projectId
                 });
 
             return NoContent();

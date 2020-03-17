@@ -87,6 +87,12 @@ namespace AcademyCloud.API.Controllers.Identity
                     UserId = userId
                 });
 
+            await (await factory.GetResourcesIdentityServiceClient())
+                .DeleteUserAsync(new AcademyCloud.ResourceManagement.Protos.Identity.DeleteUserRequest
+                {
+                    UserId = userId
+                });
+
             return NoContent();
         }
     }

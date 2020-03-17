@@ -6,6 +6,8 @@ package identity;
 
 service Identity {
   rpc AddUser (AddUserRequest) returns (AddUserResponse);
+  rpc RemoveUserFromProject (RemoveUserFromProjectRequest) returns (RemoveUserFromProjectResponse);
+  rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectResponse);
   rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
 }
 
@@ -21,12 +23,26 @@ message AddUserResponse {
 
 message DeleteUserRequest {
   string userId = 1;
-  string projectId = 2;
 }
 
 message DeleteUserResponse {
   
 }
 
+message RemoveUserFromProjectRequest {
+  string userId = 1;
+  string projectId = 2;
+}
 
+message RemoveUserFromProjectResponse {
+  
+}
+
+message DeleteProjectRequest {
+  string projectId = 1;
+}
+
+message DeleteProjectResponse {
+  
+}
 

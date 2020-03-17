@@ -19,7 +19,7 @@ class InstanceManagement(g.InstanceServiceServicer):
     def GetInstances(self, request: GetInstancesRequest, context: ServicerContext,
                      claims: TokenClaims) -> GetInstancesResponse:
         session = DBSession()
-        user = get_user_from_claims(claims)
+        user = get_user_from_claims(session, claims)
         instance_ids = [str(x.id) for x in user.instances]
 
         # find the instances
