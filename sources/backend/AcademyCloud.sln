@@ -50,6 +50,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Protos", "Protos", "{6EA4F672-CF12-4AEA-ABC5-D862504200E3}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\Protos\identity.proto = Resources\Protos\identity.proto
+		Resources\Protos\instance.proto = Resources\Protos\instance.proto
 	EndProjectSection
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Resources", "Resources\Resources\Resources.pyproj", "{921AF286-A20F-462E-ADA1-2ED0A7F4018A}"

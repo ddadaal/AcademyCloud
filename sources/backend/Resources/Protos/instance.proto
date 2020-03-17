@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "AcademyCloud.ResourceManagement.Protos.Instance";
+
+package instance;
+
+service InstanceService {
+  rpc GetInstances (GetInstancesRequest) returns (GetInstancesResponse);
+  rpc GetFlavors (GetFlavorsRequest) returns (GetFlavorsResponse);
+  rpc GetImages (GetImagesRequest) returns (GetImagesResponse);
+  rpc CreateInstance (CreateInstanceRequest) returns (CreateInstanceResponse);
+}
+
+message GetInstancesRequest {
+  
+}
+
+message Flavor {
+  string id = 1;
+  string name = 2;
+  int32 cpu = 3;
+  int32 memory = 4;
+  int32 rootDisk = 5;
+}
+
+enum InstanceStatus {
+  Shutoff = 0;
+}
+
+message Instance {
+  string id = 1;
+  string name = 2;
+  Flavor flavor = 3;
+  InstanceStatus status = 4;
+  string ip =5;
+  string imageName = 6;
+  google.protobuf.Timestamp createTime = 7;
+  int32 totalStartupHours = 8;
+}
+
+
+message GetInstancesResponse {
+  repeated Instance instances = 1;
+}
+
+message GetFlavorsRequest {
+  
+}
+
+message GetFlavorsResponse {
+  repeated Flavor flavors = 1;  
+}
+
+message GetImagesRequest {
+  
+}
+
+message Image {
+  string id = 1;
+  string name = 2;
+  int32 minDisk = 3;
+}
+
+message GetImagesResponse {
+  repeated Image images = 1;
+}
+
+message CreateInstanceRequest {
+  string name = 1;
+  string flavorId = 2;
+  string imageId = 3;
+  int32 volume = 4;
+}
+
+message CreateInstanceResponse {
+  string instanceId = 1;
+}

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "AcademyCloud.Resources.Services";
+option csharp_namespace = "AcademyCloud.ResourceManagement.Protos.Identity";
 
 package identity;
 

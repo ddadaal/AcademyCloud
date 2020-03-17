@@ -12,6 +12,7 @@
   <ItemGroup>
     <Protobuf Include="..\Identity\Protos\*" GrpcServices="Client" ProtoRoot="..\Identity\Protos" OutputDir="$(Protobuf_OutputPath)\Identity" />
     <Protobuf Include="..\Expenses\Protos\*" GrpcServices="Client" ProtoRoot="..\Expenses\Protos" OutputDir="$(Protobuf_OutputPath)\Expenses" />
+    <Protobuf Include="..\Resources\Protos\*" GrpcServices="Client" ProtoRoot="..\Resources\Protos" OutputDir="$(Protobuf_OutputPath)\Resources" />
   </ItemGroup>
 
   <ItemGroup>

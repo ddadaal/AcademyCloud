@@ -33,6 +33,7 @@ class Volume(Base):
 
     os_id = Column(GUID())
 
+    """" 单位GB"""
     size = Column(Integer)
     owner_id = Column(GUID(), ForeignKey("user.id"))
 

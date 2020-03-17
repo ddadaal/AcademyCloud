@@ -17,8 +17,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='identity.proto',
   package='identity',
   syntax='proto3',
-  serialized_options=b'\252\002\037AcademyCloud.Resources.Services',
-  serialized_pb=b'\n\x0eidentity.proto\x12\x08identity\"\x10\n\x0e\x41\x64\x64UserRequest\"\x11\n\x0f\x41\x64\x64UserResponse\"\x13\n\x11\x44\x65leteUserRequest\"\x14\n\x12\x44\x65leteUserResponse2\x93\x01\n\x08Identity\x12>\n\x07\x41\x64\x64User\x12\x18.identity.AddUserRequest\x1a\x19.identity.AddUserResponse\x12G\n\nDeleteUser\x12\x1b.identity.DeleteUserRequest\x1a\x1c.identity.DeleteUserResponseB\"\xaa\x02\x1f\x41\x63\x61\x64\x65myCloud.Resources.Servicesb\x06proto3'
+  serialized_options=b'\252\002&AcademyCloud.Resources.Protos.Identity',
+  serialized_pb=b'\n\x0eidentity.proto\x12\x08identity\"\x10\n\x0e\x41\x64\x64UserRequest\"\x11\n\x0f\x41\x64\x64UserResponse\"\x13\n\x11\x44\x65leteUserRequest\"\x14\n\x12\x44\x65leteUserResponse2\x93\x01\n\x08Identity\x12>\n\x07\x41\x64\x64User\x12\x18.identity.AddUserRequest\x1a\x19.identity.AddUserResponse\x12G\n\nDeleteUser\x12\x1b.identity.DeleteUserRequest\x1a\x1c.identity.DeleteUserResponseB)\xaa\x02&AcademyCloud.Resources.Protos.Identityb\x06proto3'
 )
 
 

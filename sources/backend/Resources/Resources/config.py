@@ -1,8 +1,8 @@
 database_url = "sqlite:///:memory:"
 token_header = "Bearer "
-token_header_key = "Authorization"
-# Generate key with cryptography.fernet.Fernet.generate_key()
-token_key = "Xbh0YhvfjzXwQcQ4PZgQQczNVnH2kB_Udfzix_bn3uo="
+token_header_key = "authorization"
+jwt_secret = "this key should be as long as possible hahahahahahaaha"
+jwt_audience = "https//academycloud.com"
 
 # openstack config
 openstack_auth_url = "http://10.0.0.77/identity/v3/"

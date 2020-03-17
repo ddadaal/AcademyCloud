@@ -33,6 +33,20 @@ namespace AcademyCloud.API.Utils
                 "System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
         }
 
+        private CallInvoker AppendAuthHeader(GrpcChannel channel)
+        {
+            // Append the authorization header if present
+            return channel.Intercept((source) =>
+            {
+                var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+                if (token != StringValues.Empty)
+                {
+                    source.Add("Authorization", token);
+                }
+                return source;
+            });
+        }
+
         /// <summary>
         /// Create a insecure channel for simpler development.
         /// Took an whole afternoon trying to get SSL working but no
@@ -46,23 +60,13 @@ namespace AcademyCloud.API.Utils
             var service = response.Response.First();
             var channel = GrpcChannel.ForAddress($"http://{service.ServiceAddress}:{service.ServicePort}");
 
-            // Append the authorization header if present
-            var invoker = channel.Intercept((source) =>
-            {
-                var token = httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-                if (token != StringValues.Empty)
-                {
-                    source.Add("Authorization", token);
-                }
-                return source;
-            });
-
-            return invoker;
+            return AppendAuthHeader(channel);
 
         }
 
         const string IdentityService = "identityservice";
         const string ExpensesService = "expensesservice";
+        const string ResourcesService = "resourcesservice";
 
         public async Task<Authentication.AuthenticationClient> GetAuthenticationClientAsync()
         {
@@ -112,6 +116,13 @@ namespace AcademyCloud.API.Utils
         public async Task<Expenses.Protos.Identity.Identity.IdentityClient> GetExpensesIdentityClient()
         {
             return new Expenses.Protos.Identity.Identity.IdentityClient(await GetInvoker(ExpensesService));
+        }
+
+        public async Task<ResourceManagement.Protos.Instance.InstanceService.InstanceServiceClient> GetInstanceServiceClient()
+        {
+            return new ResourceManagement.Protos.Instance.InstanceService.InstanceServiceClient(AppendAuthHeader(GrpcChannel.ForAddress("http://localhost:50052")));
+            //return new ResourceManagement.Protos.Instance.InstanceService.InstanceServiceClient(await GetInvoker(ResourcesService));
+
         }
 
     }
