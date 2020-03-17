@@ -1,7 +1,7 @@
 import { InstanceService, GetInstancesResponse } from './InstanceService';
 import { Flavor, InstanceStatus, Image } from "src/models/Instance";
 
-const flavor: Flavor = { id: "0", name: "m1.nano", cpu: 2, memory: 2, rootDisk: 2 };
+const flavor: Flavor = { name: "m1.nano", cpu: 2, memory: 2, rootDisk: 2 };
 
 export class InstanceServiceMock extends InstanceService {
   async getInstances(): Promise<GetInstancesResponse> {

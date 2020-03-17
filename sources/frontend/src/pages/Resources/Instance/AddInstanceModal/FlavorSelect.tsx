@@ -73,16 +73,16 @@ export const FlavorSelect: React.FC = (props) => {
           { required: true, message: required },
           {
             validator: flavorValidator,
-            transform: (id: string) => minus(
+            transform: (name: string) => minus(
               available,
-              fromFlavorToResources(data!.find(x => x.id === id))
+              fromFlavorToResources(data!.find(x => x.name === name))
             ),
             message: <Localized id={root.flavorLimit} />
           }
         ]}>
         <Select loading={isPending}>
           {(data ?? []).map(f => (
-            <Select.Option key={f.id} value={f.id}>
+            <Select.Option key={f.name} value={f.name}>
               {flavorString(f)}
             </Select.Option>
           ))}

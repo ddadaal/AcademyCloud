@@ -12,7 +12,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -20,9 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='instance',
   syntax='proto3',
   serialized_options=b'\252\002/AcademyCloud.ResourceManagement.Protos.Instance',
-  serialized_pb=b'\n\x0einstance.proto\x12\x08instance\x1a\x1fgoogle/protobuf/timestamp.proto\"\x15\n\x13GetInstancesRequest\"Q\n\x06\x46lavor\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0b\n\x03\x63pu\x18\x03 \x01(\x05\x12\x0e\n\x06memory\x18\x04 \x01(\x05\x12\x10\n\x08rootDisk\x18\x05 \x01(\x05\"\xda\x01\n\x08Instance\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12 \n\x06\x66lavor\x18\x03 \x01(\x0b\x32\x10.instance.Flavor\x12(\n\x06status\x18\x04 \x01(\x0e\x32\x18.instance.InstanceStatus\x12\n\n\x02ip\x18\x05 \x01(\t\x12\x11\n\timageName\x18\x06 \x01(\t\x12.\n\ncreateTime\x18\x07 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x19\n\x11totalStartupHours\x18\x08 \x01(\x05\"=\n\x14GetInstancesResponse\x12%\n\tinstances\x18\x01 \x03(\x0b\x32\x12.instance.Instance\"\x13\n\x11GetFlavorsRequest\"7\n\x12GetFlavorsResponse\x12!\n\x07\x66lavors\x18\x01 \x03(\x0b\x32\x10.instance.Flavor\"\x12\n\x10GetImagesRequest\"2\n\x05Image\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07minDisk\x18\x03 \x01(\x05\"4\n\x11GetImagesResponse\x12\x1f\n\x06images\x18\x01 \x03(\x0b\x32\x0f.instance.Image\"X\n\x15\x43reateInstanceRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08\x66lavorId\x18\x02 \x01(\t\x12\x0f\n\x07imageId\x18\x03 \x01(\t\x12\x0e\n\x06volume\x18\x04 \x01(\x05\",\n\x16\x43reateInstanceResponse\x12\x12\n\ninstanceId\x18\x01 \x01(\t*\x1d\n\x0eInstanceStatus\x12\x0b\n\x07Shutoff\x10\x00\x32\xc4\x02\n\x0fInstanceService\x12M\n\x0cGetInstances\x12\x1d.instance.GetInstancesRequest\x1a\x1e.instance.GetInstancesResponse\x12G\n\nGetFlavors\x12\x1b.instance.GetFlavorsRequest\x1a\x1c.instance.GetFlavorsResponse\x12\x44\n\tGetImages\x12\x1a.instance.GetImagesRequest\x1a\x1b.instance.GetImagesResponse\x12S\n\x0e\x43reateInstance\x12\x1f.instance.CreateInstanceRequest\x1a .instance.CreateInstanceResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Instanceb\x06proto3'
-  ,
-  dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
+  serialized_pb=b'\n\x0einstance.proto\x12\x08instance\"\x15\n\x13GetInstancesRequest\"E\n\x06\x46lavor\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x63pu\x18\x02 \x01(\x05\x12\x0e\n\x06memory\x18\x03 \x01(\x05\x12\x10\n\x08rootDisk\x18\x04 \x01(\x05\"\xa3\x01\n\x08Instance\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12 \n\x06\x66lavor\x18\x03 \x01(\x0b\x32\x10.instance.Flavor\x12(\n\x06status\x18\x04 \x01(\x0e\x32\x18.instance.InstanceStatus\x12\n\n\x02ip\x18\x05 \x01(\t\x12\x11\n\timageName\x18\x06 \x01(\t\x12\x12\n\ncreateTime\x18\x07 \x01(\t\"=\n\x14GetInstancesResponse\x12%\n\tinstances\x18\x01 \x03(\x0b\x32\x12.instance.Instance\"\x13\n\x11GetFlavorsRequest\"7\n\x12GetFlavorsResponse\x12!\n\x07\x66lavors\x18\x01 \x03(\x0b\x32\x10.instance.Flavor\"\x12\n\x10GetImagesRequest\"2\n\x05Image\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07minDisk\x18\x03 \x01(\x05\"4\n\x11GetImagesResponse\x12\x1f\n\x06images\x18\x01 \x03(\x0b\x32\x0f.instance.Image\"X\n\x15\x43reateInstanceRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08\x66lavorId\x18\x02 \x01(\t\x12\x0f\n\x07imageId\x18\x03 \x01(\t\x12\x0e\n\x06volume\x18\x04 \x01(\x05\",\n\x16\x43reateInstanceResponse\x12\x12\n\ninstanceId\x18\x01 \x01(\t*(\n\x0eInstanceStatus\x12\x0b\n\x07SHUTOFF\x10\x00\x12\t\n\x05\x45RROR\x10\x01\x32\xc4\x02\n\x0fInstanceService\x12M\n\x0cGetInstances\x12\x1d.instance.GetInstancesRequest\x1a\x1e.instance.GetInstancesResponse\x12G\n\nGetFlavors\x12\x1b.instance.GetFlavorsRequest\x1a\x1c.instance.GetFlavorsResponse\x12\x44\n\tGetImages\x12\x1a.instance.GetImagesRequest\x1a\x1b.instance.GetImagesResponse\x12S\n\x0e\x43reateInstance\x12\x1f.instance.CreateInstanceRequest\x1a .instance.CreateInstanceResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Instanceb\x06proto3'
+)
 
 _INSTANCESTATUS = _descriptor.EnumDescriptor(
   name='InstanceStatus',
@@ -31,19 +29,24 @@ _INSTANCESTATUS = _descriptor.EnumDescriptor(
   file=DESCRIPTOR,
   values=[
     _descriptor.EnumValueDescriptor(
-      name='Shutoff', index=0, number=0,
+      name='SHUTOFF', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ERROR', index=1, number=1,
       serialized_options=None,
       type=None),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=791,
-  serialized_end=820,
+  serialized_start=691,
+  serialized_end=731,
 )
 _sym_db.RegisterEnumDescriptor(_INSTANCESTATUS)
 
 InstanceStatus = enum_type_wrapper.EnumTypeWrapper(_INSTANCESTATUS)
-Shutoff = 0
+SHUTOFF = 0
+ERROR = 1
 
 
 
@@ -66,8 +69,8 @@ _GETINSTANCESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=61,
-  serialized_end=82,
+  serialized_start=28,
+  serialized_end=49,
 )
 
 
@@ -79,36 +82,29 @@ _FLAVOR = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='instance.Flavor.id', index=0,
+      name='name', full_name='instance.Flavor.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='instance.Flavor.name', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
+      name='cpu', full_name='instance.Flavor.cpu', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='cpu', full_name='instance.Flavor.cpu', index=2,
+      name='memory', full_name='instance.Flavor.memory', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='memory', full_name='instance.Flavor.memory', index=3,
+      name='rootDisk', full_name='instance.Flavor.rootDisk', index=3,
       number=4, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='rootDisk', full_name='instance.Flavor.rootDisk', index=4,
-      number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -125,8 +121,8 @@ _FLAVOR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=84,
-  serialized_end=165,
+  serialized_start=51,
+  serialized_end=120,
 )
 
 
@@ -181,15 +177,8 @@ _INSTANCE = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='createTime', full_name='instance.Instance.createTime', index=6,
-      number=7, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='totalStartupHours', full_name='instance.Instance.totalStartupHours', index=7,
-      number=8, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -205,8 +194,8 @@ _INSTANCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=168,
-  serialized_end=386,
+  serialized_start=123,
+  serialized_end=286,
 )
 
 
@@ -236,8 +225,8 @@ _GETINSTANCESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=388,
-  serialized_end=449,
+  serialized_start=288,
+  serialized_end=349,
 )
 
 
@@ -260,8 +249,8 @@ _GETFLAVORSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=451,
-  serialized_end=470,
+  serialized_start=351,
+  serialized_end=370,
 )
 
 
@@ -291,8 +280,8 @@ _GETFLAVORSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=472,
-  serialized_end=527,
+  serialized_start=372,
+  serialized_end=427,
 )
 
 
@@ -315,8 +304,8 @@ _GETIMAGESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=529,
-  serialized_end=547,
+  serialized_start=429,
+  serialized_end=447,
 )
 
 
@@ -360,8 +349,8 @@ _IMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=549,
-  serialized_end=599,
+  serialized_start=449,
+  serialized_end=499,
 )
 
 
@@ -391,8 +380,8 @@ _GETIMAGESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=601,
-  serialized_end=653,
+  serialized_start=501,
+  serialized_end=553,
 )
 
 
@@ -443,8 +432,8 @@ _CREATEINSTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=655,
-  serialized_end=743,
+  serialized_start=555,
+  serialized_end=643,
 )
 
 
@@ -474,13 +463,12 @@ _CREATEINSTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=745,
-  serialized_end=789,
+  serialized_start=645,
+  serialized_end=689,
 )
 
 _INSTANCE.fields_by_name['flavor'].message_type = _FLAVOR
 _INSTANCE.fields_by_name['status'].enum_type = _INSTANCESTATUS
-_INSTANCE.fields_by_name['createTime'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _GETINSTANCESRESPONSE.fields_by_name['instances'].message_type = _INSTANCE
 _GETFLAVORSRESPONSE.fields_by_name['flavors'].message_type = _FLAVOR
 _GETIMAGESRESPONSE.fields_by_name['images'].message_type = _IMAGE
@@ -584,8 +572,8 @@ _INSTANCESERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=823,
-  serialized_end=1147,
+  serialized_start=734,
+  serialized_end=1058,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetInstances',

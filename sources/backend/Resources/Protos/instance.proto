@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
 option csharp_namespace = "AcademyCloud.ResourceManagement.Protos.Instance";
 
 package instance;
@@ -17,15 +16,15 @@ message GetInstancesRequest {
 }
 
 message Flavor {
-  string id = 1;
-  string name = 2;
-  int32 cpu = 3;
-  int32 memory = 4;
-  int32 rootDisk = 5;
+  string name = 1;
+  int32 cpu = 2;
+  int32 memory = 3;
+  int32 rootDisk = 4;
 }
 
 enum InstanceStatus {
-  Shutoff = 0;
+  SHUTOFF = 0;
+  ERROR = 1;
 }
 
 message Instance {
@@ -33,10 +32,9 @@ message Instance {
   string name = 2;
   Flavor flavor = 3;
   InstanceStatus status = 4;
-  string ip =5;
+  string ip = 5;
   string imageName = 6;
-  google.protobuf.Timestamp createTime = 7;
-  int32 totalStartupHours = 8;
+  string createTime = 7;
 }
 
 

@@ -12,7 +12,8 @@ from utils.token_claims import TokenClaims
 
 
 def get_token_claims(token: str) -> Optional[TokenClaims]:
-    return jwt.decode(token, config.jwt_secret, algorithms=['HS256'], audience=config.jwt_audience)
+    return jwt.decode(token, config.jwt_secret, algorithms=['HS256'], audience=config.jwt_audience,
+                      options={'verify_exp': False})
 
 
 def auth_required(func):

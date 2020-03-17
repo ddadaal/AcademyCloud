@@ -11,14 +11,9 @@ class Instance(Base):
     实例
     """
     __tablename__ = "instance"
+
+    """直接对应openstack系统里的ID"""
     id = Column(GUID(), primary_key=True)
-
-    """对应的OpenStack系统中的ID"""
-    os_id = Column(GUID())
-
-    cpu = Column(Integer)
-    """单位: MB"""
-    memory = Column(Integer)
 
     owner_id = Column(GUID(), ForeignKey("user.id"))
 

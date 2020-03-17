@@ -1,5 +1,4 @@
 export interface Flavor {
-  id: string;
   name: string;
   cpu: number;
   memory: number;
@@ -14,6 +13,7 @@ export function flavorString({ name, cpu, memory, rootDisk }: Flavor) {
 
 export enum InstanceStatus {
   Shutoff = "Shutoff",
+  Error = "Error",
 }
 
 export interface Instance {
