@@ -116,7 +116,7 @@ namespace AcademyCloud.Expenses.Test
             fcfcproject.Resources = new Domain.ValueObjects.Resources(2, 3, 4);
 
             await db.SaveChangesAsync();
-            
+
             var resp = await service.GetQuotaStatus(new Protos.Interop.GetQuotaStatusRequest
             {
                 Subject = new Protos.Interop.Subject { Type = SubjectType.System, Id = "" }
@@ -160,6 +160,25 @@ namespace AcademyCloud.Expenses.Test
 
             Assert.Equal(lqproject.Quota, resp.Total.FromGrpc());
             Assert.Equal(cjd67project.Quota + lq67project.Quota, resp.Used.FromGrpc());
+        }
+
+        [Fact]
+        public async Task TestGetQuotaStatusOfCurrentProjectUser()
+        {
+            service = new InteropService(MockTokenClaimsAccessor(cjdlqTokenClaims), db);
+            cjd67project.Quota = new Domain.ValueObjects.Resources(3, 4, 5);
+            cjd67project.Resources = new Domain.ValueObjects.Resources(2, 3, 4);
+            lq67project.Quota = new Domain.ValueObjects.Resources(8, 9, 10);
+
+            await db.SaveChangesAsync();
+
+            var resp = await service.GetQuotaStatusOfCurrentProjectUser(new Protos.Interop.GetQuotaStatusOfCurrentProjectUserRequest
+            {
+
+            }, TestContext);
+
+            Assert.Equal(cjd67project.Quota, resp.Total.FromGrpc());
+            Assert.Equal(cjd67project.Resources, resp.Used.FromGrpc());
         }
 
     }

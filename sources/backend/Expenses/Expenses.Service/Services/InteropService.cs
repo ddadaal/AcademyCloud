@@ -11,9 +11,11 @@ using AcademyCloud.Expenses.Protos.Common;
 using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using Microsoft.EntityFrameworkCore;
 using AcademyCloud.Expenses.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademyCloud.Expenses.Services
 {
+    [Authorize]
     public class InteropService : Interop.InteropBase
     {
         private TokenClaimsAccessor tokenClaimsAccessor;
@@ -131,6 +133,22 @@ namespace AcademyCloud.Expenses.Services
                 Used = used.ToGrpc(),
             };
 
+        }
+
+        public override async Task<GetQuotaStatusOfCurrentProjectUserResponse> GetQuotaStatusOfCurrentProjectUser(GetQuotaStatusOfCurrentProjectUserRequest request, ServerCallContext context)
+        {
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
+
+            if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Need project scope")); }
+
+            var userProjectAssignment = await dbContext.UserProjectAssignments.FirstIfNotNullThrowAsync(x =>
+                x.User.Id == Guid.Parse(tokenClaims.UserId) && x.Project.Id == Guid.Parse(tokenClaims.ProjectId));
+
+            return new GetQuotaStatusOfCurrentProjectUserResponse
+            {
+                Total = userProjectAssignment.Quota.ToGrpc(),
+                Used = userProjectAssignment.Resources.ToGrpc(),
+            };
         }
     }
 }

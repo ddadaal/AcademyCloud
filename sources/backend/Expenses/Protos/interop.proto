@@ -11,6 +11,7 @@ service Interop {
   rpc GetPayUser (GetPayUserRequest) returns (GetPayUserResponse);
   rpc GetQuota (GetQuotaRequest) returns (GetQuotaResponse);
   rpc GetQuotaStatus (GetQuotaStatusRequest) returns (GetQuotaStatusResponse);
+  rpc GetQuotaStatusOfCurrentProjectUser (GetQuotaStatusOfCurrentProjectUserRequest) returns (GetQuotaStatusOfCurrentProjectUserResponse);
 }
 
 message Subject {
@@ -51,3 +52,13 @@ message GetQuotaStatusResponse {
   common.Resources used = 1;
   common.Resources total = 2;
 }
+
+message GetQuotaStatusOfCurrentProjectUserRequest {
+  
+}
+
+message GetQuotaStatusOfCurrentProjectUserResponse {
+  common.Resources used = 1;
+  common.Resources total = 2;
+}
+
