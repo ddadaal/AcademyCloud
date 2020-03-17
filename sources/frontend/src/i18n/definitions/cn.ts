@@ -347,6 +347,18 @@ export default {
         },
         createTime: "创建时间",
         startTime: "总开机时间",
+        title: "实例管理",
+        refresh: "刷新",
+        actions: {
+          title: "操作",
+        },
+        add: {
+          button: "创建新实例",
+          name: "名字",
+          flavor: "配置",
+          available: "可用",
+          mustSmallerThanAvailable: "您所选择的配置必须小于或者等于可用配置。",
+        }
       },
       dashboard: {
         title: "仪表盘",

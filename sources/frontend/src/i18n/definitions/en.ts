@@ -348,6 +348,18 @@ export default {
         },
         createTime: "Create Time",
         startTime: "Total Startup Time",
+        title: "Instance Management",
+        refresh: "Refresh",
+        actions: {
+          title: "Actions",
+        },
+        add: {
+          button: "Create a Instance",
+          name: "Name",
+          flavor: "Flavor",
+          available: "Available",
+          mustSmallerThanAvailable: "The flavor must be smaller than or equal to the available limit.",
+        }
       },
       dashboard: {
         title: "Dashboard",
