@@ -4,3 +4,6 @@ def init_services(server):
 
     import services.instance
     instance.add_to_server(server)
+
+    import services.volume
+    volume.add_to_server(server)

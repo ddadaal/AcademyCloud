@@ -22,6 +22,7 @@ class InstanceManagement(g.InstanceServiceServicer):
         session = DBSession()
         user = get_user_from_claims(session, claims)
         instances = user.instances
+        session.close()
 
         # find the instances
         client = create_client()
@@ -53,6 +54,8 @@ class InstanceManagement(g.InstanceServiceServicer):
         user = get_user_from_claims(session, claims)
 
         client = create_client()
+
+        client.connection.list_flavors()
 
         # Creating the instance directly will not return the volume it also creates,
         # so the volume must be manually created
@@ -133,10 +136,15 @@ class InstanceManagement(g.InstanceServiceServicer):
         # Delete the server
         client.connection.delete_server(name_or_id=request.instanceId)
 
-        # Delete the server from db
+        # Get the server from db
         session = DBSession()
-
         instance = session.query(models.Instance).filter_by(id=request.instanceId).one()
+
+        # Delete the volume
+        for volume in instance.volumes:
+            client.connection.delete_volume(name_or_id=volume.id)
+
+        # Delete the instance from db
         session.delete(instance)
         session.commit()
 

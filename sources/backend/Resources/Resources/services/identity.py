@@ -1,9 +1,18 @@
 import services.g.identity_pb2_grpc as g
+from client import create_client
+from client.client import Client
 from db import DBSession, get_user
 from db.models.account import User
 import uuid
 
 from services.g.identity_pb2 import *
+
+
+def delete_db_user(user: User, client: Client):
+    for instance in user.instances:
+        client.connection.delete_server(name_or_id=instance.id, wait=False)
+    for volume in user.volumes:
+        client.connection.delete_volume(name_or_id=volume.id, wait=False)
 
 
 class UserManagement(g.IdentityServicer):
@@ -15,26 +24,35 @@ class UserManagement(g.IdentityServicer):
         return AddUserResponse()
 
     def DeleteUser(self, request: DeleteUserRequest, context) -> DeleteUserResponse:
+        client = create_client()
         session = DBSession()
         for user in session.query(User).filter_by(user_id=request.userId):
+            delete_db_user(user, client)
             session.delete(user)
         session.commit()
         return DeleteUserResponse()
 
     def RemoveUserFromProject(self, request: RemoveUserFromProjectRequest, context) -> RemoveUserFromProjectResponse:
+        client = create_client()
         session = DBSession()
         user = get_user(session, request.userId, request.projectId)
+        # delete instances and volumes from server
+        delete_db_user(user, client)
+
+        # delete user from db
+        # db instances and volumes will be cascade deleted.
         session.delete(user)
         session.commit()
         return RemoveUserFromProjectResponse()
 
     def DeleteProject(self, request, context):
+        client = create_client()
         session = DBSession()
-        for project in session.query(User).filter_by(project_id=request.projectId):
-            session.delete(project)
+        for user in session.query(User).filter_by(project_id=request.projectId):
+            delete_db_user(user, client)
+            session.delete(user)
         session.commit()
         return DeleteProjectResponse()
-
 
 
 def add_to_server(server):

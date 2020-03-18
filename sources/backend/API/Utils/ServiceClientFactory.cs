@@ -124,13 +124,19 @@ namespace AcademyCloud.API.Utils
             //return new ResourceManagement.Protos.Instance.InstanceService.InstanceServiceClient(await GetInvoker(ResourcesService));
 
         }
+        public async Task<ResourceManagement.Protos.Volume.VolumeService.VolumeServiceClient> GetVolumeServiceClient()
+        {
+            return new ResourceManagement.Protos.Volume.VolumeService.VolumeServiceClient(AppendAuthHeader(GrpcChannel.ForAddress("http://localhost:50052")));
+            //return new ResourceManagement.Protos.Volume.VolumeService.VolumeServiceClient(await GetInvoker(ResourcesService));
+
+        }
 
         public async Task<ResourceManagement.Protos.Identity.Identity.IdentityClient> GetResourcesIdentityServiceClient()
         {
             return new ResourceManagement.Protos.Identity.Identity.IdentityClient(AppendAuthHeader(GrpcChannel.ForAddress("http://localhost:50052")));
             //return new ResourceManagement.Protos.Identity.Identity.IdentityClient(await GetInvoker(ResourcesService));
-
         }
+        
 
     }
 }

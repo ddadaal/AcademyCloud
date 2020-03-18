@@ -13,6 +13,7 @@ service InstanceService {
   rpc StopInstance (StopInstanceRequest) returns (StopInstanceResponse);
   rpc DeleteInstance (DeleteInstanceRequest) returns (DeleteInstanceResponse);
   rpc RebootInstance (RebootInstanceRequest) returns (RebootInstanceResponse);
+
 }
 
 message GetInstancesRequest {
@@ -107,3 +108,4 @@ message RebootInstanceRequest {
 message RebootInstanceResponse {
   
 }
+

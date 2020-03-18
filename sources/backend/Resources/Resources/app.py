@@ -5,7 +5,7 @@ import services
 from concurrent.futures import ThreadPoolExecutor
 
 from db import engine, DBSession, User, Base
-from db.models import Instance
+from db.models import Instance, Volume
 
 port = 50052
 
@@ -25,6 +25,9 @@ session.merge(test_user)
 instance_id = "6bc2a6f8-6cbb-4996-9d20-58c68a27776a"
 instance = Instance(id=instance_id, owner_id=user_id, image_name="cirros")
 session.merge(instance)
+volume_id = "b937cd1b-1dea-4440-b072-83d0d011d202"
+volume = Volume(id=volume_id, owner_id=user_id, instance_id=instance_id)
+session.merge(volume)
 session.commit()
 
 server = grpc.server(ThreadPoolExecutor(max_workers=10))
