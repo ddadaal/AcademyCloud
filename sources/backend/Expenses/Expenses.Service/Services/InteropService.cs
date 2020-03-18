@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using AcademyCloud.Expenses.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
+using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 
 namespace AcademyCloud.Expenses.Services
 {
@@ -22,12 +23,14 @@ namespace AcademyCloud.Expenses.Services
         private TokenClaimsAccessor tokenClaimsAccessor;
         private ExpensesDbContext dbContext;
         private UseCycleTask useCycleTask;
+        private BillingCycleTask billingCycleTask;
 
-        public InteropService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleTask useCycleTask)
+        public InteropService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleTask useCycleTask, BillingCycleTask billingCycleTask)
         {
             this.tokenClaimsAccessor = tokenClaimsAccessor;
             this.dbContext = dbContext;
             this.useCycleTask = useCycleTask;
+            this.billingCycleTask = billingCycleTask;
         }
 
         private void ThrowFunc<T>(T o)
@@ -169,6 +172,15 @@ namespace AcademyCloud.Expenses.Services
             useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Domain.Id));
 
             userProjectAssignment.Resources += request.ResourcesDelta.FromGrpc();
+
+            // for social user and project, also settle their billing cycles and change their quotas
+            if (tokenClaims.IsSocial)
+            {
+                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
+                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
+                userProjectAssignment.Quota += request.ResourcesDelta.FromGrpc();
+                userProjectAssignment.Project.Quota += request.ResourcesDelta.FromGrpc();
+            }
 
             await dbContext.SaveChangesAsync();
 

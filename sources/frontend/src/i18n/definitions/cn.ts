@@ -99,6 +99,7 @@ export default {
           ProjectResources: "项目资源费用周期结算",
           DomainQuotaChange: "域更改资源",
           ProjectQuotaChange: "项目更改资源",
+          SocialResourcesChange: "社会项目资源使用变化",
         },
       },
       users: {

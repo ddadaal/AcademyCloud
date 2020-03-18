@@ -99,6 +99,7 @@ export default {
           ProjectResources: "Project Resources Fee",
           DomainQuotaChange: "Domain Resources Change",
           ProjectQuotaChange: "Project Resources Change",
+          SocialResourcesChange: "Social Project Resources Change",
         },
       },
       users: {
