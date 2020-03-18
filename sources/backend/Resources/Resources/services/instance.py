@@ -20,7 +20,7 @@ class InstanceManagement(g.InstanceServiceServicer):
                      claims: TokenClaims) -> GetInstancesResponse:
         session = DBSession()
         user = get_user_from_claims(session, claims)
-        instance_ids = [str(x.id) for x in user.instances]
+        instances = user.instances
 
         # find the instances
         client = create_client()
@@ -28,11 +28,13 @@ class InstanceManagement(g.InstanceServiceServicer):
 
         resp = GetInstancesResponse()
         for server in all_servers:
-            if server.id not in instance_ids:
+            db_server = next((i for i in instances if str(i.id) == server.id), None)
+            if db_server is None:
                 continue
             i = Instance()
             i.id = server.id
             i.name = server.name
+            i.imageName = db_server.image_name
             i.flavor.name = server.flavor.original_name
             i.flavor.cpu = server.flavor.vcpus
             i.flavor.memory = server.flavor.ram
@@ -44,8 +46,12 @@ class InstanceManagement(g.InstanceServiceServicer):
 
         return resp
 
-    def CreateInstance(self, request: CreateInstanceRequest, context) -> CreateInstanceResponse:
-        pass
+    @auth_required
+    def CreateInstance(self, request: CreateInstanceRequest, context, claims: TokenClaims) -> CreateInstanceResponse:
+        session = DBSession()
+        user = get_user_from_claims(session, claims)
+
+        return CreateInstanceResponse()
 
     def GetFlavors(self, request: GetFlavorsRequest, context) -> GetFlavorsResponse:
         client = create_client()

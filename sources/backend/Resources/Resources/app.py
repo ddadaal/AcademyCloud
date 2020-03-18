@@ -22,8 +22,8 @@ user_id = "12848b44-682f-11ea-a279-d46d6d2a6673"
 test_user = User(id=user_id, user_id="9dc69b93-a261-4cf5-9836-db7a2215e9c1",
                  project_id="99d76a6c-05da-422c-8746-7328f7cd2212")
 session.merge(test_user)
-instance_id = "251daa56-c218-4eba-9db3-8751ec2d4803"
-instance = Instance(id=instance_id, owner_id=user_id)
+instance_id = "6bc2a6f8-6cbb-4996-9d20-58c68a27776a"
+instance = Instance(id=instance_id, owner_id=user_id, image_name="cirros")
 session.merge(instance)
 session.commit()
 
