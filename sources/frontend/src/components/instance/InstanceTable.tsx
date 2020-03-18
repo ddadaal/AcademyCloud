@@ -31,7 +31,7 @@ export const InstanceTable: React.FC<Props> = ({ children, refreshToken }) => {
       <Table.Column title={<Localized id={root.instance.flavor} />} dataIndex="flavor"
         render={(flavor: Flavor) => <FlavorModalLink flavor={flavor} />} />
       <Table.Column title={<Localized id={root.instance.status.label} />} dataIndex="status"
-        render={(status: InstanceStatus) => <Localized id={root.instance.status[status]} />} />
+        render={(status: InstanceStatus) => status in root.instance.status ? <Localized id={root.instance.status[status]} /> : status} />
       <Table.Column title={<Localized id={root.instance.createTime} />} dataIndex="createTime"
         render={(createTime: string) => <LocalizedDate dateTimeString={createTime} />} />
       {children}

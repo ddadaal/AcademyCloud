@@ -347,6 +347,9 @@ export default {
           BUILD: "构建中",
           ERROR: "出错",
           ACTIVE: "开机",
+          REBOOT: "软重启",
+          HARD_REBOOT: "硬重启",
+          STOPPED: "停止",
         },
         createTime: "创建时间",
         startTime: "总开机时间",
@@ -354,6 +357,11 @@ export default {
         refresh: "刷新",
         actions: {
           title: "操作",
+          start: "开启实例",
+          stop: "关闭虚拟机",
+          restart: "软重启虚拟机",
+          hardRestart: "硬重启虚拟机",
+          delete: "删除虚拟机",
         },
         add: {
           button: "创建新实例",

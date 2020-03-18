@@ -1,5 +1,5 @@
 import { InstanceService, GetInstancesResponse } from './InstanceService';
-import { Flavor, InstanceStatus, Image } from "src/models/Instance";
+import { Flavor,  Image } from "src/models/Instance";
 
 const flavor: Flavor = { name: "m1.nano", cpu: 2, memory: 2, rootDisk: 2 };
 
@@ -9,7 +9,7 @@ export class InstanceServiceMock extends InstanceService {
 
     return {
       instances: [
-        { id: "1", name: "test", flavor, status: InstanceStatus.Shutoff, ip: "10.0.0.162", imageName: "cirros", createTime: "2020-03-16T07:27:56.568Z", totalStartupHours: 100 }
+        { id: "1", name: "test", flavor, status: "SHUTOFF", ip: "10.0.0.162", imageName: "cirros", createTime: "2020-03-16T07:27:56.568Z", totalStartupHours: 100 }
       ]
     }
   }
@@ -33,6 +33,22 @@ export class InstanceServiceMock extends InstanceService {
     }
   }
   async createInstance(name: string, flavorId: string, imageId: string, volume: number): Promise<void> {
+    await this.delay();
+  }
+
+  async startInstance() {
+    await this.delay();
+  }
+
+  async stopInstance() {
+    await this.delay();
+  }
+
+  async rebootInstance() {
+    await this.delay();
+  }
+
+  async deleteInstance() {
     await this.delay();
   }
 }

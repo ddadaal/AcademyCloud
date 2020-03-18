@@ -29,7 +29,7 @@ const InstancePage: React.FC<RouteComponentProps> = (props) => {
           </ClickableA>
         </span>
       </TitleBar>
-      <InstanceManagementTable refreshToken={token} />
+      <InstanceManagementTable refreshToken={token} reload={refresh}/>
     </div>
   )
 };

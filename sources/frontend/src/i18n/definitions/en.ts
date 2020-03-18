@@ -348,6 +348,9 @@ export default {
           BUILD: "Building",
           ERROR: "Error",
           ACTIVE: "Active",
+          REBOOT: "Soft Reboot",
+          HARD_REBOOT: "Hard Reboot",
+          STOPPED: "Stopped",
         },
         createTime: "Create Time",
         startTime: "Total Startup Time",
@@ -355,6 +358,11 @@ export default {
         refresh: "Refresh",
         actions: {
           title: "Actions",
+          start: "Start Instance",
+          stop: "Stop Instance",
+          restart: "Soft Reboot Instance",
+          hardRestart: "Hard Reboot Instance",
+          delete: "Delete Instance",
         },
         add: {
           button: "Create a Instance",

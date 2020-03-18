@@ -11,11 +11,13 @@ export function flavorString({ name, cpu, memory, rootDisk }: Flavor) {
   return `${name} | ${cpu} CPU | ${memory} MB | ${rootDisk} GB`;
 }
 
+export type InstanceStatus = "SHUTOFF" | "ACTIVE" | "BUILD";
+
 export interface Instance {
   id: string;
   name: string;
   flavor: Flavor;
-  status: string;
+  status: InstanceStatus;
   ip: string;
   imageName: string;
   createTime: string;
