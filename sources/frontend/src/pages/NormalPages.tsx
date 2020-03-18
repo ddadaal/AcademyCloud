@@ -7,7 +7,7 @@ import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
 import { ErrorPage } from "src/components/ErrorPage";
 import { isResourcesDisabled } from 'src/models/Scope';
-import { ResourcesNotAvailable } from "src/pages/Resources/ResourcesNotAvailable";
+import { ResourcesNotAvailable, NotAvailableReason } from "src/pages/Resources/ResourcesNotAvailable";
 
 const ResourcesPage = React.lazy(() => import("./Resources"));
 const IdentityPage = React.lazy(() => import("./Identity"));
@@ -23,15 +23,21 @@ const NormalPages: React.FC<RouteComponentProps> = () => {
     );
   }
 
-  const { scope } = userStore.user!;
+  const { scope, scopeActive, userActive } = userStore.user!;
+
+  // judge whether resources available
+  const reason = isResourcesDisabled(scope) ? NotAvailableReason.NotProjectScope :
+    (!userActive) ? NotAvailableReason.UserNotActive :
+      (!scopeActive) ? NotAvailableReason.ScopeNotActive :
+        null;
 
   return (
     <RootLayout>
       <FunctionLayout>
         <Suspense fallback={<PageLoading />}>
           <Router>
-            {isResourcesDisabled(scope)
-              ? <ResourcesNotAvailable path="resources/*" />
+            {reason
+              ? <ResourcesNotAvailable reason={reason} path="resources/*" />
               : <ResourcesPage path="resources/*" />
             }
             <ExpensesPage path="expenses/*" />

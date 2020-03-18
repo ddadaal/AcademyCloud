@@ -34,7 +34,6 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
 
       // select default; if not, select lastLogin; if not, the first
       const scope = scopesResp.defaultScope ?? scopesResp.lastLoginScope ?? scopesResp.scopes[0];
-
       const loginResponse = await accountService.login(username, password, scope);
       userStore.login({
         userId: loginResponse.userId,
@@ -42,6 +41,8 @@ export const LoginForm: React.FC<RouteComponentProps> = () => {
         scope,
         token: loginResponse.token,
         remember: values.remember,
+        userActive: loginResponse.userActive,
+        scopeActive: loginResponse.scopeActive,
       });
       availableScopesStore.setScopes(scopesResp.scopes, values.remember);
     } catch (e) {

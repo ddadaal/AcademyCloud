@@ -4,6 +4,8 @@ import { Scope } from 'src/models/Scope';
 export interface LoginResponse {
   userId: string;
   token: string;
+  scopeActive: boolean;
+  userActive: boolean;
 }
 
 export interface RegisterResponse {

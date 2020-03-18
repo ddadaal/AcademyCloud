@@ -333,7 +333,18 @@ export default {
     resources: {
       notAvailable: {
         title: "Resources Management Not Available",
-        description: "You have to use a project scope to use cloud resources.",
+        NotProjectScope: {
+          title: "Resources are not available in domain scope.",
+          subTitle: "Please switch to a project scope to use resources."
+        },
+        UserNotActive: {
+          title: "Your balance is currently insufficient.",
+          subTitle: "Please charge."
+        },
+        ScopeNotActive: {
+          title: "Current scope is not available due to insufficient fund.",
+          subTitle: "Please contact your scope's admin."
+        },
         toExpenses: "To Expenses Management",
       },
       instance: {

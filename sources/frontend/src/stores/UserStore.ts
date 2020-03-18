@@ -10,6 +10,8 @@ interface User {
   userId: string;
   username: string;
   scope: Scope;
+  userActive: boolean;
+  scopeActive: boolean;
   token: string;
   remember: boolean;
 }

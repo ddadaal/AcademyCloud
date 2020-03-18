@@ -5,12 +5,23 @@ import { RouteComponentProps, Link } from "@reach/router";
 
 const root = lang.resources.notAvailable;
 
-export const ResourcesNotAvailable: React.FC<RouteComponentProps> = () => {
+export enum NotAvailableReason {
+  NotProjectScope = "NotProjectScope",
+  UserNotActive = "UserNotActive",
+  ScopeNotActive = "ScopeNotActive",
+}
+
+interface Props extends RouteComponentProps {
+  reason: NotAvailableReason;
+}
+
+export const ResourcesNotAvailable: React.FC<Props> = ({ reason }) => {
+
   return (
     <Result
       status={403}
-      title={<Localized id={root.title} />}
-      subTitle={<Localized id={root.description} />}
+      title={<Localized id={root[reason].title} />}
+      subTitle={<Localized id={root[reason].subTitle} />}
       extra={<Button type="primary"><Link to="/expenses"><Localized id={root.toExpenses} /></Link></Button>}
     />
   )

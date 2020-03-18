@@ -332,8 +332,20 @@ export default {
     resources: {
       notAvailable: {
         title: "资源管理不可用",
-        description: "您必须使用一个加入项目的范围登录才可以使用云资源。",
+        NotProjectScope: {
+          title: "域范围不可以使用云资源",
+          subTitle: "请切换到项目范围以使用项目的云资源。",
+        },
+        UserNotActive: {
+          title: "您的用户目前余额小于0",
+          subTitle: "先给您的用户充值再继续使用云资源。"
+        },
+        ScopeNotActive: {
+          title: "您的范围目前由于欠费不可用",
+          subTitle: "请报告给您目前范围的管理员。"
+        },
         toExpenses: "去资费管理",
+
       },
       instance: {
         id: "ID",

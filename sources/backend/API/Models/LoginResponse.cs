@@ -7,11 +7,10 @@ namespace AcademyCloud.API.Models
 {
     public class LoginResponse
     {
-        public string Token { get; set; }
+        public string UserId { get; set; }
+        public bool UserActive { get; set; }
 
-        public LoginResponse(string token)
-        {
-            Token = token;
-        }
+        public bool ScopeActive { get; set; }
+        public string Token { get; set; }
     }
 }

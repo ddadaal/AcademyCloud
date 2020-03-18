@@ -38,7 +38,9 @@ export const RegisterForm: React.FC<RouteComponentProps> = () => {
         username,
         scope,
         token,
-        remember: true
+        remember: true,
+        userActive: true,
+        scopeActive: true,
       });
       availableScopesStore.setScopes([scope], true);
     } catch (e) {
