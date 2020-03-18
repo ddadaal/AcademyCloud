@@ -52,10 +52,10 @@ Development starts from **01/28**.
 
 - [x] Requirement Analysis (initial version ended at around **02/12**, result: [0211-requirements.md](docs/requirements/0211-requirements.md))
 - [x] Design (initial version ended at around **02/19**, artifact: [Domain Models and System Architecture](docs/architecture))
-- [ ] Development and unit test
+- [x] Development and unit test
     - [x] Identity module (ended at **02/28**)
-    - [x] Expenses module (ended at **03/15**)
-    - [ ] Resources module
+    - [x] Expenses module (ended at **03/13**)
+    - [x] Resources module (ended at **03/18**)
 - [ ] Integration test and Paper Writing
 
 
