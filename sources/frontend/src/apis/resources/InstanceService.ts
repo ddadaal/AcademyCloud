@@ -34,6 +34,21 @@ export class InstanceService extends HttpService {
     });
   }
 
+  async startInstance(instanceId: string) {
+    await this.fetch({
+      method: HttpMethod.GET,
+      path: `/resources/instances/${instanceId}/start`
+    });
+  }
+
+  async rebootInstance(instanceId: string, hard: boolean) {
+    await this.fetch({
+      method: HttpMethod.GET,
+      path: `/resources/instances/${instanceId}/reboot`,
+      params: { hard }
+    });
+  }
+
   async stopInstance(instanceId: string) {
     await this.fetch({
       method: HttpMethod.GET,
@@ -44,7 +59,7 @@ export class InstanceService extends HttpService {
   async deleteInstance(instanceId: string) {
     await this.fetch({
       method: HttpMethod.DELETE,
-      path: `/resources/instances/${instanceId}`
+      path: `/resources/instances/${instanceId}`,
     });
   }
 }

@@ -90,6 +90,43 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
             await (await factory.GetInstanceServiceClient())
                 .DeleteInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.DeleteInstanceRequest
                 {
+                    InstanceId = instanceId,
+                });
+
+            return NoContent();
+        }
+
+        [HttpGet("instances/{instanceId}/start")]
+        public async Task<ActionResult> StartInstance([FromRoute] string instanceId)
+        {
+            await (await factory.GetInstanceServiceClient())
+                .StartInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.StartInstanceRequest
+                {
+                    InstanceId = instanceId
+                });
+
+            return NoContent();
+        }
+
+        [HttpGet("instances/{instanceId}/reboot")]
+        public async Task<ActionResult> RebootInstance([FromRoute] string instanceId, [FromQuery] bool hard)
+        {
+            await (await factory.GetInstanceServiceClient())
+                .RebootInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.RebootInstanceRequest
+                {
+                    InstanceId = instanceId,
+                    Hard = hard
+                });
+
+            return NoContent();
+        }
+
+        [HttpGet("instances/{instanceId}/stop")]
+        public async Task<ActionResult> StopInstance([FromRoute] string instanceId)
+        {
+            await (await factory.GetInstanceServiceClient())
+                .StopInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.StopInstanceRequest
+                {
                     InstanceId = instanceId
                 });
 

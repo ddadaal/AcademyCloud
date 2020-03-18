@@ -20,7 +20,7 @@ class Instance(Base):
 
     owner_id = Column(GUID(), ForeignKey("user.id"), nullable=False)
 
-    volumes = relationship("Volume")
+    volumes = relationship("Volume", cascade="save-update, merge, delete")
 
 
 class Volume(Base):

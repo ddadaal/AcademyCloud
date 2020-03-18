@@ -99,6 +99,7 @@ message DeleteInstanceResponse {
 
 message RebootInstanceRequest {
   string instanceId = 1;
+  bool hard = 2;
 }
 
 message RebootInstanceResponse {

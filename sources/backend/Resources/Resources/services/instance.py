@@ -103,12 +103,16 @@ class InstanceManagement(g.InstanceServiceServicer):
 
     def StartInstance(self, request, context):
         client = create_client()
+        compute = client.connection.compute
+        compute.start_server(request.instanceId)
+        return StartInstanceResponse()
 
     def DeleteInstance(self, request, context):
         client = create_client()
         client.connection.delete_server(name_or_id=request.instanceId)
 
         session = DBSession()
+
         instance = session.query(models.Instance).filter_by(id=request.instanceId).one()
         session.delete(instance)
         session.commit()
@@ -117,11 +121,15 @@ class InstanceManagement(g.InstanceServiceServicer):
 
     def StopInstance(self, request, context):
         client = create_client()
-        client.connection.server
+        compute = client.connection.compute
+        compute.stop_server(request.instanceId)
+        return StopInstanceResponse()
 
     def RebootInstance(self, request, context):
         client = create_client()
-        client.connection.re
+        compute = client.connection.compute
+        compute.reboot_server(request.instanceId, reboot_type="HARD" if request.hard else "SOFT")
+        return RebootInstanceResponse()
 
 
 def add_to_server(server):
