@@ -5,7 +5,7 @@ export interface Resources {
 }
 
 export function resourcesString({ cpu, memory, storage }: Resources) {
-  return `${cpu} | ${memory} GB | ${storage} GB`;
+  return `${cpu} | ${memory} MB | ${storage} GB`;
 }
 
 export const ZeroResources = {

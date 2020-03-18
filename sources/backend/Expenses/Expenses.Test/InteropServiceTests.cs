@@ -1,7 +1,11 @@
-﻿using AcademyCloud.Expenses.Extensions;
+﻿using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
+using AcademyCloud.Expenses.Domain.Entities;
+using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Protos.Common;
 using AcademyCloud.Expenses.Services;
 using AcademyCloud.Expenses.Test.Helpers;
+using AcademyCloud.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +18,28 @@ namespace AcademyCloud.Expenses.Test
 {
     public class InteropServiceTests : CommonTest
     {
-        private InteropService service;
-
-        public InteropServiceTests()
+        private UseCycleConfigurations useConfiguration = new UseCycleConfigurations
         {
-            service = new InteropService(MockTokenClaimsAccessor(njuadminnjuTokenClaims), db);
+            CheckCycleMs = 500,
+            SettleCycleMs = 1000,
+        };
+
+        public InteropService CreateService(TokenClaims? tokenClaims = null)
+        {
+            if (tokenClaims == null)
+            {
+                tokenClaims = njuadminnjuTokenClaims;
+            }
+            var useTask = ConfigureTask<UseCycleTask, UseCycleConfigurations>(useConfiguration);
+
+            return new InteropService(MockTokenClaimsAccessor(tokenClaims), db, useTask);
         }
 
 
         [Fact]
         public async Task TestGetActivities()
         {
+            var service = CreateService();
             njuadmin.Active = false;
 
             await db.SaveChangesAsync();
@@ -59,6 +74,8 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetQuotas()
         {
+            var service = CreateService();
+
             nju.Quota = new Domain.ValueObjects.Resources(10, 0, 0);
             lqproject.Quota = new Domain.ValueObjects.Resources(20, 30, 40);
             await db.SaveChangesAsync();
@@ -84,6 +101,8 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetPayUsers()
         {
+            var service = CreateService();
+
             var resp = await service.GetPayUser(new Protos.Interop.GetPayUserRequest
             {
                 Subjects =
@@ -107,6 +126,8 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetSystemQuotaStatus()
         {
+            var service = CreateService();
+
             var systemResourecs = new Domain.ValueObjects.Resources(1000, 1000, 1000);
 
             nju.Quota = new Domain.ValueObjects.Resources(20, 30, 40);
@@ -129,6 +150,8 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetDomainQuotaStatus()
         {
+            var service = CreateService();
+
             nju.Quota = new Domain.ValueObjects.Resources(20, 30, 40);
 
             lqproject.Quota = new Domain.ValueObjects.Resources(1, 2, 3);
@@ -146,6 +169,8 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetProjectQuotaStatus()
         {
+            var service = CreateService();
+
             lqproject.Quota = new Domain.ValueObjects.Resources(10, 20, 30);
 
             cjd67project.Quota = new Domain.ValueObjects.Resources(1, 2, 3);
@@ -165,7 +190,7 @@ namespace AcademyCloud.Expenses.Test
         [Fact]
         public async Task TestGetQuotaStatusOfCurrentProjectUser()
         {
-            service = new InteropService(MockTokenClaimsAccessor(cjdlqTokenClaims), db);
+            var service = CreateService(cjdlqTokenClaims);
             cjd67project.Quota = new Domain.ValueObjects.Resources(3, 4, 5);
             cjd67project.Resources = new Domain.ValueObjects.Resources(2, 3, 4);
             lq67project.Quota = new Domain.ValueObjects.Resources(8, 9, 10);
@@ -179,6 +204,43 @@ namespace AcademyCloud.Expenses.Test
 
             Assert.Equal(cjd67project.Quota, resp.Total.FromGrpc());
             Assert.Equal(cjd67project.Resources, resp.Used.FromGrpc());
+        }
+
+        [Fact]
+        public async Task TestChangeProjectUserResources()
+        {
+            var service = CreateService(cjdlqTokenClaims);
+            var initial = new Domain.ValueObjects.Resources(3, 4, 5);
+            cjd67project.Resources = initial;
+            db.UseCycleEntries.Add(new UseCycleEntry(cjd67project.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(lqproject.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(nju.UseCycleSubject));
+            await db.SaveChangesAsync();
+
+            // change delta
+            var delta = new Domain.ValueObjects.Resources(5, 6, 7);
+
+            await service.ChangeProjectUserResources(new Protos.Interop.ChangeProjectUserResourcesRequest
+            {
+                ResourcesDelta = delta.ToGrpc()
+            }, TestContext);
+
+            // there should be a UseCycleRecord of the initial resources on cjd67project, lqproject and nju domain
+
+            void AssertInitial(UseCycleSubject subject)
+            {
+                var record = Assert.Single(subject.UseCycleRecords);
+                Assert.Equal(initial, record.Resources);
+                Assert.Equal(PricePlan.Instance.Calculate(initial), record.Amount);
+            }
+
+            AssertInitial(cjd67project.UseCycleSubject);
+            AssertInitial(lqproject.UseCycleSubject);
+            AssertInitial(nju.UseCycleSubject);
+            Assert.Equal(cjd67project.Resources, initial + delta);
+            Assert.Equal(lqproject.Resources, initial + delta);
+            Assert.Equal(nju.Resources, initial + delta);
+
         }
 
     }

@@ -18,7 +18,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public decimal Cpu { get; private set; }
 
         /// <summary>
-        /// Memory dollar per GB
+        /// Memory dollar per MB
         /// </summary>
         public decimal Memory { get; private set; }
 
@@ -36,8 +36,8 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         /// <summary>
         /// Sample price plan.
-        /// 1 Core, 2 GB RAM and 40 GB Storage causes 50.4 per month.
+        /// 1 Core, 2 GB RAM (2048 MB Memory) and 40 GB Storage causes 50.7 per month.
         /// </summary>
-        public static PricePlan Instance => new PricePlan { Cpu = 0.01m, Memory = 0.01m, Storage = 0.001m };
+        public static PricePlan Instance => new PricePlan { Cpu = 0.01m, Memory = 0.00001m, Storage = 0.001m };
     }
 }

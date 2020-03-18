@@ -14,7 +14,7 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         public int Cpu { get; set; }
 
         /// <summary>
-        /// Memory in GB.
+        /// Memory in MB.
         /// </summary>
         public int Memory { get; set; }
 

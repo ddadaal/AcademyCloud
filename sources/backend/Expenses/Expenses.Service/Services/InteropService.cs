@@ -12,6 +12,7 @@ using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using Microsoft.EntityFrameworkCore;
 using AcademyCloud.Expenses.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 
 namespace AcademyCloud.Expenses.Services
 {
@@ -20,11 +21,13 @@ namespace AcademyCloud.Expenses.Services
     {
         private TokenClaimsAccessor tokenClaimsAccessor;
         private ExpensesDbContext dbContext;
+        private UseCycleTask useCycleTask;
 
-        public InteropService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext)
+        public InteropService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleTask useCycleTask)
         {
             this.tokenClaimsAccessor = tokenClaimsAccessor;
             this.dbContext = dbContext;
+            this.useCycleTask = useCycleTask;
         }
 
         private void ThrowFunc<T>(T o)
@@ -149,6 +152,28 @@ namespace AcademyCloud.Expenses.Services
                 Total = userProjectAssignment.Quota.ToGrpc(),
                 Used = userProjectAssignment.Resources.ToGrpc(),
             };
+        }
+
+        public override async Task<ChangeProjectUserResourcesResponse> ChangeProjectUserResources(ChangeProjectUserResourcesRequest request, ServerCallContext context)
+        {
+            var tokenClaims = tokenClaimsAccessor.TokenClaims;
+
+            if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Need project scope")); }
+
+            var userProjectAssignment = await dbContext.UserProjectAssignments.FirstIfNotNullThrowAsync(x =>
+                x.User.Id == Guid.Parse(tokenClaims.UserId) && x.Project.Id == Guid.Parse(tokenClaims.ProjectId));
+
+            // First settle use cycle for the project user, project and domain
+            useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id));
+            useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id));
+            useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Domain.Id));
+
+            userProjectAssignment.Resources += request.ResourcesDelta.FromGrpc();
+
+            await dbContext.SaveChangesAsync();
+
+            return new ChangeProjectUserResourcesResponse { };
+
         }
     }
 }

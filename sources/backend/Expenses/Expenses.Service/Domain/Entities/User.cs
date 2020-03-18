@@ -54,11 +54,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
             }
         }
 
-        public void ChangeResourecs(Project project, Resources resources)
-        {
-
-        }
-
         public void Charge(decimal amount)
         {
             var transaction = new UserTransaction(Guid.NewGuid(), DateTime.UtcNow, amount, TransactionReason.Charge, null, this);
