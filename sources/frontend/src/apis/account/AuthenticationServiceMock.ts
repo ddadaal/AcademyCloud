@@ -38,7 +38,7 @@ export class AuthenticationServiceMock extends AuthenticationService {
     await this.delay();
     return {
       userId: "123", token: `testtoken${JSON.stringify(scope)}`,
-      userActive: false , scopeActive: true,
+      userActive: true , scopeActive: true,
     };
   }
 
@@ -51,7 +51,7 @@ export class AuthenticationServiceMock extends AuthenticationService {
       userId: "123",
       token: "testtoken",
       userActive: true,
-      scopeActive: false,
+      scopeActive: true,
     }
   }
 
