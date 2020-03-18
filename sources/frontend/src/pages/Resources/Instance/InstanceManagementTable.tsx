@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import { InstanceTable } from 'src/components/instance/InstanceTable';
 import { lang, Localized } from "src/i18n";
 import { Table, Dropdown, Menu } from "antd";
@@ -36,11 +36,17 @@ export const InstanceManagementTable: React.FC<Props> = ({ refreshToken, reload 
 
   const [api, contextHolder] = useLocalizedNotification();
 
+  const [reloadIntervalToken, setReloadIntervalToken] = useState(false);
+
   const actionReload = useCallback(() => {
     reload();
+    setReloadIntervalToken((t) => !t);
   }, [reload]);
 
-  useInterval(reload, 5000);
+  useEffect(() => {
+    const id = setInterval(reload, 5000);
+    return () => clearInterval(id);
+  }, [reloadIntervalToken, reload]);
 
   return (
     <InstanceTable refreshToken={refreshToken}>
