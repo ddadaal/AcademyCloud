@@ -232,10 +232,8 @@ CPU使用单价：1元 1核 1小时
   - 创建实例（名字、flavor（从已经有的flavor中选择）、Image/Volume，创建后自动从IP池里给一个公网IP）
   - 开启实例、关闭实例
   - 删除实例
-  - 接入云硬盘
 - 云硬盘（Volume）管理
-  - 创建Volume（名字、从Image创建/空Volume、大小）
-  - 删除Volume
+  - 查看各个云硬盘以及他们连接上的实例
 
 ## 3.1 系统管理员（System Admin）
 
