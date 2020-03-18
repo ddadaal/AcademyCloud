@@ -21,6 +21,8 @@ import { InstanceServiceMock } from './resources/InstanceServiceMock';
 import { InstanceService } from "src/apis/resources/InstanceService";
 import { QuotaService } from './expenses/QuotaService';
 import { QuotaServiceMock } from './expenses/QuotaServiceMock';
+import { VolumeService } from "src/apis/resources/VolumeService";
+import { VolumeServiceMock } from "src/apis/resources/VolumeServiceMock";
 
 export const USE_MOCK = true;
 
@@ -28,6 +30,7 @@ const services = [
   [AuthenticationService, USE_MOCK ? AuthenticationServiceMock : AuthenticationService],
   [ResourcesService, USE_MOCK ? ResourcesServiceMock : ResourcesService],
   [InstanceService, USE_MOCK ? InstanceServiceMock : InstanceService],
+  [VolumeService, USE_MOCK ? VolumeServiceMock : VolumeService],
   [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
   [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
   [UsersService, USE_MOCK ? UsersServiceMock : UsersService],

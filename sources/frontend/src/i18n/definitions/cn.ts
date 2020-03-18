@@ -375,6 +375,15 @@ export default {
           opName: "创建实例",
         }
       },
+      volume: {
+        title: "查看云硬盘",
+        refresh: "刷新",
+        id: "ID",
+        size: "大小",
+        createTime: "创建时间",
+        attachedToInstance: "挂载到实例",
+        attachedToDevice: "实例上的设备路径"
+      },
       dashboard: {
         title: "仪表盘",
         instanceList: {

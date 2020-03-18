@@ -376,6 +376,15 @@ export default {
           opName: "Create Instance",
         }
       },
+      volume: {
+        title: "Volumes",
+        refresh: "Refresh",
+        id: "ID",
+        size: "Size",
+        createTime: "Create Time",
+        attachedToInstance: "Instance Attached to",
+        attachedToDevice: "Device Attached to"
+      },
       dashboard: {
         title: "Dashboard",
         instanceList: {
