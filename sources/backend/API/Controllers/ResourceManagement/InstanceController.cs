@@ -80,6 +80,18 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
                     Volume = request.Volume
                 });
 
+            // add the resources usage to expenses
+            //await (await factory.GetExpensesInteropClientAsync())
+            //    .ChangeProjectUserResourcesAsync(new AcademyCloud.Expenses.Protos.Interop.ChangeProjectUserResourcesRequest
+            //    {
+            //        ResourcesDelta = new AcademyCloud.Expenses.Protos.Common.Resources
+            //        {
+            //            Cpu = resp.Flavor.Cpu,
+            //            Memory = resp.Flavor.Memory,
+            //            Storage = request.Volume,
+            //        }
+            //    });
+
             return Created(resp.InstanceId, resp.InstanceId);
 
         }
@@ -87,11 +99,23 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
         [HttpDelete("instances/{instanceId}")]
         public async Task<ActionResult> DeleteInstance([FromRoute] string instanceId)
         {
-            await (await factory.GetInstanceServiceClient())
+            var resp = await (await factory.GetInstanceServiceClient())
                 .DeleteInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.DeleteInstanceRequest
                 {
                     InstanceId = instanceId,
                 });
+
+            // remove the resources usage to expenses
+            //await (await factory.GetExpensesInteropClientAsync())
+            //    .ChangeProjectUserResourcesAsync(new AcademyCloud.Expenses.Protos.Interop.ChangeProjectUserResourcesRequest
+            //    {
+            //        ResourcesDelta = new AcademyCloud.Expenses.Protos.Common.Resources
+            //        {
+            //            Cpu = -resp.Flavor.Cpu,
+            //            Memory = -resp.Flavor.Memory,
+            //            Storage = -resp.Volume,
+            //        }
+            //    });
 
             return NoContent();
         }

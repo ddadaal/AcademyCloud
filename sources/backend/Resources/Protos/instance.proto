@@ -71,6 +71,7 @@ message CreateInstanceRequest {
 
 message CreateInstanceResponse {
   string instanceId = 1;
+  Flavor flavor = 2;
 }
 
 message StartInstanceRequest {
@@ -94,7 +95,8 @@ message DeleteInstanceRequest {
 }
 
 message DeleteInstanceResponse {
-  
+  Flavor flavor = 1;
+  int32 volume = 2;
 }
 
 message RebootInstanceRequest {

@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='instance',
   syntax='proto3',
   serialized_options=b'\252\002/AcademyCloud.ResourceManagement.Protos.Instance',
-  serialized_pb=b'\n\x0einstance.proto\x12\x08instance\"\x15\n\x13GetInstancesRequest\"E\n\x06\x46lavor\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x63pu\x18\x02 \x01(\x05\x12\x0e\n\x06memory\x18\x03 \x01(\x05\x12\x10\n\x08rootDisk\x18\x04 \x01(\x05\"\x89\x01\n\x08Instance\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12 \n\x06\x66lavor\x18\x03 \x01(\x0b\x32\x10.instance.Flavor\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\n\n\x02ip\x18\x05 \x01(\t\x12\x11\n\timageName\x18\x06 \x01(\t\x12\x12\n\ncreateTime\x18\x07 \x01(\t\"=\n\x14GetInstancesResponse\x12%\n\tinstances\x18\x01 \x03(\x0b\x32\x12.instance.Instance\"\x13\n\x11GetFlavorsRequest\"7\n\x12GetFlavorsResponse\x12!\n\x07\x66lavors\x18\x01 \x03(\x0b\x32\x10.instance.Flavor\"\x12\n\x10GetImagesRequest\"2\n\x05Image\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07minDisk\x18\x03 \x01(\x05\"4\n\x11GetImagesResponse\x12\x1f\n\x06images\x18\x01 \x03(\x0b\x32\x0f.instance.Image\"\\\n\x15\x43reateInstanceRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nflavorName\x18\x02 \x01(\t\x12\x11\n\timageName\x18\x03 \x01(\t\x12\x0e\n\x06volume\x18\x04 \x01(\x05\",\n\x16\x43reateInstanceResponse\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"*\n\x14StartInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"\x17\n\x15StartInstanceResponse\")\n\x13StopInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"\x16\n\x14StopInstanceResponse\"+\n\x15\x44\x65leteInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"\x18\n\x16\x44\x65leteInstanceResponse\"9\n\x15RebootInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\x12\x0c\n\x04hard\x18\x02 \x01(\x08\"\x18\n\x16RebootInstanceResponse2\x8f\x05\n\x0fInstanceService\x12M\n\x0cGetInstances\x12\x1d.instance.GetInstancesRequest\x1a\x1e.instance.GetInstancesResponse\x12G\n\nGetFlavors\x12\x1b.instance.GetFlavorsRequest\x1a\x1c.instance.GetFlavorsResponse\x12\x44\n\tGetImages\x12\x1a.instance.GetImagesRequest\x1a\x1b.instance.GetImagesResponse\x12S\n\x0e\x43reateInstance\x12\x1f.instance.CreateInstanceRequest\x1a .instance.CreateInstanceResponse\x12P\n\rStartInstance\x12\x1e.instance.StartInstanceRequest\x1a\x1f.instance.StartInstanceResponse\x12M\n\x0cStopInstance\x12\x1d.instance.StopInstanceRequest\x1a\x1e.instance.StopInstanceResponse\x12S\n\x0e\x44\x65leteInstance\x12\x1f.instance.DeleteInstanceRequest\x1a .instance.DeleteInstanceResponse\x12S\n\x0eRebootInstance\x12\x1f.instance.RebootInstanceRequest\x1a .instance.RebootInstanceResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Instanceb\x06proto3'
+  serialized_pb=b'\n\x0einstance.proto\x12\x08instance\"\x15\n\x13GetInstancesRequest\"E\n\x06\x46lavor\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03\x63pu\x18\x02 \x01(\x05\x12\x0e\n\x06memory\x18\x03 \x01(\x05\x12\x10\n\x08rootDisk\x18\x04 \x01(\x05\"\x89\x01\n\x08Instance\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12 \n\x06\x66lavor\x18\x03 \x01(\x0b\x32\x10.instance.Flavor\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\n\n\x02ip\x18\x05 \x01(\t\x12\x11\n\timageName\x18\x06 \x01(\t\x12\x12\n\ncreateTime\x18\x07 \x01(\t\"=\n\x14GetInstancesResponse\x12%\n\tinstances\x18\x01 \x03(\x0b\x32\x12.instance.Instance\"\x13\n\x11GetFlavorsRequest\"7\n\x12GetFlavorsResponse\x12!\n\x07\x66lavors\x18\x01 \x03(\x0b\x32\x10.instance.Flavor\"\x12\n\x10GetImagesRequest\"2\n\x05Image\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0f\n\x07minDisk\x18\x03 \x01(\x05\"4\n\x11GetImagesResponse\x12\x1f\n\x06images\x18\x01 \x03(\x0b\x32\x0f.instance.Image\"\\\n\x15\x43reateInstanceRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x12\n\nflavorName\x18\x02 \x01(\t\x12\x11\n\timageName\x18\x03 \x01(\t\x12\x0e\n\x06volume\x18\x04 \x01(\x05\"N\n\x16\x43reateInstanceResponse\x12\x12\n\ninstanceId\x18\x01 \x01(\t\x12 \n\x06\x66lavor\x18\x02 \x01(\x0b\x32\x10.instance.Flavor\"*\n\x14StartInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"\x17\n\x15StartInstanceResponse\")\n\x13StopInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"\x16\n\x14StopInstanceResponse\"+\n\x15\x44\x65leteInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\"J\n\x16\x44\x65leteInstanceResponse\x12 \n\x06\x66lavor\x18\x01 \x01(\x0b\x32\x10.instance.Flavor\x12\x0e\n\x06volume\x18\x02 \x01(\x05\"9\n\x15RebootInstanceRequest\x12\x12\n\ninstanceId\x18\x01 \x01(\t\x12\x0c\n\x04hard\x18\x02 \x01(\x08\"\x18\n\x16RebootInstanceResponse2\x8f\x05\n\x0fInstanceService\x12M\n\x0cGetInstances\x12\x1d.instance.GetInstancesRequest\x1a\x1e.instance.GetInstancesResponse\x12G\n\nGetFlavors\x12\x1b.instance.GetFlavorsRequest\x1a\x1c.instance.GetFlavorsResponse\x12\x44\n\tGetImages\x12\x1a.instance.GetImagesRequest\x1a\x1b.instance.GetImagesResponse\x12S\n\x0e\x43reateInstance\x12\x1f.instance.CreateInstanceRequest\x1a .instance.CreateInstanceResponse\x12P\n\rStartInstance\x12\x1e.instance.StartInstanceRequest\x1a\x1f.instance.StartInstanceResponse\x12M\n\x0cStopInstance\x12\x1d.instance.StopInstanceRequest\x1a\x1e.instance.StopInstanceResponse\x12S\n\x0e\x44\x65leteInstance\x12\x1f.instance.DeleteInstanceRequest\x1a .instance.DeleteInstanceResponse\x12S\n\x0eRebootInstance\x12\x1f.instance.RebootInstanceRequest\x1a .instance.RebootInstanceResponseB2\xaa\x02/AcademyCloud.ResourceManagement.Protos.Instanceb\x06proto3'
 )
 
 
@@ -425,6 +425,13 @@ _CREATEINSTANCERESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='flavor', full_name='instance.CreateInstanceResponse.flavor', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -438,7 +445,7 @@ _CREATEINSTANCERESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=623,
-  serialized_end=667,
+  serialized_end=701,
 )
 
 
@@ -468,8 +475,8 @@ _STARTINSTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=669,
-  serialized_end=711,
+  serialized_start=703,
+  serialized_end=745,
 )
 
 
@@ -492,8 +499,8 @@ _STARTINSTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=713,
-  serialized_end=736,
+  serialized_start=747,
+  serialized_end=770,
 )
 
 
@@ -523,8 +530,8 @@ _STOPINSTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=738,
-  serialized_end=779,
+  serialized_start=772,
+  serialized_end=813,
 )
 
 
@@ -547,8 +554,8 @@ _STOPINSTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=781,
-  serialized_end=803,
+  serialized_start=815,
+  serialized_end=837,
 )
 
 
@@ -578,8 +585,8 @@ _DELETEINSTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=805,
-  serialized_end=848,
+  serialized_start=839,
+  serialized_end=882,
 )
 
 
@@ -590,6 +597,20 @@ _DELETEINSTANCERESPONSE = _descriptor.Descriptor(
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='flavor', full_name='instance.DeleteInstanceResponse.flavor', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='volume', full_name='instance.DeleteInstanceResponse.volume', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -602,8 +623,8 @@ _DELETEINSTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=850,
-  serialized_end=874,
+  serialized_start=884,
+  serialized_end=958,
 )
 
 
@@ -640,8 +661,8 @@ _REBOOTINSTANCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=876,
-  serialized_end=933,
+  serialized_start=960,
+  serialized_end=1017,
 )
 
 
@@ -664,14 +685,16 @@ _REBOOTINSTANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=935,
-  serialized_end=959,
+  serialized_start=1019,
+  serialized_end=1043,
 )
 
 _INSTANCE.fields_by_name['flavor'].message_type = _FLAVOR
 _GETINSTANCESRESPONSE.fields_by_name['instances'].message_type = _INSTANCE
 _GETFLAVORSRESPONSE.fields_by_name['flavors'].message_type = _FLAVOR
 _GETIMAGESRESPONSE.fields_by_name['images'].message_type = _IMAGE
+_CREATEINSTANCERESPONSE.fields_by_name['flavor'].message_type = _FLAVOR
+_DELETEINSTANCERESPONSE.fields_by_name['flavor'].message_type = _FLAVOR
 DESCRIPTOR.message_types_by_name['GetInstancesRequest'] = _GETINSTANCESREQUEST
 DESCRIPTOR.message_types_by_name['Flavor'] = _FLAVOR
 DESCRIPTOR.message_types_by_name['Instance'] = _INSTANCE
@@ -835,8 +858,8 @@ _INSTANCESERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=962,
-  serialized_end=1617,
+  serialized_start=1046,
+  serialized_end=1701,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetInstances',

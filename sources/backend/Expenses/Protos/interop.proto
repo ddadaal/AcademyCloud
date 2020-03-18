@@ -12,6 +12,7 @@ service Interop {
   rpc GetQuota (GetQuotaRequest) returns (GetQuotaResponse);
   rpc GetQuotaStatus (GetQuotaStatusRequest) returns (GetQuotaStatusResponse);
   rpc GetQuotaStatusOfCurrentProjectUser (GetQuotaStatusOfCurrentProjectUserRequest) returns (GetQuotaStatusOfCurrentProjectUserResponse);
+  rpc ChangeProjectUserResources (ChangeProjectUserResourcesRequest) returns (ChangeProjectUserResourcesResponse);
 }
 
 message Subject {
@@ -62,3 +63,10 @@ message GetQuotaStatusOfCurrentProjectUserResponse {
   common.Resources total = 2;
 }
 
+message ChangeProjectUserResourcesRequest {
+  common.Resources resourcesDelta = 1;
+}
+
+message ChangeProjectUserResourcesResponse {
+  
+}

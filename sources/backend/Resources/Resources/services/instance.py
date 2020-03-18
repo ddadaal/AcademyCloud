@@ -64,14 +64,23 @@ class InstanceManagement(g.InstanceServiceServicer):
                                                       boot_volume=volume.id,
                                                       )
 
+        # manually get the flavor
+        flavor = client.connection.get_flavor_by_id(os_instance.flavor["id"])
+
+        resp = CreateInstanceResponse()
+        resp.flavor.name = flavor.name
+        resp.flavor.cpu = flavor.vcpus
+        resp.flavor.memory = flavor.ram
+        resp.flavor.rootDisk = flavor.disk
+
+        resp.instanceId = os_instance.id
+
         db_volume = models.Volume(id=volume.id, size=request.volume, owner_id=user.id, instance_id=os_instance.id)
         db_instance = models.Instance(id=os_instance.id, image_name=request.imageName, owner_id=user.id)
         session.add(db_instance)
         session.add(db_volume)
         session.commit()
 
-        resp = CreateInstanceResponse()
-        resp.instanceId = os_instance.id
         return resp
 
     def GetFlavors(self, request: GetFlavorsRequest, context) -> GetFlavorsResponse:
@@ -109,15 +118,29 @@ class InstanceManagement(g.InstanceServiceServicer):
 
     def DeleteInstance(self, request, context):
         client = create_client()
+        # Get the server
+        server = client.connection.get_server_by_id(id=request.instanceId)
+
+        # Get the flavor
+        flavor = client.connection.get_flavor_by_id(server.flavor["id"])
+
+        resp = DeleteInstanceResponse()
+        resp.flavor.name = flavor.name
+        resp.flavor.cpu = flavor.vcpus
+        resp.flavor.memory = flavor.ram
+        resp.flavor.rootDisk = flavor.disk
+
+        # Delete the server
         client.connection.delete_server(name_or_id=request.instanceId)
 
+        # Delete the server from db
         session = DBSession()
 
         instance = session.query(models.Instance).filter_by(id=request.instanceId).one()
         session.delete(instance)
         session.commit()
 
-        return DeleteInstanceResponse()
+        return resp
 
     def StopInstance(self, request, context):
         client = create_client()
