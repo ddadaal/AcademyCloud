@@ -9,6 +9,10 @@ service InstanceService {
   rpc GetFlavors (GetFlavorsRequest) returns (GetFlavorsResponse);
   rpc GetImages (GetImagesRequest) returns (GetImagesResponse);
   rpc CreateInstance (CreateInstanceRequest) returns (CreateInstanceResponse);
+  rpc StartInstance (StartInstanceRequest) returns (StartInstanceResponse);
+  rpc StopInstance (StopInstanceRequest) returns (StopInstanceResponse);
+  rpc DeleteInstance (DeleteInstanceRequest) returns (DeleteInstanceResponse);
+  rpc RebootInstance (RebootInstanceRequest) returns (RebootInstanceResponse);
 }
 
 message GetInstancesRequest {
@@ -22,16 +26,11 @@ message Flavor {
   int32 rootDisk = 4;
 }
 
-enum InstanceStatus {
-  SHUTOFF = 0;
-  ERROR = 1;
-}
-
 message Instance {
   string id = 1;
   string name = 2;
   Flavor flavor = 3;
-  InstanceStatus status = 4;
+  string status = 4;
   string ip = 5;
   string imageName = 6;
   string createTime = 7;
@@ -43,7 +42,6 @@ message GetInstancesResponse {
 }
 
 message GetFlavorsRequest {
-  
 }
 
 message GetFlavorsResponse {
@@ -66,11 +64,43 @@ message GetImagesResponse {
 
 message CreateInstanceRequest {
   string name = 1;
-  string flavorId = 2;
-  string imageId = 3;
+  string flavorName = 2;
+  string imageName = 3;
   int32 volume = 4;
 }
 
 message CreateInstanceResponse {
   string instanceId = 1;
+}
+
+message StartInstanceRequest {
+  string instanceId = 1;
+}
+
+message StartInstanceResponse {
+  
+}
+
+message StopInstanceRequest {
+  string instanceId = 1;
+}
+
+message StopInstanceResponse {
+  
+}
+
+message DeleteInstanceRequest {
+  string instanceId = 1;
+}
+
+message DeleteInstanceResponse {
+  
+}
+
+message RebootInstanceRequest {
+  string instanceId = 1;
+}
+
+message RebootInstanceResponse {
+  
 }

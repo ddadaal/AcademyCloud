@@ -15,22 +15,36 @@ export class InstanceService extends HttpService {
   async getFlavors(): Promise<{ flavors: Flavor[] }> {
     return await this.fetch({
       method: HttpMethod.GET,
-      path: "/resources/instances/flavors",
+      path: "/resources/flavors",
     });
   }
 
   async getImages(): Promise<{ images: Image[] }> {
     return await this.fetch({
       method: HttpMethod.GET,
-      path: "/resources/instances/images",
+      path: "/resources/images",
     });
   }
 
-  async createInstance(name: string, flavorId: string, imageId: string, volume: number): Promise<void> {
+  async createInstance(name: string, flavorName: string, imageName: string, volume: number): Promise<void> {
     return await this.fetch({
       method: HttpMethod.POST,
       path: "/resources/instances",
-      body: { name, flavorId, imageId, volume },
+      body: { name, flavorName, imageName, volume },
+    });
+  }
+
+  async stopInstance(instanceId: string) {
+    await this.fetch({
+      method: HttpMethod.GET,
+      path: `/resources/instances/${instanceId}/stop`
+    });
+  }
+
+  async deleteInstance(instanceId: string) {
+    await this.fetch({
+      method: HttpMethod.DELETE,
+      path: `/resources/instances/${instanceId}`
     });
   }
 }

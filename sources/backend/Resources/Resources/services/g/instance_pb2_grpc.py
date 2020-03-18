@@ -34,6 +34,26 @@ class InstanceServiceStub(object):
         request_serializer=instance__pb2.CreateInstanceRequest.SerializeToString,
         response_deserializer=instance__pb2.CreateInstanceResponse.FromString,
         )
+    self.StartInstance = channel.unary_unary(
+        '/instance.InstanceService/StartInstance',
+        request_serializer=instance__pb2.StartInstanceRequest.SerializeToString,
+        response_deserializer=instance__pb2.StartInstanceResponse.FromString,
+        )
+    self.StopInstance = channel.unary_unary(
+        '/instance.InstanceService/StopInstance',
+        request_serializer=instance__pb2.StopInstanceRequest.SerializeToString,
+        response_deserializer=instance__pb2.StopInstanceResponse.FromString,
+        )
+    self.DeleteInstance = channel.unary_unary(
+        '/instance.InstanceService/DeleteInstance',
+        request_serializer=instance__pb2.DeleteInstanceRequest.SerializeToString,
+        response_deserializer=instance__pb2.DeleteInstanceResponse.FromString,
+        )
+    self.RebootInstance = channel.unary_unary(
+        '/instance.InstanceService/RebootInstance',
+        request_serializer=instance__pb2.RebootInstanceRequest.SerializeToString,
+        response_deserializer=instance__pb2.RebootInstanceResponse.FromString,
+        )
 
 
 class InstanceServiceServicer(object):
@@ -68,6 +88,34 @@ class InstanceServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def StartInstance(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def StopInstance(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DeleteInstance(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def RebootInstance(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_InstanceServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -90,6 +138,26 @@ def add_InstanceServiceServicer_to_server(servicer, server):
           servicer.CreateInstance,
           request_deserializer=instance__pb2.CreateInstanceRequest.FromString,
           response_serializer=instance__pb2.CreateInstanceResponse.SerializeToString,
+      ),
+      'StartInstance': grpc.unary_unary_rpc_method_handler(
+          servicer.StartInstance,
+          request_deserializer=instance__pb2.StartInstanceRequest.FromString,
+          response_serializer=instance__pb2.StartInstanceResponse.SerializeToString,
+      ),
+      'StopInstance': grpc.unary_unary_rpc_method_handler(
+          servicer.StopInstance,
+          request_deserializer=instance__pb2.StopInstanceRequest.FromString,
+          response_serializer=instance__pb2.StopInstanceResponse.SerializeToString,
+      ),
+      'DeleteInstance': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteInstance,
+          request_deserializer=instance__pb2.DeleteInstanceRequest.FromString,
+          response_serializer=instance__pb2.DeleteInstanceResponse.SerializeToString,
+      ),
+      'RebootInstance': grpc.unary_unary_rpc_method_handler(
+          servicer.RebootInstance,
+          request_deserializer=instance__pb2.RebootInstanceRequest.FromString,
+          response_serializer=instance__pb2.RebootInstanceResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

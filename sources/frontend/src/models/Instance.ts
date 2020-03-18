@@ -11,16 +11,11 @@ export function flavorString({ name, cpu, memory, rootDisk }: Flavor) {
   return `${name} | ${cpu} CPU | ${memory} MB | ${rootDisk} GB`;
 }
 
-export enum InstanceStatus {
-  Shutoff = "Shutoff",
-  Error = "Error",
-}
-
 export interface Instance {
   id: string;
   name: string;
   flavor: Flavor;
-  status: InstanceStatus;
+  status: string;
   ip: string;
   imageName: string;
   createTime: string;

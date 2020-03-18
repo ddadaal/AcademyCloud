@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AcademyCloud.API.Controllers.ResourceManagement
 {
-    [Route("/resources/instances")]
+    [Route("/resources")]
     [ApiController]
     [Authorize]
     public class InstanceController : Controller
@@ -21,7 +21,7 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
             this.factory = factory;
         }
 
-        [HttpGet]
+        [HttpGet("instances")]
         public async Task<GetInstancesResponse> GetInstances()
         {
             var resp = await (await factory.GetInstanceServiceClient())
@@ -66,6 +66,34 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
             {
                 Images = resp.Images
             };
+        }
+
+        [HttpPost("instances")]
+        public async Task<ActionResult> CreateInstance([FromBody] CreateInstanceRequest request)
+        {
+            var resp = await (await factory.GetInstanceServiceClient())
+                .CreateInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.CreateInstanceRequest
+                {
+                    Name = request.Name,
+                    ImageName = request.ImageName,
+                    FlavorName = request.FlavorName,
+                    Volume = request.Volume
+                });
+
+            return Created(resp.InstanceId, resp.InstanceId);
+
+        }
+
+        [HttpDelete("instances/{instanceId}")]
+        public async Task<ActionResult> DeleteInstance([FromRoute] string instanceId)
+        {
+            await (await factory.GetInstanceServiceClient())
+                .DeleteInstanceAsync(new AcademyCloud.ResourceManagement.Protos.Instance.DeleteInstanceRequest
+                {
+                    InstanceId = instanceId
+                });
+
+            return NoContent();
         }
     }
 }

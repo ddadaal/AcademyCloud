@@ -26,7 +26,7 @@ export const ImageSelect: React.FC = (props) => {
     >
       <Select loading={isPending}>
         {(data ?? []).map(f => (
-          <Select.Option key={f.id} value={f.id}>
+          <Select.Option key={f.name} value={f.name}>
             {f.name}
           </Select.Option>
         ))}

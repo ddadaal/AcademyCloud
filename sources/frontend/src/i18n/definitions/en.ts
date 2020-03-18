@@ -344,7 +344,10 @@ export default {
         imageName: "Image Name",
         status: {
           label: "Status",
-          Shutoff: "Shutoff",
+          SHUTOFF: "Shutoff",
+          BUILD: "Building",
+          ERROR: "Error",
+          ACTIVE: "Active",
         },
         createTime: "Create Time",
         startTime: "Total Startup Time",

@@ -343,7 +343,10 @@ export default {
         imageName: "镜像名字",
         status: {
           label: "状态",
-          Shutoff: "关机",
+          SHUTOFF: "关机",
+          BUILD: "构建中",
+          ERROR: "出错",
+          ACTIVE: "开机",
         },
         createTime: "创建时间",
         startTime: "总开机时间",

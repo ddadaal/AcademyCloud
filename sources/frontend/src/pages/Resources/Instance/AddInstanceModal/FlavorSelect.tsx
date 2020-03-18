@@ -68,7 +68,7 @@ export const FlavorSelect: React.FC = (props) => {
             {` `}
             {limitsPending ? <Spin /> : `CPU ${available.cpu} | Memory ${available.memory * 1024} MB`}
           </div>
-          // flavor is an id
+          // flavor is name
         )} name="flavor" rules={[
           { required: true, message: required },
           {
