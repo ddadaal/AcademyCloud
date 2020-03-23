@@ -53,4 +53,4 @@ export function isProjectAdmin(scope: Scope): boolean {
   return isProjectScope(scope) && isAdmin(scope);
 }
 
-export const isResourcesDisabled = (scope?: Scope) => !scope || isSystemScope(scope) || (isDomainScope(scope) && !isAdmin(scope));
+export const isResourcesDisabled = (scope?: Scope) => !scope || isSystemScope(scope) || isDomainScope(scope);
