@@ -20,7 +20,7 @@ namespace AcademyCloud.Expenses.Extensions
         {
             using var scope = provider.CreateScope();
 
-            var db = provider.GetService<ExpensesDbContext>();
+            var db = scope.ServiceProvider.GetRequiredService<ExpensesDbContext>();
 
             await action(db);
 

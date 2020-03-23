@@ -62,7 +62,6 @@ namespace AcademyCloud.Expenses
                 options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme)
                  .RequireAuthenticatedUser()
                  .Build();
-
             });
 
             services
@@ -92,7 +91,9 @@ namespace AcademyCloud.Expenses
             services.AddSingleton<ScopedDbProvider>();
 
             // Add background tasks
-            services.AddSingleton<ManagementFeeTask>();
+            services.AddHostedService<ManagementFeeTask>();
+            services.AddHostedService<UseCycleTask>();
+            services.AddHostedService<BillingCycleTask>();
             services.AddSingleton<UseCycleTask>();
             services.AddSingleton<BillingCycleTask>();
 
