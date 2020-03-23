@@ -53,22 +53,24 @@ export const AddInstanceModal: React.FC<Props> = ({ visible, close, onCreated })
 
 
   return (
-    <Modal
-      visible={visible}
-      title={<Localized id={root.button} />}
-      onOk={onOk}
-      onCancel={close}
-      confirmLoading={submitting}
-    >
+    <>
       {contextHolder}
-      <Form form={form} layout="vertical" initialValues={{ name: new Date().toISOString() }}>
-        <Form.Item label={<StrongLabel id={root.name} />} name="name" rules={[{ required: true, message: required }]}>
-          <Input />
-        </Form.Item>
-        <FlavorSelect />
-        <ImageSelect />
-      </Form>
+      <Modal
+        visible={visible}
+        title={<Localized id={root.button} />}
+        onOk={onOk}
+        onCancel={close}
+        confirmLoading={submitting}
+      >
+        <Form form={form} layout="vertical" initialValues={{ name: new Date().toISOString() }}>
+          <Form.Item label={<StrongLabel id={root.name} />} name="name" rules={[{ required: true, message: required }]}>
+            <Input />
+          </Form.Item>
+          <FlavorSelect />
+          <ImageSelect />
+        </Form>
 
-    </Modal >
+      </Modal >
+    </>
   )
 };
