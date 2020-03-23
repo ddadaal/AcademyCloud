@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using DomainEntity = AcademyCloud.Identity.Domain.Entities.Domain;
 using static AcademyCloud.Shared.Constants;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AcademyCloud.Identity.Data
 {
@@ -46,7 +47,34 @@ namespace AcademyCloud.Identity.Data
                 o.HasIndex(x => x.Name).IsUnique();
             });
 
+            // Set DateTime to UTC
+            var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
+            var nullableDateTimeConverter = new ValueConverter<DateTime?, DateTime?>(
+                v => v.HasValue ? v.Value.ToUniversalTime() : v,
+                v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (entityType.IsKeyless)
+                {
+                    continue;
+                }
+
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(dateTimeConverter);
+                    }
+                    else if (property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(nullableDateTimeConverter);
+                    }
+                }
+            }
 
         }
     }
