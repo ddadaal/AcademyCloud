@@ -16,6 +16,6 @@ namespace AcademyCloud.API.Models.Identity.Projects
 
         public User PayUser { get; set; }
 
-        public IDictionary<string, Resources> UserResources { get; set; }
+        public IDictionary<string, Resources> UserQuotas { get; set; }
     }
 }

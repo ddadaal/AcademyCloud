@@ -161,7 +161,7 @@ namespace AcademyCloud.API.Controllers.Identity
                     Id = payUser.PayUsers[projectId],
                     Name = payUserName.IdNameMap[payUser.PayUsers[projectId]],
                 },
-                UserResources = resp.Admins.Concat(resp.Members).ToDictionary(user => user.User.Id, user => (Resources)quotas.Quotas[user.UserProjectAssignmentId])
+                UserQuotas = resp.Admins.Concat(resp.Members).ToDictionary(user => user.User.Id, user => (Resources)quotas.Quotas[user.UserProjectAssignmentId])
             };
         }
 
