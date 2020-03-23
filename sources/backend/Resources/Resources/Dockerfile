@@ -38,8 +38,9 @@ COPY --from=builder $PYROOT/lib/ $PYROOT/lib/
 # Copy source code
 COPY . ./
 
-# Run, -u for unbuffered output
-CMD ["python", "-u", "app.py"]
+# Wait for database to be available
+# Then run, -u for unbuffered output
+CMD ["./wait-for-it.sh", "db:3306", "--", "python", "-u", "app.py"]
 
 
 
