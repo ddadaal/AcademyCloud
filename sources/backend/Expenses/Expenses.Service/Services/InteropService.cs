@@ -17,7 +17,6 @@ using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 
 namespace AcademyCloud.Expenses.Services
 {
-    [Authorize]
     public class InteropService : Interop.InteropBase
     {
         private TokenClaimsAccessor tokenClaimsAccessor;
@@ -145,7 +144,7 @@ namespace AcademyCloud.Expenses.Services
             };
 
         }
-
+        [Authorize]
         public override async Task<GetQuotaStatusOfCurrentProjectUserResponse> GetQuotaStatusOfCurrentProjectUser(GetQuotaStatusOfCurrentProjectUserRequest request, ServerCallContext context)
         {
             var tokenClaims = tokenClaimsAccessor.TokenClaims;
@@ -162,6 +161,7 @@ namespace AcademyCloud.Expenses.Services
             };
         }
 
+        [Authorize]
         public override async Task<ChangeProjectUserResourcesResponse> ChangeProjectUserResources(ChangeProjectUserResourcesRequest request, ServerCallContext context)
         {
             var tokenClaims = tokenClaimsAccessor.TokenClaims;

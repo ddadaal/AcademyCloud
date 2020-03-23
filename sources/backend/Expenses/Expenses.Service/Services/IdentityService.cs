@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DomainEntity = AcademyCloud.Expenses.Domain.Entities.Domain;
 using static AcademyCloud.Shared.Constants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AcademyCloud.Expenses.Services
 {
@@ -47,6 +48,7 @@ namespace AcademyCloud.Expenses.Services
             return new AddDomainResponse { };
         }
 
+        [Authorize]
         public override async Task<AddProjectResponse> AddProject(AddProjectRequest request, ServerCallContext context)
         {
             var payer = await dbContext.Users.FindIfNullThrowAsync(request.PayUserId);
@@ -244,14 +246,14 @@ namespace AcademyCloud.Expenses.Services
             // BillingCycleEntry share id with its subject.
             var entry = await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userAssignment.Id);
             billingCycleTask.TrySettle(entry, TransactionReason.ProjectQuotaChange);
-            
+
             // then, change the quota
             userAssignment.Quota = quota.FromGrpc();
 
             await dbContext.SaveChangesAsync();
 
             return new SetProjectUserQuotaResponse { };
-            
+
         }
 
         public override async Task<DeleteUserResponse> DeleteUser(DeleteUserRequest request, ServerCallContext context)
