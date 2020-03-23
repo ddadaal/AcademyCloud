@@ -39,12 +39,12 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
         {
             if (entry.Settle(CalculatePrice(entry.Resources), DateTime.UtcNow))
             {
-                logger.LogDebug($"Settling use cycle for {entry} completed.");
+                logger.LogInformation($"Settling use cycle for {entry} completed.");
                 return true;
             }
             else
             {
-                logger.LogDebug($"{entry} has no resources. Skip settling.");
+                logger.LogInformation($"{entry} has no resources. Skip settling.");
                 return false;
             }
         }
@@ -56,7 +56,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
             {
                 var time = DateTime.UtcNow;
 
-                logger.LogDebug($"Start settling use cycle at {time}..");
+                logger.LogInformation($"Start settling use cycle at {time}..");
 
                 await provider.WithDbContext(async dbContext =>
                 {
@@ -64,7 +64,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
                     {
                         if (time >= NextDue(i.LastSettled))
                         {
-                            logger.LogDebug($"Settling use cycle for {i}");
+                            logger.LogInformation($"Settling use cycle for {i}");
 
                             if (i.Settle(CalculatePrice(i.Resources), time))
                             {
@@ -73,13 +73,13 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
                         }
                         else
                         {
-                            logger.LogDebug($"Will not settle use cycle {i} this time.");
+                            logger.LogInformation($"Will not settle use cycle {i} this time.");
                         }
                     }
 
                 });
 
-                logger.LogDebug("End settling use cycle.");
+                logger.LogInformation("End settling use cycle.");
 
                 await Task.Delay(configuration.CheckCycleMs, stoppingToken);
             }

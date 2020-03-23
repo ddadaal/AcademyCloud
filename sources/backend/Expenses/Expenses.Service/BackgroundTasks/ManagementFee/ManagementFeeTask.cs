@@ -46,7 +46,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
             {
                 var time = DateTime.UtcNow;
 
-                logger.LogDebug($"Start charging management fees at {time}..");
+                logger.LogInformation($"Start charging management fees at {time}..");
 
                 await provider.WithDbContext(async dbContext =>
                 {
@@ -57,22 +57,22 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
                         if ((time - i.LastSettled).TotalMilliseconds > configuration.ChargeCycleMs)
                         {
                             var amount = GetPrice(i);
-                            logger.LogDebug($"{i} is being charged with management fee {amount}.");
+                            logger.LogInformation($"{i} is being charged with management fee {amount}.");
 
                             i.Charge(system, amount, time);
 
-                            logger.LogDebug($"Charging {i} for management fee is completed.");
+                            logger.LogInformation($"Charging {i} for management fee is completed.");
                             await dbContext.SaveChangesAsync();
                         }
                         else
                         {
-                            logger.LogDebug($"{i} will not be charged with management fee this time.");
+                            logger.LogInformation($"{i} will not be charged with management fee this time.");
                         }
                     }
 
                 });
 
-                logger.LogDebug("End charging management fee.");
+                logger.LogInformation("End charging management fee.");
 
                 await Task.Delay(configuration.CheckCycleMs, stoppingToken);
             }

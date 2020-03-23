@@ -52,12 +52,12 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         {
             if (entry.Settle(CalculatePrice(entry), DateTime.UtcNow, reason))
             {
-                logger.LogDebug($"Settling billing cycle for {entry} completed.");
+                logger.LogInformation($"Settling billing cycle for {entry} completed.");
                 return true;
             }
             else
             {
-                logger.LogDebug($"{entry} has no quota. Skip settling.");
+                logger.LogInformation($"{entry} has no quota. Skip settling.");
                 return false;
             }
         }
@@ -68,7 +68,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
             {
                 var time = DateTime.UtcNow;
 
-                logger.LogDebug($"Start settling billing cycle at {time}..");
+                logger.LogInformation($"Start settling billing cycle at {time}..");
 
                 await provider.WithDbContext(async dbContext =>
                 {
@@ -83,13 +83,13 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                         }
                         else
                         {
-                            logger.LogDebug($"Will not settle billing cycle {i} this time.");
+                            logger.LogInformation($"Will not settle billing cycle {i} this time.");
                         }
                     }
 
                 });
 
-                logger.LogDebug("End settling billing cycle.");
+                logger.LogInformation("End settling billing cycle.");
 
                 await Task.Delay(configuration.CheckCycleMs, stoppingToken);
             }
