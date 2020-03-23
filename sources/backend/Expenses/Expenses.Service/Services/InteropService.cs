@@ -131,7 +131,7 @@ namespace AcademyCloud.Expenses.Services
 
         public override async Task<GetQuotaStatusResponse> GetQuotaStatus(GetQuotaStatusRequest request, ServerCallContext context)
         {
-            var totalSystemResources = new Domain.ValueObjects.Resources(1000, 1000, 1000);
+            var totalSystemResources = new Domain.ValueObjects.Resources(1000, 1000000, 1000);
             var (total, used) = await Dispatch(request.Subject,
                 systemFunc: x => (totalSystemResources, Domain.ValueObjects.Resources.Sum(x.Domains.Select(x => x.Quota))),
                 domainFunc: x => (x.Quota, Domain.ValueObjects.Resources.Sum(x.Projects.Select(x => x.Quota))),
