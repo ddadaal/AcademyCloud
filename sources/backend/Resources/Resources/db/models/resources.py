@@ -16,7 +16,7 @@ class Instance(Base):
     id = Column(GUID(), primary_key=True)
 
     """OpenStack不知道为什么没有记录实例的image，那就我们自己记吧"""
-    image_name = Column(String, nullable=False)
+    image_name = Column(String(16), nullable=False)
 
     owner_id = Column(GUID(), ForeignKey("user.id"), nullable=False)
 

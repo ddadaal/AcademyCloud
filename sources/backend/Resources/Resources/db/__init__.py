@@ -13,6 +13,10 @@ from utils.token_claims import TokenClaims
 
 engine = create_engine(config.database_url, echo=True)
 
+# Create database if not exists
+engine.execute(f"CREATE DATABASE IF NOT EXISTS {config.database_name};")
+engine.execute(f"USE {config.database_name};")
+
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
 

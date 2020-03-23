@@ -14,10 +14,21 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
     command: -internal consul://consul:8500
+  db:
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    depends_on:
+      - registrator
+    volumes:
+      - ./dbdata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
   identity.service:
     image: ${DOCKER_REGISTRY-}identityservice
     depends_on:
       - registrator
+      - db
     build:
       context: .
       dockerfile: Identity/Identity.Service/Dockerfile
@@ -25,6 +36,7 @@ services:
     image: ${DOCKER_REGISTRY-}expensesservice
     depends_on:
       - registrator
+      - db
     build:
       context: .
       dockerfile: Expenses/Expenses.Service/Dockerfile
@@ -32,6 +44,7 @@ services:
     image: ${DOCKER_REGISTRY-}resourcesservice
     depends_on:
       - registrator
+      - db
     build:
       context: ./Resources/Resources
       dockerfile: Dockerfile

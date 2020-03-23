@@ -1,4 +1,5 @@
-database_url = "sqlite:///test.db"
+database_url = "mysql+pymysql://root:example@db:3306"
+database_name = "resources"
 token_header = "Bearer "
 token_header_key = "authorization"
 jwt_secret = "this key should be as long as possible hahahahahahaaha"

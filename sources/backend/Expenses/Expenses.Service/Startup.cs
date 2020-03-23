@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,17 +34,14 @@ namespace AcademyCloud.Expenses
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var sqliteConnection = new SqliteConnection("DataSource=:memory:");
-
             services.AddGrpc(options =>
             {
                 options.Interceptors.Add<ExceptionInterceptor>();
             });
             services.AddDbContext<ExpensesDbContext>(options =>
             {
+                options.UseMySql(Configuration.GetConnectionString("default"));
                 options.UseLazyLoadingProxies();
-                options.UseSqlite(sqliteConnection);
-                //options.UseInMemoryDatabase("Test");
             });
 
             // Strongly typed configuration
@@ -107,7 +103,6 @@ namespace AcademyCloud.Expenses
                 app.UseDeveloperExceptionPage();
             }
 
-            dbContext.Database.OpenConnection();
             dbContext.Database.EnsureCreated();
 
             app.UseRouting();
