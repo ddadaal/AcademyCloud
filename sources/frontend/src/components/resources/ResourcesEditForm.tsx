@@ -34,7 +34,7 @@ const ResourceInput = ({ initial, used = ZeroResources, total = ZeroResources, r
 
   return (
     <Form.Item label={(
-      <p>
+      <div>
         <strong><Localized id={root[resourceKey]} /></strong>
         <Divider type="vertical" />
         <Localized id={root.available} />
@@ -45,7 +45,7 @@ const ResourceInput = ({ initial, used = ZeroResources, total = ZeroResources, r
         <Divider type="vertical" />
         <Localized id={root.total} />
         <strong> {total[resourceKey]}</strong>
-      </p>
+      </div>
     )} name={resourceKey} rules={[
       { required: true, message: required },
       {

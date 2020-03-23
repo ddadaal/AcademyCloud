@@ -70,7 +70,7 @@ export default {
         total: "Total",
         number: "Please input a number >= used and <= available.",
         cpu: "CPU Cores",
-        memory: "Memory (GB)",
+        memory: "Memory (MB)",
         storage: "Storage (GB)",
         setResources: {
           link: "Set Quota",

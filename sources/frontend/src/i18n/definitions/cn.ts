@@ -70,7 +70,7 @@ export default {
         total: "共",
         number: "请输入一个大于等于已用值，小于等于可用值的数字。",
         cpu: "CPU核心数",
-        memory: "内存 (GB)",
+        memory: "内存 (MB)",
         storage: "存储 (GB)",
         setResources: {
           link: "设置资源限额",
