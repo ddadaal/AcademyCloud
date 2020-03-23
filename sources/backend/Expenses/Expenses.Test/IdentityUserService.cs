@@ -13,7 +13,7 @@ using static AcademyCloud.Shared.Constants;
 
 namespace AcademyCloud.Expenses.Test
 {
-    public class IdentityRegisterService : CommonTest
+    public class IdentityUserService : CommonTest
     {
 
         private BillingCycleConfigurations billingConfiguration = new BillingCycleConfigurations
@@ -65,6 +65,21 @@ namespace AcademyCloud.Expenses.Test
 
             var socialProject = Assert.Single(db.Domains.Find(SocialDomainId).Projects);
             Assert.Equal(socialProject, project);
+        }
+
+        [Fact]
+        public async Task TestRemoveUser()
+        {
+            var (service, _, _) = CreateService();
+
+            await service.DeleteUser(new Protos.Identity.DeleteUserRequest
+            {
+                UserId = cjd.Id.ToString(),
+            }, TestContext);
+
+            Assert.Null(db.Users.Find(cjd.Id));
+
+            Assert.Equal(0, lqproject.Users.Count(x => x.User.Id == cjd.Id));
         }
     }
 }

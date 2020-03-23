@@ -253,5 +253,14 @@ namespace AcademyCloud.Expenses.Services
             return new SetProjectUserQuotaResponse { };
             
         }
+
+        public override async Task<DeleteUserResponse> DeleteUser(DeleteUserRequest request, ServerCallContext context)
+        {
+            var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            dbContext.Users.Remove(user);
+            await dbContext.SaveChangesAsync();
+
+            return new DeleteUserResponse { };
+        }
     }
 }

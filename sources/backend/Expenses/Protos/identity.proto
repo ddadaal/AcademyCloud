@@ -13,6 +13,7 @@ service Identity {
   rpc RemoveUserFromDomain (RemoveUserFromDomainRequest) returns (RemoveUserFromDomainResponse);
 
   rpc AddUser (AddUserRequest) returns (AddUserResponse);
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserResponse);
 
   rpc AddProject (AddProjectRequest) returns (AddProjectResponse);
   rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectResponse);
@@ -70,6 +71,15 @@ message AddUserRequest {
 }
 
 message AddUserResponse {
+  
+}
+
+
+message DeleteUserRequest {
+  string userId = 1;
+}
+
+message DeleteUserResponse {
   
 }
 

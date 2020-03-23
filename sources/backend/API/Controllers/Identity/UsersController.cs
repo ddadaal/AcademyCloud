@@ -80,9 +80,14 @@ namespace AcademyCloud.API.Controllers.Identity
         [HttpDelete("users/{userId}")]
         public async Task<ActionResult> RemoveUserFromSystem([FromRoute] string userId)
         {
-            // TODO request to expenses
             var resp = await (await factory.GetUsersClientAsync())
                 .RemoveUserFromSystemAsync(new AcademyCloud.Identity.Protos.Users.RemoveUserFromSystemRequest
+                {
+                    UserId = userId
+                });
+
+            await (await factory.GetExpensesIdentityClient())
+                .DeleteUserAsync(new AcademyCloud.Expenses.Protos.Identity.DeleteUserRequest
                 {
                     UserId = userId
                 });
