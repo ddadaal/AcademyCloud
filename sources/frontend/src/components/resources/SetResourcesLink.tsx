@@ -23,9 +23,9 @@ export const SetResourcesLink: React.FC<Props> = ({ initial, onConfirm, getAvail
   const [api, contextHolder] = useLocalizedNotification();
 
   const deferFn = useCallback(async () => {
-    const resources = await form.validateFields() as Resources;
-    await onConfirm(resources);
-  }, [onConfirm])
+    const { cpu, memory, storage } = await form.validateFields();
+    await onConfirm({ cpu: parseInt(cpu), memory: parseInt(memory), storage: parseInt(storage) });
+  }, [form, onConfirm]);
 
 
   const { run, isPending } = useAsync({
