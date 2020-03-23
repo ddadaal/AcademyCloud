@@ -81,16 +81,16 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
                 });
 
             // add the resources usage to expenses
-            //await (await factory.GetExpensesInteropClientAsync())
-            //    .ChangeProjectUserResourcesAsync(new AcademyCloud.Expenses.Protos.Interop.ChangeProjectUserResourcesRequest
-            //    {
-            //        ResourcesDelta = new AcademyCloud.Expenses.Protos.Common.Resources
-            //        {
-            //            Cpu = resp.Flavor.Cpu,
-            //            Memory = resp.Flavor.Memory,
-            //            Storage = request.Volume,
-            //        }
-            //    });
+            await (await factory.GetExpensesInteropClientAsync())
+               .ChangeProjectUserResourcesAsync(new AcademyCloud.Expenses.Protos.Interop.ChangeProjectUserResourcesRequest
+               {
+                   ResourcesDelta = new AcademyCloud.Expenses.Protos.Common.Resources
+                   {
+                       Cpu = resp.Flavor.Cpu,
+                       Memory = resp.Flavor.Memory,
+                       Storage = request.Volume,
+                   }
+               });
 
             return Created(resp.InstanceId, resp.InstanceId);
 
@@ -106,16 +106,16 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
                 });
 
             // remove the resources usage to expenses
-            //await (await factory.GetExpensesInteropClientAsync())
-            //    .ChangeProjectUserResourcesAsync(new AcademyCloud.Expenses.Protos.Interop.ChangeProjectUserResourcesRequest
-            //    {
-            //        ResourcesDelta = new AcademyCloud.Expenses.Protos.Common.Resources
-            //        {
-            //            Cpu = -resp.Flavor.Cpu,
-            //            Memory = -resp.Flavor.Memory,
-            //            Storage = -resp.Volume,
-            //        }
-            //    });
+            await (await factory.GetExpensesInteropClientAsync())
+               .ChangeProjectUserResourcesAsync(new AcademyCloud.Expenses.Protos.Interop.ChangeProjectUserResourcesRequest
+               {
+                   ResourcesDelta = new AcademyCloud.Expenses.Protos.Common.Resources
+                   {
+                       Cpu = -resp.Flavor.Cpu,
+                       Memory = -resp.Flavor.Memory,
+                       Storage = -resp.Volume,
+                   }
+               });
 
             return NoContent();
         }
