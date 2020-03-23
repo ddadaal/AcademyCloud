@@ -23,8 +23,8 @@ interface Props {
 }
 
 const service = getApiService(InstanceService);
-const createInstance = async (data: { name: string; flavor: string; image: string; volume: number }) => {
-  await service.createInstance(data.name, data.flavor, data.image, data.volume);
+const createInstance = async (data: { name: string; flavor: string; image: string; volume: string }) => {
+  await service.createInstance(data.name, data.flavor, data.image, parseInt(data.volume));
 }
 
 
