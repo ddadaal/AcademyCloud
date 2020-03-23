@@ -275,13 +275,16 @@ namespace AcademyCloud.Expenses.Test
                 ResourcesDelta = delta.ToGrpc()
             }, TestContext);
 
-            var billingRecord = Assert.Single(lq67project.BillingCycleRecords);
-            Assert.Equal(initial, billingRecord.Quota);
-            var projectBillingRecord = Assert.Single(lqproject.BillingCycleRecords);
-            Assert.Equal(initial, projectBillingRecord.Quota);
-            Assert.Equal(Domain.ValueObjects.Resources.Zero, lq67project.Quota);
-            Assert.Equal(Domain.ValueObjects.Resources.Zero, lqproject.Quota);
-            Assert.Equal(Domain.ValueObjects.Resources.Zero, lq67project.Resources);
+            // no billing is to be allocated to user.
+            Assert.Empty(lq67project.BillingCycleRecords);
+
+            //var billingRecord = Assert.Single(lq67project.BillingCycleRecords);
+            //Assert.Equal(initial, billingRecord.Quota);
+            //var projectBillingRecord = Assert.Single(lqproject.BillingCycleRecords);
+            //Assert.Equal(initial, projectBillingRecord.Quota);
+            //Assert.Equal(Domain.ValueObjects.Resources.Zero, lq67project.Quota);
+            //Assert.Equal(Domain.ValueObjects.Resources.Zero, lqproject.Quota);
+            //Assert.Equal(Domain.ValueObjects.Resources.Zero, lq67project.Resources);
 
 
 

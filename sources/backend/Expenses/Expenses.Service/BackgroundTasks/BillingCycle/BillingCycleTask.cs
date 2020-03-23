@@ -72,11 +72,15 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
 
                 await provider.WithDbContext(async dbContext =>
                 {
-                    await foreach (var i in dbContext.BillingCycleEntries.AsAsyncEnumerable())
+                    await foreach (var i in dbContext.BillingCycleEntries.Where(x => x.SubjectType != SubjectType.UserProjectAssignment).AsAsyncEnumerable())
                     {
                         if (time >= NextDue(i.LastSettled))
                         {
-                            if (TrySettle(i, TransactionReason.DomainResources))
+                            if (TrySettle(i, i.SubjectType switch {
+                                SubjectType.Domain => TransactionReason.DomainResources,
+                                SubjectType.Project => TransactionReason.ProjectResources,
+                                _ => throw new InvalidOperationException($"Got {i.SubjectType} with id {i.Id} when settling billing cycle. Only domains, projects and UserProject will be settled.")
+                            }))
                             {
                                 await dbContext.SaveChangesAsync();
                             }

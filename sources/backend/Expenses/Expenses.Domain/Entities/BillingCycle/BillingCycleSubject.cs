@@ -41,6 +41,8 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public bool Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reason)
         {
+            if (price == 0) { return false; }
+
             var resources = Quota;
 
             if (resources == Resources.Zero) { return false; }

@@ -306,13 +306,8 @@ namespace AcademyCloud.Expenses.Test
                 SubjectType = Protos.Common.SubjectType.UserProjectAssignment,
             }, TestContext);
 
-            Assert.Equal(2, resp.Billings.Count);
-
-            var billing = resp.Billings.First();
-
-            Assert.Equal(quota.ToGrpc(), billing.Quota);
-            // User should not actually for the resources
-            Assert.Equal(0, (decimal)billing.Amount);
+            // no allocated billings is issued to user project
+            Assert.Empty(resp.Billings);
         }
     }
 }

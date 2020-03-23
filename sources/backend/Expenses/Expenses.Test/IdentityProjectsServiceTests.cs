@@ -175,7 +175,7 @@ namespace AcademyCloud.Expenses.Test
             }, TestContext);
 
             Assert.Equal(newQuota, userAssignment.Quota);
-            // Since previously it has zero quota, there should be no records
+            // No allocated billing is to be issued to project user.
             Assert.Empty(userAssignment.BillingCycleRecords);
             Assert.Empty(userAssignment.PayedOrgTransactions);
 
@@ -187,9 +187,8 @@ namespace AcademyCloud.Expenses.Test
                 Quota = new Protos.Common.Resources { Cpu = 1, Memory = 1, Storage = 1 }
             }, TestContext);
 
-            // Previous quota is not zero, there should be records
-            var record = Assert.Single(userAssignment.BillingCycleRecords);
-            Assert.Equal(record.Quota, newQuota);
+            // No allocated billing is to be issued to project user.
+            Assert.Empty(userAssignment.BillingCycleRecords);
         }
     }
 }
