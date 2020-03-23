@@ -4,7 +4,7 @@ import grpc
 import services
 from concurrent.futures import ThreadPoolExecutor
 
-from db import engine, DBSession, User, Base
+from db import engine, DBSession, ProjectUser, Base
 from db.models import Instance, Volume
 
 port = 80
@@ -19,7 +19,7 @@ Base.metadata.create_all(engine)
 
 session = DBSession()
 user_id = "12848b44-682f-11ea-a279-d46d6d2a6673"
-test_user = User(id=user_id, user_id="9dc69b93-a261-4cf5-9836-db7a2215e9c1",
+test_user = ProjectUser(id=user_id, user_id="9dc69b93-a261-4cf5-9836-db7a2215e9c1",
                  project_id="99d76a6c-05da-422c-8746-7328f7cd2212")
 session.merge(test_user)
 instance_id = "6bc2a6f8-6cbb-4996-9d20-58c68a27776a"

@@ -7,7 +7,6 @@ from client import create_client
 from db import DBSession, get_user_from_claims
 import uuid
 
-from db.models.account import User
 from db import models
 from services.g.instance_pb2 import *
 from utils.decorator import auth_required

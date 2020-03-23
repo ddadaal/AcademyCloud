@@ -2,13 +2,13 @@ import services.g.identity_pb2_grpc as g
 from client import create_client
 from client.client import Client
 from db import DBSession, get_user
-from db.models.account import User
+from db.models.account import ProjectUser
 import uuid
 
 from services.g.identity_pb2 import *
 
 
-def delete_db_user(user: User, client: Client):
+def delete_db_user(user: ProjectUser, client: Client):
     for instance in user.instances:
         client.connection.delete_server(name_or_id=instance.id, wait=False)
     for volume in user.volumes:
@@ -18,7 +18,7 @@ def delete_db_user(user: User, client: Client):
 class UserManagement(g.IdentityServicer):
     def AddUser(self, req: AddUserRequest, context) -> AddUserResponse:
         session = DBSession()
-        user = User(id=req.userProjectAssignmentId, user_id=req.userId, project_id=req.projectId)
+        user = ProjectUser(id=req.userProjectAssignmentId, user_id=req.userId, project_id=req.projectId)
         session.add(user)
         session.commit()
         return AddUserResponse()
@@ -26,7 +26,7 @@ class UserManagement(g.IdentityServicer):
     def DeleteUser(self, request: DeleteUserRequest, context) -> DeleteUserResponse:
         client = create_client()
         session = DBSession()
-        for user in session.query(User).filter_by(user_id=request.userId):
+        for user in session.query(ProjectUser).filter_by(user_id=request.userId):
             delete_db_user(user, client)
             session.delete(user)
         session.commit()
@@ -48,7 +48,7 @@ class UserManagement(g.IdentityServicer):
     def DeleteProject(self, request, context):
         client = create_client()
         session = DBSession()
-        for user in session.query(User).filter_by(project_id=request.projectId):
+        for user in session.query(ProjectUser).filter_by(project_id=request.projectId):
             delete_db_user(user, client)
             session.delete(user)
         session.commit()

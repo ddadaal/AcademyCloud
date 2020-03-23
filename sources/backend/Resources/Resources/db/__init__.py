@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 import config
 
 # 初始化数据库连接:
-from db.models.account import User
+from db.models.account import ProjectUser
 from db.models.utils import Base
 import uuid
 
@@ -23,9 +23,9 @@ DBSession = sessionmaker(bind=engine)
 
 
 # Will Throw if no user is or multiple users are found.
-def get_user_from_claims(session, claims: TokenClaims) -> User:
+def get_user_from_claims(session, claims: TokenClaims) -> ProjectUser:
     return get_user(session, claims["UserId"], claims["ProjectId"])
 
 
-def get_user(session, user_id: str, project_id: str) -> User:
-    return session.query(User).filter_by(user_id=user_id, project_id=project_id).one()
+def get_user(session, user_id: str, project_id: str) -> ProjectUser:
+    return session.query(ProjectUser).filter_by(user_id=user_id, project_id=project_id).one()

@@ -18,7 +18,7 @@ class Instance(Base):
     """OpenStack不知道为什么没有记录实例的image，那就我们自己记吧"""
     image_name = Column(String(16), nullable=False)
 
-    owner_id = Column(GUID(), ForeignKey("user.id"), nullable=False)
+    owner_id = Column(GUID(), ForeignKey("project_user.id"), nullable=False)
 
     volumes = relationship("Volume", cascade="save-update, merge, delete")
 
@@ -32,6 +32,6 @@ class Volume(Base):
 
     """" 单位GB"""
     size = Column(Integer)
-    owner_id = Column(GUID(), ForeignKey("user.id"), nullable=False)
+    owner_id = Column(GUID(), ForeignKey("project_user.id"), nullable=False)
 
     instance_id = Column(GUID(), ForeignKey("instance.id"), nullable=True)
