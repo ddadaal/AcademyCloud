@@ -28,11 +28,19 @@ services:
     build:
       context: .
       dockerfile: Expenses/Expenses.Service/Dockerfile
+  resources.service:
+    image: ${DOCKER_REGISTRY-}resourcesservice
+    depends_on:
+      - registrator
+    build:
+      context: ./Resources/Resources
+      dockerfile: Dockerfile
   api:
     image: ${DOCKER_REGISTRY-}api
     depends_on:
       - identity.service
       - expenses.service
+      - resources.service
     build:
       context: .
       dockerfile: API/Dockerfile
