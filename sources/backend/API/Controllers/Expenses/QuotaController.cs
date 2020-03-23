@@ -21,7 +21,7 @@ namespace AcademyCloud.API.Controllers.Expenses
         }
 
         [HttpGet("{subjectType}/{id}")]
-        public async Task<GetQuotaStatusResponse> GetQuotaStatus([FromRoute] SubjectType subjectType, [FromRoute] string id)
+        public async Task<GetQuotaStatusResponse> GetQuotaStatus([FromRoute] SubjectType subjectType, [FromRoute] string id = "")
         {
             var resp = await (await factory.GetExpensesInteropClientAsync())
                 .GetQuotaStatusAsync(new AcademyCloud.Expenses.Protos.Interop.GetQuotaStatusRequest
@@ -30,6 +30,27 @@ namespace AcademyCloud.API.Controllers.Expenses
                     {
                         Id = id,
                         Type = subjectType
+                    }
+                });
+
+            return new GetQuotaStatusResponse
+            {
+                Total = resp.Total,
+                Used = resp.Used,
+            };
+
+        }
+
+        [HttpGet("System")]
+        public async Task<GetQuotaStatusResponse> GetSystemQuotaStatus()
+        {
+            var resp = await (await factory.GetExpensesInteropClientAsync())
+                .GetQuotaStatusAsync(new AcademyCloud.Expenses.Protos.Interop.GetQuotaStatusRequest
+                {
+                    Subject = new AcademyCloud.Expenses.Protos.Interop.Subject
+                    {
+                        Id = "",
+                        Type = SubjectType.System,
                     }
                 });
 
