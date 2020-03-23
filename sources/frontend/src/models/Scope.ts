@@ -1,4 +1,7 @@
-export type UserRole = "admin" | "member";
+export enum UserRole {
+  Admin = "Admin",
+  Member = "Member",
+}
 
 
 export interface Scope {
@@ -35,7 +38,7 @@ export function isDomainScope(scope: Scope): boolean {
 }
 
 export function isAdmin(scope: Scope): boolean {
-  return scope.role === "admin";
+  return scope.role === UserRole.Admin;
 
 }
 export function isDomainAdmin(scope: Scope): boolean {

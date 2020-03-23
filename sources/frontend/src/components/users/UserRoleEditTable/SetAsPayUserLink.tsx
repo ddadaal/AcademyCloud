@@ -4,6 +4,7 @@ import { Localized, lang } from "src/i18n";
 import { User } from "src/models/User";
 import { DisabledA } from "src/components/DisabledA";
 import { FullUser } from "../FullUser";
+import { UserRole } from "src/models/Scope";
 
 interface Props {
   user: FullUser;
@@ -14,7 +15,7 @@ interface Props {
 const root = lang.components.users.setAsPayUser;
 
 export const SetAsPayUserLink: React.FC<Props> = ({ user, onSet, disabled }) => {
-  if (user.role !== "admin") {
+  if (user.role !== UserRole.Admin) {
     return (
       <DisabledA disabled={true} message={<Localized id={root.mustAdmin}/>}>
         <Localized id={root.link}/>

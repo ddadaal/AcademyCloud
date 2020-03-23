@@ -1,5 +1,6 @@
 import { AccountService, ProfileResponse, GetJoinedDomainsResponse, GetJoinableDomainsResponse, GetScopesResponse } from './AccountService';
 import { makeHttpError } from '../HttpService';
+import { UserRole } from "src/models/Scope";
 
 export class AccountServiceMock extends AccountService {
 
@@ -8,11 +9,11 @@ export class AccountServiceMock extends AccountService {
 
     return {
       scopes: [
-        { domainId: "NJUID", domainName: "NJU", role: "member" },
-        { domainId: "NJUID", domainName: "NJU", projectName: "67", projectId: "67", role: "admin" },
-        { domainId: "NJUID", domainName: "NJU", projectName: "fgh", projectId: "fgh", role: "member" },
-        { domainId: "PKUID", domainName: "PKU", role: "admin" },
-        { social: true, domainId: "socialID", domainName: "social", projectName: "test", projectId: "test", role: "admin" },
+        { domainId: "NJUID", domainName: "NJU", role: UserRole.Member },
+        { domainId: "NJUID", domainName: "NJU", projectName: "67", projectId: "67", role: UserRole.Admin },
+        { domainId: "NJUID", domainName: "NJU", projectName: "fgh", projectId: "fgh", role: UserRole.Member },
+        { domainId: "PKUID", domainName: "PKU", role: UserRole.Admin },
+        { social: true, domainId: "socialID", domainName: "social", projectName: "test", projectId: "test", role: UserRole.Admin },
       ],
     }
   }
@@ -50,8 +51,8 @@ export class AccountServiceMock extends AccountService {
     await this.delay();
     return {
       domains: [
-        { domainId: "NJUID", domainName: "NJU", role: "member" },
-        { domainId: "PKUID", domainName: "PKU", role: "admin" },
+        { domainId: "NJUID", domainName: "NJU", role: UserRole.Member },
+        { domainId: "PKUID", domainName: "PKU", role: UserRole.Admin },
       ]
     }
   }

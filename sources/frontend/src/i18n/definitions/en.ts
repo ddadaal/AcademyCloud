@@ -121,8 +121,8 @@ export default {
         quota: "Quota",
         role: {
           title: "Role",
-          admin: "Admin",
-          member: "Member",
+          Admin: "Admin",
+          Member: "Member",
         },
         payUser: {
           title: "Pay User",

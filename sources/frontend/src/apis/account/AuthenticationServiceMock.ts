@@ -1,7 +1,7 @@
 import { AuthenticationService, LoginResponse, ScopesResponse, RegisterResponse } from "./AuthenticationService";
 import { delay } from "src/utils/delay";
 import { makeHttpError, HttpMethod } from '../HttpService';
-import { Scope } from "src/models/Scope";
+import { Scope, UserRole } from "src/models/Scope";
 
 export class AuthenticationServiceMock extends AuthenticationService {
   async getScopes(username: string): Promise<ScopesResponse> {
@@ -12,24 +12,24 @@ export class AuthenticationServiceMock extends AuthenticationService {
           system: true,
           domainId: "system",
           domainName: "system",
-          role: "admin",
+          role: UserRole.Admin,
         }]
       };
     }
 
     return {
       scopes: [
-        { domainId: "NJUID", domainName: "NJU", role: "member" },
-        { domainId: "NJUID", domainName: "NJU", projectName: "67", projectId: "67", role: "admin" },
-        { domainId: "NJUID", domainName: "NJU", projectName: "fgh", projectId: "fgh", role: "member" },
-        { domainId: "PKUID", domainName: "PKU", role: "admin" },
-        { social: true, domainId: "socialID", domainName: "social", projectName: username, projectId: username, role: "admin" },
+        { domainId: "NJUID", domainName: "NJU", role: UserRole.Member },
+        { domainId: "NJUID", domainName: "NJU", projectName: "67", projectId: "67", role: UserRole.Admin },
+        { domainId: "NJUID", domainName: "NJU", projectName: "fgh", projectId: "fgh", role: UserRole.Member },
+        { domainId: "PKUID", domainName: "PKU", role: UserRole.Admin },
+        { social: true, domainId: "socialID", domainName: "social", projectName: username, projectId: username, role: UserRole.Admin },
       ],
       lastLoginScope: {
-        domainId: "NJUID", domainName: "NJU", role: "member",
+        domainId: "NJUID", domainName: "NJU", role: UserRole.Member,
       },
       defaultScope: {
-        domainId: "NJUID", domainName: "NJU", role: "member",
+        domainId: "NJUID", domainName: "NJU", role: UserRole.Member,
       }
     }
   }
@@ -63,7 +63,7 @@ export class AuthenticationServiceMock extends AuthenticationService {
     return {
       userId: "123",
       token: "testtoken",
-      scope: { social: true, domainId: "social", domainName: "Social", projectId: username, projectName: username, role: "member" }
+      scope: { social: true, domainId: "social", domainName: "Social", projectId: username, projectName: username, role: UserRole.Member }
     }
   }
 

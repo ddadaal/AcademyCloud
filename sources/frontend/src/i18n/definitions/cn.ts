@@ -121,8 +121,8 @@ export default {
         quota: "资源配额",
         role: {
           title: "角色",
-          admin: "管理员",
-          member: "成员",
+          Admin: "管理员",
+          Member: "成员",
         },
         payUser: {
           title: "付款用户",

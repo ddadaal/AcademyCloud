@@ -30,7 +30,7 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
 
   const handleAdd = useCallback(async (user: User, role: UserRole) => {
     await onAdd(user.id, role);
-    if (role === "admin") {
+    if (role === UserRole.Admin) {
       setAllUsers((users) => ({ ...users, admins: [...users.admins, user] }));
     } else {
       setAllUsers((users) => ({ ...users, members: [...users.members, user] }));
@@ -54,7 +54,7 @@ export const UserRoleEditTable: React.FC<Props> = (props) => {
 
   const handleRoleChange = useCallback(async (user: User, role: UserRole) => {
     await onRoleChange(user.id, role);
-    if (role === "admin") {
+    if (role === UserRole.Admin) {
       setAllUsers((users) => ({
         ...users,
         admins: [...users.admins, user],

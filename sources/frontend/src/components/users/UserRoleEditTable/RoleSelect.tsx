@@ -12,15 +12,15 @@ interface Props {
 }
 
 export const RoleSelect: React.FC<Props> = ({
-  value = "admin",
+  value = UserRole.Admin,
   onChange = () => { },
   disabled = false,
 }) => {
 
   return (
     <Select disabled={disabled} value={value} onChange={(e) => onChange(e)}>
-      <Select.Option value="admin"><Localized id={root.admin} /></Select.Option>
-      <Select.Option value="member"><Localized id={root.member} /></Select.Option>
+      <Select.Option value="Admin"><Localized id={root.Admin} /></Select.Option>
+      <Select.Option value="Member"><Localized id={root.Member} /></Select.Option>
     </Select>
   );
 
