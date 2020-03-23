@@ -23,28 +23,28 @@ const routes = [
     checkScope: () => true,
     Component: React.lazy(() => import("./Transactions/Account"))
   },
-  {
-    path: "billings/user",
-    textId: root.billings.user,
-    Icon: UserOutlined,
-    checkScope: (scope: Scope) => true,
-    children: [
-      {
-        path: "allocated",
-        textId: root.billings.allocated,
-        Icon: AllocatedIcon,
-        checkScope: (scope: Scope) => true,
-        Component: React.lazy(() => import("./Billing/User/Allocated")),
-      },
-      {
-        path: "used",
-        textId: root.billings.used,
-        Icon: UsedIcon,
-        checkScope: (scope: Scope) => true,
-        Component: React.lazy(() => import("./Billing/User/Used")),
-      }
-    ],
-  },
+  // {
+  //   path: "billings/user",
+  //   textId: root.billings.user,
+  //   Icon: UserOutlined,
+  //   checkScope: (scope: Scope) => true,
+  //   children: [
+  //     {
+  //       path: "allocated",
+  //       textId: root.billings.allocated,
+  //       Icon: AllocatedIcon,
+  //       checkScope: (scope: Scope) => true,
+  //       Component: React.lazy(() => import("./Billing/User/Allocated")),
+  //     },
+  //     {
+  //       path: "used",
+  //       textId: root.billings.used,
+  //       Icon: UsedIcon,
+  //       checkScope: (scope: Scope) => true,
+  //       Component: React.lazy(() => import("./Billing/User/Used")),
+  //     }
+  //   ],
+  // },
   {
     path: "transactions/system",
     textId: root.systemTransactions,
