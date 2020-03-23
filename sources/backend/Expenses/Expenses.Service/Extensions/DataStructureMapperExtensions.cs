@@ -18,22 +18,22 @@ namespace AcademyCloud.Expenses.Extensions
             };
         }
 
-        public static Protos.Transactions.AccountTransaction ToGrpc(this Domain.Entities.UserTransaction transaction)
+        public static Protos.Transactions.AccountTransaction ToGrpc(this Domain.Entities.UserTransaction transaction, bool negateAmount)
         {
             return new Protos.Transactions.AccountTransaction
             {
                 Id = transaction.Id.ToString(),
-                Amount = transaction.Amount,
+                Amount = negateAmount ? -transaction.Amount : transaction.Amount,
                 Reason = transaction.Reason.ToGrpc(),
                 Time = Timestamp.FromDateTime(transaction.Time),
             };
         }
-        public static Protos.Transactions.OrgTransaction ToGrpc(this Domain.Entities.OrgTransaction transaction)
+        public static Protos.Transactions.OrgTransaction ToGrpc(this Domain.Entities.OrgTransaction transaction, bool negateAmount)
         {
             return new Protos.Transactions.OrgTransaction
             {
                 Id = transaction.Id.ToString(),
-                Amount = transaction.Amount,
+                Amount = negateAmount ? -transaction.Amount : transaction.Amount,
                 Reason = transaction.Reason.ToGrpc(),
                 Time = Timestamp.FromDateTime(transaction.Time),
                 Payer = new Protos.Transactions.OrgTransactionSubject

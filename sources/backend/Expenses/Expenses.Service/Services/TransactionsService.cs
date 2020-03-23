@@ -30,8 +30,9 @@ namespace AcademyCloud.Expenses.Services
 
             var user = await dbContext.Users.FindIfNullThrowAsync(tokenClaims.UserId);
 
-            var transactions = user.ReceivedUserTransactions
-                .Concat(user.PayedUserTransactions)
+            // for payed transaction, negate the amount.
+            var transactions = user.ReceivedUserTransactions.AsEnumerable().Select(x => x.ToGrpc(false))
+                .Concat(user.PayedUserTransactions.AsEnumerable().Select(x => x.ToGrpc(true)))
                 .OrderByDescending(x => x.Time)
                 .AsEnumerable();
 
@@ -42,7 +43,7 @@ namespace AcademyCloud.Expenses.Services
 
             return new GetAccountTransactionsResponse
             {
-                Transactions = { transactions.Select(x => x.ToGrpc()) }
+                Transactions = { transactions }
             };
         }
 
@@ -55,20 +56,19 @@ namespace AcademyCloud.Expenses.Services
             var domain = user.Domains.FirstOrDefault(x => x.Domain.Id.ToString() == request.DomainId)?.Domain
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
-            var transactions = domain.ReceivedOrgTransactions
-                .Concat(domain.PayedOrgTransactions)
+            var transactions = domain.ReceivedOrgTransactions.AsEnumerable().Select(x => x.ToGrpc(false))
+                .Concat(domain.PayedOrgTransactions.AsEnumerable().Select(x => x.ToGrpc(true)))
                 .OrderByDescending(x => x.Time)
                 .AsEnumerable();
 
             if (request.Limit > 0)
-
             {
                 transactions = transactions.Take(request.Limit);
             }
 
             return new GetDomainTransactionsResponse
             {
-                Transactions = { transactions.Select(x => x.ToGrpc()) }
+                Transactions = { transactions }
             };
 
         }
@@ -85,8 +85,8 @@ namespace AcademyCloud.Expenses.Services
                 ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
 
 
-            var transactions = project.ReceivedOrgTransactions
-                .Concat(project.PayedOrgTransactions)
+            var transactions = project.ReceivedOrgTransactions.AsEnumerable().Select(x => x.ToGrpc(false))
+                .Concat(project.PayedOrgTransactions.AsEnumerable().Select(x => x.ToGrpc(true)))
                 .OrderByDescending(x => x.Time)
                 .AsEnumerable();
 
@@ -97,7 +97,7 @@ namespace AcademyCloud.Expenses.Services
 
             return new GetProjectTransactionsResponse
             {
-                Transactions = { transactions.Select(x => x.ToGrpc())}
+                Transactions = { transactions }
             };
         }
 
@@ -115,7 +115,7 @@ namespace AcademyCloud.Expenses.Services
 
             return new GetSystemTransactionsResponse
             {
-                Transactions = { transactions.Select(x => x.ToGrpc()) }
+                Transactions = { transactions.Select(x => x.ToGrpc(false)) }
             };
         }
     }
