@@ -290,6 +290,14 @@ namespace AcademyCloud.API.Controllers.Identity
                     PayUserId = request.PayUserId,
                 });
 
+            // add project user to resources
+            await (await factory.GetResourcesIdentityServiceClient())
+                .AddUserAsync(new AcademyCloud.ResourceManagement.Protos.Identity.AddUserRequest {
+                    UserId = request.PayUserId,
+                    ProjectId = res.ProjectId,
+                    UserProjectAssignmentId = res.AdminAssignmentId,
+                });
+
             return Created(res.ProjectId, res.ProjectId);
         }
 
