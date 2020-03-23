@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from db import engine, DBSession, User, Base
 from db.models import Instance, Volume
 
-port = 50052
+port = 80
 
 # init db
 

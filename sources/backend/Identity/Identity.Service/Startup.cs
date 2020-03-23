@@ -40,7 +40,10 @@ namespace AcademyCloud.Identity
             });
             services.AddDbContext<IdentityDbContext>(options =>
             {
-                options.UseMySql(Configuration.GetConnectionString("default"));
+                options.UseMySql(Configuration.GetConnectionString("default"), o =>
+                {
+                    o.EnableRetryOnFailure();
+                });
                 options.UseLazyLoadingProxies();
             });
 

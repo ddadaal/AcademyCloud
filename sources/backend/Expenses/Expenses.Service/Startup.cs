@@ -40,7 +40,10 @@ namespace AcademyCloud.Expenses
             });
             services.AddDbContext<ExpensesDbContext>(options =>
             {
-                options.UseMySql(Configuration.GetConnectionString("default"));
+                options.UseMySql(Configuration.GetConnectionString("default"), o =>
+                {
+                    o.EnableRetryOnFailure();
+                });
                 options.UseLazyLoadingProxies();
             });
 

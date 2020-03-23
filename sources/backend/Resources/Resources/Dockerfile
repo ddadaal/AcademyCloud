@@ -40,7 +40,7 @@ COPY . ./
 
 # Wait for database to be available
 # Then run, -u for unbuffered output
-CMD ["./wait-for-it.sh", "db:3306", "--", "python", "-u", "app.py"]
+CMD ["./wait-for-it.sh", "db:3306", "-t", "30000", "--", "python", "-u", "app.py"]
 
 
 
