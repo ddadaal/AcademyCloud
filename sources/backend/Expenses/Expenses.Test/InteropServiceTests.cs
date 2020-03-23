@@ -136,7 +136,7 @@ namespace AcademyCloud.Expenses.Test
         {
             var service = CreateService();
 
-            var systemResourecs = new Domain.ValueObjects.Resources(1000, 1000, 1000);
+            var systemResourecs = new Domain.ValueObjects.Resources(1000, 1000000, 1000);
 
             nju.Quota = new Domain.ValueObjects.Resources(20, 30, 40);
             pku.Quota = new Domain.ValueObjects.Resources(30, 40, 50);
