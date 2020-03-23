@@ -11,8 +11,10 @@ namespace AcademyCloud.API.Models.Identity.Projects
 
         public bool Active { get; set; }
 
-        public IEnumerable<User> Admins {get;set;}
+        public IEnumerable<User> Admins { get; set; }
         public IEnumerable<User> Members { get; set; }
+
+        public User PayUser { get; set; }
 
         public Resources Quota { get; set; }
 

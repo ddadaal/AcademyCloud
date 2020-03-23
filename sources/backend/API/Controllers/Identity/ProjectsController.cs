@@ -93,6 +93,11 @@ namespace AcademyCloud.API.Controllers.Identity
                     Active = true,
                     Admins = x.Admins.Select(x => FromGrpc(x.User)),
                     Members = x.Members.Select(x => FromGrpc(x.User)),
+                    PayUser = new Models.Identity.Common.User
+                    {
+                        Id = payUsers.PayUsers[x.Id],
+                        Name = payUserNames.IdNameMap[payUsers.PayUsers[x.Id]],
+                    },
                     Quota = quotas.Quotas[x.Id],
                     UserQuotas = x.Admins.Concat(x.Members).ToDictionary(user => user.User.Id, user => (Resources)quotas.Quotas[user.UserProjectAssignmentId])
                 })
@@ -122,10 +127,40 @@ namespace AcademyCloud.API.Controllers.Identity
                     Subjects = { subjects }
                 });
 
+            // payuser id
+            var payUser = await (await factory.GetExpensesInteropClientAsync())
+                .GetPayUserAsync(new AcademyCloud.Expenses.Protos.Interop.GetPayUserRequest
+                {
+                    Subjects =
+                    {
+                        new AcademyCloud.Expenses.Protos.Interop.Subject {
+                            Id = projectId,
+                            Type = AcademyCloud.Expenses.Protos.Common.SubjectType.Project
+                        }
+                    }
+                });
+
+            // get its name
+            var payUserName = await (await factory.GetIdentityInteropClientAsync())
+            .GetNamesAsync(new AcademyCloud.Identity.Protos.Interop.GetNamesRequest
+            {
+                Subjects = {
+                    new AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.Subject {
+                        Id = payUser.PayUsers[projectId],
+                        Type = AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.SubjectType.User,
+                    }
+                }
+            });
+
             return new GetUsersOfProjectResponse
             {
                 Admins = resp.Admins.Select(x => FromGrpc(x.User)),
                 Members = resp.Members.Select(x => FromGrpc(x.User)),
+                PayUser = new Models.Identity.Common.User
+                {
+                    Id = payUser.PayUsers[projectId],
+                    Name = payUserName.IdNameMap[payUser.PayUsers[projectId]],
+                },
                 UserResources = resp.Admins.Concat(resp.Members).ToDictionary(user => user.User.Id, user => (Resources)quotas.Quotas[user.UserProjectAssignmentId])
             };
         }
