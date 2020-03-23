@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using AcademyCloud.Shared;
 using AcademyCloud.Identity.Extensions;
 using SubjectType = AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types.SubjectType;
+using AcademyCloud.Identity.Domain.Entities;
+using static AcademyCloud.Identity.Protos.Interop.GetNamesRequest.Types;
 
 namespace AcademyCloud.Identity.Services
 {
@@ -20,22 +22,61 @@ namespace AcademyCloud.Identity.Services
             this.dbContext = dbContext;
         }
 
-        public override async Task<GetNamesResponse> GetNames(GetNamesRequest request, ServerCallContext context)
+        private async Task<TItem> Dispatch<TItem>(
+            Subject subject,
+            TItem system,
+            Func<Domain.Entities.Domain, TItem>? domainFunc = null,
+            Func<Project, TItem>? projectFunc = null,
+            Func<User, TItem>? userFunc = null,
+            Func<UserProjectAssignment, TItem>? userProjectAssignmentFunc = null)
         {
-            var result = new GetNamesResponse
+
+            Func<object, TItem> throwFunc = (o) => { throw new ArgumentOutOfRangeException("Type"); };
+
+            return await (subject.Type switch
             {
-                IdNameMap = { }
+                SubjectType.Domain => dbContext.Domains.FindIfNullThrowAsync(subject.Id).Then(r => (domainFunc ?? throwFunc)(r)),
+                SubjectType.Project => dbContext.Projects.FindIfNullThrowAsync(subject.Id).Then(r => (projectFunc ?? throwFunc)(r)),
+                SubjectType.User => dbContext.Users.FindIfNullThrowAsync(subject.Id).Then(r => (userFunc ?? throwFunc)(r)),
+                SubjectType.System => Task.FromResult(system),
+                _ => throw new ArgumentOutOfRangeException(nameof(subject.Type))
+            });
+        }
+
+        private async Task<Dictionary<string, TItem>> Collect<TItem>(
+            IEnumerable<Subject> subjects,
+            TItem system,
+            Func<Domain.Entities.Domain, TItem>? domainFunc = null,
+            Func<Project, TItem>? projectFunc = null,
+            Func<User, TItem>? userFunc = null,
+            Func<UserProjectAssignment, TItem>? userProjectAssignmentFunc = null)
+        {
+            var result = new Dictionary<string, TItem>();
+
+            foreach (var x in subjects)
+            {
+                result[x.Id] = await Dispatch(x, system, domainFunc, projectFunc, userFunc, userProjectAssignmentFunc);
             };
 
-            await request.Subjects.SelectAsync(x => x.Type switch 
-            {
-                SubjectType.Domain => dbContext.Domains.FindIfNullThrowAsync(x.Id).Then(r => result.IdNameMap[x.Id] = r.Name),
-                SubjectType.Project => dbContext.Projects.FindIfNullThrowAsync(x.Id).Then(r => result.IdNameMap[x.Id] = r.Name),
-                SubjectType.User => dbContext.Users.FindIfNullThrowAsync(x.Id).Then(r => result.IdNameMap[x.Id] = r.Name),
-                SubjectType.System => Task.FromResult(result.IdNameMap[x.Id] = "system"),
-            });
-
             return result;
+
+        }
+
+        public override async Task<GetNamesResponse> GetNames(GetNamesRequest request, ServerCallContext context)
+        {
+
+            return new GetNamesResponse
+            {
+                IdNameMap = 
+                { 
+                    await Collect(
+                        request.Subjects,
+                        "system",
+                        domainFunc: x => x.Name,
+                        projectFunc: x => x.Name,
+                        userFunc: x => x.Name
+                )}
+            };
         }
     }
 

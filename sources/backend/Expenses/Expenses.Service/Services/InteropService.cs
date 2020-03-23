@@ -68,9 +68,14 @@ namespace AcademyCloud.Expenses.Services
             Func<User, TItem>? userFunc = null,
             Func<UserProjectAssignment, TItem>? userProjectAssignmentFunc = null)
         {
+            var result = new Dictionary<string, TItem>();
 
-            return (await subjects.SelectAsync(async x => (x.Id, await Dispatch(x, systemFunc, domainFunc, projectFunc, userFunc, userProjectAssignmentFunc))))
-            .ToDictionary(x => x.Id, x => x.Item2);
+            foreach (var x in subjects)
+            {
+                result[x.Id] = await Dispatch(x, systemFunc, domainFunc, projectFunc, userFunc, userProjectAssignmentFunc);
+            };
+
+            return result;
 
         }
 
