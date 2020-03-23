@@ -21,7 +21,7 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
             this.factory = factory;
         }
 
-        [HttpGet("limit")]
+        [HttpGet("limits")]
         public async Task<GetResourcesLimitResponse> GetLimit()
         {
             var resp = await (await factory.GetExpensesInteropClientAsync())
