@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AcademyCloud.API.Models.Expenses.Transactions;
 
 namespace AcademyCloud.API.Extensions
 {
@@ -14,7 +15,7 @@ namespace AcademyCloud.API.Extensions
             {
                 Id = grpcModel.Id,
                 Amount = grpcModel.Amount,
-                Reason = grpcModel.Reason,
+                Reason = TransactionReason.FromGrpc(grpcModel.Reason),
                 Time = grpcModel.Time.ToDateTime(),
             };
         }

@@ -26,6 +26,9 @@ enum TransactionType {
   ProjectManagementFee = 3;
   DomainResources = 4;
   ProjectResources = 5;
+  DomainQuotaChange = 6;
+  ProjectQuotaChange = 7;
+  SocialResourcesChange = 8;
 }
 
 
@@ -57,6 +60,7 @@ message OrgTransactionSubject {
 
 message OrgTransaction {
     
+
 
   string id = 1;
   google.protobuf.Timestamp time = 2;
