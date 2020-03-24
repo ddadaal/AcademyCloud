@@ -32,25 +32,18 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
             return now.AddMilliseconds(configuration.SettleCycleMs);
         }
 
-        public decimal CalculatePrice(BillingCycleEntry entry)
-        {
-            if (entry.SubjectType == SubjectType.UserProjectAssignment)
-            {
-                return 0;
-            }
-            else
-            {
-                return CalculatePrice(entry.Quota);
-            }
-        }
-
         public decimal CalculatePrice(Resources resources)
         {
             return PricePlan.Instance.Calculate(resources);
         }
         public bool TrySettle(BillingCycleEntry entry, TransactionReason reason)
         {
-            if (entry.Settle(CalculatePrice(entry), DateTime.UtcNow, reason))
+            // if the entry is a social project, use its resources instead of quota
+            var quota = entry.Subject.Project != null && entry.Subject.Project.Domain.Id == Shared.Constants.SocialDomainId
+                ? entry.Subject.Project.Resources
+                : entry.Quota;
+
+            if (entry.Settle(CalculatePrice(quota), quota, DateTime.UtcNow, reason))
             {
                 logger.LogInformation($"Settling billing cycle for {entry} completed.");
                 return true;

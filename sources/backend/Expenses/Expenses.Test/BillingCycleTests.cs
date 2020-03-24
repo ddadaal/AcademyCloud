@@ -71,6 +71,12 @@ namespace AcademyCloud.Expenses.Test
             Assert.Empty(lqproject.BillingCycleRecords);
             Assert.Empty(lqproject.PayedOrgTransactions);
         }
+        
+        [Fact]
+        public async Task TestSocialProjectSettle()
+        {
+
+        }
 
 
         // Need great overhalt to test design

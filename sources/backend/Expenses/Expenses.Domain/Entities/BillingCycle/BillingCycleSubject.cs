@@ -39,17 +39,15 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public User PayUser => RealSubject.PayUser;
 
-        public bool Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reason)
+        public bool Settle(decimal price, Resources quota, DateTime lastSettled, DateTime now, TransactionReason reason)
         {
             if (price == 0) { return false; }
 
-            var resources = Quota;
-
-            if (resources == Resources.Zero) { return false; }
+            if (quota == Resources.Zero) { return false; }
 
             var orgTransaction = RealSubject.Pay(BillingReceiver, price, reason, now);
 
-            var cycle = new BillingCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price, orgTransaction);
+            var cycle = new BillingCycleRecord(Guid.NewGuid(), quota, lastSettled, now, price, orgTransaction);
 
             BillingCycleRecords.Add(cycle);
 

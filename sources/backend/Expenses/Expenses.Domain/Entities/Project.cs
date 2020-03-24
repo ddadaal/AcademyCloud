@@ -62,9 +62,9 @@ namespace AcademyCloud.Expenses.Domain.Entities
             return UseCycleSubject.Settle(price, lastSettled, now);
         }
 
-        bool IBillingCycleSubject.Settle(decimal price, DateTime lastSettled, DateTime now, TransactionReason reason)
+        bool IBillingCycleSubject.Settle(decimal price, Resources quota, DateTime lastSettled, DateTime now, TransactionReason reason)
         {
-            return BillingCycleSubject.Settle(price, lastSettled, now, reason);
+            return BillingCycleSubject.Settle(price, quota, lastSettled, now, reason);
         }
 
         public Project(Guid id, User payUser, Domain domain, Resources quota)

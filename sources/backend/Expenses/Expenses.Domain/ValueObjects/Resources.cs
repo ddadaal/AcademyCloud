@@ -40,6 +40,11 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
 
         public static Resources Zero => new Resources(0, 0, 0);
 
+        /// <summary>
+        /// Social Project's initial quota.
+        /// </summary>
+        public static Resources QuotaForSocialProject => new Resources(4, 4096, 40);
+
         public Resources Clone()
         {
             return new Resources(Cpu, Memory, Storage);

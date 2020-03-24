@@ -54,7 +54,8 @@ namespace AcademyCloud.Expenses.Services
             var payer = await dbContext.Users.FindIfNullThrowAsync(request.PayUserId);
             var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaimsAccessor.TokenClaims.DomainId);
 
-            var project = new Project(Guid.Parse(request.Id), payer, domain, Resources.Zero);
+            // if the project is of social domain, set its quota to social project quota
+            var project = new Project(Guid.Parse(request.Id), payer, domain, domain.Id == SocialDomainId ? Resources.QuotaForSocialProject : Resources.Zero);
             var payUserProjectAssignment = new UserProjectAssignment(Guid.Parse(request.PayUserAssignmentId), payer, project, Resources.Zero);
 
             dbContext.Projects.Add(project);
