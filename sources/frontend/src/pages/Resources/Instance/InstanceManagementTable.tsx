@@ -39,25 +39,30 @@ export const InstanceManagementTable: React.FC<Props> = ({ refreshToken }) => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
-  const { data, isPending, setData } = useAsync({ promiseFn: getInstances, watch: refreshToken });
+  const { data, isPending, setData, reload } = useAsync({ promiseFn: getInstances, watch: refreshToken });
 
   const disposedRef = useRef<boolean | undefined>(false);
 
-  const actionReload = useCallback(async () => {
-    const instances = await getInstances();
-    setData(instances);
-    await delay(5000);
+  const timedReload = useCallback(async () => {
+    await delay(3000);
+    try {
+      const instances = await getInstances();
+      setData(instances);
+    }
+    catch (e) {
+      // ignored
+    }
     if (!disposedRef.current) {
-      actionReload();
+      timedReload();
     }
   }, [setData]);
 
   useEffect(() => {
-    delay(5000).then(actionReload);
+    timedReload();
     return () => {
       disposedRef.current = true;
     };
-  }, [actionReload]);
+  }, [timedReload]);
 
   return (
     <InstanceTable data={data} loading={isPending} >
@@ -65,11 +70,11 @@ export const InstanceManagementTable: React.FC<Props> = ({ refreshToken }) => {
         render={(_, instance: Instance) => (
           <Dropdown overlay={(
             <Menu>
-              {action(root.start, () => service.startInstance(instance.id), actionReload, api)}
-              {action(root.stop, () => service.stopInstance(instance.id), actionReload, api)}
-              {action(root.restart, () => service.rebootInstance(instance.id, false), actionReload, api)}
-              {action(root.hardRestart, () => service.rebootInstance(instance.id, true), actionReload, api)}
-              {action(root.delete, () => service.deleteInstance(instance.id), actionReload, api)}
+              {action(root.start, () => service.startInstance(instance.id), reload, api)}
+              {action(root.stop, () => service.stopInstance(instance.id), reload, api)}
+              {action(root.restart, () => service.rebootInstance(instance.id, false), reload, api)}
+              {action(root.hardRestart, () => service.rebootInstance(instance.id, true), reload, api)}
+              {action(root.delete, () => service.deleteInstance(instance.id), reload, api)}
             </Menu>
           )}>
             <ClickableA>
