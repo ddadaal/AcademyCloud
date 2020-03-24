@@ -63,7 +63,7 @@ const routes = [
     path: "transactions/project",
     textId: root.projectTransactions,
     Icon: TransactionOutlined,
-    checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
+    checkScope: (scope: Scope) => isProjectAdmin(scope),
     Component: React.lazy(() => import("./Transactions/Project"))
   },
   {
@@ -135,13 +135,13 @@ const routes = [
     path: "billings/project",
     textId: root.billings.project,
     Icon: ProjectOutlined,
-    checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
+    checkScope: (scope: Scope) =>  isProjectAdmin(scope),
     children: [
       {
         path: "allocated",
         textId: root.billings.allocated,
         Icon: AllocatedIcon,
-        checkScope: (scope: Scope) => isProjectAdmin(scope),
+        checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectAdmin(scope),
         Component: React.lazy(() => import("./Billing/Project/Allocated")),
       },
       {

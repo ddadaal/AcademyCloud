@@ -431,6 +431,7 @@ export default {
         failDescription: "Please re-login.",
         changing: "Switching to {}...",
         reloading: "Reloading...",
+        reload: "Reload",
       },
       user: {
         selfCenter: "Manage Account",

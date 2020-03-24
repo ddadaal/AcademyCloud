@@ -431,6 +431,7 @@ export default {
         failDescription: "请退出登录重试",
         changing: "正在切换到{}...",
         reloading: "重新加载中...",
+        reload: "重新加载",
       },
       user: {
         selfCenter: "账号管理",

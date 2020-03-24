@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { useStore } from 'simstate';
 import { UserStore } from 'src/stores/UserStore';
 import { Menu, Dropdown } from "antd";
-import { DownOutlined, BookOutlined } from "@ant-design/icons";
+import { DownOutlined, BookOutlined, ReloadOutlined } from "@ant-design/icons";
 import { lang, Localized } from "src/i18n";
 import { scopeId, scopeName, Scope, isSystemScope, isSocialScope, isAdmin } from "src/models/Scope";
 import { ClickableA } from "src/components/ClickableA";
@@ -29,7 +29,7 @@ export const ScopeIndicator: React.FC = () => {
   if (!user) { return null; }
 
   const { scope: currentScope } = user;
-  const { scopes, reloading } = availableScopesStore;
+  const { scopes, reloading, updateScopes } = availableScopesStore;
 
   if (reloading) {
     return (
@@ -128,6 +128,18 @@ export const ScopeIndicator: React.FC = () => {
       </Menu.Item>
     );
   }
+
+  // add a refresh button
+  if (menuItems.length > 0) {
+    menuItems.push(<Menu.Divider key="refreshDivider" />);
+  }
+  menuItems.push(
+    <Menu.Item disabled={reloading} onClick={updateScopes} key={"update"}>
+      <ReloadOutlined /> <Localized id={root.reload} />
+    </Menu.Item>
+  );
+
+
 
   const menu = (
     <Menu selectedKeys={[scopeId(currentScope)]}>
