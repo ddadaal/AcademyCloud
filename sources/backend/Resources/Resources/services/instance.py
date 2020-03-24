@@ -126,6 +126,9 @@ class InstanceManagement(g.InstanceServiceServicer):
         # Get the server
         server = client.connection.get_server_by_id(id=request.instanceId)
 
+        # Get the volume
+        # volume = server.volumes[0]
+
         # Get the flavor
         flavor = client.connection.get_flavor_by_id(server.flavor["id"])
 
@@ -136,7 +139,7 @@ class InstanceManagement(g.InstanceServiceServicer):
         resp.flavor.rootDisk = flavor.disk
 
         # Delete the server
-        client.connection.delete_server(name_or_id=request.instanceId)
+        client.connection.delete_server(name_or_id=request.instanceId, wait=True, delete_ips=True)
 
         # Get the server from db
         session = DBSession()
@@ -144,7 +147,7 @@ class InstanceManagement(g.InstanceServiceServicer):
 
         # Delete the volume
         for volume in instance.volumes:
-            client.connection.delete_volume(name_or_id=volume.id)
+            client.connection.delete_volume(name_or_id=volume.id, force=True)
 
         # Delete the instance from db
         session.delete(instance)
