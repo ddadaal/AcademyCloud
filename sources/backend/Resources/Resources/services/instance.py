@@ -145,10 +145,11 @@ class InstanceManagement(g.InstanceServiceServicer):
         session = DBSession()
         instance = session.query(models.Instance).filter_by(id=request.instanceId).one()
 
-        # Delete the volume
-        for volume in instance.volumes:
-            client.connection.delete_volume(name_or_id=volume.id, force=True)
-
+        # Delete the volume. 
+        volume =  instance.volumes[0]
+        resp.volume = volume.size
+        client.connection.delete_volume(name_or_id=volume.id, force=True)
+            
         # Delete the instance from db
         session.delete(instance)
         session.commit()
