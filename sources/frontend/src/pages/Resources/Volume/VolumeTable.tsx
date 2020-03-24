@@ -26,7 +26,7 @@ export const VolumeTable: React.FC<Props> = (props) => {
   const { data, isPending } = useAsync({ promiseFn: getVolumes, watch: props.refreshToken });
 
   return (
-    <Table dataSource={data} loading={isPending}>
+    <Table dataSource={data} loading={isPending} rowKey="id">
       <Table.Column title={<Localized id={root.id} />} dataIndex="id" />
       <Table.Column title={<Localized id={root.size} />} dataIndex="size"
         render={(size: number) => `${size} GB`} />
