@@ -178,14 +178,6 @@ namespace AcademyCloud.Expenses.Services
 
             userProjectAssignment.Resources += request.ResourcesDelta.FromGrpc();
 
-            // for social user and project, also settle their billing cycles and change their quotas
-            if (tokenClaims.IsSocial)
-            {
-                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
-                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
-                userProjectAssignment.Quota += request.ResourcesDelta.FromGrpc();
-                userProjectAssignment.Project.Quota += request.ResourcesDelta.FromGrpc();
-            }
 
             await dbContext.SaveChangesAsync();
 

@@ -250,45 +250,5 @@ namespace AcademyCloud.Expenses.Test
             Assert.Equal(nju.Resources, initial + delta);
         }
 
-        [Fact]
-        public async Task TestChangeProjectUserResourcesOnSocialProject()
-        {
-            // set this token as a social project token.
-            lqlqTokenClaims.Social = true;
-            var initial = new Domain.ValueObjects.Resources(3, 4, 5);
-            lq67project.Quota = initial.Clone();
-            lq67project.Resources = initial.Clone();
-            lqproject.Quota = initial.Clone();
-            db.UseCycleEntries.Add(new UseCycleEntry(lq67project.UseCycleSubject));
-            db.UseCycleEntries.Add(new UseCycleEntry(lqproject.UseCycleSubject));
-            db.UseCycleEntries.Add(new UseCycleEntry(nju.UseCycleSubject));
-            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(lq67project.BillingCycleSubject));
-            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(lqproject.BillingCycleSubject));
-            await db.SaveChangesAsync();
-
-            var service = CreateService(lqlqTokenClaims);
-            // change delta
-            var delta = new Domain.ValueObjects.Resources(-3, -4, -5);
-
-            await service.ChangeProjectUserResources(new Protos.Interop.ChangeProjectUserResourcesRequest
-            {
-                ResourcesDelta = delta.ToGrpc()
-            }, TestContext);
-
-            // no billing is to be allocated to user.
-            Assert.Empty(lq67project.BillingCycleRecords);
-
-            //var billingRecord = Assert.Single(lq67project.BillingCycleRecords);
-            //Assert.Equal(initial, billingRecord.Quota);
-            //var projectBillingRecord = Assert.Single(lqproject.BillingCycleRecords);
-            //Assert.Equal(initial, projectBillingRecord.Quota);
-            //Assert.Equal(Domain.ValueObjects.Resources.Zero, lq67project.Quota);
-            //Assert.Equal(Domain.ValueObjects.Resources.Zero, lqproject.Quota);
-            //Assert.Equal(Domain.ValueObjects.Resources.Zero, lq67project.Resources);
-
-
-
-        }
-
     }
 }
