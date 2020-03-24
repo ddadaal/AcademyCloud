@@ -5,6 +5,8 @@ import { IndexRoute, indexRoutes } from "src/pages/common/indexRoutes";
 import { RouteComponentProps } from "@reach/router";
 import { useStore } from "simstate";
 import { UserStore } from "src/stores/UserStore";
+import { isResourcesDisabled } from "src/models/Scope";
+import { NotAvailableReason, ResourcesNotAvailable } from "./ResourcesNotAvailable";
 
 const root = lang.nav.sidenav.resources;
 
@@ -40,7 +42,21 @@ const ResourcesIndexPage: React.FC<RouteComponentProps> = (props) => {
 
   useEffect(() => {
     userStore.updateAvailability();
-  }, [userStore]);
+  });
+
+  const { scope, scopeActive, userActive } = userStore.user!;
+
+  // judge whether resources available
+  const reason = isResourcesDisabled(scope) ? NotAvailableReason.NotProjectScope :
+    (!userActive) ? NotAvailableReason.UserNotActive :
+      (!scopeActive) ? NotAvailableReason.ScopeNotActive :
+        null;
+
+  if (reason) {
+    return (
+      <ResourcesNotAvailable reason={reason} path="resources/*" />
+    );
+  }
 
   return (
     <ResourcesIndexRoutes {...props} />
