@@ -7,24 +7,22 @@ interface Props {
   message?: React.ReactNode;
 }
 
-export const DisabledA: React.FC<Props> = ({ onClick, disabled, message, children }) => {
+export const DisabledA: React.FC<Props> = React.forwardRef(({  onClick, disabled, message, children }, ref) => {
 
   if (!disabled) {
     return <a onClick={onClick}>{children}</a>;
   }
 
-  const inner = (
-    <span>{children}</span>
-  );
-
   if (message) {
     return (
-      <Tooltip overlay={message}>
-        {inner}
+      <Tooltip ref={ref as any} overlay={message}>
+        <span>{children}</span>
       </Tooltip>
     );
   } else {
-    return inner;
+    return (
+      <span ref={ref as any}>{children}</span>
+    )
   }
 
-}
+});
