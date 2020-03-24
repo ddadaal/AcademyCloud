@@ -10,13 +10,14 @@ import { InstanceService } from "src/apis/resources/InstanceService";
 import { NotificationInstance } from "antd/lib/notification";
 import { useLocalizedNotification } from "src/utils/useLocalizedNotification";
 import { useInterval } from "src/utils/useInterval";
+import { useAsync } from "react-async";
+import { delay } from "src/utils/delay";
 
 const root = lang.resources.instance.actions;
 const opResult = lang.components.operationResult;
 
 interface Props {
   refreshToken?: any;
-  reload: () => void;
 }
 
 const action = (id: string, onClick: () => Promise<void>, reload: () => void, api: ReturnType<typeof useLocalizedNotification>[0]) => (
@@ -32,24 +33,27 @@ const action = (id: string, onClick: () => Promise<void>, reload: () => void, ap
 
 const service = getApiService(InstanceService);
 
-export const InstanceManagementTable: React.FC<Props> = ({ refreshToken, reload }) => {
+const getInstances = () => service.getInstances().then(x => x.instances);
+
+export const InstanceManagementTable: React.FC<Props> = ({ refreshToken }) => {
 
   const [api, contextHolder] = useLocalizedNotification();
 
-  const [reloadIntervalToken, setReloadIntervalToken] = useState(false);
+  const { data, isPending, setData } = useAsync({ promiseFn: getInstances, watch: refreshToken });
 
-  const actionReload = useCallback(() => {
-    reload();
-    setReloadIntervalToken((t) => !t);
-  }, [reload]);
+  const actionReload = useCallback(async () => {
+    const instances = await getInstances();
+    setData(instances);
+    await delay(1000);
+    actionReload();
+  }, [setData]);
 
   useEffect(() => {
-    const id = setInterval(reload, 5000);
-    return () => clearInterval(id);
-  }, [reloadIntervalToken, reload]);
+    delay(1000).then(actionReload);
+  }, [actionReload]);
 
   return (
-    <InstanceTable refreshToken={refreshToken}>
+    <InstanceTable data={data} loading={isPending} >
       <Table.Column title={<Localized id={root.title} />}
         render={(_, instance: Instance) => (
           <Dropdown overlay={(

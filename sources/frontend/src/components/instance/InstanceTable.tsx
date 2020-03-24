@@ -1,29 +1,22 @@
 import React from "react";
 import { lang, Localized } from "src/i18n";
-import { getApiService } from "src/apis";
-import { InstanceService } from "src/apis/resources/InstanceService";
 import { Table } from "antd";
-import { useAsync } from "react-async";
-import { Flavor, InstanceStatus } from "src/models/Instance";
+import { Flavor, InstanceStatus, Instance } from "src/models/Instance";
 import { FlavorModalLink } from "src/components/flavor/FlavorModalLink";
 import { LocalizedDate } from "src/i18n/LocalizedDate";
 
 const root = lang.resources;
 
-const service = getApiService(InstanceService);
-
-const getInstances = () => service.getInstances().then(x => x.instances);
 
 interface Props {
-  refreshToken?: any;
+  data: Instance[] | undefined;
+  loading: boolean;
 }
 
-export const InstanceTable: React.FC<Props> = ({ children, refreshToken }) => {
-
-  const { data, isPending } = useAsync({ promiseFn: getInstances, watch: refreshToken });
+export const InstanceTable: React.FC<Props> = ({ data, loading, children }) => {
 
   return (
-    <Table dataSource={data} loading={isPending} rowKey="id">
+    <Table dataSource={data} loading={loading} rowKey="id">
       <Table.Column title={<Localized id={root.instance.id} />} dataIndex="id" />
       <Table.Column title={<Localized id={root.instance.name} />} dataIndex="name" />
       <Table.Column title={<Localized id={root.instance.ip} />} dataIndex="ip" />
