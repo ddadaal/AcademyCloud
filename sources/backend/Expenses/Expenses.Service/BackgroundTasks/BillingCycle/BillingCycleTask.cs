@@ -38,6 +38,12 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         }
         public bool TrySettle(BillingCycleEntry entry, TransactionReason reason)
         {
+            if (entry.SubjectType == SubjectType.UserProjectAssignment)
+            {
+                logger.LogInformation($"Not settling UserProjectAssignment {entry}.");
+                return false;
+            }
+
             // if the entry is a social project, use its resources instead of quota
             var quota = entry.Subject.Project != null && entry.Subject.Project.Domain.Id == Shared.Constants.SocialDomainId
                 ? entry.Subject.Project.Resources
