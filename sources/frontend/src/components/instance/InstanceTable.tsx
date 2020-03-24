@@ -25,6 +25,12 @@ export const InstanceTable: React.FC<Props> = ({ data, loading, children }) => {
         render={(flavor: Flavor) => <FlavorModalLink flavor={flavor} />} />
       <Table.Column title={<Localized id={root.instance.status.label} />} dataIndex="status"
         render={(status: InstanceStatus) => status in root.instance.status ? <Localized id={root.instance.status[status]} /> : status} />
+      <Table.Column title={<Localized id={root.instance.vmState.label} />} dataIndex="vmState"
+        render={(state: string) => state in root.instance.vmState ? <Localized id={root.instance.vmState[state]} /> : state} />
+      <Table.Column title={<Localized id={root.instance.taskState.label} />} dataIndex="taskState"
+        render={(state: string) => state in root.instance.taskState ? <Localized id={root.instance.taskState[state]} /> : state} />
+      <Table.Column title={<Localized id={root.instance.powerState.label} />} dataIndex="powerState"
+        render={(state: string) => state in root.instance.powerState ? <Localized id={root.instance.powerState[state]} /> : state} />
       <Table.Column title={<Localized id={root.instance.createTime} />} dataIndex="createTime"
         render={(createTime: string) => <LocalizedDate dateTimeString={createTime} />} />
       {children}

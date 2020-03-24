@@ -18,6 +18,9 @@ export interface Instance {
   name: string;
   flavor: Flavor;
   status: InstanceStatus;
+  taskState: string;
+  vmState: string;
+  powerState: string;
   ip: string;
   imageName: string;
   createTime: string;

@@ -364,6 +364,16 @@ export default {
           HARD_REBOOT: "硬重启",
           STOPPED: "停止",
         },
+        taskState: {
+          label: "任务状态",
+
+        },
+        powerState: {
+          label: "电源状态",
+        },
+        vmState: {
+          label: "虚拟机状态",
+        },
         createTime: "创建时间",
         startTime: "总开机时间",
         title: "实例管理",

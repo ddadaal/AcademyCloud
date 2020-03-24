@@ -12,7 +12,6 @@ class VolumeManagement(g.VolumeServiceServicer):
     @auth_required
     def GetVolumes(self, request, context, claims: TokenClaims):
         client = create_client()
-        volumes = client.connection.list_volumes()
 
         session = DBSession()
         user = get_user_from_claims(session, claims)
@@ -20,10 +19,8 @@ class VolumeManagement(g.VolumeServiceServicer):
         session.close()
 
         resp = GetVolumesResponse()
-        for volume in volumes:
-            db_volume = next((i for i in db_volumes if str(i.id) == volume.id), None)
-            if db_volume is None:
-                continue
+        for db_volume in db_volumes:
+            volume = client.connection.get_volume_by_id(db_volume.id)
             v = Volume()
             v.size = volume.size
             v.id = volume.id
@@ -35,6 +32,7 @@ class VolumeManagement(g.VolumeServiceServicer):
             resp.volumes.append(v)
 
         return resp
+
 
 def add_to_server(server):
     g.add_VolumeServiceServicer_to_server(VolumeManagement(), server)

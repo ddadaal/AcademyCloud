@@ -364,6 +364,16 @@ export default {
           HARD_REBOOT: "Hard Reboot",
           STOPPED: "Stopped",
         },
+        taskState: {
+          label: "Task",
+
+        },
+        powerState: {
+          label: "Power",
+        },
+        vmState: {
+          label: "VM State",
+        },
         createTime: "Create Time",
         startTime: "Total Startup Time",
         title: "Instance Management",

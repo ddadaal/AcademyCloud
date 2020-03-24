@@ -9,7 +9,9 @@ export class InstanceServiceMock extends InstanceService {
 
     return {
       instances: [
-        { id: "1", name: "test", flavor, status: "SHUTOFF", ip: "10.0.0.162", imageName: "cirros", createTime: "2020-03-16T07:27:56.568Z", totalStartupHours: 100 }
+        { id: "1", name: "test", flavor, status: "SHUTOFF", vmState: "4", taskState: "Building", powerState: "4",
+          ip: "10.0.0.162",
+          imageName: "cirros", createTime: "2020-03-16T07:27:56.568Z", totalStartupHours: 100 }
       ]
     }
   }

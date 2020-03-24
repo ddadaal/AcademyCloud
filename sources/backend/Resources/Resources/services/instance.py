@@ -4,6 +4,7 @@ from grpc import ServicerContext
 
 import services.g.instance_pb2_grpc as g
 from client import create_client
+from client.client import Client
 from db import DBSession, get_user_from_claims
 import uuid
 
@@ -25,22 +26,23 @@ class InstanceManagement(g.InstanceServiceServicer):
 
         # find the instances
         client = create_client()
-        all_servers = client.connection.list_servers(all_projects=True)
 
         resp = GetInstancesResponse()
-        for server in all_servers:
-            db_server = next((i for i in instances if str(i.id) == server.id), None)
-            if db_server is None:
-                continue
+        for db_server in instances:
+            server = client.connection.get_server_by_id(db_server.id)
+            flavor = client.connection.get_flavor_by_id(server.flavor.id)
             i = Instance()
             i.id = server.id
             i.name = server.name
             i.imageName = db_server.image_name
-            i.flavor.name = server.flavor.original_name
-            i.flavor.cpu = server.flavor.vcpus
-            i.flavor.memory = server.flavor.ram
-            i.flavor.rootDisk = server.flavor.disk
+            i.flavor.name = server.flavor.name
+            i.flavor.cpu = flavor.vcpus
+            i.flavor.memory = flavor.ram
+            i.flavor.rootDisk = flavor.disk
             i.status = server.status
+            i.vmState = server.vm_state
+            i.powerState = server.power_state
+            i.taskState = server.task_state
             i.ip = server.public_v4
             i.createTime = server.created_at
             resp.instances.append(i)

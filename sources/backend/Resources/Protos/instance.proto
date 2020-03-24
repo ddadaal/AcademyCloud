@@ -32,9 +32,12 @@ message Instance {
   string name = 2;
   Flavor flavor = 3;
   string status = 4;
-  string ip = 5;
-  string imageName = 6;
-  string createTime = 7;
+  string taskState = 5;
+  string powerState = 6;
+  string vmState = 7;
+  string ip = 8;
+  string imageName = 9;
+  string createTime = 10;
 }
 
 
