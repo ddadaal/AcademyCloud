@@ -32,6 +32,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public bool Settle(decimal price, Resources quota, DateTime now, TransactionReason reason)
         {
+            LastSettled = now;
             return Subject.Settle(price, quota, LastSettled, now, reason);
         }
 
