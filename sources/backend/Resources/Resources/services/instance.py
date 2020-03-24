@@ -30,19 +30,20 @@ class InstanceManagement(g.InstanceServiceServicer):
         resp = GetInstancesResponse()
         for db_server in instances:
             server = client.connection.get_server_by_id(db_server.id)
-            flavor = client.connection.get_flavor_by_id(server.flavor.id)
+            flavor = client.connection.get_flavor_by_id(server.flavor["id"])
             i = Instance()
             i.id = server.id
             i.name = server.name
             i.imageName = db_server.image_name
-            i.flavor.name = server.flavor.name
+            i.flavor.name = flavor.name
             i.flavor.cpu = flavor.vcpus
             i.flavor.memory = flavor.ram
             i.flavor.rootDisk = flavor.disk
             i.status = server.status
             i.vmState = server.vm_state
-            i.powerState = server.power_state
-            i.taskState = server.task_state
+            i.powerState = str(server.power_state)
+            if server.task_state is not None:
+                i.taskState = server.task_state
             i.ip = server.public_v4
             i.createTime = server.created_at
             resp.instances.append(i)
