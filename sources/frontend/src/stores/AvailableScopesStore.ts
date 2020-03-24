@@ -1,5 +1,5 @@
 import { Scope } from "src/models/Scope";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { getApiService } from "src/apis";
 import { AccountService } from "src/apis/identity/AccountService";
 
@@ -46,6 +46,10 @@ export function AvailableScopesStore() {
   const logout = useCallback(() => {
     localStorage.removeItem(AVAILABLE_SCOPES_KEY);
     setScopes([]);
+  }, []);
+
+  useEffect(() => {
+    updateScopes();
   }, []);
 
   return { scopes, setScopes: set, updateScopes, reloading, logout };
