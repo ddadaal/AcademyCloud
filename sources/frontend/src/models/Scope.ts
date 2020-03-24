@@ -14,8 +14,13 @@ export interface Scope {
   role: UserRole;
 }
 
+
 export function scopeId(scope: Scope): string {
   return `${scope.domainId}+${scope.projectId ?? ""}`;
+}
+
+export function scopeEquals(scope1: Scope, scope2: Scope): boolean {
+  return scopeId(scope1) == scopeId(scope2);
 }
 
 export function scopeName(scope: Scope): string {

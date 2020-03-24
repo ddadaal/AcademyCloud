@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Scope } from "src/models/Scope";
 import { getApiService } from "src/apis";
 import { AuthenticationService } from "src/apis/account/AuthenticationService";
@@ -16,13 +16,13 @@ interface User {
   remember: boolean;
 }
 
-const accountService = getApiService(AuthenticationService);
+const authenticationService = getApiService(AuthenticationService);
 
 export function getUserInfoInStorage(): User | null {
   const data = localStorage.getItem(STORAGE_KEY);
   if (data) {
     const user =  JSON.parse(data) as User;
-    accountService.setToken(user.token);
+    authenticationService.setToken(user.token);
     return user;
   } else {
     return null;
@@ -50,5 +50,20 @@ export function UserStore() {
     }
   }, []);
 
-  return { loggedIn, user, logout, login };
+  const updateAvailability = useCallback(async () => {
+    // just relogin
+    if (user) {
+      const resp = await authenticationService.changeScope(user.scope);
+      // if availability is changed, relogin.
+      if (user.scopeActive !== resp.scopeActive || user.userActive !== resp.userActive) {
+        login({ ...user, ...resp });
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    updateAvailability();
+  }, [updateAvailability]);
+
+  return { loggedIn, user, logout, login, updateAvailability };
 }
