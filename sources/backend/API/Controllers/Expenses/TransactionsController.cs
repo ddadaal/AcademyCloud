@@ -91,7 +91,8 @@ namespace AcademyCloud.API.Controllers.Expenses
             var expensesResp = await (await factory.GetTransactionsClient())
                 .GetDomainTransactionsAsync(new AcademyCloud.Expenses.Protos.Transactions.GetDomainTransactionsRequest
                 {
-                    Limit = limit
+                    Limit = limit,
+                    DomainId = domainId,
                 });
 
             var converted = await ConvertToApiModels(expensesResp.Transactions);
@@ -108,7 +109,8 @@ namespace AcademyCloud.API.Controllers.Expenses
             var expensesResp = await (await factory.GetTransactionsClient())
                 .GetProjectTransactionsAsync(new AcademyCloud.Expenses.Protos.Transactions.GetProjectTransactionsRequest
                 {
-                    Limit = limit
+                    Limit = limit,
+                    ProjectId = projectId,
                 });
 
             var converted = await ConvertToApiModels(expensesResp.Transactions);
