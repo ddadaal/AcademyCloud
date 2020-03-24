@@ -111,6 +111,16 @@ namespace AcademyCloud.Expenses.Data
             modelBuilder.ApplyConfiguration(new UseCycleSubjectConfiguration());
             modelBuilder.ApplyConfiguration(new BillingCycleSubjectConfiguration());
 
+            // Add the social domain use cycle entry
+            modelBuilder.Entity<UseCycleEntry>()
+                .HasData(new
+                {
+                    Id = SocialDomainId,
+                    SubjectId = SocialDomainId,
+                    SubjectType = Domain.ValueObjects.SubjectType.Domain,
+                    LastSettled = DateTime.UtcNow,
+                });
+
             // Set DateTime to UTC
             var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.ToUniversalTime(),
