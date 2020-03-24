@@ -41,15 +41,22 @@ export const InstanceManagementTable: React.FC<Props> = ({ refreshToken }) => {
 
   const { data, isPending, setData } = useAsync({ promiseFn: getInstances, watch: refreshToken });
 
+  const disposedRef = useRef<boolean | undefined>(false);
+
   const actionReload = useCallback(async () => {
     const instances = await getInstances();
     setData(instances);
-    await delay(1000);
-    actionReload();
+    await delay(5000);
+    if (!disposedRef.current) {
+      actionReload();
+    }
   }, [setData]);
 
   useEffect(() => {
-    delay(1000).then(actionReload);
+    delay(5000).then(actionReload);
+    return () => {
+      disposedRef.current = true;
+    };
   }, [actionReload]);
 
   return (
