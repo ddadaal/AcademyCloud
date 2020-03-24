@@ -19,4 +19,5 @@ RUN dotnet publish "Expenses.Service.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Expenses.Service.dll"]
+COPY ./wait-for-it.sh .
+ENTRYPOINT ["./wait-for-it.sh", "db:3306", "-t", "60000", "--", "dotnet", "Expenses.Service.dll"]

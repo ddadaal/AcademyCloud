@@ -19,4 +19,5 @@ RUN dotnet publish "Identity.Service.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Identity.Service.dll"]
+COPY ./wait-for-it.sh .
+ENTRYPOINT ["./wait-for-it.sh", "db:3306", "-t", "60000", "--", "dotnet", "Identity.Service.dll"]
