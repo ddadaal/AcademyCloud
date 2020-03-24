@@ -31,11 +31,14 @@ namespace AcademyCloud.Expenses.Domain.Entities
 
         public User PayUser => this;
 
+        /// <summary>
+        /// Apply the balance delta to the user.
+        /// </summary>
+        /// <param name="transaction">The transaction to apply</param>
         public void ApplyTransaction(UserTransaction transaction)
         {
             if (transaction.Receiver == this)
             {
-                ReceivedUserTransactions.Add(transaction);
                 Balance += transaction.Amount;
 
                 if (!Active && Balance >= 0)
@@ -45,7 +48,6 @@ namespace AcademyCloud.Expenses.Domain.Entities
             }
             else if (transaction.Payer == this)
             {
-                PayedUserTransactions.Add(transaction);
                 Balance -= transaction.Amount;
                 if (Active && Balance < 0)
                 {
@@ -57,6 +59,7 @@ namespace AcademyCloud.Expenses.Domain.Entities
         public void Charge(decimal amount)
         {
             var transaction = new UserTransaction(Guid.NewGuid(), DateTime.UtcNow, amount, TransactionReason.Charge, null, this);
+            ReceivedUserTransactions.Add(transaction);
             ApplyTransaction(transaction);
         }
 

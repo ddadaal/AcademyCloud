@@ -58,6 +58,7 @@ namespace AcademyCloud.Expenses.Test.Helpers
 
             lqproject = new Project(Guid.NewGuid(), lq, nju, new Domain.ValueObjects.Resources(5, 10, 20));
             fcproject = new Project(Guid.NewGuid(), fc, pku, new Domain.ValueObjects.Resources(10, 30, 40));
+
             lq67project = new UserProjectAssignment(Guid.NewGuid(), lq, lqproject, new Domain.ValueObjects.Resources(4, 8, 10));
             cjd67project = new UserProjectAssignment(Guid.NewGuid(), cjd, lqproject, new Domain.ValueObjects.Resources(1, 2, 10));
             fcfcproject = new UserProjectAssignment(Guid.NewGuid(), fc, fcproject, new Domain.ValueObjects.Resources(5, 15, 20));

@@ -176,8 +176,15 @@ namespace AcademyCloud.Expenses.Services
             useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id));
             useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Domain.Id));
 
-            userProjectAssignment.Resources += request.ResourcesDelta.FromGrpc();
 
+            // for social user and project, also settle their billing cycles
+            if (userProjectAssignment.Project.Domain.Id == Constants.SocialDomainId)
+            {
+                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
+                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
+            }
+
+            userProjectAssignment.Resources += request.ResourcesDelta.FromGrpc();
 
             await dbContext.SaveChangesAsync();
 

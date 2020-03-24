@@ -61,7 +61,7 @@ namespace AcademyCloud.Expenses.Test
             var userAssignment = Assert.Single(project.Users);
             AssertIEnumerableIgnoreOrder(new[] { user.Payer, project.Payer }, db.ManagementFeeEntries.Select(x => x.Payer));
             AssertIEnumerableIgnoreOrder(new[] { userAssignment.BillingCycleSubject, project.BillingCycleSubject }, db.BillingCycleEntries.Select(x => x.Subject));
-            AssertIEnumerableIgnoreOrder(new[] { userAssignment.UseCycleSubject, project.UseCycleSubject }, db.UseCycleEntries.Select(x => x.Subject));
+            AssertIEnumerableIgnoreOrder(new[] { userAssignment.UseCycleSubject.Id, project.UseCycleSubject.Id, SocialDomainId }, db.UseCycleEntries.Select(x => x.Subject.Id));
 
             var socialProject = Assert.Single(db.Domains.Find(SocialDomainId).Projects);
             Assert.Equal(socialProject, project);

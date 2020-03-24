@@ -25,11 +25,11 @@ namespace AcademyCloud.Expenses.Test
         {
             var service = new BalanceService(MockTokenClaimsAccessor(cjdlqTokenClaims), db);
 
-            var resp = await service.GetBalance(new AcademyCloud.Expenses.Protos.Balance.GetBalanceRequest { }, TestContext);
+            var resp = await service.GetBalance(new Protos.Balance.GetBalanceRequest { }, TestContext);
 
             Assert.Equal(10, resp.Balance);
 
-            var resp2 = await service.Charge(new AcademyCloud.Expenses.Protos.Balance.ChargeRequest { Amount = 30 }, TestContext);
+            var resp2 = await service.Charge(new Protos.Balance.ChargeRequest { Amount = 30 }, TestContext);
 
             Assert.Equal(40, resp2.Balance);
             Assert.Single(cjd.ReceivedUserTransactions);

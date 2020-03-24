@@ -250,5 +250,46 @@ namespace AcademyCloud.Expenses.Test
             Assert.Equal(nju.Resources, initial + delta);
         }
 
+        [Fact]
+        public async Task TestChangeProjectUserResourcesOnSocialProject()
+        {
+            var socialDomain = db.Domains.Find(Constants.SocialDomainId);
+            var lqsocialproject = new Project(Guid.NewGuid(), lq, socialDomain, Domain.ValueObjects.Resources.QuotaForSocialProject); 
+            var lqlqsocialproject = new UserProjectAssignment(Guid.NewGuid(), lq, lqsocialproject, Domain.ValueObjects.Resources.QuotaForSocialProject);
+            var lqlqsocialprojectTokenClaims = new TokenClaims(false, true, lq.Id, Constants.SocialDomainId, lqsocialproject.Id, UserRole.Admin);
+
+            // set this token as a social project token.
+            var initial = new Domain.ValueObjects.Resources(3, 4, 5);
+            lqlqsocialproject.Resources = initial.Clone();
+            db.UseCycleEntries.Add(new UseCycleEntry(lqlqsocialproject.UseCycleSubject));
+            db.UseCycleEntries.Add(new UseCycleEntry(lqsocialproject.UseCycleSubject));
+            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(lqlqsocialproject.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(lqsocialproject.BillingCycleSubject));
+            await db.SaveChangesAsync();
+
+            var service = CreateService(lqlqsocialprojectTokenClaims);
+            // change delta
+            var delta = new Domain.ValueObjects.Resources(-3, -4, -5);
+
+            await service.ChangeProjectUserResources(new Protos.Interop.ChangeProjectUserResourcesRequest
+            {
+                ResourcesDelta = delta.ToGrpc()
+            }, TestContext);
+
+            // no billing is to be allocated to user.
+            Assert.Empty(lqlqsocialproject.BillingCycleRecords);
+
+            // No resources is now being used
+            Assert.Equal(Domain.ValueObjects.Resources.Zero, lqsocialproject.Resources);
+
+            // lq should pay the resources price
+            var transaction = Assert.Single(lq.PayedUserTransactions);
+            Assert.Equal(PricePlan.Instance.Calculate(initial), transaction.Amount);
+
+
+
+
+        }
+
     }
 }

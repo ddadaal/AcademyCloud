@@ -182,7 +182,8 @@ namespace AcademyCloud.Expenses.Test
                 SubjectType = Protos.Common.SubjectType.Domain
             }, TestContext);
 
-            Assert.Single(resp.Billings);
+
+            AssertIEnumerableIgnoreOrder(new[] { Constants.SocialDomainId, nju.Id }, resp.Billings.Select(x => Guid.Parse(x.SubjectId)));
 
             // the content should be the same with GetCurrentUsedBilling
         }

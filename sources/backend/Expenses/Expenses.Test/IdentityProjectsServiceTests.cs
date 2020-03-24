@@ -57,7 +57,7 @@ namespace AcademyCloud.Expenses.Test
         public async Task TestAddProject()
         {
             AssertIEnumerableIgnoreOrder(new[] { projectId, payUserAssignmentId }, db.BillingCycleEntries.Select(x => x.Id));
-            AssertIEnumerableIgnoreOrder(new[] { projectId, payUserAssignmentId }, db.UseCycleEntries.Select(x => x.Id));
+            AssertIEnumerableIgnoreOrder(new[] { projectId, payUserAssignmentId, SocialDomainId }, db.UseCycleEntries.Select(x => x.Id));
             var project = db.BillingCycleEntries.Find(projectId).Subject.Project;
             Assert.NotNull(project);
             Assert.Single(project.Users);
