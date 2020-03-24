@@ -54,8 +54,7 @@ namespace AcademyCloud.Expenses.Services
             var payer = await dbContext.Users.FindIfNullThrowAsync(request.PayUserId);
             var domain = await dbContext.Domains.FindIfNullThrowAsync(tokenClaimsAccessor.TokenClaims.DomainId);
 
-            // if the project is of social domain, set its quota to social project quota
-            var project = new Project(Guid.Parse(request.Id), payer, domain, domain.Id == SocialDomainId ? Resources.QuotaForSocialProject : Resources.Zero);
+            var project = new Project(Guid.Parse(request.Id), payer, domain, Resources.Zero);
             var payUserProjectAssignment = new UserProjectAssignment(Guid.Parse(request.PayUserAssignmentId), payer, project, Resources.Zero);
 
             dbContext.Projects.Add(project);
@@ -76,8 +75,9 @@ namespace AcademyCloud.Expenses.Services
         {
             var socialDomain = await dbContext.Domains.FindAsync(SocialDomainId);
             var user = new User(Guid.Parse(request.UserId), 0);
-            var project = new Project(Guid.Parse(request.SocialProjectId), user, socialDomain, Resources.Zero);
-            var userProjectAssignment = new UserProjectAssignment(Guid.Parse(request.SocialProjectAssignmentId), user, project, Resources.Zero);
+            // Set the project and user with their initial quota
+            var project = new Project(Guid.Parse(request.SocialProjectId), user, socialDomain, Resources.QuotaForSocialProject);
+            var userProjectAssignment = new UserProjectAssignment(Guid.Parse(request.SocialProjectAssignmentId), user, project, Resources.QuotaForSocialProject);
             var userDomainAssignment = new UserDomainAssignment(Guid.Parse(request.SocialDomainAssignmentId), socialDomain, user);
 
             dbContext.Users.Add(user);

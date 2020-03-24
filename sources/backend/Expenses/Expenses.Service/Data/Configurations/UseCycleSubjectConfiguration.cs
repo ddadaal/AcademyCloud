@@ -14,7 +14,7 @@ namespace AcademyCloud.Expenses.Data.Configurations
         public void Configure(EntityTypeBuilder<UseCycleSubject> builder)
         {
             builder.Property(x => x.Id).ValueGeneratedNever();
-            
+
             // Not care about subject. It's not a aggregate root and will not be accessed directly.
             builder.HasMany(x => x.UseCycleRecords).WithOne();
 
@@ -32,6 +32,15 @@ namespace AcademyCloud.Expenses.Data.Configurations
                 .HasOne(x => x.UserProjectAssignment)
                 .WithOne(x => x.UseCycleSubject)
                 .HasForeignKey<UseCycleSubject>("UserProjectAssignmentId");
+
+            // add the social domain into the use cycle.
+            builder
+                .HasData(new
+                {
+                    Id = Shared.Constants.SocialDomainId,
+                    DomainId = Shared.Constants.SocialDomainId,
+                    SubjectType = AcademyCloud.Expenses.Domain.ValueObjects.SubjectType.Domain
+                });
 
         }
     }
