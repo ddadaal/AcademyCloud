@@ -41,7 +41,7 @@ const fromFlavorToResources = (flavor?: Flavor) => {
   if (flavor) {
     return {
       cpu: flavor.cpu,
-      memory: flavor.memory / 1024,
+      memory: flavor.memory,
       storage: flavor.rootDisk,
     };
   } else {
@@ -66,7 +66,7 @@ export const FlavorSelect: React.FC = (props) => {
             <Divider type="vertical" />
             <Localized id={root.available} />
             {` `}
-            {limitsPending ? <Spin /> : `CPU ${available.cpu} | Memory ${available.memory * 1024} MB`}
+            {limitsPending ? <Spin /> : `CPU ${available.cpu} | Memory ${available.memory} MB`}
           </div>
           // flavor is name
         )} name="flavor" rules={[
