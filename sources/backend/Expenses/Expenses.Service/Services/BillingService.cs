@@ -77,7 +77,7 @@ namespace AcademyCloud.Expenses.Services
             else if (request.SubjectType == SubjectType.UserProjectAssignment)
             {
                 // only the user project assignment under current project
-                if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Social User cannot access Users allocated resources.")); }
+                if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Domain User cannot access Users allocated resources.")); }
                 var project = await dbContext.Projects.FindIfNullThrowAsync(tokenClaims.ProjectId);
                 data = data.Where(x => x.Subject.UserProjectAssignment!.Project == project);
             }
@@ -128,7 +128,7 @@ namespace AcademyCloud.Expenses.Services
             else if (request.SubjectType == SubjectType.UserProjectAssignment)
             {
                 // only the user project assignment under current project
-                if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Social User cannot access Users allocated resources.")); }
+                if (tokenClaims.ProjectId == null) { throw new RpcException(new Status(StatusCode.PermissionDenied, "Domain User cannot access Users allocated resources.")); }
                 var project = await dbContext.Projects.FindIfNullThrowAsync(tokenClaims.ProjectId);
                 data = data.Where(x => x.Subject.UserProjectAssignment!.Project == project);
             }
