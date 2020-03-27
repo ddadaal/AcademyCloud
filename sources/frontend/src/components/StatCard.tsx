@@ -19,7 +19,7 @@ export function StatsCard<T>({ data, children, title }: Props<T>) {
       <Title>
         {title}
       </Title>
-      {data ? children(data) : null}
+      {data !== undefined ? children(data) : null}
     </MarginedCard>
   )
 }
