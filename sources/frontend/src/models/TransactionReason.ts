@@ -8,6 +8,7 @@ export enum TransactionType {
   DomainQuotaChange = "DomainQuotaChange",
   ProjectQuotaChange = "ProjectQuotaChange",
   SocialResourcesChange = "SocialResourcesChange",
+  UserProjectResources = "UserProjectResources",
 }
 
 export interface TransactionReason {
