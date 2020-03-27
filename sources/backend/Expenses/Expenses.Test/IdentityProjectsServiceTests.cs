@@ -187,8 +187,9 @@ namespace AcademyCloud.Expenses.Test
                 Quota = new Protos.Common.Resources { Cpu = 1, Memory = 1, Storage = 1 }
             }, TestContext);
 
-            // No allocated billing is to be issued to project user.
-            Assert.Empty(userAssignment.BillingCycleRecords);
+            // one allocated billing with zero amount is to be issued to project user.
+            var billing = Assert.Single(userAssignment.BillingCycleRecords);
+            Assert.Equal(0, billing.Amount);
         }
     }
 }

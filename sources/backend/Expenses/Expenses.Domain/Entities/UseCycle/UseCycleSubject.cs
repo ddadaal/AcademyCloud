@@ -41,7 +41,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.UseCycle
                 return false;
             }
 
-            var cycle = new UseCycleRecord(Guid.NewGuid(), resources, lastSettled, now, price);
+            var cycle = new UseCycleRecord(Guid.NewGuid(), resources.Clone(), lastSettled, now, price);
             UseCycleRecords.Add(cycle);
 
             return true;

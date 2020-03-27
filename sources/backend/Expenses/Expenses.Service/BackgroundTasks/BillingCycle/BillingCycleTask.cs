@@ -32,24 +32,25 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
             return now.AddMilliseconds(configuration.SettleCycleMs);
         }
 
+
         public decimal CalculatePrice(Resources resources)
-        {
+        { 
             return PricePlan.Instance.Calculate(resources);
         }
         public bool TrySettle(BillingCycleEntry entry, TransactionReason reason)
         {
-            if (entry.SubjectType == SubjectType.UserProjectAssignment)
-            {
-                logger.LogInformation($"Not settling UserProjectAssignment {entry}.");
-                return false;
-            }
 
             // if the entry is a social project, use its resources instead of quota
             var quota = entry.Subject.Project != null && entry.Subject.Project.Domain.Id == Shared.Constants.SocialDomainId
                 ? entry.Subject.Project.Resources
                 : entry.Quota;
 
-            if (entry.Settle(CalculatePrice(quota), quota, DateTime.UtcNow, reason))
+            // if the entry is a UserProjectAssignment, the price should always to zero
+            var price = entry.SubjectType == SubjectType.UserProjectAssignment
+                ? 0
+                : CalculatePrice(quota);
+
+            if (entry.Settle(price, quota, DateTime.UtcNow, reason))
             {
                 logger.LogInformation($"Settling billing cycle for {entry} completed.");
                 return true;
@@ -78,6 +79,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                             if (TrySettle(i, i.SubjectType switch {
                                 SubjectType.Domain => TransactionReason.DomainResources,
                                 SubjectType.Project => TransactionReason.ProjectResources,
+                                SubjectType.UserProjectAssignment => TransactionReason.UserProjectResources,
                                 _ => throw new InvalidOperationException($"Got {i.SubjectType} with id {i.Id} when settling billing cycle. Only domains, projects and UserProject will be settled.")
                             }))
                             {

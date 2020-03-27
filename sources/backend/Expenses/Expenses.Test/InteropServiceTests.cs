@@ -254,7 +254,7 @@ namespace AcademyCloud.Expenses.Test
         public async Task TestChangeProjectUserResourcesOnSocialProject()
         {
             var socialDomain = db.Domains.Find(Constants.SocialDomainId);
-            var lqsocialproject = new Project(Guid.NewGuid(), lq, socialDomain, Domain.ValueObjects.Resources.QuotaForSocialProject); 
+            var lqsocialproject = new Project(Guid.NewGuid(), lq, socialDomain, Domain.ValueObjects.Resources.QuotaForSocialProject);
             var lqlqsocialproject = new UserProjectAssignment(Guid.NewGuid(), lq, lqsocialproject, Domain.ValueObjects.Resources.QuotaForSocialProject);
             var lqlqsocialprojectTokenClaims = new TokenClaims(false, true, lq.Id, Constants.SocialDomainId, lqsocialproject.Id, lqlqsocialproject.Id, UserRole.Admin);
 
@@ -276,15 +276,17 @@ namespace AcademyCloud.Expenses.Test
                 ResourcesDelta = delta.ToGrpc()
             }, TestContext);
 
-            // no billing is to be allocated to user.
-            Assert.Empty(lqlqsocialproject.BillingCycleRecords);
+            // 1 allocated billing with 0 amount to be allocated to user.
+            var billing = Assert.Single(lqlqsocialproject.BillingCycleRecords);
+            Assert.Equal(0, billing.Amount);
+
 
             // No resources is now being used
             Assert.Equal(Domain.ValueObjects.Resources.Zero, lqsocialproject.Resources);
 
             // lq should pay the resources price
-            var transaction = Assert.Single(lq.PayedUserTransactions);
-            Assert.Equal(PricePlan.Instance.Calculate(initial), transaction.Amount);
+            // the previous 0 allocated billing should also be included
+            AssertIEnumerableIgnoreOrder(new[] { PricePlan.Instance.Calculate(initial), 0 }, lq.PayedUserTransactions.Select(x => x.Amount));
 
 
 

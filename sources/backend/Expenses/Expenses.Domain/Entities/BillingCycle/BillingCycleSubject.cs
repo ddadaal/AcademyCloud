@@ -41,13 +41,11 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
 
         public bool Settle(decimal price, Resources quota, DateTime lastSettled, DateTime now, TransactionReason reason)
         {
-            if (price == 0) { return false; }
-
             if (quota == Resources.Zero) { return false; }
 
             var orgTransaction = RealSubject.Pay(BillingReceiver, price, reason, now);
 
-            var cycle = new BillingCycleRecord(Guid.NewGuid(), quota, lastSettled, now, price, orgTransaction);
+            var cycle = new BillingCycleRecord(Guid.NewGuid(), quota.Clone(), lastSettled, now, price, orgTransaction);
 
             BillingCycleRecords.Add(cycle);
 

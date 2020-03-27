@@ -16,5 +16,6 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         DomainQuotaChange,
         ProjectQuotaChange,
         SocialResourcesChange,
+        UserProjectResources,
     }
 }

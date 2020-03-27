@@ -33,5 +33,6 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         public static TransactionReason ProjectResources => new TransactionReason(TransactionType.ProjectResources, "");
         public static TransactionReason ProjectQuotaChange => new TransactionReason(TransactionType.ProjectQuotaChange, "");
         public static TransactionReason SocialResourcesChange => new TransactionReason(TransactionType.SocialResourcesChange, "");
+        public static TransactionReason UserProjectResources => new TransactionReason(TransactionType.UserProjectResources, "");
     }
 }

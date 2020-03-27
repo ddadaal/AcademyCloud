@@ -298,8 +298,8 @@ namespace AcademyCloud.Expenses.Test
 
             var (service, billingTask, _) = CreateService();
 
-            // wait 2 cycles
-            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2 * 2);
+            // wait 1 cycle
+            await WaitForTaskForExecuteCycles(billingTask, billingConfiguration.CheckCycleMs, 2);
 
             var resp = await service.GetHistoryAllocatedBillings(new GetHistoryAllocatedBillingsRequest
             {
@@ -307,8 +307,10 @@ namespace AcademyCloud.Expenses.Test
                 SubjectType = Protos.Common.SubjectType.UserProjectAssignment,
             }, TestContext);
 
-            // no allocated billings is issued to user project
-            Assert.Empty(resp.Billings);
+            // a allocated billings is issued to user project
+            // but the price must be 0
+            var billing = Assert.Single(resp.Billings);
+            Assert.Equal(0, billing.Amount);
         }
     }
 }
