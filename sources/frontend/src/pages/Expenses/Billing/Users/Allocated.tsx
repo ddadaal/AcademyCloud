@@ -8,7 +8,7 @@ import { CurrentBillingsPage } from "src/components/billings/CurrentBillingsPage
 
 const service = getApiService(BillingService);
 
-const getUsers = () => service.getCurrentAllocatedBillings(BillSubjectType.User).then(x => x.billings);
+const getUsers = () => service.getCurrentAllocatedBillings(BillSubjectType.UserProjectAssignment).then(x => x.billings);
 
 const UsersAllocated: React.FC<RouteComponentProps> = () => {
   return (
@@ -20,7 +20,7 @@ const UsersAllocated: React.FC<RouteComponentProps> = () => {
   );
 }
 
-const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.User, id).then(x => x.billings);
+const getData = (id: string) => service.getHistoryAllocatedBillings(BillSubjectType.UserProjectAssignment, id).then(x => x.billings);
 
 const HistoryUserAllocated: React.FC<RouteComponentProps<{ userId: string }>> = ({ userId, location }) => {
   return (
