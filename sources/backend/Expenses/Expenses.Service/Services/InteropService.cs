@@ -134,7 +134,8 @@ namespace AcademyCloud.Expenses.Services
             var (total, used) = await Dispatch(request.Subject,
                 systemFunc: x => (totalSystemResources, Domain.ValueObjects.Resources.Sum(x.Domains.Select(x => x.Quota))),
                 domainFunc: x => (x.Quota, Domain.ValueObjects.Resources.Sum(x.Projects.Select(x => x.Quota))),
-                projectFunc: x => (x.Quota, Domain.ValueObjects.Resources.Sum(x.Users.Select(x => x.Quota)))
+                projectFunc: x => (x.Quota, Domain.ValueObjects.Resources.Sum(x.Users.Select(x => x.Quota))),
+                userProjectAssignmentFunc: x => (x.Quota, x.Resources)
                 );
 
             return new GetQuotaStatusResponse
