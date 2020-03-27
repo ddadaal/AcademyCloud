@@ -161,7 +161,7 @@ namespace AcademyCloud.Identity.Services
             await dbContext.SaveChangesAsync();
 
             // Return the scope (project scope) and token
-            var token = jwtSettings.GenerateToken(new TokenClaims(false, true, newUser.Id.ToString(), socialDomainId.ToString(), newProject.Id.ToString(), Shared.UserRole.Admin));
+            var token = jwtSettings.GenerateToken(new TokenClaims(false, true, newUser.Id.ToString(), socialDomainId.ToString(), newProject.Id.ToString(), projectAssignment.Id.ToString(), Shared.UserRole.Admin));
 
             var scope = new Scope()
             {

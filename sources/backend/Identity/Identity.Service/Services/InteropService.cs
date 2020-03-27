@@ -38,6 +38,7 @@ namespace AcademyCloud.Identity.Services
                 SubjectType.Domain => dbContext.Domains.FindIfNullThrowAsync(subject.Id).Then(r => (domainFunc ?? throwFunc)(r)),
                 SubjectType.Project => dbContext.Projects.FindIfNullThrowAsync(subject.Id).Then(r => (projectFunc ?? throwFunc)(r)),
                 SubjectType.User => dbContext.Users.FindIfNullThrowAsync(subject.Id).Then(r => (userFunc ?? throwFunc)(r)),
+                SubjectType.UserProjectAssignment => dbContext.UserProjectAssignments.FindIfNullThrowAsync(subject.Id).Then(r => (userProjectAssignmentFunc ?? throwFunc)(r)),
                 SubjectType.System => Task.FromResult(system),
                 _ => throw new ArgumentOutOfRangeException(nameof(subject.Type))
             });
@@ -67,14 +68,15 @@ namespace AcademyCloud.Identity.Services
 
             return new GetNamesResponse
             {
-                IdNameMap = 
-                { 
+                IdNameMap =
+                {
                     await Collect(
                         request.Subjects,
                         "system",
                         domainFunc: x => x.Name,
                         projectFunc: x => x.Name,
-                        userFunc: x => x.Name
+                        userFunc: x => x.Name,
+                        userProjectAssignmentFunc: x => x.User.Name
                 )}
             };
         }

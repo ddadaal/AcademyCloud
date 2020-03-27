@@ -1,7 +1,7 @@
 import React from "react";
 import { lang } from "src/i18n";
 import { DashboardOutlined, TransactionOutlined, UserOutlined, ProjectOutlined, TeamOutlined, BankOutlined, PlayCircleOutlined, DatabaseOutlined } from "@ant-design/icons";
-import { Scope, isSystemScope, isSocialScope, isDomainAdmin, isProjectAdmin } from "src/models/Scope";
+import { Scope, isSystemScope, isSocialScope, isDomainAdmin, isProjectAdmin, isProjectScope } from "src/models/Scope";
 import { indexRoutes, IndexRoute } from "src/pages/common/indexRoutes";
 
 const root = lang.nav.sidenav.expenses;
@@ -23,28 +23,28 @@ const routes = [
     checkScope: () => true,
     Component: React.lazy(() => import("./Transactions/Account"))
   },
-  // {
-  //   path: "billings/user",
-  //   textId: root.billings.user,
-  //   Icon: UserOutlined,
-  //   checkScope: (scope: Scope) => true,
-  //   children: [
-  //     {
-  //       path: "allocated",
-  //       textId: root.billings.allocated,
-  //       Icon: AllocatedIcon,
-  //       checkScope: (scope: Scope) => true,
-  //       Component: React.lazy(() => import("./Billing/User/Allocated")),
-  //     },
-  //     {
-  //       path: "used",
-  //       textId: root.billings.used,
-  //       Icon: UsedIcon,
-  //       checkScope: (scope: Scope) => true,
-  //       Component: React.lazy(() => import("./Billing/User/Used")),
-  //     }
-  //   ],
-  // },
+  {
+    path: "billings/user",
+    textId: root.billings.user,
+    Icon: UserOutlined,
+    checkScope: (scope: Scope) => isProjectScope(scope),
+    children: [
+      {
+        path: "allocated",
+        textId: root.billings.allocated,
+        Icon: AllocatedIcon,
+        checkScope: (scope: Scope) => isProjectScope(scope),
+        Component: React.lazy(() => import("./Billing/User/Allocated")),
+      },
+      {
+        path: "used",
+        textId: root.billings.used,
+        Icon: UsedIcon,
+        checkScope: (scope: Scope) => isProjectScope(scope),
+        Component: React.lazy(() => import("./Billing/User/Used")),
+      }
+    ],
+  },
   {
     path: "transactions/system",
     textId: root.systemTransactions,

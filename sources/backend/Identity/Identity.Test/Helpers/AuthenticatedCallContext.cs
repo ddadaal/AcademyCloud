@@ -39,7 +39,7 @@ namespace AcademyCloud.Identity.Test.Helpers
         {
             var (scope, userId) = await GetAuthenticationInfo(context, username, password, scopeChooser);
 
-            var tokenClaims = new TokenClaims(scope.System, scope.Social, userId, scope.DomainId, scope.ProjectId, (UserRole)scope.Role);
+            var tokenClaims = new TokenClaims(scope.System, scope.Social, userId, scope.DomainId, scope.ProjectId, scope.UserProjectAssignmentId, (UserRole)scope.Role);
 
             var mockHttpAccessor = new Mock<IHttpContextAccessor>();
 

@@ -60,5 +60,6 @@ message Scope {
   string domainName = 4;
   string projectId = 5;
   string projectName = 6;
-  common.UserRole role = 7;
+  string userProjectAssignmentId = 7;
+  common.UserRole role = 8;
 }

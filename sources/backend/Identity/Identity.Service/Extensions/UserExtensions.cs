@@ -37,6 +37,7 @@ namespace AcademyCloud.Identity.Extensions
                 DomainName = x.Project.Domain.Name,
                 ProjectId = x.Project.Id.ToString(),
                 ProjectName = x.Project.Name,
+                UserProjectAssignmentId = x.Id.ToString(),
                 Role = (Protos.Common.UserRole)x.Role,
             }).ToList();
 

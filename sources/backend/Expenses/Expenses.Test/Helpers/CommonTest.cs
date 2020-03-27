@@ -63,11 +63,11 @@ namespace AcademyCloud.Expenses.Test.Helpers
             cjd67project = new UserProjectAssignment(Guid.NewGuid(), cjd, lqproject, new Domain.ValueObjects.Resources(1, 2, 10));
             fcfcproject = new UserProjectAssignment(Guid.NewGuid(), fc, fcproject, new Domain.ValueObjects.Resources(5, 15, 20));
 
-            cjdlqTokenClaims = new TokenClaims(false, false, cjd.Id, nju.Id, lqproject.Id, UserRole.Member);
-            lqlqTokenClaims = new TokenClaims(false, false, lq.Id, nju.Id, lqproject.Id, UserRole.Admin);
-            njuadminnjuTokenClaims = new TokenClaims(false, false, njuadmin.Id, nju.Id, null, UserRole.Admin);
-            fcfcTokenClaims = new TokenClaims(false, false, fc.Id, pku.Id, fcproject.Id, UserRole.Admin);
-            systemTokenClaims = new TokenClaims(true, false, SystemUserId, nju.Id, null, UserRole.Admin);
+            cjdlqTokenClaims = new TokenClaims(false, false, cjd.Id, nju.Id, lqproject.Id, cjd67project.Id, UserRole.Member);
+            lqlqTokenClaims = new TokenClaims(false, false, lq.Id, nju.Id, lqproject.Id, lq67project.Id, UserRole.Admin);
+            njuadminnjuTokenClaims = new TokenClaims(false, false, njuadmin.Id, nju.Id, null, null, UserRole.Admin);
+            fcfcTokenClaims = new TokenClaims(false, false, fc.Id, pku.Id, fcproject.Id, fcfcproject.Id, UserRole.Admin);
+            systemTokenClaims = new TokenClaims(true, false, SystemUserId, nju.Id, null, null, UserRole.Admin);
         }
 
         public void FillData(ExpensesDbContext context)
@@ -87,7 +87,7 @@ namespace AcademyCloud.Expenses.Test.Helpers
 
         public void AssertIEnumerableIgnoreOrder<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
-            var comparer = typeof(IComparable).IsAssignableFrom(typeof(T)) 
+            var comparer = typeof(IComparable).IsAssignableFrom(typeof(T))
                 ? Comparer<T>.Default
                 : Comparer<T>.Create((a, b) => a.GetHashCode() - b.GetHashCode());
             Assert.Equal(expected.OrderBy(x => x, comparer), actual.OrderBy(x => x, comparer));
@@ -134,9 +134,9 @@ namespace AcademyCloud.Expenses.Test.Helpers
             return new TokenClaimsAccessor(mockHttpAccessor.Object);
         }
 
-        public TTask ConfigureTask<TTask, TConfiguration>(TConfiguration configuration) 
-            where TConfiguration: class, new()
-            where TTask: class
+        public TTask ConfigureTask<TTask, TConfiguration>(TConfiguration configuration)
+            where TConfiguration : class, new()
+            where TTask : class
         {
 
             var mockIOptions = new Mock<IOptions<TConfiguration>>();
@@ -156,7 +156,7 @@ namespace AcademyCloud.Expenses.Test.Helpers
         }
 
         public async Task WaitForTaskForExecuteCycles<TTask>(TTask task, int spanMs, int times)
-            where TTask: IHostedService
+            where TTask : IHostedService
         {
 
             var token = new CancellationToken();

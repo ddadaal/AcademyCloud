@@ -53,7 +53,7 @@ namespace AcademyCloud.Identity.Services
             }
 
             // auth successful. generate token according to token claims
-            var claims = new TokenClaims(scope.System, scope.Social, user.Id.ToString(), scope.DomainId, scope.ProjectId, (UserRole)scope.Role);
+            var claims = new TokenClaims(scope.System, scope.Social, user.Id.ToString(), scope.DomainId, scope.ProjectId, scope.UserProjectAssignmentId, (UserRole)scope.Role);
 
             return jwtSettings.GenerateToken(claims);
         }

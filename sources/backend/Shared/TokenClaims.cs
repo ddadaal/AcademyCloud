@@ -17,20 +17,22 @@ namespace AcademyCloud.Shared
         public string DomainId { get; set; }
 
         public string? ProjectId { get; set; }
+        public string? UserProjectAssignmentId{get;set;}
 
         public UserRole Role { get; set; }
 
-        public TokenClaims(bool system, bool social, string userId, string domainId, string? projectId, UserRole role)
+        public TokenClaims(bool system, bool social, string userId, string domainId, string? projectId, string? userProjectAssignmentId, UserRole role)
         {
             System = system;
             Social = social;
             UserId = userId;
             DomainId = domainId;
             ProjectId = projectId;
+            UserProjectAssignmentId = userProjectAssignmentId;
             Role = role;
         }
-        public TokenClaims(bool system, bool social, Guid userId, Guid domainId, Guid? projectId, UserRole role)
-            : this(system, social, userId.ToString(), domainId.ToString(), projectId?.ToString(), role)
+        public TokenClaims(bool system, bool social, Guid userId, Guid domainId, Guid? projectId, Guid? userProjectAssignmentId, UserRole role)
+            : this(system, social, userId.ToString(), domainId.ToString(), projectId?.ToString(), userProjectAssignmentId?.ToString(), role)
         {
         }
 
@@ -59,6 +61,7 @@ namespace AcademyCloud.Shared
                 new Claim(nameof(UserId), UserId),
                 new Claim(nameof(DomainId), DomainId),
                 new Claim(nameof(ProjectId), ProjectId ?? ""),
+                new Claim(nameof(UserProjectAssignmentId), UserProjectAssignmentId ?? ""),
                 new Claim(nameof(Role), Role.ToString()),
             };
         }
@@ -76,6 +79,7 @@ namespace AcademyCloud.Shared
                 userId: claims.GetClaimValue(nameof(UserId)),
                 domainId: claims.GetClaimValue(nameof(DomainId)),
                 projectId: claims.GetClaimValue(nameof(ProjectId)),
+                userProjectAssignmentId: claims.GetClaimValue(nameof(UserProjectAssignmentId)),
                 role: (UserRole)Enum.Parse(typeof(UserRole), claims.GetClaimValue(nameof(Role)))
             );
 

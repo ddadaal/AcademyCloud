@@ -256,7 +256,7 @@ namespace AcademyCloud.Expenses.Test
             var socialDomain = db.Domains.Find(Constants.SocialDomainId);
             var lqsocialproject = new Project(Guid.NewGuid(), lq, socialDomain, Domain.ValueObjects.Resources.QuotaForSocialProject); 
             var lqlqsocialproject = new UserProjectAssignment(Guid.NewGuid(), lq, lqsocialproject, Domain.ValueObjects.Resources.QuotaForSocialProject);
-            var lqlqsocialprojectTokenClaims = new TokenClaims(false, true, lq.Id, Constants.SocialDomainId, lqsocialproject.Id, UserRole.Admin);
+            var lqlqsocialprojectTokenClaims = new TokenClaims(false, true, lq.Id, Constants.SocialDomainId, lqsocialproject.Id, lqlqsocialproject.Id, UserRole.Admin);
 
             // set this token as a social project token.
             var initial = new Domain.ValueObjects.Resources(3, 4, 5);

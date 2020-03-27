@@ -9,13 +9,13 @@ export const ProjectUsed: React.FC = (props) => {
 
   const userStore = useStore(UserStore);
 
-  const { userId, username } = userStore.user!!;
+  const { scope, username } = userStore.user!!;
 
   return (
     <StatsPage
       billType={BillType.Used}
       billSubjectType={BillSubjectType.UserProjectAssignment}
-      id={userId}
+      id={scope.userProjectAssignmentId!}
       name={username}
     />
   )

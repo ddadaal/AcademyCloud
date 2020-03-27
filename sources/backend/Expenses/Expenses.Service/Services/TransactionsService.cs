@@ -82,7 +82,7 @@ namespace AcademyCloud.Expenses.Services
             var project = user.Projects
                 .Select(x => x.Project)
                 .FirstOrDefault(x => x.Id.ToString() == request.ProjectId)
-                ?? throw new RpcException(new Status(StatusCode.PermissionDenied, ""));
+                ?? throw new RpcException(new Status(StatusCode.PermissionDenied, $"Unable to find project ${request.ProjectId} for user ${user.Id}."));
 
 
             var transactions = project.ReceivedOrgTransactions.AsEnumerable().Select(x => x.ToGrpc(false))

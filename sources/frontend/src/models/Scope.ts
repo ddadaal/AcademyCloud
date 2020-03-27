@@ -11,6 +11,7 @@ export interface Scope {
   domainName: string;
   projectId?: string;
   projectName?: string;
+  userProjectAssignmentId?: string;
   role: UserRole;
 }
 

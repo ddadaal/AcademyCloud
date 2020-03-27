@@ -9,13 +9,13 @@ export const UserAllocated: React.FC = (props) => {
 
   const userStore = useStore(UserStore);
 
-  const { userId, username } = userStore.user!!;
+  const { scope, username } = userStore.user!!;
 
   return (
     <StatsPage
       billType={BillType.Allocated}
       billSubjectType={BillSubjectType.UserProjectAssignment}
-      id={userId}
+      id={scope.userProjectAssignmentId!}
       name={username}
     />
   )
