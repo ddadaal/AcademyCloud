@@ -60,7 +60,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
 
                 await provider.WithDbContext(async dbContext =>
                 {
-                    await foreach (var i in dbContext.UseCycleEntries.AsAsyncEnumerable())
+                    foreach (var i in dbContext.UseCycleEntries)
                     {
                         if (time >= NextDue(i.LastSettled))
                         {

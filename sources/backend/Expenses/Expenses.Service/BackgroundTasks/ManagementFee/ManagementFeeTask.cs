@@ -52,7 +52,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
                 {
                     var system = await dbContext.Systems.FirstAsync();
 
-                    await foreach (var i in dbContext.ManagementFeeEntries.AsAsyncEnumerable())
+                    foreach (var i in dbContext.ManagementFeeEntries)
                     {
                         if ((time - i.LastSettled).TotalMilliseconds > configuration.ChargeCycleMs)
                         {

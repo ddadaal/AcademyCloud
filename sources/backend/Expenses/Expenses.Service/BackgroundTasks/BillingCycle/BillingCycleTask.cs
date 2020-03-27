@@ -71,7 +71,7 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
 
                 await provider.WithDbContext(async dbContext =>
                 {
-                    await foreach (var i in dbContext.BillingCycleEntries.Where(x => x.SubjectType != SubjectType.UserProjectAssignment).AsAsyncEnumerable())
+                    foreach (var i in dbContext.BillingCycleEntries)
                     {
                         if (time >= NextDue(i.LastSettled))
                         {
