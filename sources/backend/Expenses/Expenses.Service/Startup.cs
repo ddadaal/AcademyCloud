@@ -90,6 +90,9 @@ namespace AcademyCloud.Expenses
 
             services.AddSingleton<ScopedDbProvider>();
 
+            // Prepare database
+            services.AddHostedService<DatabaseInitializerHostedService>();
+
             // Add background tasks
             services.AddHostedService<ManagementFeeTask>();
             services.AddHostedService<UseCycleTask>();
@@ -100,14 +103,12 @@ namespace AcademyCloud.Expenses
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ExpensesDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            dbContext.Database.EnsureCreated();
 
             app.UseRouting();
             app.UseAuthorization();
