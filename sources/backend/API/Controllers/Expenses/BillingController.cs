@@ -171,7 +171,7 @@ namespace AcademyCloud.API.Controllers.Expenses
                 {
                     Subjects =
                     {
-                        resp.Billings.Select(x => new GetNamesRequest.Types.Subject { Type = (GetNamesRequest.Types.SubjectType) subjectType, Id = id })
+                        resp.Billings.Select(x => new GetNamesRequest.Types.Subject { Type = GetNamesRequest.Types.SubjectType.User, Id = x.PayerId })
                     }
                 });
 
