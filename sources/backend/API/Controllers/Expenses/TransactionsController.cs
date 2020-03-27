@@ -62,7 +62,7 @@ namespace AcademyCloud.API.Controllers.Expenses
                 PayerName = nameMap[x.Payer.Id],
                 ReceiverId = x.Receiver.Id,
                 ReceiverName = nameMap[x.Receiver.Id],
-                Reason = TransactionReason.FromGrpc(x.Reason),
+                Reason = x.Reason,
                 Time = x.Time.ToDateTime(),
             });
         }

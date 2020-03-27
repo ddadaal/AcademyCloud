@@ -29,6 +29,7 @@ enum TransactionType {
   DomainQuotaChange = 6;
   ProjectQuotaChange = 7;
   SocialResourcesChange = 8;
+  UserProjectResources = 9;
 }
 
 

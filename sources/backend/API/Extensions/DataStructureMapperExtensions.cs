@@ -15,7 +15,7 @@ namespace AcademyCloud.API.Extensions
             {
                 Id = grpcModel.Id,
                 Amount = grpcModel.Amount,
-                Reason = TransactionReason.FromGrpc(grpcModel.Reason),
+                Reason = grpcModel.Reason,
                 Time = grpcModel.Time.ToDateTime(),
             };
         }
