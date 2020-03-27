@@ -462,7 +462,7 @@ export default {
             projects: "Projects Billings",
             project: "Project Billing",
             users: "Users Billings",
-            user: "Account Billing",
+            user: "Project User Billing",
           },
         },
         identity: {
