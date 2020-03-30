@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.API.Models.ResourceManagement;
 using AcademyCloud.API.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace AcademyCloud.API.Controllers.ResourceManagement
 {
     [Route("/resources/volumes")]
     [ApiController]
+    [Authorize]
     public class VolumeController: Controller
     {
         private readonly ServiceClientFactory factory;

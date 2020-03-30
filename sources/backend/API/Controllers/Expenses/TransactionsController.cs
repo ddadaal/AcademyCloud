@@ -2,6 +2,7 @@
 using AcademyCloud.API.Models.Expenses.Transactions;
 using AcademyCloud.API.Utils;
 using AcademyCloud.Expenses.Protos.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace AcademyCloud.API.Controllers.Expenses
 {
     [Route("/expenses/transactions")]
     [ApiController]
+    [Authorize]
     public class TransactionsController : Controller
     {
         private readonly ServiceClientFactory factory;

@@ -1,6 +1,7 @@
 ﻿using AcademyCloud.API.Models.Expenses;
 using AcademyCloud.API.Utils;
 using AcademyCloud.Expenses.Protos.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace AcademyCloud.API.Controllers.Expenses
 {
     [Route("/expenses/quotaStatus")]
     [ApiController]
+    [Authorize]
     public class QuotaController: Controller
     {
         private readonly ServiceClientFactory factory;
