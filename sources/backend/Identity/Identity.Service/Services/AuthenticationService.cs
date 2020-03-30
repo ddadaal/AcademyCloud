@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AcademyCloud.Identity.Data;
 using AcademyCloud.Identity.Domain.Entities;
@@ -28,28 +29,22 @@ namespace AcademyCloud.Identity.Services
         {
             if (scope.System)
             {
-                if (!user.System)
-                {
-                    return null;
-                }
+                if (!user.System) { return null; }
             }
             // In gRPC there is no null value, the empty string means nothing
             else if (string.IsNullOrEmpty(scope.ProjectId))
             {
+                // disallow social domain login
+                var domainIdGuid = Guid.Parse(scope.DomainId);
+                if (domainIdGuid == Constants.SocialDomainId) { return null; }
                 // it's a domain scope, find whether the user has it
-                var domain = user.Domains.FirstOrDefault(domain => (int)domain.Role == (int)scope.Role);
-                if (domain == null)
-                {
-                    return null;
-                }
+                var domain = user.Domains.FirstOrDefault(x => x.Domain.Id == domainIdGuid && (int)x.Role == (int)scope.Role);
+                if (domain == null) { return null; }
             }
             else
             {
-                var project = user.Projects.FirstOrDefault(project => (int)project.Role == (int)scope.Role);
-                if (project == null)
-                {
-                    return null;
-                }
+                var project = user.Projects.FirstOrDefault(x => x.Project.Id == Guid.Parse(scope.ProjectId) && (int)x.Role == (int)scope.Role);
+                if (project == null) { return null; }
             }
 
             // auth successful. generate token according to token claims

@@ -41,18 +41,13 @@ namespace AcademyCloud.Identity.Extensions
                 Role = (Protos.Common.UserRole)x.Role,
             }).ToList();
 
-            // load 
-
-            // add domains that are either admin, or not the domain of a project scopes.
+            // add domains
             scopes.AddRange(user.Domains.AsEnumerable()
-                .Where(x =>
-                    x.Role == Domain.ValueObjects.UserRole.Admin ||
-                    !scopes.Exists(project => project.DomainId == x.Domain.Id.ToString())
-                )
+                .Where(x => x.Domain.Id != SocialDomainId)
                 .Select(x => new Scope()
                 {
                     System = false,
-                    Social = x.Domain.Id == SocialDomainId,
+                    Social = false,
                     DomainId = x.Domain.Id.ToString(),
                     DomainName = x.Domain.Name,
                     Role = (Protos.Common.UserRole)x.Role,
