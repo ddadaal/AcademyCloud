@@ -24,12 +24,12 @@ enum TransactionType {
   UserManagementFee = 1;
   DomainManagementFee = 2;
   ProjectManagementFee = 3;
-  DomainResources = 4;
-  ProjectResources = 5;
+  DomainQuota = 4;
+  ProjectQuota = 5;
   DomainQuotaChange = 6;
   ProjectQuotaChange = 7;
   SocialResourcesChange = 8;
-  UserProjectResources = 9;
+  UserProjectQuota = 9;
 }
 
 

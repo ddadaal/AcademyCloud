@@ -77,9 +77,9 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                         if (time >= NextDue(i.LastSettled))
                         {
                             if (TrySettle(i, i.SubjectType switch {
-                                SubjectType.Domain => TransactionReason.DomainResources,
-                                SubjectType.Project => TransactionReason.ProjectResources,
-                                SubjectType.UserProjectAssignment => TransactionReason.UserProjectResources,
+                                SubjectType.Domain => TransactionReason.DomainQuota,
+                                SubjectType.Project => TransactionReason.ProjectQuota,
+                                SubjectType.UserProjectAssignment => TransactionReason.UserProjectQuota,
                                 _ => throw new InvalidOperationException($"Got {i.SubjectType} with id {i.Id} when settling billing cycle. Only domains, projects and UserProject will be settled.")
                             }))
                             {

@@ -11,11 +11,11 @@ namespace AcademyCloud.Expenses.Domain.ValueObjects
         UserManagementFee,
         DomainManagementFee,
         ProjectManagementFee,
-        DomainResources,
-        ProjectResources,
+        DomainQuota,
+        ProjectQuota,
         DomainQuotaChange,
         ProjectQuotaChange,
         SocialResourcesChange,
-        UserProjectResources,
+        UserProjectQuota,
     }
 }
