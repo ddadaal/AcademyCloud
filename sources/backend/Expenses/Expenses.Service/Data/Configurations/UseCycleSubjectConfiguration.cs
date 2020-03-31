@@ -22,16 +22,20 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder
                 .HasOne(x => x.Domain)
                 .WithOne(x => x.UseCycleSubject)
-                .HasForeignKey<UseCycleSubject>("DomainId");
+                .HasForeignKey<UseCycleSubject>("DomainId")
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(x => x.Project)
                 .WithOne(x => x.UseCycleSubject)
-                .HasForeignKey<UseCycleSubject>("ProjectId");
+                .HasForeignKey<UseCycleSubject>("ProjectId")
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder
                 .HasOne(x => x.UserProjectAssignment)
                 .WithOne(x => x.UseCycleSubject)
-                .HasForeignKey<UseCycleSubject>("UserProjectAssignmentId");
+                .HasForeignKey<UseCycleSubject>("UserProjectAssignmentId")
+                .OnDelete(DeleteBehavior.Cascade);
 
             // add the social domain into the use cycle.
             builder

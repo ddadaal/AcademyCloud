@@ -60,6 +60,9 @@ namespace AcademyCloud.Expenses.Test
             Assert.Single(db.Domains.Find(domainId).Users);
             Assert.Equal(cjd, billingEntry.Subject.PayUser);
             Assert.Single(cjd.Domains.Where(x => x.Domain.Id == domainId));
+            Assert.NotNull(db.ManagementFeeEntries.FirstOrDefault(x => x.Id == domainId));
+            Assert.NotNull(db.BillingCycleEntries.FirstOrDefault(x => x.Id == domainId));
+            Assert.NotNull(db.UseCycleEntries.FirstOrDefault(x => x.Id == domainId));
         }
 
 
@@ -74,6 +77,9 @@ namespace AcademyCloud.Expenses.Test
 
             Assert.Empty(db.BillingCycleEntries.Where(x => x.Subject.Domain.Id == domainId));
             Assert.Empty(cjd.Domains.Where(x => x.Domain.Id == domainId));
+            Assert.Null(db.ManagementFeeEntries.FirstOrDefault(x => x.Id == domainId));
+            Assert.Null(db.BillingCycleEntries.FirstOrDefault(x => x.Id == domainId));
+            Assert.Null(db.UseCycleEntries.FirstOrDefault(x => x.Id == domainId));
         }
 
         [Fact]

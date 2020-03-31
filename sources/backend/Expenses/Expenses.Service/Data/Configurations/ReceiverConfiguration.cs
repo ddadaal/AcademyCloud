@@ -21,9 +21,9 @@ namespace AcademyCloud.Expenses.Data.Configurations
 
             // Configure one-to-one relationships
             // Add a DomainId foreign key on Receiver (HasForeignKey) referencing Domain
-            builder.HasOne(e => e.Domain).WithOne(e => e.Receiver).HasForeignKey<Receiver>("DomainId");
-            builder.HasOne(e => e.Project).WithOne(e => e.Receiver).HasForeignKey<Receiver>("ProjectId");
-            builder.HasOne(e => e.System).WithOne(e => e.Receiver).HasForeignKey<Receiver>("SystemId");
+            builder.HasOne(e => e.Domain).WithOne(e => e.Receiver).HasForeignKey<Receiver>("DomainId").OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(e => e.Project).WithOne(e => e.Receiver).HasForeignKey<Receiver>("ProjectId").OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(e => e.System).WithOne(e => e.Receiver).HasForeignKey<Receiver>("SystemId").OnDelete(DeleteBehavior.Cascade);
 
             // Setup receiver for System and Social Domain
             builder.HasData(new { Id = SystemId, SystemId = SystemId, SubjectType = SubjectType.System });

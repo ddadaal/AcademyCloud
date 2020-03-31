@@ -23,10 +23,10 @@ namespace AcademyCloud.Expenses.Data.Configurations
             // Must configure the foreign key to 
             // https://docs.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key#one-to-one
             // Foreign key is configured on the child side
-            builder.HasOne(e => e.Domain).WithOne(e => e.Payer).HasForeignKey<Payer>("DomainId");
-            builder.HasOne(e => e.Project).WithOne(e => e.Payer).HasForeignKey<Payer>("ProjectId");
-            builder.HasOne(e => e.User).WithOne(e => e.Payer).HasForeignKey<Payer>("UserId");
-            builder.HasOne(e => e.UserProjectAssignment).WithOne(e => e.Payer).HasForeignKey<Payer>("UserProjectAssignmentId");
+            builder.HasOne(e => e.Domain).WithOne(e => e.Payer).HasForeignKey<Payer>("DomainId").OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(e => e.Project).WithOne(e => e.Payer).HasForeignKey<Payer>("ProjectId").OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(e => e.User).WithOne(e => e.Payer).HasForeignKey<Payer>("UserId").OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(e => e.UserProjectAssignment).WithOne(e => e.Payer).HasForeignKey<Payer>("UserProjectAssignmentId").OnDelete(DeleteBehavior.Cascade);
 
             // Setup payer for social domain admin and system user
             builder.HasData(new { Id = SocialDomainAdminId, UserId = SocialDomainAdminId, SubjectType = SubjectType.User });

@@ -42,7 +42,10 @@ namespace AcademyCloud.Expenses.Services
 
             dbContext.Domains.Add(domain);
             dbContext.UserDomainAssignments.Add(userDomainAssignment);
+
             dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(domain.BillingCycleSubject));
+            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(domain.UseCycleSubject));
+            dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(domain.Payer));
 
             await dbContext.SaveChangesAsync();
             return new AddDomainResponse { };
@@ -65,6 +68,8 @@ namespace AcademyCloud.Expenses.Services
 
             dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(project.UseCycleSubject));
             dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(payUserProjectAssignment.UseCycleSubject));
+
+            dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(project.Payer));
 
             await dbContext.SaveChangesAsync();
 
@@ -129,6 +134,8 @@ namespace AcademyCloud.Expenses.Services
         {
             var domain = await dbContext.Domains.FindIfNullThrowAsync(request.Id);
             dbContext.Domains.Remove(domain);
+            
+            // delete of entries should happen automatically by EFCore with foreign key constraints.
 
             await dbContext.SaveChangesAsync();
 

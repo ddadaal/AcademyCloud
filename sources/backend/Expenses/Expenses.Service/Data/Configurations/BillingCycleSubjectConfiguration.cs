@@ -26,17 +26,20 @@ namespace AcademyCloud.Expenses.Data.Configurations
             builder
                 .HasOne(x => x.Domain)
                 .WithOne(x => x.BillingCycleSubject)
-                .HasForeignKey<BillingCycleSubject>("DomainId");
+                .HasForeignKey<BillingCycleSubject>("DomainId")
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(x => x.Project)
                 .WithOne(x => x.BillingCycleSubject)
-                .HasForeignKey<BillingCycleSubject>("ProjectId");
+                .HasForeignKey<BillingCycleSubject>("ProjectId")
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder
                 .HasOne(x => x.UserProjectAssignment)
                 .WithOne(x => x.BillingCycleSubject)
-                .HasForeignKey<BillingCycleSubject>("UserProjectAssignmentId");
+                .HasForeignKey<BillingCycleSubject>("UserProjectAssignmentId")
+                .OnDelete(DeleteBehavior.Cascade);
                 
         }
     }

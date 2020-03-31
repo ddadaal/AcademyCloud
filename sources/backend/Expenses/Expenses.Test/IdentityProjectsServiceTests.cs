@@ -62,6 +62,9 @@ namespace AcademyCloud.Expenses.Test
             Assert.NotNull(project);
             Assert.Single(project.Users);
             Assert.Equal(cjd, project.PayUser);
+            Assert.NotNull(db.ManagementFeeEntries.FirstOrDefault(x => x.Id == projectId));
+            Assert.NotNull(db.BillingCycleEntries.FirstOrDefault(x => x.Id == projectId));
+            Assert.NotNull(db.UseCycleEntries.FirstOrDefault(x => x.Id == projectId));
         }
 
         [Fact]
@@ -92,6 +95,9 @@ namespace AcademyCloud.Expenses.Test
             Assert.Empty(db.BillingCycleEntries.Where(x => x.Subject.UserProjectAssignment.Id == payUserAssignmentId));
             Assert.Empty(db.UseCycleEntries.Where(x => x.Subject.UserProjectAssignment.Id == payUserAssignmentId));
             Assert.Empty(cjd.Projects.Where(x => x.Project.Id == projectId));
+            Assert.Null(db.ManagementFeeEntries.FirstOrDefault(x => x.Id == projectId));
+            Assert.Null(db.BillingCycleEntries.FirstOrDefault(x => x.Id == projectId));
+            Assert.Null(db.UseCycleEntries.FirstOrDefault(x => x.Id == projectId));
         }
 
         [Fact]
