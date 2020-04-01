@@ -31,7 +31,7 @@ export const CurrentBillingsTable: React.FC<Props> = ({ subjectType, type, data,
             <span>{item.subjectName}</span>
           </Tooltip>
         )} />
-      <Table.Column title={<Localized id={root.table.quota} />} dataIndex="resources"
+      <Table.Column title={<Localized id={type == BillType.Allocated ? root.table.quota : root.table.resources} />} dataIndex="resources"
         render={(resources: Resources) => <ResourcesModalLink resources={resources} />} />
       <Table.Column title={<Localized id={root.table.amount} />} dataIndex="amount"
         render={(amount: number) => amount.toFixed(2)} />
