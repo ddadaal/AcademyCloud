@@ -33,7 +33,7 @@ const routes = [
         path: "allocated",
         textId: root.billings.allocated,
         Icon: AllocatedIcon,
-        checkScope: (scope: Scope) => isProjectScope(scope),
+        checkScope: (scope: Scope) => !isSocialScope(scope) && isProjectScope(scope),
         Component: React.lazy(() => import("./Billing/User/Allocated")),
       },
       {
