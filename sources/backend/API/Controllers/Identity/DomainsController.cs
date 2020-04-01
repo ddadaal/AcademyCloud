@@ -175,7 +175,7 @@ namespace AcademyCloud.API.Controllers.Identity
             return NoContent();
         }
 
-        [HttpPost("{domainId}/payUser")]
+        [HttpPatch("{domainId}/payUser")]
         public async Task<ActionResult> SetPayUser([FromRoute] string domainId, [FromBody] SetPayUserRequest request)
         {
             // set the pay user in the expenses
