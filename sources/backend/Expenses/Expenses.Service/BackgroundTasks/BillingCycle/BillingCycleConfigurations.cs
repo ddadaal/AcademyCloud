@@ -9,6 +9,5 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
     {
         public int CheckCycleMs { get; set; }
 
-        public int SettleCycleMs { get; set; }
     }
 }

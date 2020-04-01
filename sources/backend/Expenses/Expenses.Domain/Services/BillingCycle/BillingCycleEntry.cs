@@ -1,10 +1,11 @@
-﻿using AcademyCloud.Expenses.Domain.ValueObjects;
+﻿using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
+using AcademyCloud.Expenses.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
+namespace AcademyCloud.Expenses.Domain.Services.BillingCycle
 {
     public class BillingCycleEntry
     {
@@ -13,7 +14,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.BillingCycle
         public virtual BillingCycleSubject Subject { get; set; }
 
         public DateTime LastSettled { get; set; }
-        
+
         public SubjectType SubjectType { get; set; }
 
         public Resources Quota => Subject.Quota;

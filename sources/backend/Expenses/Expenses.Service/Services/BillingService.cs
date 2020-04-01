@@ -1,8 +1,8 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Data;
-using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
-using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 using AcademyCloud.Expenses.Exceptions;
 using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Protos.Billing;
@@ -23,15 +23,13 @@ namespace AcademyCloud.Expenses.Services
     {
         private TokenClaimsAccessor tokenClaimsAccessor;
         private ExpensesDbContext dbContext;
-        private UseCycleTask useCycleTask;
-        private BillingCycleTask billingCycleTask;
+        private BillingCycleService billingCycleService;
 
-        public BillingService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleTask useCycleTask, BillingCycleTask billingCycleTask)
+        public BillingService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, BillingCycleService billingCycleService)
         {
             this.tokenClaimsAccessor = tokenClaimsAccessor;
             this.dbContext = dbContext;
-            this.useCycleTask = useCycleTask;
-            this.billingCycleTask = billingCycleTask;
+            this.billingCycleService = billingCycleService;
         }
 
         public override async Task<GetCurrentAllocatedBillingResponse> GetCurrentAllocatedBilling(GetCurrentAllocatedBillingRequest request, ServerCallContext context)
@@ -56,8 +54,8 @@ namespace AcademyCloud.Expenses.Services
                 SubjectId = entry.Id.ToString(),
                 PayerId = entry.Subject.PayUser.Id.ToString(),
                 Quota = entry.Quota.ToGrpc(),
-                Amount = billingCycleTask.CalculatePrice(entry.Quota),
-                NextDue = Timestamp.FromDateTime(billingCycleTask.NextDue(entry.LastSettled)),
+                Amount = billingCycleService.CalculatePrice(entry.Quota),
+                NextDue = Timestamp.FromDateTime(billingCycleService.NextDue(entry.LastSettled)),
             };
         }
 
@@ -94,8 +92,8 @@ namespace AcademyCloud.Expenses.Services
             {
                 SubjectId = entry.Id.ToString(),
                 Resources = entry.Resources.ToGrpc(),
-                Amount = billingCycleTask.CalculatePrice(entry.Resources),
-                NextDue = Timestamp.FromDateTime(billingCycleTask.NextDue(entry.LastSettled)),
+                Amount = billingCycleService.CalculatePrice(entry.Resources),
+                NextDue = Timestamp.FromDateTime(billingCycleService.NextDue(entry.LastSettled)),
             };
         }
 

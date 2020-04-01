@@ -14,6 +14,8 @@ using AcademyCloud.Expenses.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 
 namespace AcademyCloud.Expenses.Services
 {
@@ -21,15 +23,15 @@ namespace AcademyCloud.Expenses.Services
     {
         private TokenClaimsAccessor tokenClaimsAccessor;
         private ExpensesDbContext dbContext;
-        private UseCycleTask useCycleTask;
-        private BillingCycleTask billingCycleTask;
+        private UseCycleService useCycleService;
+        private BillingCycleService billingCycleService;
 
-        public InteropService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleTask useCycleTask, BillingCycleTask billingCycleTask)
+        public InteropService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleService useCycleService, BillingCycleService billingCycleService)
         {
             this.tokenClaimsAccessor = tokenClaimsAccessor;
             this.dbContext = dbContext;
-            this.useCycleTask = useCycleTask;
-            this.billingCycleTask = billingCycleTask;
+            this.useCycleService = useCycleService;
+            this.billingCycleService = billingCycleService;
         }
 
         private void ThrowFunc<T>(T o)
@@ -173,16 +175,16 @@ namespace AcademyCloud.Expenses.Services
                 x.User.Id == Guid.Parse(tokenClaims.UserId) && x.Project.Id == Guid.Parse(tokenClaims.ProjectId));
 
             // First settle use cycle for the project user, project and domain
-            useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id));
-            useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id));
-            useCycleTask.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Domain.Id));
+            useCycleService.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id));
+            useCycleService.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id));
+            useCycleService.TrySettle(await dbContext.UseCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Domain.Id));
 
 
             // for social user and project, also settle their billing cycles
             if (userProjectAssignment.Project.Domain.Id == Constants.SocialDomainId)
             {
-                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
-                billingCycleTask.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
+                billingCycleService.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
+                billingCycleService.TrySettle(await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userProjectAssignment.Project.Id), Domain.ValueObjects.TransactionReason.SocialResourcesChange);
             }
 
             userProjectAssignment.Resources += request.ResourcesDelta.FromGrpc();

@@ -1,6 +1,6 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 using AcademyCloud.Expenses.Domain.Entities;
-using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Test.Helpers;
 using System;
@@ -15,7 +15,7 @@ namespace AcademyCloud.Expenses.Test
 {
     public class BillingCycleTests : CommonTest
     {
-        private BillingCycleConfigurations configuration = new BillingCycleConfigurations
+        private CombinedBillingCycleConfigurations configuration = new CombinedBillingCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
@@ -23,7 +23,7 @@ namespace AcademyCloud.Expenses.Test
 
         private BillingCycleTask CreateTask()
         {
-            return ConfigureTask<BillingCycleTask, BillingCycleConfigurations>(configuration);
+            return ConfigureBillingCycleTask(configuration).Item1;
         }
 
         private async Task Wait(int waitTimes = 1)
@@ -71,7 +71,7 @@ namespace AcademyCloud.Expenses.Test
             Assert.Empty(lqproject.BillingCycleRecords);
             Assert.Empty(lqproject.PayedOrgTransactions);
         }
-        
+
         [Fact]
         public async Task TestSocialProjectSettle()
         {

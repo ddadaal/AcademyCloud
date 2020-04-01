@@ -1,6 +1,6 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.Data;
-using AcademyCloud.Expenses.Domain.Entities.ManagementFee;
+using AcademyCloud.Expenses.Domain.Services.ManagementFee;
 using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Test.Helpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +21,7 @@ namespace AcademyCloud.Expenses.Test
     public class ManagementFeeServiceTests : CommonTest
     {
 
-        private ManagementFeeConfigurations configuration = new ManagementFeeConfigurations
+        private CombinedManagementFeeConfigurations configuration = new CombinedManagementFeeConfigurations
         {
             CheckCycleMs = 500,
             ChargeCycleMs = 1000,
@@ -32,7 +32,7 @@ namespace AcademyCloud.Expenses.Test
 
         private ManagementFeeTask CreateTask()
         {
-            return ConfigureTask<ManagementFeeTask, ManagementFeeConfigurations>(configuration);
+            return ConfigureManagementFeeTask(configuration).Item1;
         }
 
         private async Task Wait(int waitTimes = 1)

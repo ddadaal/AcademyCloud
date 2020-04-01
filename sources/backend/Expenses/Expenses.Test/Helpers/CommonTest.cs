@@ -19,6 +19,12 @@ using System.Threading;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using Xunit;
+using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
+using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
+using AcademyCloud.Expenses.Domain.Services.ManagementFee;
 
 namespace AcademyCloud.Expenses.Test.Helpers
 {
@@ -134,25 +140,48 @@ namespace AcademyCloud.Expenses.Test.Helpers
             return new TokenClaimsAccessor(mockHttpAccessor.Object);
         }
 
-        public TTask ConfigureTask<TTask, TConfiguration>(TConfiguration configuration)
-            where TConfiguration : class, new()
+        public (BillingCycleTask, BillingCycleService) ConfigureBillingCycleTask(CombinedBillingCycleConfigurations configurations)
+        {
+            return ConfigureTask<BillingCycleTask, BillingCycleService, Domain.Services.BillingCycle.BillingCycleConfigurations, BackgroundTasks.BillingCycle.BillingCycleConfigurations>
+                (configurations);
+        }
+        public (UseCycleTask, UseCycleService) ConfigureUseCycleTask(CombinedUseCycleConfigurations configurations)
+        {
+            return ConfigureTask<UseCycleTask, UseCycleService, Domain.Services.UseCycle.UseCycleConfigurations, BackgroundTasks.UseCycle.UseCycleConfigurations>
+                (configurations);
+        }
+        public (ManagementFeeTask, ManagementFeeService) ConfigureManagementFeeTask(CombinedManagementFeeConfigurations configurations)
+        {
+            return ConfigureTask<ManagementFeeTask, ManagementFeeService, Domain.Services.ManagementFee.ManagementFeeConfigurations, BackgroundTasks.ManagementFee.ManagementFeeConfigurations>
+                (configurations);
+        }
+
+        public (TTask, TService) ConfigureTask<TTask, TService, TDomainConfigurations, TTaskConfigurations>(ICombinedConfigurations<TDomainConfigurations, TTaskConfigurations> configurations)
+            where TDomainConfigurations : class, new()
+            where TTaskConfigurations : class, new()
             where TTask : class
+            where TService : class
         {
 
-            var mockIOptions = new Mock<IOptions<TConfiguration>>();
-            mockIOptions.Setup(x => x.Value).Returns(configuration);
+            var mockITaskOptions = new Mock<IOptions<TTaskConfigurations>>();
+            mockITaskOptions.Setup(x => x.Value).Returns(configurations.TaskConfigurations);
+
+            var mockIDomainOptions = new Mock<IOptions<TDomainConfigurations>>();
+            mockIDomainOptions.Setup(x => x.Value).Returns(configurations.DomainConfigurations);
 
             var services = new ServiceCollection();
 
             services.AddSingleton(db);
             services.AddSingleton<ScopedDbProvider>();
             services.AddLogging(o => o.AddConsole());
-            services.AddSingleton(mockIOptions.Object);
+            services.AddSingleton(mockITaskOptions.Object);
+            services.AddSingleton(mockIDomainOptions.Object);
             services.AddSingleton<TTask>();
+            services.AddSingleton<TService>();
 
             var provider = services.BuildServiceProvider();
 
-            return provider.GetService<TTask>();
+            return (provider.GetService<TTask>(), provider.GetService<TService>());
         }
 
         public async Task WaitForTaskForExecuteCycles<TTask>(TTask task, int spanMs, int times)

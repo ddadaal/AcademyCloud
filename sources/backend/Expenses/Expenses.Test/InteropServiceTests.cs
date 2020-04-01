@@ -2,6 +2,8 @@
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Domain.Entities;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Protos.Common;
 using AcademyCloud.Expenses.Services;
@@ -19,12 +21,12 @@ namespace AcademyCloud.Expenses.Test
 {
     public class InteropServiceTests : CommonTest
     {
-        private UseCycleConfigurations useConfiguration = new UseCycleConfigurations
+        private CombinedUseCycleConfigurations useConfiguration = new CombinedUseCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
         };
-        private BillingCycleConfigurations billingConfiguration = new BillingCycleConfigurations
+        private CombinedBillingCycleConfigurations billingConfiguration = new CombinedBillingCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
@@ -37,10 +39,10 @@ namespace AcademyCloud.Expenses.Test
             {
                 tokenClaims = njuadminnjuTokenClaims;
             }
-            var useTask = ConfigureTask<UseCycleTask, UseCycleConfigurations>(useConfiguration);
-            var billingTask = ConfigureTask<BillingCycleTask, BillingCycleConfigurations>(billingConfiguration);
+            var (useTask, useService) = ConfigureUseCycleTask(useConfiguration);
+            var (billingTask, billingService) = ConfigureBillingCycleTask(billingConfiguration);
 
-            return new InteropService(MockTokenClaimsAccessor(tokenClaims), db, useTask, billingTask);
+            return new InteropService(MockTokenClaimsAccessor(tokenClaims), db, useService, billingService);
         }
 
 
@@ -263,8 +265,8 @@ namespace AcademyCloud.Expenses.Test
             lqlqsocialproject.Resources = initial.Clone();
             db.UseCycleEntries.Add(new UseCycleEntry(lqlqsocialproject.UseCycleSubject));
             db.UseCycleEntries.Add(new UseCycleEntry(lqsocialproject.UseCycleSubject));
-            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(lqlqsocialproject.BillingCycleSubject));
-            db.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(lqsocialproject.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new BillingCycleEntry(lqlqsocialproject.BillingCycleSubject));
+            db.BillingCycleEntries.Add(new BillingCycleEntry(lqsocialproject.BillingCycleSubject));
             await db.SaveChangesAsync();
 
             var service = CreateService(lqlqsocialprojectTokenClaims);

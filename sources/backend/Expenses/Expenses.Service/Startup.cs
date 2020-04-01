@@ -4,6 +4,9 @@ using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 using AcademyCloud.Expenses.BackgroundTasks.ManagementFee;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Data;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.ManagementFee;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 using AcademyCloud.Expenses.Exceptions;
 using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Services;
@@ -50,9 +53,17 @@ namespace AcademyCloud.Expenses
             // Strongly typed configuration
             services.AddOptions();
 
-            services.Configure<ManagementFeeConfigurations>(Configuration.GetSection("ManagementFee"));
-            services.Configure<UseCycleConfigurations>(Configuration.GetSection("UseCycle"));
-            services.Configure<BillingCycleConfigurations>(Configuration.GetSection("BillingCycle"));
+            var managementFeeSection = Configuration.GetSection("ManagementFee");
+            services.Configure<BackgroundTasks.ManagementFee.ManagementFeeConfigurations>(managementFeeSection);
+            services.Configure<Domain.Services.ManagementFee.ManagementFeeConfigurations>(managementFeeSection);
+
+            var useCycleSection = Configuration.GetSection("UseCycle");
+            services.Configure<BackgroundTasks.UseCycle.UseCycleConfigurations>(useCycleSection);
+            services.Configure<Domain.Services.UseCycle.UseCycleConfigurations>(useCycleSection);
+
+            var billingCycleSection = Configuration.GetSection("BillingCycle");
+            services.Configure<BackgroundTasks.BillingCycle.BillingCycleConfigurations>(billingCycleSection);
+            services.Configure<Domain.Services.BillingCycle.BillingCycleConfigurations>(billingCycleSection);
 
             var jwtSettings = new JwtSettings();
             services.AddSingleton(jwtSettings);
@@ -93,12 +104,15 @@ namespace AcademyCloud.Expenses
             // Prepare database
             services.AddHostedService<DatabaseInitializerHostedService>();
 
+            // Add domain services
+            services.AddSingleton<BillingCycleService>();
+            services.AddSingleton<UseCycleService>();
+            services.AddSingleton<ManagementFeeService>();
+
             // Add background tasks
             services.AddHostedService<ManagementFeeTask>();
             services.AddHostedService<UseCycleTask>();
             services.AddHostedService<BillingCycleTask>();
-            services.AddSingleton<UseCycleTask>();
-            services.AddSingleton<BillingCycleTask>();
 
         }
 

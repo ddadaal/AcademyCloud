@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
 using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -19,48 +20,16 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
         private readonly BillingCycleConfigurations configuration;
         private readonly ScopedDbProvider provider;
         private readonly ILogger<BillingCycleTask> logger;
+        private readonly BillingCycleService service;
 
-        public BillingCycleTask(IOptions<BillingCycleConfigurations> configuration, ScopedDbProvider provider, ILogger<BillingCycleTask> logger)
+        public BillingCycleTask(IOptions<BillingCycleConfigurations> configuration, ScopedDbProvider provider, ILogger<BillingCycleTask> logger, BillingCycleService service)
         {
             this.configuration = configuration.Value;
             this.provider = provider;
             this.logger = logger;
+            this.service = service;
         }
 
-        public DateTime NextDue(DateTime now)
-        {
-            return now.AddMilliseconds(configuration.SettleCycleMs);
-        }
-
-
-        public decimal CalculatePrice(Resources resources)
-        { 
-            return PricePlan.Instance.Calculate(resources);
-        }
-        public bool TrySettle(BillingCycleEntry entry, TransactionReason reason)
-        {
-
-            // if the entry is a social project, use its resources instead of quota
-            var quota = entry.Subject.Project != null && entry.Subject.Project.Domain.Id == Shared.Constants.SocialDomainId
-                ? entry.Subject.Project.Resources
-                : entry.Quota;
-
-            // if the entry is a UserProjectAssignment, the price should always to zero
-            var price = entry.SubjectType == SubjectType.UserProjectAssignment
-                ? 0
-                : CalculatePrice(quota);
-
-            if (entry.Settle(price, quota, DateTime.UtcNow, reason))
-            {
-                logger.LogInformation($"Settling billing cycle for {entry} completed.");
-                return true;
-            }
-            else
-            {
-                logger.LogInformation($"{entry} has no quota. Skip settling.");
-                return false;
-            }
-        }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -74,9 +43,9 @@ namespace AcademyCloud.Expenses.BackgroundTasks.BillingCycle
                 {
                     foreach (var i in dbContext.BillingCycleEntries)
                     {
-                        if (time >= NextDue(i.LastSettled))
+                        if (time >= service.NextDue(i.LastSettled))
                         {
-                            if (TrySettle(i, i.SubjectType switch {
+                            if (service.TrySettle(i, i.SubjectType switch {
                                 SubjectType.Domain => TransactionReason.DomainQuota,
                                 SubjectType.Project => TransactionReason.ProjectQuota,
                                 SubjectType.UserProjectAssignment => TransactionReason.UserProjectQuota,

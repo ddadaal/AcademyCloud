@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using DomainEntity = AcademyCloud.Expenses.Domain.Entities.Domain;
 using static AcademyCloud.Shared.Constants;
 using Microsoft.AspNetCore.Authorization;
+using AcademyCloud.Expenses.Domain.Services.ManagementFee;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 
 namespace AcademyCloud.Expenses.Services
 {
@@ -21,15 +24,13 @@ namespace AcademyCloud.Expenses.Services
     {
         private TokenClaimsAccessor tokenClaimsAccessor;
         private ExpensesDbContext dbContext;
-        private UseCycleTask useCycleTask;
-        private BillingCycleTask billingCycleTask;
+        private BillingCycleService billingCycleService;
 
-        public IdentityService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, UseCycleTask useCycleTask, BillingCycleTask billingCycleTask)
+        public IdentityService(TokenClaimsAccessor tokenClaimsAccessor, ExpensesDbContext dbContext, BillingCycleService billingCycleService)
         {
             this.tokenClaimsAccessor = tokenClaimsAccessor;
             this.dbContext = dbContext;
-            this.useCycleTask = useCycleTask;
-            this.billingCycleTask = billingCycleTask;
+            this.billingCycleService = billingCycleService;
         }
 
         public override async Task<AddDomainResponse> AddDomain(AddDomainRequest request, ServerCallContext context)
@@ -43,9 +44,9 @@ namespace AcademyCloud.Expenses.Services
             dbContext.Domains.Add(domain);
             dbContext.UserDomainAssignments.Add(userDomainAssignment);
 
-            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(domain.BillingCycleSubject));
-            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(domain.UseCycleSubject));
-            dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(domain.Payer));
+            dbContext.BillingCycleEntries.Add(new BillingCycleEntry(domain.BillingCycleSubject));
+            dbContext.UseCycleEntries.Add(new UseCycleEntry(domain.UseCycleSubject));
+            dbContext.ManagementFeeEntries.Add(new ManagementFeeEntry(domain.Payer));
 
             await dbContext.SaveChangesAsync();
             return new AddDomainResponse { };
@@ -63,13 +64,13 @@ namespace AcademyCloud.Expenses.Services
             dbContext.Projects.Add(project);
             dbContext.UserProjectAssignments.Add(payUserProjectAssignment);
 
-            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(project.BillingCycleSubject));
-            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(payUserProjectAssignment.BillingCycleSubject));
+            dbContext.BillingCycleEntries.Add(new BillingCycleEntry(project.BillingCycleSubject));
+            dbContext.BillingCycleEntries.Add(new BillingCycleEntry(payUserProjectAssignment.BillingCycleSubject));
 
-            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(project.UseCycleSubject));
-            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(payUserProjectAssignment.UseCycleSubject));
+            dbContext.UseCycleEntries.Add(new UseCycleEntry(project.UseCycleSubject));
+            dbContext.UseCycleEntries.Add(new UseCycleEntry(payUserProjectAssignment.UseCycleSubject));
 
-            dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(project.Payer));
+            dbContext.ManagementFeeEntries.Add(new ManagementFeeEntry(project.Payer));
 
             await dbContext.SaveChangesAsync();
 
@@ -91,14 +92,14 @@ namespace AcademyCloud.Expenses.Services
             dbContext.UserDomainAssignments.Add(userDomainAssignment);
 
             // Add user and project into the use cycle, billing cycle and management fee
-            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(userProjectAssignment.UseCycleSubject));
-            dbContext.UseCycleEntries.Add(new Domain.Entities.UseCycle.UseCycleEntry(project.UseCycleSubject));
+            dbContext.UseCycleEntries.Add(new UseCycleEntry(userProjectAssignment.UseCycleSubject));
+            dbContext.UseCycleEntries.Add(new UseCycleEntry(project.UseCycleSubject));
 
-            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(userProjectAssignment.BillingCycleSubject));
-            dbContext.BillingCycleEntries.Add(new Domain.Entities.BillingCycle.BillingCycleEntry(project.BillingCycleSubject));
+            dbContext.BillingCycleEntries.Add(new BillingCycleEntry(userProjectAssignment.BillingCycleSubject));
+            dbContext.BillingCycleEntries.Add(new BillingCycleEntry(project.BillingCycleSubject));
 
-            dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(project.Payer));
-            dbContext.ManagementFeeEntries.Add(new Domain.Entities.ManagementFee.ManagementFeeEntry(user.Payer));
+            dbContext.ManagementFeeEntries.Add(new ManagementFeeEntry(project.Payer));
+            dbContext.ManagementFeeEntries.Add(new ManagementFeeEntry(user.Payer));
 
             await dbContext.SaveChangesAsync();
 
@@ -202,7 +203,7 @@ namespace AcademyCloud.Expenses.Services
 
             // BillingCycleEntry share id with its subject.
             var entry = await dbContext.BillingCycleEntries.FindIfNullThrowAsync(request.DomainId);
-            billingCycleTask.TrySettle(entry, TransactionReason.DomainQuotaChange);
+            billingCycleService.TrySettle(entry, TransactionReason.DomainQuotaChange);
 
             // then, change the quota
             domain.Quota = quota.FromGrpc();
@@ -233,7 +234,7 @@ namespace AcademyCloud.Expenses.Services
 
             // BillingCycleEntry share id with its subject.
             var entry = await dbContext.BillingCycleEntries.FindIfNullThrowAsync(request.ProjectId);
-            billingCycleTask.TrySettle(entry, TransactionReason.ProjectQuotaChange);
+            billingCycleService.TrySettle(entry, TransactionReason.ProjectQuotaChange);
 
             // then, change the quota
             project.Quota = quota.FromGrpc();
@@ -253,7 +254,7 @@ namespace AcademyCloud.Expenses.Services
 
             // BillingCycleEntry share id with its subject.
             var entry = await dbContext.BillingCycleEntries.FindIfNullThrowAsync(userAssignment.Id);
-            billingCycleTask.TrySettle(entry, TransactionReason.ProjectQuotaChange);
+            billingCycleService.TrySettle(entry, TransactionReason.ProjectQuotaChange);
 
             // then, change the quota
             userAssignment.Quota = quota.FromGrpc();

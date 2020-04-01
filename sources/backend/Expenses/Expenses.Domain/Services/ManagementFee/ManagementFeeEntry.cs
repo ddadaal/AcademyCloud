@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SystemEntity = AcademyCloud.Expenses.Domain.Entities.System;
 
-namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
+namespace AcademyCloud.Expenses.Domain.Services.ManagementFee
 {
     public class ManagementFeeEntry
     {
@@ -15,7 +15,7 @@ namespace AcademyCloud.Expenses.Domain.Entities.ManagementFee
         public virtual Payer Payer { get; set; }
 
         public DateTime LastSettled { get; set; }
-        
+
         public SubjectType SubjectType { get; set; }
 
 

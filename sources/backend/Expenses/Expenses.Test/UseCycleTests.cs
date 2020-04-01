@@ -1,6 +1,7 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
 using AcademyCloud.Expenses.Domain.Entities;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Test.Helpers;
 using System;
@@ -15,7 +16,7 @@ namespace AcademyCloud.Expenses.Test
 {
     public class UseCycleTests : CommonTest
     {
-        private UseCycleConfigurations configuration = new UseCycleConfigurations
+        private CombinedUseCycleConfigurations configuration = new CombinedUseCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
@@ -23,7 +24,7 @@ namespace AcademyCloud.Expenses.Test
 
         private UseCycleTask CreateTask()
         {
-            return ConfigureTask<UseCycleTask, UseCycleConfigurations>(configuration);
+            return ConfigureUseCycleTask(configuration).Item1;
         }
 
         private async Task Wait(int waitTimes = 1)

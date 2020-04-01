@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Expenses.BackgroundTasks.BillingCycle;
 using AcademyCloud.Expenses.BackgroundTasks.UseCycle;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using AcademyCloud.Expenses.Services;
@@ -16,12 +17,12 @@ namespace AcademyCloud.Expenses.Test
 {
     public class IdentityDomainServiceTests: CommonTest
     {
-        private BillingCycleConfigurations billingConfiguration = new BillingCycleConfigurations
+        private CombinedBillingCycleConfigurations billingConfiguration = new CombinedBillingCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
         };
-        private UseCycleConfigurations useConfiguration = new UseCycleConfigurations
+        private CombinedUseCycleConfigurations useConfiguration = new CombinedUseCycleConfigurations
         {
             CheckCycleMs = 500,
             SettleCycleMs = 1000,
@@ -29,11 +30,11 @@ namespace AcademyCloud.Expenses.Test
 
         public (IdentityService, BillingCycleTask, UseCycleTask) CreateService(TokenClaims? tokenClaims = null)
         {
-            var billingTask = ConfigureTask<BillingCycleTask, BillingCycleConfigurations>(billingConfiguration);
-            var useTask = ConfigureTask<UseCycleTask, UseCycleConfigurations>(useConfiguration);
+            var (billingTask, billingService) = ConfigureBillingCycleTask(billingConfiguration);
+            var (useTask, useService) = ConfigureUseCycleTask(useConfiguration);
             var claimsAccessor = MockTokenClaimsAccessor(tokenClaims ?? njuadminnjuTokenClaims);
 
-            return (new IdentityService(claimsAccessor, db, useTask, billingTask), billingTask, useTask);
+            return (new IdentityService(claimsAccessor, db, billingService), billingTask, useTask);
         }
         private Guid domainId = Guid.NewGuid();
 

@@ -1,6 +1,6 @@
 ﻿using AcademyCloud.Expenses.Data;
 using AcademyCloud.Expenses.Domain.Entities;
-using AcademyCloud.Expenses.Domain.Entities.ManagementFee;
+using AcademyCloud.Expenses.Domain.Services.ManagementFee;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -21,23 +21,14 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
         private readonly ManagementFeeConfigurations configuration;
         private readonly ScopedDbProvider provider;
         private readonly ILogger<ManagementFeeTask> logger;
+        private readonly ManagementFeeService service;
 
-        public ManagementFeeTask(IOptions<ManagementFeeConfigurations> configuration, ScopedDbProvider provider, ILogger<ManagementFeeTask> logger)
+        public ManagementFeeTask(IOptions<ManagementFeeConfigurations> configuration, ScopedDbProvider provider, ILogger<ManagementFeeTask> logger, ManagementFeeService service)
         {
             this.configuration = configuration.Value;
             this.provider = provider;
             this.logger = logger;
-        }
-
-        private int GetPrice(ManagementFeeEntry entry)
-        {
-            return entry.SubjectType switch
-            {
-                SubjectType.Domain => configuration.DomainPrice,
-                SubjectType.Project => configuration.ProjectPrice,
-                SubjectType.User => configuration.UserPrice,
-                _ => throw new ArgumentOutOfRangeException(nameof(entry.SubjectType))
-            };
+            this.service = service;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -45,7 +36,6 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
             while (!stoppingToken.IsCancellationRequested)
             {
                 var time = DateTime.UtcNow;
-
                 logger.LogInformation($"Start charging management fees at {time}..");
 
                 await provider.WithDbContext(async dbContext =>
@@ -54,12 +44,10 @@ namespace AcademyCloud.Expenses.BackgroundTasks.ManagementFee
 
                     foreach (var i in dbContext.ManagementFeeEntries)
                     {
-                        if ((time - i.LastSettled).TotalMilliseconds > configuration.ChargeCycleMs)
+                        if (time >= service.NextDue(i.LastSettled))
                         {
-                            var amount = GetPrice(i);
-                            logger.LogInformation($"{i} is being charged with management fee {amount}.");
-
-                            i.Charge(system, amount, time);
+                            logger.LogInformation($"{i} is being charged with management fee.");
+                            service.TrySettle(system, i);
 
                             logger.LogInformation($"Charging {i} for management fee is completed.");
                             await dbContext.SaveChangesAsync();

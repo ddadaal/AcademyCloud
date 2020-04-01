@@ -11,9 +11,11 @@ using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Domain.Entities.Transaction;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
 using AcademyCloud.Expenses.Data.Configurations;
-using AcademyCloud.Expenses.Domain.Entities.ManagementFee;
 using AcademyCloud.Expenses.Domain.Entities.BillingCycle;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using AcademyCloud.Expenses.Domain.Services.ManagementFee;
+using AcademyCloud.Expenses.Domain.Services.BillingCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 
 namespace AcademyCloud.Expenses.Data
 {

@@ -1,5 +1,6 @@
 ﻿using AcademyCloud.Expenses.Domain.Entities;
 using AcademyCloud.Expenses.Domain.Entities.UseCycle;
+using AcademyCloud.Expenses.Domain.Services.UseCycle;
 using AcademyCloud.Expenses.Domain.ValueObjects;
 using AcademyCloud.Expenses.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -19,35 +20,17 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
         private readonly UseCycleConfigurations configuration;
         private readonly ScopedDbProvider provider;
         private readonly ILogger<UseCycleTask> logger;
+        private readonly UseCycleService service;
 
-        public UseCycleTask(IOptions<UseCycleConfigurations> configuration, ScopedDbProvider provider, ILogger<UseCycleTask> logger)
+        public UseCycleTask(IOptions<UseCycleConfigurations> configuration, ScopedDbProvider provider, ILogger<UseCycleTask> logger, UseCycleService service)
         {
             this.configuration = configuration.Value;
             this.provider = provider;
             this.logger = logger;
-        }
-        public DateTime NextDue(DateTime now)
-        {
-            return now.AddMilliseconds(configuration.SettleCycleMs);
+            this.service = service;
         }
 
-        public decimal CalculatePrice(Resources resources)
-        {
-            return PricePlan.Instance.Calculate(resources);
-        }
-        public bool TrySettle(UseCycleEntry entry)
-        {
-            if (entry.Settle(CalculatePrice(entry.Resources), DateTime.UtcNow))
-            {
-                logger.LogInformation($"Settling use cycle for {entry} completed.");
-                return true;
-            }
-            else
-            {
-                logger.LogInformation($"{entry} has no resources. Skip settling.");
-                return false;
-            }
-        }
+
 
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -62,11 +45,11 @@ namespace AcademyCloud.Expenses.BackgroundTasks.UseCycle
                 {
                     foreach (var i in dbContext.UseCycleEntries)
                     {
-                        if (time >= NextDue(i.LastSettled))
+                        if (time >= service.NextDue(i.LastSettled))
                         {
                             logger.LogInformation($"Settling use cycle for {i}");
 
-                            if (i.Settle(CalculatePrice(i.Resources), time))
+                            if (service.TrySettle(i))
                             {
                                 await dbContext.SaveChangesAsync();
                             }
