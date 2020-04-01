@@ -27,25 +27,25 @@ import { VolumeServiceMock } from "src/apis/resources/VolumeServiceMock";
 export const USE_MOCK = true;
 
 const services = [
-  [AuthenticationService, USE_MOCK ? AuthenticationServiceMock : AuthenticationService],
-  [ResourcesService, USE_MOCK ? ResourcesServiceMock : ResourcesService],
-  [InstanceService, USE_MOCK ? InstanceServiceMock : InstanceService],
-  [VolumeService, USE_MOCK ? VolumeServiceMock : VolumeService],
-  [AccountService, USE_MOCK ? AccountServiceMock : AccountService],
-  [DomainsService, USE_MOCK ? DomainsServiceMock : DomainsService],
-  [UsersService, USE_MOCK ? UsersServiceMock : UsersService],
-  [ProjectsService, USE_MOCK ? ProjectsServiceMock : ProjectsService],
-  [QuotaService, USE_MOCK ? QuotaServiceMock : QuotaService],
-  [BalanceService, USE_MOCK ? BalanceServiceMock : BalanceService],
-  [TransactionsService, USE_MOCK ? TransactionsServiceMock : TransactionsService],
-  [BillingService, USE_MOCK ? BillingServiceMock : BillingService],
+  [AuthenticationService, AuthenticationServiceMock],
+  [ResourcesService, ResourcesServiceMock],
+  [InstanceService, InstanceServiceMock],
+  [VolumeService, VolumeServiceMock],
+  [AccountService, AccountServiceMock],
+  [DomainsService, DomainsServiceMock],
+  [UsersService, UsersServiceMock],
+  [ProjectsService, ProjectsServiceMock],
+  [QuotaService, QuotaServiceMock],
+  [BalanceService, BalanceServiceMock],
+  [TransactionsService, TransactionsServiceMock],
+  [BillingService, BillingServiceMock],
 ] as const;
 
 
 const serviceConfig = new Map<HttpServiceType, HttpService>();
 
 services.forEach((item) => {
-  serviceConfig.set(item[0], new item[1]());
+  serviceConfig.set(item[0], new item[USE_MOCK ? 1 : 0]());
 });
 
 export interface HttpServiceType {
