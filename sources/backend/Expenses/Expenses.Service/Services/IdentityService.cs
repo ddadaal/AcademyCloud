@@ -123,8 +123,12 @@ namespace AcademyCloud.Expenses.Services
         {
             var project = await dbContext.Projects.FindIfNullThrowAsync(request.ProjectId);
             var user = await dbContext.Users.FindIfNullThrowAsync(request.UserId);
+            var userProjectAssignment = new UserProjectAssignment(Guid.Parse(request.UserProjectAssignmentId), user, project, Resources.Zero);
 
-            dbContext.UserProjectAssignments.Add(new UserProjectAssignment(Guid.Parse(request.UserProjectAssignmentId), user, project, Resources.Zero));
+            dbContext.UserProjectAssignments.Add(userProjectAssignment);
+
+            dbContext.BillingCycleEntries.Add(new BillingCycleEntry(userProjectAssignment.BillingCycleSubject));
+            dbContext.UseCycleEntries.Add(new UseCycleEntry(userProjectAssignment.UseCycleSubject));
 
             await dbContext.SaveChangesAsync();
 
