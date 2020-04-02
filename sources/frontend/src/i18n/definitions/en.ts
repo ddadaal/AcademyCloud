@@ -49,7 +49,7 @@ export default {
           resources: "Resources",
           amount: "Payable",
           nextDue: "Next Due",
-          payer: "Payer",
+          payer: "PayUser",
         }
       },
       flavor: {
