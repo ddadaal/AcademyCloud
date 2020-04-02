@@ -1,0 +1,2 @@
+(this["webpackJsonpacademycloud-frontend"]=this["webpackJsonpacademycloud-frontend"]||[]).push([[41],{622:function(n,t,e){"use strict";e.r(t),e.d(t,"default",(function(){return a}));var c=e(1),u=e.n(c);function a(n){return u.a.createElement("div",null,"Account")}}}]);
+//# sourceMappingURL=41.3023c464.chunk.js.map
