@@ -147,15 +147,17 @@ namespace AcademyCloud.Expenses.Services
             return new GetHistoryAllocatedBillingsResponse
             {
                 Billings = {
-                    data.Subject.BillingCycleRecords.Select(x => new HistoryAllocatedBilling
-                    {
-                        Id = x.Id.ToString(),
-                        Amount = x.Amount,
-                        PayerId = x.OrgTransaction.UserTransaction.Payer!.Id.ToString(),
-                        Quota = x.Quota.ToGrpc(),
-                        StartTime = x.StartTime.ToGrpc(),
-                        EndTime = x.EndTime.ToGrpc(),
-                    })
+                    data.Subject.BillingCycleRecords
+                        .OrderByDescending(x => x.StartTime)
+                        .Select(x => new HistoryAllocatedBilling
+                        {
+                            Id = x.Id.ToString(),
+                            Amount = x.Amount,
+                            PayerId = x.OrgTransaction.UserTransaction.Payer!.Id.ToString(),
+                            Quota = x.Quota.ToGrpc(),
+                            StartTime = x.StartTime.ToGrpc(),
+                            EndTime = x.EndTime.ToGrpc(),
+                        })
                 }
             };
         }
@@ -170,14 +172,16 @@ namespace AcademyCloud.Expenses.Services
             return new GetHistoryUsedBillingsResponse
             {
                 Billings = {
-                    data.Subject.UseCycleRecords.Select(x => new HistoryUsedBilling
-                    {
-                        Id = x.Id.ToString(),
-                        Amount = x.Amount,
-                        Resources = x.Resources.ToGrpc(),
-                        StartTime = x.StartTime.ToGrpc(),
-                        EndTime = x.EndTime.ToGrpc(),
-                    })
+                    data.Subject.UseCycleRecords
+                        .OrderByDescending(x => x.StartTime)
+                        .Select(x => new HistoryUsedBilling
+                        {
+                            Id = x.Id.ToString(),
+                            Amount = x.Amount,
+                            Resources = x.Resources.ToGrpc(),
+                            StartTime = x.StartTime.ToGrpc(),
+                            EndTime = x.EndTime.ToGrpc(),
+                        })
                 }
             };
         }
