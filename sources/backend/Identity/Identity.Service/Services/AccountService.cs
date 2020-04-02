@@ -171,6 +171,7 @@ namespace AcademyCloud.Identity.Services
                 DomainName = socialDomain.Name,
                 ProjectId = newProject.Id.ToString(),
                 ProjectName = newProject.Name,
+                UserProjectAssignmentId = projectAssignment.Id.ToString(),
                 Social = true
             };
 
