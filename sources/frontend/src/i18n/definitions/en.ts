@@ -35,7 +35,7 @@ export default {
           quota: "Quota",
           resources: "Resources",
           amount: "Payable",
-          payer: "Payer",
+          payer: "PayUser",
           nextDue: "Next Due",
           startTime: "StartTime",
           endTime: "EndTime",
@@ -427,7 +427,7 @@ export default {
       scopeIndicator: {
         projects: "Projects",
         domains: "Domains",
-        social: "Public",
+        social: "Social",
         system: "System",
         admin: "Admin",
         opName: "Switch",
