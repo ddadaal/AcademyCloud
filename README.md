@@ -56,7 +56,8 @@ Development starts from **01/28**.
     - [x] Identity module (ended at **02/28**)
     - [x] Expenses module (ended at **03/13**)
     - [x] Resources module (ended at **03/18**)
-- [ ] Integration test and Paper Writing
+- [x] Integration test and Paper Writing (ended at **04/02**)
+- [ ] Revise the paper with tutors
 
 
 ## License
