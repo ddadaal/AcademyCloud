@@ -106,7 +106,7 @@ namespace AcademyCloud.Expenses.Services
             // let it throw if there is no system instance
             var system = await dbContext.Systems.FirstAsync();
 
-            var transactions = system.ReceivedOrgTransactions.AsQueryable();
+            var transactions = system.ReceivedOrgTransactions.OrderByDescending(x => x.Time).AsQueryable();
             
             if (request.Limit > 0)
             {
